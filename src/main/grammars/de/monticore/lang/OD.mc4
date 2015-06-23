@@ -1,0 +1,176 @@
+package de.monticore.lang;
+
+grammar OD extends de.monticore.types.Types {
+
+    /*========================================================================*/
+    /*===================== FROM UMLP COMMONS ================================*/
+    /*========================================================================*/
+    Completeness =
+        [complete:"(c)"] 
+          | ("(" [incomplete:"..."] ")")         //separate brackets to avoid
+                                                 //lexer-symbol clash with SD/SC
+          | [incomplete:"(...,...)"] | [complete:"(c,c)"]
+          | [rightComplete:"(...,c)"] 
+          | [leftComplete:"(c,...)"];
+          
+    /*========================================================================*/
+    /*=============== FROM CD4A INSTEAD OF UMLP COMMONS ======================*/
+    /*========================================================================*/
+    
+	Modifier = Stereotype?
+    (["abstract"]
+      | ["final"]
+      | ["static"]
+      | ["local"]
+      | ["private"]   | [private:"-"]
+      | ["protected"] | [protected:"#"]
+      | ["public"]    | [public:"+"]
+      | ["readonly"]  | [readonly:"?"]
+      | ["derived"]   | [derived:"/"] )*;
+      
+	Stereotype = "<<" values:(StereoValue || ",")+ ">>";
+    
+	StereoValue = Name ("=" value:String)?;
+      
+    /*========================================================================*/
+    /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
+    /*========================================================================*/
+    
+    /** ASTODElement represents all Elements of a UML Objectdiagram
+    */    
+    abstract ODElement;
+
+    // TODO external Value;
+    Value = SignedLiteral;
+    
+    Version = "version" StringLiteral ";";
+        
+    /*========================================================================*/
+    /*============================== GRAMMAR =================================*/
+    /*========================================================================*/
+    
+    /** ASTODCompilationUnit represents the complete Diagram
+      @attribute package          The package declaration of this Objectdiagram
+      @attribute importStatements List of imported elements
+      @attribute oDDefinition   
+    */
+    ODCompilationUnit =
+      ("package" Package:(Name& || ".")+ ";")?
+      Version? 
+      (ImportStatement)*
+      ODDefinition;
+    
+    /** ASTODDefinition represents a UML Objectdiagram
+      @attribute completeness Optional Comleteness of this Objectdiagramm
+      @attribute stereotype   Optional Stereotype
+      @attribute name         Name of this Objectdiagram
+      @attribute oDObjects    List of Objects of this Objectdiagram
+      @attribute oDLinks      List of Links of this Objectdiagram
+      @attribute invaritants  List of Invaritants of this Objectdiagram
+    */
+    ODDefinition =
+      Completeness?
+      Stereotype?
+      "objectdiagram" Name
+      "{"
+      (
+        oDObjects:ODObject
+        |
+        oDLinks:ODLink
+//TODO  |
+//TODO  invariants:Invariant
+      )*
+      "}";
+    
+    
+    /** ASTODObject represents an Object in a UML Objectdiagram
+      @attribute completeness Optional Comleteness of this Object
+      @attribute modifier     Modifier of this Object
+      @attribute name         Optional Name of this Object
+      @attribute type         Optional Type of this Object
+      @attribute oDAttributes List of Attributes of this Object
+    */
+    ODObject extends ODElement =
+      Completeness?
+      Modifier
+      (Name (":" type:ReferenceType)? | (":" type:ReferenceType))
+      (
+        ("{" oDAttributes:ODAttribute* "}")
+        |
+        ";"
+      );
+    
+    
+    /** ASTODAttribute represents an Attribute of an Object
+      @attribute modifier Modifier of this Attribute
+      @attribute type     Type of this Attribute
+      @attribute name     Name of this Attribute
+      @attribute value    Value of this Attribute
+    */
+    ODAttribute =
+      Modifier
+      Type?
+      Name
+      ("=" Value)? ";";
+        
+        
+    /** ASTODLinkQualifier represents a reference to a Qualifier of Links 
+        between Objects. The reference can be either a concrete attribute
+        name or a concrete value.
+      @attribute name     Name of a referenced attribute (if set)
+      @attribute value    Concrete value of this qualifier (if set)
+    */
+    ODLinkQualifier = "[[" Name "]]" | "[" Value "]";
+
+    
+    /** ASTODLink represents a Link between Objects
+      @attribute stereotype          Optional Stereotype
+      @attribute Link                True if Link is of type "link"
+      @attribute Aggregation         True if Link is of type "aggregation"
+      @attribute Composition         True if Link is of type "composition"
+      @attribute derived             True if this is a derived Link
+      @attribute Name                Name of the Association of this Link
+      @attribute leftModifier        Optional left side Modifier
+      @attribute leftReferenceNames  List of References of the Objects on the
+                                     left side of this Link
+      @attribute leftQualifier       Qualifier of the left side of this Link
+      @attribute leftRole            Role of Objects on the Links left side
+      @attribute leftToRight         True if Link is navigable from 
+                                     left to right ("->")
+      @attribute rightToLeft         True if Link is navigable from 
+                                     right to left ("<-")
+      @attribute bidirectional       True if Link is navigable in 
+                                     both directions ("<->")
+      @attribute simple              True if navigation of Link is 
+                                     not specified ("--")
+      @attribute rightRole           Role of Objects on the Links right side
+      @attribute rightQualifier      Qualifier of the right side of this Link
+      @attribute rightReferenceNames List of References of the Objects on the
+                                     right side of this Link
+      @attribute rightModifier       Optional right side Modifier
+    */
+    ODLink extends ODElement =
+      Stereotype?
+      (
+        ["link"]
+        | ["aggregation"]
+        | ["composition"]
+      )
+      ([derived:"/"])?
+      Name?
+      leftModifier:Modifier
+      leftReferenceNames:(QualifiedName || ",")+
+      leftQualifier:ODLinkQualifier?
+      ("(" leftRole:Name ")")?
+      (
+        leftToRight:["->"]
+        | rightToLeft:["<-"]
+        | bidirectional:["<->"]
+        | unspecified:["--"]
+      )
+      ("(" rightRole:Name ")")?
+      rightQualifier:ODLinkQualifier?
+      rightReferenceNames:(QualifiedName || ",")+
+      rightModifier:Modifier
+      ";";
+}

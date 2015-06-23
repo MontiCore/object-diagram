@@ -1,0 +1,38 @@
+package examples.od;
+
+version "1.0.9";
+
+(...) <<global_stereotypes>>
+objectdiagram Variants {
+
+//TODO  ocl:[context o3 inv: attr3 > 0;]
+//TODO  java:[o3.attr6 > 0]
+//TODO  [o3.attr7 == 0]
+
+  (...) <<object_specific_stereotypes>> o1:type1;
+  (...) local o2:type2<T>;
+  (c) o3:type3 {
+    public int attr1;
+    private static type1 attr2;
+    protected final attr3 = 5;
+    derived attr4;
+    readonly attr5;
+    Map<String, ? extends Person> m;
+    + attr6;
+    - attr7;
+    # attr8;
+    / attr9;
+    ? attr10;
+  }
+  local o4;
+  o5:type5<? extends Comparable<T>>;
+  :type6;
+
+  <<link_specific_stereotypes>> link o1 -> o2;
+  link association1 o2 [[ID]] (leftRole) -- (rightRole) o1;
+  link association1 o2 ["ID"] (leftRole) -- (rightRole) o1;
+  link association1 <<left_stereotype>> public o2 (myO3) -- (myO2) o3 <<right_stereotype>> protected;
+  link o1 -> o3;
+  composition o3 <-> o4;
+
+}
