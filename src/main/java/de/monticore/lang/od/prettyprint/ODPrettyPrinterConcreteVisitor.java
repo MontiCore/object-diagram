@@ -34,7 +34,7 @@ import de.se_rwth.commons.Names;
  * and allow to explictly visit subtrees by calling
  * getVisitor().startVisit(ASTNode)
  * 
- * @author Martin Schindler
+ * @author Martin Schindler, Robert Heim
  */
 public class ODPrettyPrinterConcreteVisitor extends TypesPrettyPrinterConcreteVisitor implements
     ODVisitor {

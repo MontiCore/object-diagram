@@ -13,7 +13,7 @@
   <properties>
 
     <!-- .. Libraries ..................................................... -->
-    <monticore.version>4.1.5-SNAPSHOT</monticore.version>
+    <monticore.version>4.1.5</monticore.version>
     
     <antlr.version>4.5</antlr.version>
     <guava.version>18.0</guava.version>
