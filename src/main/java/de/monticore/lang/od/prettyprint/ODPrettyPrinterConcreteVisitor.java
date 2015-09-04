@@ -1,26 +1,15 @@
 package de.monticore.lang.od.prettyprint;
 
-import java.util.Iterator;
-
-import com.google.common.base.Joiner;
-
-import de.monticore.lang.od._ast.ASTCompleteness;
-import de.monticore.lang.od._ast.ASTModifier;
+import de.monticore.common.prettyprint.CommonPrettyPrinterConcreteVisitor;
 import de.monticore.lang.od._ast.ASTODAttribute;
-import de.monticore.lang.od._ast.ASTODBase;
 import de.monticore.lang.od._ast.ASTODCompilationUnit;
 import de.monticore.lang.od._ast.ASTODDefinition;
 import de.monticore.lang.od._ast.ASTODLink;
 import de.monticore.lang.od._ast.ASTODLinkQualifier;
 import de.monticore.lang.od._ast.ASTODObject;
-import de.monticore.lang.od._ast.ASTStereoValue;
-import de.monticore.lang.od._ast.ASTStereoValueList;
-import de.monticore.lang.od._ast.ASTStereotype;
-import de.monticore.lang.od._ast.ASTStereotypeList;
 import de.monticore.lang.od._ast.ASTVersion;
 import de.monticore.lang.od._visitor.ODVisitor;
 import de.monticore.prettyprint.IndentPrinter;
-import de.monticore.types.prettyprint.TypesPrettyPrinterConcreteVisitor;
 import de.monticore.types.types._ast.ASTImportStatement;
 import de.se_rwth.commons.Joiners;
 import de.se_rwth.commons.Names;
@@ -36,7 +25,7 @@ import de.se_rwth.commons.Names;
  * 
  * @author Martin Schindler, Robert Heim
  */
-public class ODPrettyPrinterConcreteVisitor extends TypesPrettyPrinterConcreteVisitor implements
+public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteVisitor implements
     ODVisitor {
   
   /**
@@ -78,7 +67,6 @@ public class ODPrettyPrinterConcreteVisitor extends TypesPrettyPrinterConcreteVi
       getPrinter().println();
     }
     unit.getODDefinition().accept(getRealThis());
-    
   }
   
   @Override
@@ -273,99 +261,21 @@ public class ODPrettyPrinterConcreteVisitor extends TypesPrettyPrinterConcreteVi
     getPrinter().println(";");
   }
   
-  @Override
-  public void handle(ASTModifier a) {
-    if (a.getStereotype().isPresent()) {
-      a.getStereotype().get().accept(getRealThis());
-      getPrinter().print(" ");
-    }
-    if (a.isAbstract()) {
-      getPrinter().print("abstract ");
-    }
-    if (a.isLocal()) {
-      getPrinter().print("local ");
-    }
-    if (a.isReadonly()) {
-      getPrinter().print("readonly ");
-    }
-    if (a.isFinal()) {
-      getPrinter().print("final ");
-    }
-    if (a.isStatic()) {
-      getPrinter().print("static ");
-    }
-    if (a.isPrivate()) {
-      getPrinter().print("private ");
-    }
-    if (a.isProtected()) {
-      getPrinter().print("protected ");
-    }
-    if (a.isPublic()) {
-      getPrinter().print("public ");
-    }
-    if (a.isDerived()) {
-      getPrinter().print("derived ");
-    }
-  }
+  private ODVisitor realThis = this;
   
+  /**
+   * @see de.monticore.lang.od._visitor.ODVisitor#setRealThis(de.monticore.lang.od._visitor.ODVisitor)
+   */
   @Override
-  public void visit(ASTStereotype node) {
-    getPrinter().print("<<");
-  }
-  
-  @Override
-  public void endVisit(ASTStereotype node) {
-    getPrinter().print(">>");
-  }
-  
-  @Override
-  public void handle(ASTStereotypeList node) {
-    getPrinter().print(Joiner.on(" ").join(node));
-  }
-  
-  @Override
-  public void visit(ASTStereoValue a) {
-    getPrinter().print(a.getName());
-    if (a.getValue().isPresent()) {
-      printer.print("=\"" + a.getValue().get() + "\"");
-    }
-  }
-  
-  @Override
-  public void handle(ASTStereoValueList a) {
-    printSeparator(a.iterator(), ",");
-  }
-  
-  @Override
-  public void handle(ASTCompleteness a) {
-    if (a.isComplete()) {
-      getPrinter().print("(c) ");
-    }
-    if (a.isIncomplete()) {
-      getPrinter().print("(...) ");
-    }
-    if (a.isLeftComplete()) {
-      getPrinter().print("(c,...) ");
-    }
-    if (a.isRightComplete()) {
-      getPrinter().print("(...,c) ");
-    }
+  public void setRealThis(ODVisitor realThis) {
+    this.realThis = realThis;
   }
   
   /**
-   * Prints a list separating the elements by separator
-   * 
-   * @param iter iterator for the list of ASTQualifiedNames
-   * @param seperator string for seperating the ASTQualifiedNames
+   * @see de.monticore.common.prettyprint.CommonPrettyPrinterConcreteVisitor#getRealThis()
    */
-  private void printSeparator(Iterator<? extends ASTODBase> iter, String separator) {
-    // print by iterate through all items
-    String sep = "";
-    while (iter.hasNext()) {
-      getPrinter().print(sep);
-      iter.next().accept(getRealThis());
-      sep = separator;
-    }
+  @Override
+  public ODVisitor getRealThis() {
+    return realThis;
   }
-  
 }

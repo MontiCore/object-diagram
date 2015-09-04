@@ -35,6 +35,7 @@ public class ExamplesTest {
     test("src/test/resources/examples/od/QualifiedLinks.od");
     test("src/test/resources/examples/od/AuctionParticipants.od");
     test("src/test/resources/examples/od/Variants.od");
+    test("src/test/resources/examples/od/StereoWithKeyword.od");
   }
   
   private void test(String modelName) throws RecognitionException, IOException {

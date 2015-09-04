@@ -1,36 +1,6 @@
 package de.monticore.lang;
 
-grammar OD extends de.monticore.types.Types {
-
-    /*========================================================================*/
-    /*===================== FROM UMLP COMMONS ================================*/
-    /*========================================================================*/
-    Completeness =
-        [complete:"(c)"] 
-          | ("(" [incomplete:"..."] ")")         //separate brackets to avoid
-                                                 //lexer-symbol clash with SD/SC
-          | [incomplete:"(...,...)"] | [complete:"(c,c)"]
-          | [rightComplete:"(...,c)"] 
-          | [leftComplete:"(c,...)"];
-          
-    /*========================================================================*/
-    /*=============== FROM CD4A INSTEAD OF UMLP COMMONS ======================*/
-    /*========================================================================*/
-    
-	Modifier = Stereotype?
-    (["abstract"]
-      | ["final"]
-      | ["static"]
-      | ["local"]
-      | ["private"]   | [private:"-"]
-      | ["protected"] | [protected:"#"]
-      | ["public"]    | [public:"+"]
-      | ["readonly"]  | [readonly:"?"]
-      | ["derived"]   | [derived:"/"] )*;
-      
-	Stereotype = "<<" values:(StereoValue || ",")+ ">>";
-    
-	StereoValue = Name& ("=" value:String)?;
+grammar OD extends de.monticore.common.Common {
       
     /*========================================================================*/
     /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
@@ -55,7 +25,7 @@ grammar OD extends de.monticore.types.Types {
       @attribute oDDefinition   
     */
     ODCompilationUnit =
-      ("package" Package:(Name& || ".")+ ";")?
+      ("package" package:(Name& || ".")+ ";")?
       Version? 
       (ImportStatement)*
       ODDefinition;
