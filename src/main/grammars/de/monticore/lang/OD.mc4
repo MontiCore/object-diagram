@@ -30,7 +30,7 @@ grammar OD extends de.monticore.types.Types {
       
 	Stereotype = "<<" values:(StereoValue || ",")+ ">>";
     
-	StereoValue = Name ("=" value:String)?;
+	StereoValue = Name& ("=" value:String)?;
       
     /*========================================================================*/
     /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
