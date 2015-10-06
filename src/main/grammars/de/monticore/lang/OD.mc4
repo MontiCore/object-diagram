@@ -55,14 +55,14 @@ grammar OD extends de.monticore.common.Common {
     
     /** ASTODObject represents an Object in a UML Objectdiagram
       @attribute completeness Optional Comleteness of this Object
-      @attribute modifier     Modifier of this Object
+      @attribute modifier     Optional Modifier of this Object
       @attribute name         Optional Name of this Object
       @attribute type         Optional Type of this Object
       @attribute oDAttributes List of Attributes of this Object
     */
     ODObject extends ODElement =
       Completeness?
-      Modifier
+      Modifier?
       (Name (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
         ("{" oDAttributes:ODAttribute* "}")
@@ -72,13 +72,13 @@ grammar OD extends de.monticore.common.Common {
     
     
     /** ASTODAttribute represents an Attribute of an Object
-      @attribute modifier Modifier of this Attribute
+      @attribute modifier Optional Modifier of this Attribute
       @attribute type     Type of this Attribute
       @attribute name     Name of this Attribute
       @attribute value    Value of this Attribute
     */
     ODAttribute =
-      Modifier
+      Modifier?
       Type?
       Name
       ("=" Value)? ";";
@@ -128,7 +128,7 @@ grammar OD extends de.monticore.common.Common {
       )
       ([derived:"/"])?
       Name?
-      leftModifier:Modifier
+      leftModifier:Modifier?
       leftReferenceNames:(QualifiedName || ",")+
       leftQualifier:ODLinkQualifier?
       ("(" leftRole:Name ")")?
@@ -141,6 +141,6 @@ grammar OD extends de.monticore.common.Common {
       ("(" rightRole:Name ")")?
       rightQualifier:ODLinkQualifier?
       rightReferenceNames:(QualifiedName || ",")+
-      rightModifier:Modifier
+      rightModifier:Modifier?
       ";";
 }

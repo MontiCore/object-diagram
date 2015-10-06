@@ -118,7 +118,9 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       a.getCompleteness().get().accept(getRealThis());
     }
     // print object modifier
-    a.getModifier().accept(getRealThis());
+    if (a.getModifier().isPresent()) {
+      a.getModifier().get().accept(getRealThis());
+    }
     // print object name and type
     if (a.getName().isPresent()) {
       getPrinter().print(a.getName().get());
@@ -148,7 +150,8 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   @Override
   public void handle(ASTODAttribute a) {
     // print modifier
-    a.getModifier().accept(getRealThis());
+    if (a.getModifier().isPresent())
+    a.getModifier().get().accept(getRealThis());
     // print type
     if (a.getType().isPresent()) {
       a.getType().get().accept(getRealThis());
@@ -215,7 +218,9 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       getPrinter().print(a.getName().get() + " ");
     }
     // print left modifier
-    a.getLeftModifier().accept(getRealThis());
+    if (a.getLeftModifier().isPresent()) {
+      a.getLeftModifier().get().accept(getRealThis());
+    }
     // print objects referenced on the left side of the link
     getPrinter().print(Joiners.COMMA.join(a.getLeftReferenceNames()));
     getPrinter().print(" ");
@@ -257,7 +262,9 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     getPrinter().print(Joiners.COMMA.join(a.getRightReferenceNames()));
     getPrinter().print(" ");
     // print right modifier
-    a.getRightModifier().accept(getRealThis());
+    if (a.getRightModifier().isPresent()) {
+      a.getRightModifier().get().accept(getRealThis());
+    }
     getPrinter().println(";");
   }
   
