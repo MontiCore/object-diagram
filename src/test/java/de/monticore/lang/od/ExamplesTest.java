@@ -17,8 +17,7 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
 import de.monticore.lang.od._ast.ASTODCompilationUnit;
-import de.monticore.lang.od._parser.ODCompilationUnitMCParser;
-import de.monticore.lang.od._parser.ODParserFactory;
+import de.monticore.lang.od._parser.ODParser;
 import de.monticore.lang.od.prettyprint.ODPrettyPrinterConcreteVisitor;
 import de.monticore.prettyprint.IndentPrinter;
 
@@ -40,8 +39,8 @@ public class ExamplesTest {
   
   private void test(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
-    ODCompilationUnitMCParser parser = ODParserFactory.createODCompilationUnitMCParser();
-    Optional<ASTODCompilationUnit> odDef = parser.parse(model.toString());
+    ODParser parser = new ODParser();
+    Optional<ASTODCompilationUnit> odDef = parser.parseODCompilationUnit(model.toString());
     assertFalse(parser.hasErrors());
     assertTrue(odDef.isPresent());
     
@@ -51,7 +50,7 @@ public class ExamplesTest {
     String ppResult = pp.getPrinter().getContent();
     
     // parse the printers content
-    Optional<ASTODCompilationUnit> ppOd = parser.parseString(ppResult);
+    Optional<ASTODCompilationUnit> ppOd = parser.parseString_ODCompilationUnit(ppResult);
     
     assertFalse(parser.hasErrors());
     assertTrue(ppOd.isPresent());

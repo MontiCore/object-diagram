@@ -99,8 +99,12 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     getPrinter().println(" {");
     getPrinter().indent();
     // TODO a.getInvariants().accept(getRealThis());
-    a.getODObjects().accept(getRealThis());
-    a.getODLinks().accept(getRealThis());
+    for (ASTODObject o: a.getODObjects()) {
+      o.accept(getRealThis());
+    }
+    for (ASTODLink l: a.getODLinks()) {
+      l.accept(getRealThis());
+    }
     getPrinter().unindent();
     getPrinter().print("\n}\n");
   }
@@ -133,7 +137,9 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     if (!a.getODAttributes().isEmpty()) {
       getPrinter().println(" {");
       getPrinter().indent();
-      a.getODAttributes().accept(getRealThis());
+      for (ASTODAttribute ast: a.getODAttributes()) {
+        ast.accept(getRealThis());
+      }      
       getPrinter().unindent();
       getPrinter().println("}");
     }
