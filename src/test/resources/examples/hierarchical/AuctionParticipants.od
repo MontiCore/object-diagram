@@ -1,0 +1,32 @@
+package examples.od;
+
+import examples.cd.Associations;
+
+  objectdiagram AuctionParticipants {
+
+  kupfer912:Auction {
+    long auctionIdent = 912;
+    String title = "420t Kupfer";
+    /int numberOfBids = 0;     
+    theo:Person {
+      personIdent = 1783;
+      name = "Theobald Schmidt";
+      isActive = false;
+    }
+    otto:Person {
+      personIdent = 20544;
+      name = "Ottokar Huber";
+      isActive = true;
+    }
+    lisa:Person {
+      personIdent = 45392;
+      name = "Elisabeth Müller";
+      isActive = true;
+    }
+
+    <<interf>> private bp:BiddingPolicy;
+
+    <<interf>> private tp:TimingPolicy;
+  }
+  
+}

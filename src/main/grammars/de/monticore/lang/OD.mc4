@@ -6,6 +6,9 @@ grammar OD extends de.monticore.common.Common {
     /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
     /*========================================================================*/
     
+//TODO 	token ObjectId =
+//    	( 'a'..'z' | 'A'..'Z' | '_' | '$' )( 'a'..'z' | 'A'..'Z' | '_' | '0'..'9' | '$' )*;
+    
     /** ASTODElement represents all Elements of a UML Objectdiagram
     */    
     abstract ODElement;
@@ -63,9 +66,10 @@ grammar OD extends de.monticore.common.Common {
     ODObject extends ODElement =
       Completeness?
       Modifier?
-      (Name (":" type:ReferenceType)? | (":" type:ReferenceType))
+//	  (ObjectId (":" type:ReferenceType)? | (":" type:ReferenceType))
+ (Name (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
-        ("{" oDAttributes:ODAttribute* "}")
+        ("{" (oDAttributes:ODAttribute | oDObjects:ODObject)* "}")
         |
         ";"
       );

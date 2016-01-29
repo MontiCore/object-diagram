@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import de.monticore.lang.od._ast.ASTODCompilationUnit;
 import de.monticore.lang.od._parser.ODParser;
+import de.monticore.lang.od.prettyprint.HierachicalODPrettyPrinterConcreteVisitor;
 import de.monticore.lang.od.prettyprint.ODPrettyPrinterConcreteVisitor;
 import de.monticore.prettyprint.IndentPrinter;
 
@@ -25,19 +26,37 @@ import de.monticore.prettyprint.IndentPrinter;
  * This test compares the ASTs of the files in the examples folder with the
  * pretty-printed versions of these files.
  * 
- * @author Robert Heim
+ * @author Robert Heim, Timo Greifenberg
  */
 public class ExamplesTest {
   
   @Test
-  public void test() throws RecognitionException, IOException {
-    test("src/test/resources/examples/od/QualifiedLinks.od");
-    test("src/test/resources/examples/od/AuctionParticipants.od");
-    test("src/test/resources/examples/od/Variants.od");
-    test("src/test/resources/examples/od/StereoWithKeyword.od");
+  public void testQualifiedLinks() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/QualifiedLinks.od", false);
   }
   
-  private void test(String modelName) throws RecognitionException, IOException {
+  @Test
+  public void testAuctionParticipats() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/AuctionParticipants.od", false);
+  }
+  
+  @Test
+  public void testVariants() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/Variants.od", false);
+  }
+  
+  @Test
+  public void testStereoWithKeyword() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/StereoWithKeyword.od", false);
+  }
+  
+  @Test
+  public void testHierarchicalOd() throws RecognitionException, IOException {
+    test("src/test/resources/examples/hierarchical/AuctionParticipants.od", true);
+  }
+  
+  private void test(String modelName, boolean hierarchical)
+      throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
     ODParser parser = new ODParser();
     Optional<ASTODCompilationUnit> odDef = parser.parseODCompilationUnit(model.toString());
@@ -45,7 +64,14 @@ public class ExamplesTest {
     assertTrue(odDef.isPresent());
     
     // pretty print the AST
-    ODPrettyPrinterConcreteVisitor pp = new ODPrettyPrinterConcreteVisitor(new IndentPrinter());
+    ODPrettyPrinterConcreteVisitor pp;
+    if (hierarchical) {
+      pp = new HierachicalODPrettyPrinterConcreteVisitor(new IndentPrinter());
+    }
+    else {
+      pp = new ODPrettyPrinterConcreteVisitor(new IndentPrinter());
+    }
+    
     pp.handle(odDef.get());
     String ppResult = pp.getPrinter().getContent();
     
