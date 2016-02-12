@@ -6,8 +6,8 @@ grammar OD extends de.monticore.common.Common {
     /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
     /*========================================================================*/
     
-//TODO 	token ObjectId =
-//    	( 'a'..'z' | 'A'..'Z' | '_' | '$' )( 'a'..'z' | 'A'..'Z' | '_' | '0'..'9' | '$' )*;
+    ObjectId =
+    	(Name | StringLiteral);
     
     /** ASTODElement represents all Elements of a UML Objectdiagram
     */    
@@ -50,8 +50,6 @@ grammar OD extends de.monticore.common.Common {
         oDObjects:ODObject
         |
         oDLinks:ODLink
-//TODO  |
-//TODO  invariants:Invariant
       )*
       "}";
     
@@ -66,8 +64,7 @@ grammar OD extends de.monticore.common.Common {
     ODObject extends ODElement =
       Completeness?
       Modifier?
-//	  (ObjectId (":" type:ReferenceType)? | (":" type:ReferenceType))
- (Name (":" type:ReferenceType)? | (":" type:ReferenceType))
+	  (ObjectId (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
         ("{" (oDAttributes:ODAttribute | oDObjects:ODObject)* "}")
         |
@@ -133,6 +130,7 @@ grammar OD extends de.monticore.common.Common {
       ([derived:"/"])?
       Name?
       leftModifier:Modifier?
+//TODO  leftReferenceNames:(ObjectId || ",")+
       leftReferenceNames:(QualifiedName || ",")+
       leftQualifier:ODLinkQualifier?
       ("(" leftRole:Name ")")?
@@ -144,6 +142,7 @@ grammar OD extends de.monticore.common.Common {
       )
       ("(" rightRole:Name ")")?
       rightQualifier:ODLinkQualifier?
+//TODO  rightReferenceNames:(ObjectId || ",")+
       rightReferenceNames:(QualifiedName || ",")+
       rightModifier:Modifier?
       ";";
