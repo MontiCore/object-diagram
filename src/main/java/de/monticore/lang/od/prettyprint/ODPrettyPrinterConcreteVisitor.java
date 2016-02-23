@@ -96,17 +96,18 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     // print object diagram name and parameters
     getPrinter().print("objectdiagram " + a.getName());
     // print body
-    getPrinter().println(" {");
+    getPrinter().println(" {\n");
     getPrinter().indent();
     // TODO a.getInvariants().accept(getRealThis());
     for (ASTODObject o: a.getODObjects()) {
       o.accept(getRealThis());
+      getPrinter().println();
     }
     for (ASTODLink l: a.getODLinks()) {
       l.accept(getRealThis());
     }
     getPrinter().unindent();
-    getPrinter().print("\n}\n");
+    getPrinter().print("}\n");
   }
   
   /**

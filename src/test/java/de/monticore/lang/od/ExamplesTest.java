@@ -21,6 +21,7 @@ import de.monticore.lang.od._parser.ODParser;
 import de.monticore.lang.od.prettyprint.HierachicalODPrettyPrinterConcreteVisitor;
 import de.monticore.lang.od.prettyprint.ODPrettyPrinterConcreteVisitor;
 import de.monticore.prettyprint.IndentPrinter;
+import de.se_rwth.commons.logging.Log;
 
 /**
  * This test compares the ASTs of the files in the examples folder with the
@@ -32,6 +33,7 @@ public class ExamplesTest {
   
   @Test
   public void testQualifiedLinks() throws RecognitionException, IOException {
+    Log.enableFailQuick(false);
     test("src/test/resources/examples/od/QualifiedLinks.od", false);
   }
   
@@ -52,7 +54,7 @@ public class ExamplesTest {
   
   @Test
   public void testHierarchicalOd() throws RecognitionException, IOException {
-    test("src/test/resources/examples/hierarchical/AuctionParticipants.od", true);
+    test("src/test/resources/examples/hierarchical/StandardInnerLink.od", true);
   }
   
   private void test(String modelName, boolean hierarchical)
@@ -74,6 +76,7 @@ public class ExamplesTest {
     
     pp.handle(odDef.get());
     String ppResult = pp.getPrinter().getContent();
+    System.out.println(ppResult);
     
     // parse the printers content
     Optional<ASTODCompilationUnit> ppOd = parser.parseString_ODCompilationUnit(ppResult);

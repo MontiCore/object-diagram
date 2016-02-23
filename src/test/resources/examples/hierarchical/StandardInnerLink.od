@@ -1,0 +1,23 @@
+package examples.od;
+
+import examples.cd.Associations;
+
+objectdiagram StandardInnerLink {
+
+  myObject:ObjectType {
+    innerLink = innerObject:InnerObjectType {
+      someInt = 1783;
+      someString = "Theobald Schmidt";
+      someBool = false;
+    }    
+  }
+  
+  myObject2:ObjectType {
+    innerLink = innerObject2:InnerObjectType {
+      someInt = 1784;
+      someString = "Elisabeth Müller";
+      someBool = true;
+    }    
+  }
+  
+}

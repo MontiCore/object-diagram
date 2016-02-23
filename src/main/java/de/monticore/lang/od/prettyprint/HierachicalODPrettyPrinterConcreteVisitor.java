@@ -1,6 +1,7 @@
 package de.monticore.lang.od.prettyprint;
 
 import de.monticore.lang.od._ast.ASTODAttribute;
+import de.monticore.lang.od._ast.ASTODInnerLink;
 import de.monticore.lang.od._ast.ASTODObject;
 import de.monticore.prettyprint.IndentPrinter;
 
@@ -28,7 +29,6 @@ public class HierachicalODPrettyPrinterConcreteVisitor extends ODPrettyPrinterCo
    */
   @Override
   public void handle(ASTODObject a) {
-    getPrinter().println();
     // print completeness
     if (a.getCompleteness().isPresent()) {
       a.getCompleteness().get().accept(getRealThis());
@@ -46,13 +46,13 @@ public class HierachicalODPrettyPrinterConcreteVisitor extends ODPrettyPrinterCo
       a.getType().get().accept(getRealThis());
     }
     // print object body
-    if (!a.getODAttributes().isEmpty() || !a.getODObjects().isEmpty()) {
+    if (!a.getODAttributes().isEmpty() || !a.getInnerLinks().isEmpty()) {
       getPrinter().println(" {");
       getPrinter().indent();
       for (ASTODAttribute ast : a.getODAttributes()) {
         ast.accept(getRealThis());
       }
-      for (ASTODObject ast : a.getODObjects()) {
+      for (ASTODInnerLink ast : a.getInnerLinks()) {
         ast.accept(getRealThis());
       }
       getPrinter().unindent();
@@ -61,5 +61,16 @@ public class HierachicalODPrettyPrinterConcreteVisitor extends ODPrettyPrinterCo
     else {
       getPrinter().println(";");
     }
+  }
+  
+  /**
+   * Prints an object in an object diagram
+   * 
+   * @param a object
+   */
+  @Override
+  public void handle(ASTODInnerLink a) {
+    getPrinter().print(a.getLinkName() + " = ");
+    a.getODObject().accept(getRealThis());
   }
 }
