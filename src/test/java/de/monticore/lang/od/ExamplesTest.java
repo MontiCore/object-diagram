@@ -57,6 +57,16 @@ public class ExamplesTest {
     test("src/test/resources/examples/hierarchical/StandardInnerLink.od", true);
   }
   
+  @Test
+  public void testHierarchicalOdVariants() throws RecognitionException, IOException {
+    test("src/test/resources/examples/hierarchical/InnerLinkVariants.od", true);
+  }
+  
+  @Test
+  public void testValueCollection() throws RecognitionException, IOException {
+    test("src/test/resources/examples/valuecollections/ValueCollection.od", true);
+  }
+  
   private void test(String modelName, boolean hierarchical)
       throws RecognitionException, IOException {
     Path model = Paths.get(modelName);

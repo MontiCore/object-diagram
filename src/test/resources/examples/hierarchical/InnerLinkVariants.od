@@ -1,0 +1,21 @@
+package examples.od;
+
+import examples.cd.Associations;
+
+objectdiagram InnerLinkVariants {
+
+  :TypeOfAnonymousObject;
+
+  myObject:ObjectType;
+  
+  anotherObject:ObjectType {
+    innerLink = myObject;
+    
+    innerLink2 = :TypeOfAnonymousObject {
+      name = "anonymous";
+    }
+    
+    objectWithoutLinkName:TypeOfAnonymousObject;
+  }
+  
+}

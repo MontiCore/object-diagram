@@ -1,0 +1,11 @@
+package examples.od;
+
+import examples.cd.Associations;
+
+objectdiagram ValueCollection {
+
+  kupfer912:Auction {
+    [912, "420t Kupfer", 0];  
+  }
+  
+}

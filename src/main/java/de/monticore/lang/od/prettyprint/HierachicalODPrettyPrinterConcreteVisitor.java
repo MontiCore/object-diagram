@@ -1,8 +1,12 @@
 package de.monticore.lang.od.prettyprint;
 
+import java.util.Iterator;
+
 import de.monticore.lang.od._ast.ASTODAttribute;
 import de.monticore.lang.od._ast.ASTODInnerLink;
 import de.monticore.lang.od._ast.ASTODObject;
+import de.monticore.lang.od._ast.ASTODValueCollection;
+import de.monticore.lang.od._ast.ASTValue;
 import de.monticore.prettyprint.IndentPrinter;
 
 /**
@@ -46,12 +50,18 @@ public class HierachicalODPrettyPrinterConcreteVisitor extends ODPrettyPrinterCo
       a.getType().get().accept(getRealThis());
     }
     // print object body
-    if (!a.getODAttributes().isEmpty() || !a.getInnerLinks().isEmpty()) {
+    if (!a.getODAttributes().isEmpty() || !a.getInnerLinks().isEmpty()
+        || !a.getValueCollections().isEmpty()) {
       getPrinter().println(" {");
       getPrinter().indent();
       for (ASTODAttribute ast : a.getODAttributes()) {
         ast.accept(getRealThis());
       }
+      
+      for (ASTODValueCollection ast : a.getValueCollections()) {
+        ast.accept(getRealThis());
+      }
+      
       for (ASTODInnerLink ast : a.getInnerLinks()) {
         ast.accept(getRealThis());
       }
@@ -70,7 +80,31 @@ public class HierachicalODPrettyPrinterConcreteVisitor extends ODPrettyPrinterCo
    */
   @Override
   public void handle(ASTODInnerLink a) {
-    getPrinter().print(a.getLinkName() + " = ");
+    if (a.getLinkName().isPresent()) {
+      getPrinter().print(a.getLinkName().get() + " = ");
+    }
     a.getODObject().accept(getRealThis());
+  }
+  
+  /**
+   * Prints an object in an object diagram
+   * 
+   * @param a object
+   */
+  @Override
+  public void handle(ASTODValueCollection a) {
+//    getPrinter().indent();
+    getPrinter().print("[");
+    Iterator<ASTValue> it = a.getValues().iterator();
+    while (it.hasNext()) {
+      ASTValue v = it.next();
+      v.accept(getRealThis());
+      if (it.hasNext()) {
+        getPrinter().print(",");
+      }
+    }
+    
+    getPrinter().print("];\n");
+//    getPrinter().unindent();
   }
 }
