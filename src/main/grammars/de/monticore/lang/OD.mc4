@@ -3,20 +3,7 @@ package de.monticore.lang;
 grammar OD extends de.monticore.common.Common {
       
     /*========================================================================*/
-    /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
-    /*========================================================================*/
-       
-    /** ASTODElement represents all Elements of a UML Objectdiagram
-    */    
-    abstract ODElement;
-
-    // TODO external Value;
-    Value = SignedLiteral;
-    
-    Version = "version" StringLiteral ";";
-        
-    /*========================================================================*/
-    /*============================== GRAMMAR =================================*/
+    /*=========================== CompilationUnit ============================*/
     /*========================================================================*/
     
     /** ASTODCompilationUnit represents the complete Diagram
@@ -29,7 +16,24 @@ grammar OD extends de.monticore.common.Common {
       Version? 
       (ImportStatement)*
       ODDefinition;
-    
+
+    /*========================================================================*/
+    /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
+    /*========================================================================*/
+
+        /** ASTODElement represents all Elements of a UML Objectdiagram
+        */
+        abstract ODElement;
+
+        // TODO external Value;
+        Value = SignedLiteral;
+
+        Version = "version" StringLiteral ";";
+
+    /*========================================================================*/
+    /*============================== Grammar =================================*/
+    /*========================================================================*/
+
     /** ASTODDefinition represents a UML Objectdiagram
       @attribute completeness Optional Comleteness of this Objectdiagramm
       @attribute stereotype   Optional Stereotype
@@ -38,7 +42,7 @@ grammar OD extends de.monticore.common.Common {
       @attribute oDLinks      List of Links of this Objectdiagram
       @attribute invaritants  List of Invaritants of this Objectdiagram
     */
-    ODDefinition =
+    ODDefinition@! =
       Completeness?
       Stereotype?
       "objectdiagram" Name
@@ -58,7 +62,7 @@ grammar OD extends de.monticore.common.Common {
       @attribute type         Optional Type of this Object
       @attribute oDAttributes List of Attributes of this Object
     */
-    ODObject extends ODElement =
+    ODObject@! extends ODElement =
       Completeness?
       Modifier?
 	  (Name (":" type:ReferenceType)? | (":" type:ReferenceType))
