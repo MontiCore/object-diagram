@@ -6,7 +6,7 @@
 
 	<groupId>de.monticore.lang</groupId>
 	<artifactId>od</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.1.0</version>
 
 	<!-- == PROJECT PROPERTIES ============================================== -->
 
