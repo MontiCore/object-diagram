@@ -83,7 +83,7 @@ grammar OD extends de.monticore.common.Common {
       Modifier?
       Type?
       Name
-      ("=" Value)? ";";
+      ("=" Value | ODValueCollection)? ";";
         
         
     /** ASTODLinkQualifier represents a reference to a Qualifier of Links 
