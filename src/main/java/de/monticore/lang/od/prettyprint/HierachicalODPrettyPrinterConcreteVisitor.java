@@ -60,6 +60,7 @@ public class HierachicalODPrettyPrinterConcreteVisitor extends ODPrettyPrinterCo
       
       for (ASTODValueCollection ast : a.getValueCollections()) {
         ast.accept(getRealThis());
+        getPrinter().print(";\n");
       }
       
       for (ASTODInnerLink ast : a.getInnerLinks()) {
@@ -86,25 +87,4 @@ public class HierachicalODPrettyPrinterConcreteVisitor extends ODPrettyPrinterCo
     a.getODObject().accept(getRealThis());
   }
   
-  /**
-   * Prints an object in an object diagram
-   * 
-   * @param a object
-   */
-  @Override
-  public void handle(ASTODValueCollection a) {
-//    getPrinter().indent();
-    getPrinter().print("[");
-    Iterator<ASTValue> it = a.getValues().iterator();
-    while (it.hasNext()) {
-      ASTValue v = it.next();
-      v.accept(getRealThis());
-      if (it.hasNext()) {
-        getPrinter().print(",");
-      }
-    }
-    
-    getPrinter().print("];\n");
-//    getPrinter().unindent();
-  }
 }

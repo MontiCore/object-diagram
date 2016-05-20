@@ -67,7 +67,7 @@ grammar OD extends de.monticore.common.Common {
       Modifier?
 	  (Name (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
-        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection)* "}")
+        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection ";")* "}")
         |
         ";"
       );
@@ -83,7 +83,7 @@ grammar OD extends de.monticore.common.Common {
       Modifier?
       Type?
       Name
-      ("=" Value | ODValueCollection)? ";";
+      ("=" (Value | ODValueCollection))? ";";
         
         
     /** ASTODLinkQualifier represents a reference to a Qualifier of Links 
@@ -150,5 +150,5 @@ grammar OD extends de.monticore.common.Common {
       (linkName:Name "=")? ODObject;
       
     ODValueCollection = 
-      "[" values:Value ("," values:Value)* "]" ";";
+      "[" values:Value ("," values:Value)* "]" ;
 }

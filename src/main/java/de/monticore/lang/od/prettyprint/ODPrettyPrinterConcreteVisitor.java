@@ -1,18 +1,14 @@
 package de.monticore.lang.od.prettyprint;
 
 import de.monticore.common.prettyprint.CommonPrettyPrinterConcreteVisitor;
-import de.monticore.lang.od._ast.ASTODAttribute;
-import de.monticore.lang.od._ast.ASTODCompilationUnit;
-import de.monticore.lang.od._ast.ASTODDefinition;
-import de.monticore.lang.od._ast.ASTODLink;
-import de.monticore.lang.od._ast.ASTODLinkQualifier;
-import de.monticore.lang.od._ast.ASTODObject;
-import de.monticore.lang.od._ast.ASTVersion;
+import de.monticore.lang.od._ast.*;
 import de.monticore.lang.od._visitor.ODVisitor;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.types._ast.ASTImportStatement;
 import de.se_rwth.commons.Joiners;
 import de.se_rwth.commons.Names;
+
+import java.util.Iterator;
 
 /**
  * This class is responsible for pretty-printing object diagrams. It is
@@ -30,9 +26,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   
   /**
    * Constructor.
-   * 
-   * @param parent the parent pretty printer, needed to give control to the
-   * embedded pretty printer when embedding is detected.
+   *
    * @param printer the printer to write to.
    */
   public ODPrettyPrinterConcreteVisitor(IndentPrinter printer) {
@@ -98,10 +92,13 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     // print body
     getPrinter().println(" {\n");
     getPrinter().indent();
-    // TODO a.getInvariants().accept(getRealThis());
-    for (ASTODObject o: a.getODObjects()) {
-      o.accept(getRealThis());
-      getPrinter().println();
+    // print Objects
+
+    for (Iterator<ASTODObject> it = a.getODObjects().iterator(); it.hasNext();) {
+      it.next().accept(getRealThis());
+      if (it.hasNext()) {
+        getPrinter().println();
+      }
     }
     for (ASTODLink l: a.getODLinks()) {
       l.accept(getRealThis());
@@ -117,7 +114,6 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
    */
   @Override
   public void handle(ASTODObject a) {
-    getPrinter().println();
     // print completeness
     if (a.getCompleteness().isPresent()) {
       a.getCompleteness().get().accept(getRealThis());
@@ -170,6 +166,11 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     if (a.getValue().isPresent()) {
       getPrinter().print(" = ");
       a.getValue().get().accept(getRealThis());
+    }
+    // print value collection
+    else if (a.getODValueCollection().isPresent()) {
+      getPrinter().print(" = ");
+      a.getODValueCollection().get().accept(getRealThis());
     }
     getPrinter().println(";");
   }
@@ -274,7 +275,24 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     }
     getPrinter().println(";");
   }
-  
+
+  /**
+   * Prints an object in an object diagram
+   *
+   * @param a object
+   */
+  @Override
+  public void handle(ASTODValueCollection a) {
+    getPrinter().print("[");
+    for (Iterator<ASTValue> it = a.getValues().iterator(); it.hasNext();) {
+      it.next().accept(getRealThis());
+      if (it.hasNext()) {
+        getPrinter().print(",");
+      }
+    }
+    getPrinter().print("]");
+  }
+
   private ODVisitor realThis = this;
   
   /**

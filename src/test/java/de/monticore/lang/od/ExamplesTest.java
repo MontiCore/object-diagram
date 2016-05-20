@@ -31,6 +31,12 @@ import static org.junit.Assert.assertTrue;
 public class ExamplesTest {
 
   @Test
+  public void testSpecialValues() throws RecognitionException, IOException {
+    Log.enableFailQuick(false);
+    test("src/test/resources/examples/od/SpecialValues.od", false);
+  }
+
+  @Test
   public void testQualifiedLinks() throws RecognitionException, IOException {
     Log.enableFailQuick(false);
     test("src/test/resources/examples/od/QualifiedLinks.od", false);
