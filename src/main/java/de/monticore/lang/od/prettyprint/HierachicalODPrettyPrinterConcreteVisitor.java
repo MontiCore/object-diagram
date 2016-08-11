@@ -1,12 +1,9 @@
 package de.monticore.lang.od.prettyprint;
 
-import java.util.Iterator;
-
 import de.monticore.lang.od._ast.ASTODAttribute;
 import de.monticore.lang.od._ast.ASTODInnerLink;
 import de.monticore.lang.od._ast.ASTODObject;
 import de.monticore.lang.od._ast.ASTODValueCollection;
-import de.monticore.lang.od._ast.ASTValue;
 import de.monticore.prettyprint.IndentPrinter;
 
 /**

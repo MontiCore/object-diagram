@@ -45,7 +45,7 @@ grammar OD extends de.monticore.common.Common {
     ODDefinition@! =
       Completeness?
       Stereotype?
-      "objectdiagram" Name
+      ("objectdiagram" | "astobjectdiagram") Name
       "{"
       (
         oDObjects:ODObject
@@ -65,7 +65,7 @@ grammar OD extends de.monticore.common.Common {
     ODObject@! extends ODElement =
       Completeness?
       Modifier?
-	  (Name (":" type:ReferenceType)? | (":" type:ReferenceType))
+	  ( (Name | name:ExtendedName) (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
         ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection ";")* "}")
         |
@@ -151,4 +151,6 @@ grammar OD extends de.monticore.common.Common {
       
     ODValueCollection = 
       "[" values:Value ("," values:Value)* "]" ;
+      
+    token ExtendedName = '@'Name?':'Name'<'Digits','Digits'>'('!'Digits'!')?;
 }

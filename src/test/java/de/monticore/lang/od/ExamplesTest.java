@@ -11,7 +11,10 @@ import de.monticore.lang.od.prettyprint.HierachicalODPrettyPrinterConcreteVisito
 import de.monticore.lang.od.prettyprint.ODPrettyPrinterConcreteVisitor;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.Slf4jLog;
+
 import org.antlr.v4.runtime.RecognitionException;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -29,6 +32,12 @@ import static org.junit.Assert.assertTrue;
  * @author Robert Heim, Timo Greifenberg
  */
 public class ExamplesTest {
+
+  @BeforeClass
+  public static void disableFailQuick() {
+    Slf4jLog.init();
+    Log.enableFailQuick(false);
+  }
 
   @Test
   public void testSpecialValues() throws RecognitionException, IOException {
@@ -70,6 +79,11 @@ public class ExamplesTest {
   @Test
   public void testValueCollection() throws RecognitionException, IOException {
     test("src/test/resources/examples/valuecollections/ValueCollection.od", true);
+  }
+
+  @Test
+  public void testAstOd() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/AstOd.od", true);
   }
 
   private void test(String modelName, boolean hierarchical)
