@@ -152,5 +152,5 @@ grammar OD extends de.monticore.common.Common {
     ODValueCollection = 
       "[" values:Value ("," values:Value)* "]" ;
       
-    token ExtendedName = '@'Name?':'Name'<'Digits','Digits'>'('!'Digits'!')?;
+    token ExtendedName = '@'Name?':'Name'('Digits','Digits')'('!'Digits'!')?;
 }
