@@ -12,7 +12,7 @@ import java.util.Set;
 public class ODModelNameCalculator extends ODModelNameCalculatorTOP {
 
   @Override
-  protected Set<String> calculateModelNameForODObject(String name) {
+  protected Set<String> calculateModelNamesForODObject(String name) {
     // e.g., if p.OD.Object, return p.OD
     if (!Names.getQualifier(name).isEmpty()) {
       return ImmutableSet.of(Names.getQualifier(name));

@@ -14,7 +14,7 @@
     <properties>
 
         <!-- .. Libraries ..................................................... -->
-        <monticore.version>4.4.1</monticore.version>
+        <monticore.version>4.4.2-SNAPSHOT</monticore.version>
 
         <antlr.version>4.5</antlr.version>
         <guava.version>18.0</guava.version>
@@ -28,7 +28,7 @@
         <assembly.plugin>2.5.4</assembly.plugin>
         <compiler.plugin>3.3</compiler.plugin>
         <source.plugin>2.4</source.plugin>
-        <monticore.plugin>4.4.1</monticore.plugin>
+        <monticore.plugin>4.4.2-SNAPSHOT</monticore.plugin>
         <shade.plugin>2.4.3</shade.plugin>
 
         <!-- Classifiers -->

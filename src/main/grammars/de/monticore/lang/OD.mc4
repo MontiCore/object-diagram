@@ -1,6 +1,6 @@
 package de.monticore.lang;
 
-grammar OD extends de.monticore.common.Common {
+grammar OD extends de.monticore.common.Common { 
       
     /*========================================================================*/
     /*=========================== CompilationUnit ============================*/
@@ -40,7 +40,6 @@ grammar OD extends de.monticore.common.Common {
       @attribute name         Name of this Objectdiagram
       @attribute oDObjects    List of Objects of this Objectdiagram
       @attribute oDLinks      List of Links of this Objectdiagram
-      @attribute invaritants  List of Invaritants of this Objectdiagram
     */
     ODDefinition@! =
       Completeness?
@@ -65,7 +64,7 @@ grammar OD extends de.monticore.common.Common {
     ODObject@! extends ODElement =
       Completeness?
       Modifier?
-	  ( (Name | name:ExtendedName) (":" type:ReferenceType)? | (":" type:ReferenceType))
+	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
         ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection ";")* "}")
         |
@@ -131,7 +130,7 @@ grammar OD extends de.monticore.common.Common {
       ([derived:"/"])?
       Name?
       leftModifier:Modifier?
-      leftReferenceNames:(QualifiedName || ",")+
+      (leftReferenceNames:ODName |leftReferenceNames:Name) ("," (leftReferenceNames:ODName | leftReferenceNames:Name))*
       leftQualifier:ODLinkQualifier?
       ("(" leftRole:Name ")")?
       (
@@ -142,15 +141,17 @@ grammar OD extends de.monticore.common.Common {
       )
       ("(" rightRole:Name ")")?
       rightQualifier:ODLinkQualifier?
-      rightReferenceNames:(QualifiedName || ",")+
+      (rightReferenceNames:ODName |rightReferenceNames:Name) ("," (rightReferenceNames:ODName | rightReferenceNames:Name))*
       rightModifier:Modifier?
       ";";
       
     ODInnerLink = 
-      (linkName:Name "=")? ODObject;
+      (linkName:Name "=")? ODObject
+      | linkName:Name ("=" | "->") (objectName:ODName | objectName:Name) ";";
       
     ODValueCollection = 
       "[" values:Value ("," values:Value)* "]" ;
-      
-    token ExtendedName = '@'Name?':'Name'('Digits','Digits')'('!'Digits'!')?;
+          
+    token ODName = '@' ( 'a'..'z' | 'A'..'Z' | '_' | '0'..'9' | '$' | '-' | '+' | '.')* ('('.*?')')?;
+        
 }

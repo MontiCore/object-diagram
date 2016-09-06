@@ -86,6 +86,21 @@ public class ExamplesTest {
     test("src/test/resources/examples/od/AstOd.od", true);
   }
 
+  @Test
+  public void testActionObservation102406() throws RecognitionException, IOException {
+    test("src/test/resources/examples/action/ActionObservation102406.od", true);
+  }
+
+  @Test
+  public void testActionObservation102489() throws RecognitionException, IOException {
+    test("src/test/resources/examples/action/ActionObservation102489.od", true);
+  }
+
+  @Test
+  public void testActionObservation102530() throws RecognitionException, IOException {
+    test("src/test/resources/examples/action/ActionObservation102530.od", true);
+  }
+
   private void test(String modelName, boolean hierarchical)
       throws RecognitionException, IOException {
     Path model = Paths.get(modelName);

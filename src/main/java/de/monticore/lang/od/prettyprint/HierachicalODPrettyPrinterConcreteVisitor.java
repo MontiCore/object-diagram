@@ -78,10 +78,17 @@ public class HierachicalODPrettyPrinterConcreteVisitor extends ODPrettyPrinterCo
    */
   @Override
   public void handle(ASTODInnerLink a) {
-    if (a.getLinkName().isPresent()) {
-      getPrinter().print(a.getLinkName().get() + " = ");
+    if (a.getODObject().isPresent()) {
+      if (a.getLinkName().isPresent()) {
+        getPrinter().print(a.getLinkName().get() + " = ");
+      }
+      a.getODObject().get().accept(getRealThis());
     }
-    a.getODObject().accept(getRealThis());
+    if (a.getObjectName().isPresent()) {
+      getPrinter().print(a.getLinkName().get() + " -> ");
+      getPrinter().print(a.getObjectName().get());
+      getPrinter().print(";\n");
+    }
   }
   
 }

@@ -2,44 +2,44 @@
  * ========================================================== Object diagram
  */
 astobjectdiagram CD4Analysis {
-  @CD4Analysis:MCGrammar(1,0):ASTMCGrammar {
+  @CD4Analysis_MCGrammar(1,0):ASTMCGrammar {
     r__package = ["mc", "lang"];
     name = "CD4Analysis";
     component = false;
-    @Types:GrammarReference(7,28):ASTGrammarReference {
+    @Types_GrammarReference(7,28):ASTGrammarReference {
       names = ["mc", "grammar", "types", "Types"];
     }
-    @CDCompilationUnit:ClassProd(14,2):ASTClassProd {
+    @CDCompilationUnit_ClassProd(14,2):ASTClassProd {
       name = "CDCompilationUnit";
-      @:Alt(15,4):ASTAlt {
+      @_Alt(15,4):ASTAlt {
         rightAssoc = false;
-        @:Block(15,4):ASTBlock {
+        @_Block(15,4):ASTBlock {
           iteration = 2;
-          @:Alt(15,5):ASTAlt {
+          @_Alt(15,5):ASTAlt {
             rightAssoc = false;
-            @package:Terminal(15,5):ASTTerminal {
+            @package_Terminal(15,5):ASTTerminal {
               iteration = 0;
               name = "package";
             }
-            @:Block(1,0):ASTBlock {
+            @_Block(1,0):ASTBlock {
               iteration = 0;
-              @:Alt(1,1):ASTAlt {
+              @_Alt(1,1):ASTAlt {
                 rightAssoc = false;
-                @Name:NonTerminal(1,1):ASTNonTerminal {
+                @Name_NonTerminal(1,1):ASTNonTerminal {
                   usageName = "package";
                   name = "Name";
                   iteration = 0;
                   plusKeywords = true;
                 }
-                @:Block(1,17):ASTBlock {
+                @_Block(1,17):ASTBlock {
                   iteration = 3;
-                  @:Alt(1,18):ASTAlt {
+                  @_Alt(1,18):ASTAlt {
                     rightAssoc = false;
-                    @POINT:Terminal(1,18):ASTTerminal {
+                    @POINT_Terminal(1,18):ASTTerminal {
                       iteration = 0;
                       name = ".";
                     }
-                    @Name:NonTerminal(1,22):ASTNonTerminal {
+                    @Name_NonTerminal(1,22):ASTNonTerminal {
                       usageName = "package";
                       name = "Name";
                       iteration = 0;
@@ -49,17 +49,17 @@ astobjectdiagram CD4Analysis {
                 }
               }
             }
-            @SEMI:Terminal(15,39):ASTTerminal {
+            @SEMI_Terminal(15,39):ASTTerminal {
               iteration = 0;
               name = ";";
             }
           }
         }
-        @:Block(16,4):ASTBlock {
+        @_Block(16,4):ASTBlock {
           iteration = 3;
-          @:Alt(16,5):ASTAlt {
+          @_Alt(16,5):ASTAlt {
             rightAssoc = false;
-            @ImportStatement:NonTerminal(16,5):ASTNonTerminal {
+            @ImportStatement_NonTerminal(16,5):ASTNonTerminal {
               usageName = "importStatements";
               name = "ImportStatement";
               iteration = 0;
@@ -67,62 +67,62 @@ astobjectdiagram CD4Analysis {
             }
           }
         }
-        @CDDefinition:NonTerminal(17,4):ASTNonTerminal {
+        @CDDefinition_NonTerminal(17,4):ASTNonTerminal {
           name = "CDDefinition";
           iteration = 0;
           plusKeywords = false;
         }
       }
     }
-    @CDDefinition:ClassProd(27,2):ASTClassProd {
+    @CDDefinition_ClassProd(27,2):ASTClassProd {
       name = "CDDefinition";
-      @:Alt(27,17):ASTAlt {
+      @_Alt(27,17):ASTAlt {
         rightAssoc = false;
-        @classdiagram:Terminal(27,17):ASTTerminal {
+        @classdiagram_Terminal(27,17):ASTTerminal {
           iteration = 0;
           name = "classdiagram";
         }
-        @Name:NonTerminal(27,32):ASTNonTerminal {
+        @Name_NonTerminal(27,32):ASTNonTerminal {
           name = "Name";
           iteration = 0;
           plusKeywords = false;
         }
-        @LCURLY:Terminal(27,37):ASTTerminal {
+        @LCURLY_Terminal(27,37):ASTTerminal {
           iteration = 0;
           name = "{";
         }
-        @:Block(28,2):ASTBlock {
+        @_Block(28,2):ASTBlock {
           iteration = 3;
-          @:Alt(28,6):ASTAlt {
+          @_Alt(28,6):ASTAlt {
             rightAssoc = false;
-            @CDClass:NonTerminal(28,6):ASTNonTerminal {
+            @CDClass_NonTerminal(28,6):ASTNonTerminal {
               usageName = "cDClasss";
               name = "CDClass";
               iteration = 0;
               plusKeywords = false;
             }
           }
-          @:Alt(29,6):ASTAlt {
+          @_Alt(29,6):ASTAlt {
             rightAssoc = false;
-            @CDInterface:NonTerminal(29,6):ASTNonTerminal {
+            @CDInterface_NonTerminal(29,6):ASTNonTerminal {
               usageName = "cDInterfaces";
               name = "CDInterface";
               iteration = 0;
               plusKeywords = false;
             }
           }
-          @:Alt(30,6):ASTAlt {
+          @_Alt(30,6):ASTAlt {
             rightAssoc = false;
-            @CDEnum:NonTerminal(30,6):ASTNonTerminal {
+            @CDEnum_NonTerminal(30,6):ASTNonTerminal {
               usageName = "cDEnums";
               name = "CDEnum";
               iteration = 0;
               plusKeywords = false;
             }
           }
-          @:Alt(31,6):ASTAlt {
+          @_Alt(31,6):ASTAlt {
             rightAssoc = false;
-            @CDAssociation:NonTerminal(31,6):ASTNonTerminal {
+            @CDAssociation_NonTerminal(31,6):ASTNonTerminal {
               usageName = "cDAssociations";
               name = "CDAssociation";
               iteration = 0;
@@ -130,39 +130,39 @@ astobjectdiagram CD4Analysis {
             }
           }
         }
-        @RCURLY:Terminal(31,22):ASTTerminal {
+        @RCURLY_Terminal(31,22):ASTTerminal {
           iteration = 0;
           name = "}";
         }
       }
     }
-    @CDClass:ClassProd(43,2):ASTClassProd {
+    @CDClass_ClassProd(43,2):ASTClassProd {
       name = "CDClass";
-      @:Alt(43,12):ASTAlt {
+      @_Alt(43,12):ASTAlt {
         rightAssoc = false;
-        @Modifier:NonTerminal(43,12):ASTNonTerminal {
+        @Modifier_NonTerminal(43,12):ASTNonTerminal {
           name = "Modifier";
           iteration = 2;
           plusKeywords = false;
         }
-        @class:Terminal(43,23):ASTTerminal {
+        @class_Terminal(43,23):ASTTerminal {
           iteration = 0;
           name = "class";
         }
-        @Name:NonTerminal(43,31):ASTNonTerminal {
+        @Name_NonTerminal(43,31):ASTNonTerminal {
           name = "Name";
           iteration = 0;
           plusKeywords = false;
         }
-        @:Block(44,2):ASTBlock {
+        @_Block(44,2):ASTBlock {
           iteration = 2;
-          @:Alt(44,4):ASTAlt {
+          @_Alt(44,4):ASTAlt {
             rightAssoc = false;
-            @extends:Terminal(44,4):ASTTerminal {
+            @extends_Terminal(44,4):ASTTerminal {
               iteration = 0;
               name = "extends";
             }
-            @ReferenceType:NonTerminal(44,15):ASTNonTerminal {
+            @ReferenceType_NonTerminal(44,15):ASTNonTerminal {
               usageName = "superclass";
               name = "ReferenceType";
               iteration = 0;
@@ -170,33 +170,33 @@ astobjectdiagram CD4Analysis {
             }
           }
         }
-        @:Block(45,2):ASTBlock {
+        @_Block(45,2):ASTBlock {
           iteration = 2;
-          @:Alt(45,4):ASTAlt {
+          @_Alt(45,4):ASTAlt {
             rightAssoc = false;
-            @implements:Terminal(45,4):ASTTerminal {
+            @implements_Terminal(45,4):ASTTerminal {
               iteration = 0;
               name = "implements";
             }
-            @:Block(1,0)!2!:ASTBlock {
+            @_Block(1,0!2):ASTBlock {
               iteration = 0;
-              @:Alt(1,1)!2!:ASTAlt {
+              @_Alt(1,1!2):ASTAlt {
                 rightAssoc = false;
-                @ReferenceType:NonTerminal(1,1):ASTNonTerminal {
+                @ReferenceType_NonTerminal(1,1):ASTNonTerminal {
                   usageName = "interfaces";
                   name = "ReferenceType";
                   iteration = 0;
                   plusKeywords = false;
                 }
-                @:Block(1,28):ASTBlock {
+                @_Block(1,28):ASTBlock {
                   iteration = 3;
-                  @:Alt(1,29):ASTAlt {
+                  @_Alt(1,29):ASTAlt {
                     rightAssoc = false;
-                    @COMMA:Terminal(1,29):ASTTerminal {
+                    @COMMA_Terminal(1,29):ASTTerminal {
                       iteration = 0;
                       name = ",";
                     }
-                    @ReferenceType:NonTerminal(1,33):ASTNonTerminal {
+                    @ReferenceType_NonTerminal(1,33):ASTNonTerminal {
                       usageName = "interfaces";
                       name = "ReferenceType";
                       iteration = 0;
@@ -208,37 +208,37 @@ astobjectdiagram CD4Analysis {
             }
           }
         }
-        @:Block(46,2):ASTBlock {
+        @_Block(46,2):ASTBlock {
           iteration = 0;
-          @:Alt(46,4):ASTAlt {
+          @_Alt(46,4):ASTAlt {
             rightAssoc = false;
-            @LCURLY:Terminal(46,4):ASTTerminal {
+            @LCURLY_Terminal(46,4):ASTTerminal {
               iteration = 0;
               name = "{";
             }
-            @:Block(47,4):ASTBlock {
+            @_Block(47,4):ASTBlock {
               iteration = 3;
-              @:Alt(47,6):ASTAlt {
+              @_Alt(47,6):ASTAlt {
                 rightAssoc = false;
-                @CDAttribute:NonTerminal(47,6):ASTNonTerminal {
+                @CDAttribute_NonTerminal(47,6):ASTNonTerminal {
                   usageName = "cDAttributes";
                   name = "CDAttribute";
                   iteration = 0;
                   plusKeywords = false;
                 }
               }
-              @:Alt(48,6):ASTAlt {
+              @_Alt(48,6):ASTAlt {
                 rightAssoc = false;
-                @CDConstructor:NonTerminal(48,6):ASTNonTerminal {
+                @CDConstructor_NonTerminal(48,6):ASTNonTerminal {
                   usageName = "cDConstructors";
                   name = "CDConstructor";
                   iteration = 0;
                   plusKeywords = false;
                 }
               }
-              @:Alt(49,6):ASTAlt {
+              @_Alt(49,6):ASTAlt {
                 rightAssoc = false;
-                @CDMethod:NonTerminal(49,6):ASTNonTerminal {
+                @CDMethod_NonTerminal(49,6):ASTNonTerminal {
                   usageName = "cDMethods";
                   name = "CDMethod";
                   iteration = 0;
@@ -246,14 +246,14 @@ astobjectdiagram CD4Analysis {
                 }
               }
             }
-            @RCURLY:Terminal(50,4):ASTTerminal {
+            @RCURLY_Terminal(50,4):ASTTerminal {
               iteration = 0;
               name = "}";
             }
           }
-          @:Alt(51,4):ASTAlt {
+          @_Alt(51,4):ASTAlt {
             rightAssoc = false;
-            @SEMI:Terminal(51,4):ASTTerminal {
+            @SEMI_Terminal(51,4):ASTTerminal {
               iteration = 0;
               name = ";";
             }
@@ -261,51 +261,51 @@ astobjectdiagram CD4Analysis {
         }
       }
     }
-    @CDInterface:ClassProd(61,2):ASTClassProd {
+    @CDInterface_ClassProd(61,2):ASTClassProd {
       name = "CDInterface";
-      @:Alt(61,16):ASTAlt {
+      @_Alt(61,16):ASTAlt {
         rightAssoc = false;
-        @Modifier:NonTerminal(61,16):ASTNonTerminal {
+        @Modifier_NonTerminal(61,16):ASTNonTerminal {
           name = "Modifier";
           iteration = 2;
           plusKeywords = false;
         }
-        @interface:Terminal(61,26):ASTTerminal {
+        @interface_Terminal(61,26):ASTTerminal {
           iteration = 0;
           name = "interface";
         }
-        @Name:NonTerminal(61,38):ASTNonTerminal {
+        @Name_NonTerminal(61,38):ASTNonTerminal {
           name = "Name";
           iteration = 0;
           plusKeywords = false;
         }
-        @:Block(62,4):ASTBlock {
+        @_Block(62,4):ASTBlock {
           iteration = 2;
-          @:Alt(62,6):ASTAlt {
+          @_Alt(62,6):ASTAlt {
             rightAssoc = false;
-            @extends:Terminal(62,6):ASTTerminal {
+            @extends_Terminal(62,6):ASTTerminal {
               iteration = 0;
               name = "extends";
             }
-            @:Block(1,0)!3!:ASTBlock {
+            @_Block(1,0!3):ASTBlock {
               iteration = 0;
-              @:Alt(1,1)!3!:ASTAlt {
+              @_Alt(1,1!3):ASTAlt {
                 rightAssoc = false;
-                @ReferenceType:NonTerminal(1,1)!2!:ASTNonTerminal {
+                @ReferenceType_NonTerminal(1,1!2):ASTNonTerminal {
                   usageName = "interfaces";
                   name = "ReferenceType";
                   iteration = 0;
                   plusKeywords = false;
                 }
-                @:Block(1,28)!2!:ASTBlock {
+                @_Block(1,28!2):ASTBlock {
                   iteration = 3;
-                  @:Alt(1,29)!2!:ASTAlt {
+                  @_Alt(1,29!2):ASTAlt {
                     rightAssoc = false;
-                    @COMMA:Terminal(1,29)!2!:ASTTerminal {
+                    @COMMA_Terminal(1,29!2):ASTTerminal {
                       iteration = 0;
                       name = ",";
                     }
-                    @ReferenceType:NonTerminal(1,33)!2!:ASTNonTerminal {
+                    @ReferenceType_NonTerminal(1,33!2):ASTNonTerminal {
                       usageName = "interfaces";
                       name = "ReferenceType";
                       iteration = 0;
@@ -317,28 +317,28 @@ astobjectdiagram CD4Analysis {
             }
           }
         }
-        @:Block(62,54):ASTBlock {
+        @_Block(62,54):ASTBlock {
           iteration = 0;
-          @:Alt(62,56):ASTAlt {
+          @_Alt(62,56):ASTAlt {
             rightAssoc = false;
-            @LCURLY:Terminal(62,56):ASTTerminal {
+            @LCURLY_Terminal(62,56):ASTTerminal {
               iteration = 0;
               name = "{";
             }
-            @:Block(63,6):ASTBlock {
+            @_Block(63,6):ASTBlock {
               iteration = 3;
-              @:Alt(63,8):ASTAlt {
+              @_Alt(63,8):ASTAlt {
                 rightAssoc = false;
-                @CDAttribute:NonTerminal(63,8):ASTNonTerminal {
+                @CDAttribute_NonTerminal(63,8):ASTNonTerminal {
                   usageName = "cDAttributes";
                   name = "CDAttribute";
                   iteration = 0;
                   plusKeywords = false;
                 }
               }
-              @:Alt(64,8):ASTAlt {
+              @_Alt(64,8):ASTAlt {
                 rightAssoc = false;
-                @CDMethod:NonTerminal(64,8):ASTNonTerminal {
+                @CDMethod_NonTerminal(64,8):ASTNonTerminal {
                   usageName = "cDMethods";
                   name = "CDMethod";
                   iteration = 0;
@@ -346,14 +346,14 @@ astobjectdiagram CD4Analysis {
                 }
               }
             }
-            @RCURLY:Terminal(65,6):ASTTerminal {
+            @RCURLY_Terminal(65,6):ASTTerminal {
               iteration = 0;
               name = "}";
             }
           }
-          @:Alt(66,6):ASTAlt {
+          @_Alt(66,6):ASTAlt {
             rightAssoc = false;
-            @SEMI:Terminal(66,6):ASTTerminal {
+            @SEMI_Terminal(66,6):ASTTerminal {
               iteration = 0;
               name = ";";
             }
@@ -361,51 +361,51 @@ astobjectdiagram CD4Analysis {
         }
       }
     }
-    @CDEnum:ClassProd(78,2):ASTClassProd {
+    @CDEnum_ClassProd(78,2):ASTClassProd {
       name = "CDEnum";
-      @:Alt(78,11):ASTAlt {
+      @_Alt(78,11):ASTAlt {
         rightAssoc = false;
-        @Modifier:NonTerminal(78,11):ASTNonTerminal {
+        @Modifier_NonTerminal(78,11):ASTNonTerminal {
           name = "Modifier";
           iteration = 2;
           plusKeywords = false;
         }
-        @enum:Terminal(78,21):ASTTerminal {
+        @enum_Terminal(78,21):ASTTerminal {
           iteration = 0;
           name = "enum";
         }
-        @Name:NonTerminal(78,28):ASTNonTerminal {
+        @Name_NonTerminal(78,28):ASTNonTerminal {
           name = "Name";
           iteration = 0;
           plusKeywords = false;
         }
-        @:Block(79,4):ASTBlock {
+        @_Block(79,4):ASTBlock {
           iteration = 2;
-          @:Alt(79,6):ASTAlt {
+          @_Alt(79,6):ASTAlt {
             rightAssoc = false;
-            @implements:Terminal(79,6):ASTTerminal {
+            @implements_Terminal(79,6):ASTTerminal {
               iteration = 0;
               name = "implements";
             }
-            @:Block(1,0)!4!:ASTBlock {
+            @_Block(1,0!4):ASTBlock {
               iteration = 0;
-              @:Alt(1,1)!4!:ASTAlt {
+              @_Alt(1,1!4):ASTAlt {
                 rightAssoc = false;
-                @ReferenceType:NonTerminal(1,1)!3!:ASTNonTerminal {
+                @ReferenceType_NonTerminal(1,1!3):ASTNonTerminal {
                   usageName = "interfaces";
                   name = "ReferenceType";
                   iteration = 0;
                   plusKeywords = false;
                 }
-                @:Block(1,28)!3!:ASTBlock {
+                @_Block(1,28!3):ASTBlock {
                   iteration = 3;
-                  @:Alt(1,29)!3!:ASTAlt {
+                  @_Alt(1,29!3):ASTAlt {
                     rightAssoc = false;
-                    @COMMA:Terminal(1,29)!3!:ASTTerminal {
+                    @COMMA_Terminal(1,29!3):ASTTerminal {
                       iteration = 0;
                       name = ",";
                     }
-                    @ReferenceType:NonTerminal(1,33)!3!:ASTNonTerminal {
+                    @ReferenceType_NonTerminal(1,33!3):ASTNonTerminal {
                       usageName = "interfaces";
                       name = "ReferenceType";
                       iteration = 0;
@@ -417,37 +417,37 @@ astobjectdiagram CD4Analysis {
             }
           }
         }
-        @:Block(80,4):ASTBlock {
+        @_Block(80,4):ASTBlock {
           iteration = 0;
-          @:Alt(80,6):ASTAlt {
+          @_Alt(80,6):ASTAlt {
             rightAssoc = false;
-            @LCURLY:Terminal(80,6):ASTTerminal {
+            @LCURLY_Terminal(80,6):ASTTerminal {
               iteration = 0;
               name = "{";
             }
-            @:Block(80,10):ASTBlock {
+            @_Block(80,10):ASTBlock {
               iteration = 2;
-              @:Alt(80,12):ASTAlt {
+              @_Alt(80,12):ASTAlt {
                 rightAssoc = false;
-                @:Block(1,0)!5!:ASTBlock {
+                @_Block(1,0!5):ASTBlock {
                   iteration = 0;
-                  @:Alt(1,2):ASTAlt {
+                  @_Alt(1,2):ASTAlt {
                     rightAssoc = false;
-                    @CDEnumConstant:NonTerminal(1,2):ASTNonTerminal {
+                    @CDEnumConstant_NonTerminal(1,2):ASTNonTerminal {
                       usageName = "cDEnumConstants";
                       name = "CDEnumConstant";
                       iteration = 0;
                       plusKeywords = false;
                     }
-                    @:Block(1,18):ASTBlock {
+                    @_Block(1,18):ASTBlock {
                       iteration = 3;
-                      @:Alt(1,19):ASTAlt {
+                      @_Alt(1,19):ASTAlt {
                         rightAssoc = false;
-                        @COMMA:Terminal(1,19):ASTTerminal {
+                        @COMMA_Terminal(1,19):ASTTerminal {
                           iteration = 0;
                           name = ",";
                         }
-                        @CDEnumConstant:NonTerminal(1,24):ASTNonTerminal {
+                        @CDEnumConstant_NonTerminal(1,24):ASTNonTerminal {
                           usageName = "cDEnumConstants";
                           name = "CDEnumConstant";
                           iteration = 0;
@@ -457,20 +457,20 @@ astobjectdiagram CD4Analysis {
                     }
                   }
                 }
-                @:Block(81,4):ASTBlock {
+                @_Block(81,4):ASTBlock {
                   iteration = 3;
-                  @:Alt(81,6):ASTAlt {
+                  @_Alt(81,6):ASTAlt {
                     rightAssoc = false;
-                    @CDConstructor:NonTerminal(81,6):ASTNonTerminal {
+                    @CDConstructor_NonTerminal(81,6):ASTNonTerminal {
                       usageName = "cDConstructors";
                       name = "CDConstructor";
                       iteration = 0;
                       plusKeywords = false;
                     }
                   }
-                  @:Alt(81,22):ASTAlt {
+                  @_Alt(81,22):ASTAlt {
                     rightAssoc = false;
-                    @CDMethod:NonTerminal(81,22):ASTNonTerminal {
+                    @CDMethod_NonTerminal(81,22):ASTNonTerminal {
                       usageName = "cDMethods";
                       name = "CDMethod";
                       iteration = 0;
@@ -478,20 +478,20 @@ astobjectdiagram CD4Analysis {
                     }
                   }
                 }
-                @SEMI:Terminal(82,4):ASTTerminal {
+                @SEMI_Terminal(82,4):ASTTerminal {
                   iteration = 0;
                   name = ";";
                 }
               }
             }
-            @RCURLY:Terminal(82,10):ASTTerminal {
+            @RCURLY_Terminal(82,10):ASTTerminal {
               iteration = 0;
               name = "}";
             }
           }
-          @:Alt(83,6):ASTAlt {
+          @_Alt(83,6):ASTAlt {
             rightAssoc = false;
-            @SEMI:Terminal(83,6):ASTTerminal {
+            @SEMI_Terminal(83,6):ASTTerminal {
               iteration = 0;
               name = ";";
             }
@@ -499,82 +499,82 @@ astobjectdiagram CD4Analysis {
         }
       }
     }
-    @CDAttribute:ClassProd(92,2):ASTClassProd {
+    @CDAttribute_ClassProd(92,2):ASTClassProd {
       name = "CDAttribute";
-      @:Alt(92,16):ASTAlt {
+      @_Alt(92,16):ASTAlt {
         rightAssoc = false;
-        @Modifier:NonTerminal(92,16):ASTNonTerminal {
+        @Modifier_NonTerminal(92,16):ASTNonTerminal {
           name = "Modifier";
           iteration = 2;
           plusKeywords = false;
         }
-        @Type:NonTerminal(92,27):ASTNonTerminal {
+        @Type_NonTerminal(92,27):ASTNonTerminal {
           name = "Type";
           iteration = 0;
           plusKeywords = false;
         }
-        @Name:NonTerminal(92,32):ASTNonTerminal {
+        @Name_NonTerminal(92,32):ASTNonTerminal {
           name = "Name";
           iteration = 0;
           plusKeywords = false;
         }
-        @:Block(92,37):ASTBlock {
+        @_Block(92,37):ASTBlock {
           iteration = 2;
-          @:Alt(92,38):ASTAlt {
+          @_Alt(92,38):ASTAlt {
             rightAssoc = false;
-            @EQUALS:Terminal(92,38):ASTTerminal {
+            @EQUALS_Terminal(92,38):ASTTerminal {
               iteration = 0;
               name = "=";
             }
-            @Value:NonTerminal(92,42):ASTNonTerminal {
+            @Value_NonTerminal(92,42):ASTNonTerminal {
               name = "Value";
               iteration = 0;
               plusKeywords = false;
             }
           }
         }
-        @SEMI:Terminal(92,50):ASTTerminal {
+        @SEMI_Terminal(92,50):ASTTerminal {
           iteration = 0;
           name = ";";
         }
       }
     }
-    @CDEnumConstant:ClassProd(99,2):ASTClassProd {
+    @CDEnumConstant_ClassProd(99,2):ASTClassProd {
       name = "CDEnumConstant";
-      @:Alt(99,19):ASTAlt {
+      @_Alt(99,19):ASTAlt {
         rightAssoc = false;
-        @Name:NonTerminal(99,19):ASTNonTerminal {
+        @Name_NonTerminal(99,19):ASTNonTerminal {
           name = "Name";
           iteration = 0;
           plusKeywords = false;
         }
-        @:Block(99,24):ASTBlock {
+        @_Block(99,24):ASTBlock {
           iteration = 2;
-          @:Alt(99,26):ASTAlt {
+          @_Alt(99,26):ASTAlt {
             rightAssoc = false;
-            @LPAREN:Terminal(99,26):ASTTerminal {
+            @LPAREN_Terminal(99,26):ASTTerminal {
               iteration = 0;
               name = "(";
             }
-            @:Block(1,0)!6!:ASTBlock {
+            @_Block(1,0!6):ASTBlock {
               iteration = 0;
-              @:Alt(1,2)!2!:ASTAlt {
+              @_Alt(1,2!2):ASTAlt {
                 rightAssoc = false;
-                @CDEnumParameter:NonTerminal(1,2):ASTNonTerminal {
+                @CDEnumParameter_NonTerminal(1,2):ASTNonTerminal {
                   usageName = "cDEnumParameters";
                   name = "CDEnumParameter";
                   iteration = 0;
                   plusKeywords = false;
                 }
-                @:Block(1,19):ASTBlock {
+                @_Block(1,19):ASTBlock {
                   iteration = 3;
-                  @:Alt(1,20):ASTAlt {
+                  @_Alt(1,20):ASTAlt {
                     rightAssoc = false;
-                    @COMMA:Terminal(1,20):ASTTerminal {
+                    @COMMA_Terminal(1,20):ASTTerminal {
                       iteration = 0;
                       name = ",";
                     }
-                    @CDEnumParameter:NonTerminal(1,25):ASTNonTerminal {
+                    @CDEnumParameter_NonTerminal(1,25):ASTNonTerminal {
                       usageName = "cDEnumParameters";
                       name = "CDEnumParameter";
                       iteration = 0;
@@ -584,7 +584,7 @@ astobjectdiagram CD4Analysis {
                 }
               }
             }
-            @RPAREN:Terminal(99,56):ASTTerminal {
+            @RPAREN_Terminal(99,56):ASTTerminal {
               iteration = 0;
               name = ")";
             }
@@ -592,54 +592,54 @@ astobjectdiagram CD4Analysis {
         }
       }
     }
-    @CDEnumParameter:ClassProd(105,2):ASTClassProd {
+    @CDEnumParameter_ClassProd(105,2):ASTClassProd {
       name = "CDEnumParameter";
-      @:Alt(105,20):ASTAlt {
+      @_Alt(105,20):ASTAlt {
         rightAssoc = false;
-        @Value:NonTerminal(105,20):ASTNonTerminal {
+        @Value_NonTerminal(105,20):ASTNonTerminal {
           name = "Value";
           iteration = 0;
           plusKeywords = false;
         }
       }
     }
-    @CDConstructor:ClassProd(113,2):ASTClassProd {
+    @CDConstructor_ClassProd(113,2):ASTClassProd {
       name = "CDConstructor";
-      @:Alt(114,4):ASTAlt {
+      @_Alt(114,4):ASTAlt {
         rightAssoc = false;
-        @Modifier:NonTerminal(114,4):ASTNonTerminal {
+        @Modifier_NonTerminal(114,4):ASTNonTerminal {
           name = "Modifier";
           iteration = 0;
           plusKeywords = false;
         }
-        @Name:NonTerminal(115,4):ASTNonTerminal {
+        @Name_NonTerminal(115,4):ASTNonTerminal {
           name = "Name";
           iteration = 0;
           plusKeywords = false;
         }
-        @LPAREN:Terminal(115,9):ASTTerminal {
+        @LPAREN_Terminal(115,9):ASTTerminal {
           iteration = 0;
           name = "(";
         }
-        @:Block(1,0)!7!:ASTBlock {
+        @_Block(1,0!7):ASTBlock {
           iteration = 2;
-          @:Alt(1,2)!3!:ASTAlt {
+          @_Alt(1,2!3):ASTAlt {
             rightAssoc = false;
-            @CDParameter:NonTerminal(1,2):ASTNonTerminal {
+            @CDParameter_NonTerminal(1,2):ASTNonTerminal {
               usageName = "cDParameters";
               name = "CDParameter";
               iteration = 0;
               plusKeywords = false;
             }
-            @:Block(1,15):ASTBlock {
+            @_Block(1,15):ASTBlock {
               iteration = 3;
-              @:Alt(1,16):ASTAlt {
+              @_Alt(1,16):ASTAlt {
                 rightAssoc = false;
-                @COMMA:Terminal(1,16):ASTTerminal {
+                @COMMA_Terminal(1,16):ASTTerminal {
                   iteration = 0;
                   name = ",";
                 }
-                @CDParameter:NonTerminal(1,21):ASTNonTerminal {
+                @CDParameter_NonTerminal(1,21):ASTNonTerminal {
                   usageName = "cDParameters";
                   name = "CDParameter";
                   iteration = 0;
@@ -649,37 +649,37 @@ astobjectdiagram CD4Analysis {
             }
           }
         }
-        @RPAREN:Terminal(115,35):ASTTerminal {
+        @RPAREN_Terminal(115,35):ASTTerminal {
           iteration = 0;
           name = ")";
         }
-        @:Block(116,4):ASTBlock {
+        @_Block(116,4):ASTBlock {
           iteration = 2;
-          @:Alt(116,5):ASTAlt {
+          @_Alt(116,5):ASTAlt {
             rightAssoc = false;
-            @throws:Terminal(116,5):ASTTerminal {
+            @throws_Terminal(116,5):ASTTerminal {
               iteration = 0;
               name = "throws";
             }
-            @:Block(1,0)!8!:ASTBlock {
+            @_Block(1,0!8):ASTBlock {
               iteration = 0;
-              @:Alt(1,1)!5!:ASTAlt {
+              @_Alt(1,1!5):ASTAlt {
                 rightAssoc = false;
-                @QualifiedName:NonTerminal(1,1):ASTNonTerminal {
+                @QualifiedName_NonTerminal(1,1):ASTNonTerminal {
                   usageName = "exceptions";
                   name = "QualifiedName";
                   iteration = 0;
                   plusKeywords = false;
                 }
-                @:Block(1,28)!4!:ASTBlock {
+                @_Block(1,28!4):ASTBlock {
                   iteration = 3;
-                  @:Alt(1,29)!4!:ASTAlt {
+                  @_Alt(1,29!4):ASTAlt {
                     rightAssoc = false;
-                    @COMMA:Terminal(1,29)!4!:ASTTerminal {
+                    @COMMA_Terminal(1,29!4):ASTTerminal {
                       iteration = 0;
                       name = ",";
                     }
-                    @QualifiedName:NonTerminal(1,33):ASTNonTerminal {
+                    @QualifiedName_NonTerminal(1,33):ASTNonTerminal {
                       usageName = "exceptions";
                       name = "QualifiedName";
                       iteration = 0;
@@ -691,54 +691,54 @@ astobjectdiagram CD4Analysis {
             }
           }
         }
-        @SEMI:Terminal(117,4):ASTTerminal {
+        @SEMI_Terminal(117,4):ASTTerminal {
           iteration = 0;
           name = ";";
         }
       }
     }
-    @CDMethod:ClassProd(127,2):ASTClassProd {
+    @CDMethod_ClassProd(127,2):ASTClassProd {
       name = "CDMethod";
-      @:Alt(128,4):ASTAlt {
+      @_Alt(128,4):ASTAlt {
         rightAssoc = false;
-        @Modifier:NonTerminal(128,4):ASTNonTerminal {
+        @Modifier_NonTerminal(128,4):ASTNonTerminal {
           name = "Modifier";
           iteration = 0;
           plusKeywords = false;
         }
-        @ReturnType:NonTerminal(129,4):ASTNonTerminal {
+        @ReturnType_NonTerminal(129,4):ASTNonTerminal {
           name = "ReturnType";
           iteration = 0;
           plusKeywords = false;
         }
-        @Name:NonTerminal(130,4):ASTNonTerminal {
+        @Name_NonTerminal(130,4):ASTNonTerminal {
           name = "Name";
           iteration = 0;
           plusKeywords = false;
         }
-        @LPAREN:Terminal(130,9):ASTTerminal {
+        @LPAREN_Terminal(130,9):ASTTerminal {
           iteration = 0;
           name = "(";
         }
-        @:Block(1,0)!9!:ASTBlock {
+        @_Block(1,0!9):ASTBlock {
           iteration = 2;
-          @:Alt(1,2)!4!:ASTAlt {
+          @_Alt(1,2!4):ASTAlt {
             rightAssoc = false;
-            @CDParameter:NonTerminal(1,2)!2!:ASTNonTerminal {
+            @CDParameter_NonTerminal(1,2!2):ASTNonTerminal {
               usageName = "cDParameters";
               name = "CDParameter";
               iteration = 0;
               plusKeywords = false;
             }
-            @:Block(1,15)!2!:ASTBlock {
+            @_Block(1,15!2):ASTBlock {
               iteration = 3;
-              @:Alt(1,16)!2!:ASTAlt {
+              @_Alt(1,16!2):ASTAlt {
                 rightAssoc = false;
-                @COMMA:Terminal(1,16)!2!:ASTTerminal {
+                @COMMA_Terminal(1,16!2):ASTTerminal {
                   iteration = 0;
                   name = ",";
                 }
-                @CDParameter:NonTerminal(1,21)!2!:ASTNonTerminal {
+                @CDParameter_NonTerminal(1,21!2):ASTNonTerminal {
                   usageName = "cDParameters";
                   name = "CDParameter";
                   iteration = 0;
@@ -748,37 +748,37 @@ astobjectdiagram CD4Analysis {
             }
           }
         }
-        @RPAREN:Terminal(130,35):ASTTerminal {
+        @RPAREN_Terminal(130,35):ASTTerminal {
           iteration = 0;
           name = ")";
         }
-        @:Block(131,4):ASTBlock {
+        @_Block(131,4):ASTBlock {
           iteration = 2;
-          @:Alt(131,5):ASTAlt {
+          @_Alt(131,5):ASTAlt {
             rightAssoc = false;
-            @throws:Terminal(131,5):ASTTerminal {
+            @throws_Terminal(131,5):ASTTerminal {
               iteration = 0;
               name = "throws";
             }
-            @:Block(1,0)!10!:ASTBlock {
+            @_Block(1,0!10):ASTBlock {
               iteration = 0;
-              @:Alt(1,1)!6!:ASTAlt {
+              @_Alt(1,1!6):ASTAlt {
                 rightAssoc = false;
-                @QualifiedName:NonTerminal(1,1)!2!:ASTNonTerminal {
+                @QualifiedName_NonTerminal(1,1!2):ASTNonTerminal {
                   usageName = "exceptions";
                   name = "QualifiedName";
                   iteration = 0;
                   plusKeywords = false;
                 }
-                @:Block(1,28)!5!:ASTBlock {
+                @_Block(1,28!5):ASTBlock {
                   iteration = 3;
-                  @:Alt(1,29)!5!:ASTAlt {
+                  @_Alt(1,29!5):ASTAlt {
                     rightAssoc = false;
-                    @COMMA:Terminal(1,29)!5!:ASTTerminal {
+                    @COMMA_Terminal(1,29!5):ASTTerminal {
                       iteration = 0;
                       name = ",";
                     }
-                    @QualifiedName:NonTerminal(1,33)!2!:ASTNonTerminal {
+                    @QualifiedName_NonTerminal(1,33!2):ASTNonTerminal {
                       usageName = "exceptions";
                       name = "QualifiedName";
                       iteration = 0;
@@ -790,368 +790,368 @@ astobjectdiagram CD4Analysis {
             }
           }
         }
-        @SEMI:Terminal(132,4):ASTTerminal {
+        @SEMI_Terminal(132,4):ASTTerminal {
           iteration = 0;
           name = ";";
         }
       }
     }
-    @CDParameter:ClassProd(140,2):ASTClassProd {
+    @CDParameter_ClassProd(140,2):ASTClassProd {
       name = "CDParameter";
-      @:Alt(141,2):ASTAlt {
+      @_Alt(141,2):ASTAlt {
         rightAssoc = false;
-        @Type:NonTerminal(141,2):ASTNonTerminal {
+        @Type_NonTerminal(141,2):ASTNonTerminal {
           name = "Type";
           iteration = 0;
           plusKeywords = false;
         }
-        @:Block(141,7):ASTBlock {
+        @_Block(141,7):ASTBlock {
           iteration = 2;
-          @:Alt(141,8):ASTAlt {
+          @_Alt(141,8):ASTAlt {
             rightAssoc = false;
-            @Ellipsis:ConstantGroup(141,8):ASTConstantGroup {
+            @Ellipsis_ConstantGroup(141,8):ASTConstantGroup {
               usageName = "Ellipsis";
               iteration = 0;
-              @POINTPOINTPOINT:Constant(141,18):ASTConstant {
+              @POINTPOINTPOINT_Constant(141,18):ASTConstant {
                 name = "...";
               }
             }
           }
         }
-        @Name:NonTerminal(141,27):ASTNonTerminal {
+        @Name_NonTerminal(141,27):ASTNonTerminal {
           name = "Name";
           iteration = 0;
           plusKeywords = false;
         }
       }
     }
-    @CDAssociation:ClassProd(177,2):ASTClassProd {
+    @CDAssociation_ClassProd(177,2):ASTClassProd {
       name = "CDAssociation";
-      @:Alt(177,18):ASTAlt {
+      @_Alt(177,18):ASTAlt {
         rightAssoc = false;
-        @Stereotype:NonTerminal(177,18):ASTNonTerminal {
+        @Stereotype_NonTerminal(177,18):ASTNonTerminal {
           name = "Stereotype";
           iteration = 2;
           plusKeywords = false;
         }
-        @:Block(178,4):ASTBlock {
+        @_Block(178,4):ASTBlock {
           iteration = 0;
-          @:Alt(178,5):ASTAlt {
+          @_Alt(178,5):ASTAlt {
             rightAssoc = false;
-            @:ConstantGroup(178,5):ASTConstantGroup {
+            @_ConstantGroup(178,5):ASTConstantGroup {
               iteration = 0;
-              @association:Constant(178,6):ASTConstant {
+              @association_Constant(178,6):ASTConstant {
                 name = "association";
               }
             }
           }
-          @:Alt(178,23):ASTAlt {
+          @_Alt(178,23):ASTAlt {
             rightAssoc = false;
-            @:ConstantGroup(178,23):ASTConstantGroup {
+            @_ConstantGroup(178,23):ASTConstantGroup {
               iteration = 0;
-              @composition:Constant(178,24):ASTConstant {
+              @composition_Constant(178,24):ASTConstant {
                 name = "composition";
               }
             }
           }
         }
-        @:Block(179,4):ASTBlock {
+        @_Block(179,4):ASTBlock {
           iteration = 2;
-          @:Alt(179,5):ASTAlt {
+          @_Alt(179,5):ASTAlt {
             rightAssoc = false;
-            @:ConstantGroup(179,5):ASTConstantGroup {
+            @_ConstantGroup(179,5):ASTConstantGroup {
               iteration = 0;
-              @SLASH:Constant(179,6):ASTConstant {
-                humanName = "Derived";
+              @SLASH_Constant(179,6):ASTConstant {
+                humanName = Derived;
                 name = "/";
               }
             }
           }
         }
-        @Name:NonTerminal(179,22):ASTNonTerminal {
+        @Name_NonTerminal(179,22):ASTNonTerminal {
           name = "Name";
           iteration = 2;
           plusKeywords = false;
         }
-        @Modifier:NonTerminal(180,4):ASTNonTerminal {
+        @Modifier_NonTerminal(180,4):ASTNonTerminal {
           usageName = "leftModifier";
           name = "Modifier";
           iteration = 2;
           plusKeywords = false;
         }
-        @Cardinality:NonTerminal(181,4):ASTNonTerminal {
+        @Cardinality_NonTerminal(181,4):ASTNonTerminal {
           usageName = "leftCardinality";
           name = "Cardinality";
           iteration = 2;
           plusKeywords = false;
         }
-        @QualifiedName:NonTerminal(182,4):ASTNonTerminal {
+        @QualifiedName_NonTerminal(182,4):ASTNonTerminal {
           usageName = "leftReferenceName";
           name = "QualifiedName";
           iteration = 0;
           plusKeywords = false;
         }
-        @:Block(183,4):ASTBlock {
+        @_Block(183,4):ASTBlock {
           iteration = 2;
-          @:Alt(183,5):ASTAlt {
+          @_Alt(183,5):ASTAlt {
             rightAssoc = false;
-            @LBRACK:Terminal(183,5):ASTTerminal {
+            @LBRACK_Terminal(183,5):ASTTerminal {
               iteration = 0;
               name = "[";
             }
-            @CDQualifier:NonTerminal(183,9):ASTNonTerminal {
+            @CDQualifier_NonTerminal(183,9):ASTNonTerminal {
               usageName = "leftQualifier";
               name = "CDQualifier";
               iteration = 0;
               plusKeywords = false;
             }
-            @RBRACK:Terminal(183,35):ASTTerminal {
+            @RBRACK_Terminal(183,35):ASTTerminal {
               iteration = 0;
               name = "]";
             }
           }
         }
-        @:Block(184,4):ASTBlock {
+        @_Block(184,4):ASTBlock {
           iteration = 2;
-          @:Alt(184,5):ASTAlt {
+          @_Alt(184,5):ASTAlt {
             rightAssoc = false;
-            @LPAREN:Terminal(184,5):ASTTerminal {
+            @LPAREN_Terminal(184,5):ASTTerminal {
               iteration = 0;
               name = "(";
             }
-            @Name:NonTerminal(184,9):ASTNonTerminal {
+            @Name_NonTerminal(184,9):ASTNonTerminal {
               usageName = "leftRole";
               name = "Name";
               iteration = 0;
               plusKeywords = false;
             }
-            @RPAREN:Terminal(184,23):ASTTerminal {
+            @RPAREN_Terminal(184,23):ASTTerminal {
               iteration = 0;
               name = ")";
             }
           }
         }
-        @:Block(185,4):ASTBlock {
+        @_Block(185,4):ASTBlock {
           iteration = 0;
-          @:Alt(185,8):ASTAlt {
+          @_Alt(185,8):ASTAlt {
             rightAssoc = false;
-            @leftToRight:ConstantGroup(185,8):ASTConstantGroup {
+            @leftToRight_ConstantGroup(185,8):ASTConstantGroup {
               usageName = "leftToRight";
               iteration = 0;
-              @MINUSGT:Constant(185,21):ASTConstant {
+              @MINUSGT_Constant(185,21):ASTConstant {
                 name = "->";
               }
             }
           }
-          @:Alt(186,8):ASTAlt {
+          @_Alt(186,8):ASTAlt {
             rightAssoc = false;
-            @rightToLeft:ConstantGroup(186,8):ASTConstantGroup {
+            @rightToLeft_ConstantGroup(186,8):ASTConstantGroup {
               usageName = "rightToLeft";
               iteration = 0;
-              @LTMINUS:Constant(186,21):ASTConstant {
+              @LTMINUS_Constant(186,21):ASTConstant {
                 name = "<-";
               }
             }
           }
-          @:Alt(187,8):ASTAlt {
+          @_Alt(187,8):ASTAlt {
             rightAssoc = false;
-            @bidirectional:ConstantGroup(187,8):ASTConstantGroup {
+            @bidirectional_ConstantGroup(187,8):ASTConstantGroup {
               usageName = "bidirectional";
               iteration = 0;
-              @LTMINUSGT:Constant(187,23):ASTConstant {
+              @LTMINUSGT_Constant(187,23):ASTConstant {
                 name = "<->";
               }
             }
           }
-          @:Alt(188,8):ASTAlt {
+          @_Alt(188,8):ASTAlt {
             rightAssoc = false;
-            @unspecified:ConstantGroup(188,8):ASTConstantGroup {
+            @unspecified_ConstantGroup(188,8):ASTConstantGroup {
               usageName = "unspecified";
               iteration = 0;
-              @MINUSMINUS:Constant(188,21):ASTConstant {
+              @--_Constant(188,21):ASTConstant {
                 name = "--";
               }
             }
           }
         }
-        @:Block(189,4):ASTBlock {
+        @_Block(189,4):ASTBlock {
           iteration = 2;
-          @:Alt(189,5):ASTAlt {
+          @_Alt(189,5):ASTAlt {
             rightAssoc = false;
-            @LPAREN:Terminal(189,5):ASTTerminal {
+            @LPAREN_Terminal(189,5):ASTTerminal {
               iteration = 0;
               name = "(";
             }
-            @Name:NonTerminal(189,9):ASTNonTerminal {
+            @Name_NonTerminal(189,9):ASTNonTerminal {
               usageName = "rightRole";
               name = "Name";
               iteration = 0;
               plusKeywords = false;
             }
-            @RPAREN:Terminal(189,24):ASTTerminal {
+            @RPAREN_Terminal(189,24):ASTTerminal {
               iteration = 0;
               name = ")";
             }
           }
         }
-        @:Block(190,4):ASTBlock {
+        @_Block(190,4):ASTBlock {
           iteration = 2;
-          @:Alt(190,5):ASTAlt {
+          @_Alt(190,5):ASTAlt {
             rightAssoc = false;
-            @LBRACK:Terminal(190,5):ASTTerminal {
+            @LBRACK_Terminal(190,5):ASTTerminal {
               iteration = 0;
               name = "[";
             }
-            @CDQualifier:NonTerminal(190,9):ASTNonTerminal {
+            @CDQualifier_NonTerminal(190,9):ASTNonTerminal {
               usageName = "rightQualifier";
               name = "CDQualifier";
               iteration = 0;
               plusKeywords = false;
             }
-            @RBRACK:Terminal(190,36):ASTTerminal {
+            @RBRACK_Terminal(190,36):ASTTerminal {
               iteration = 0;
               name = "]";
             }
           }
         }
-        @QualifiedName:NonTerminal(191,4):ASTNonTerminal {
+        @QualifiedName_NonTerminal(191,4):ASTNonTerminal {
           usageName = "rightReferenceName";
           name = "QualifiedName";
           iteration = 0;
           plusKeywords = false;
         }
-        @Cardinality:NonTerminal(192,4):ASTNonTerminal {
+        @Cardinality_NonTerminal(192,4):ASTNonTerminal {
           usageName = "rightCardinality";
           name = "Cardinality";
           iteration = 2;
           plusKeywords = false;
         }
-        @Modifier:NonTerminal(193,4):ASTNonTerminal {
+        @Modifier_NonTerminal(193,4):ASTNonTerminal {
           usageName = "rightModifier";
           name = "Modifier";
           iteration = 2;
           plusKeywords = false;
         }
-        @SEMI:Terminal(193,28):ASTTerminal {
+        @SEMI_Terminal(193,28):ASTTerminal {
           iteration = 0;
           name = ";";
         }
       }
     }
-    @Modifier:ClassProd(196,2):ASTClassProd {
+    @Modifier_ClassProd(196,2):ASTClassProd {
       name = "Modifier";
-      @:Alt(196,13):ASTAlt {
+      @_Alt(196,13):ASTAlt {
         rightAssoc = false;
-        @Stereotype:NonTerminal(196,13):ASTNonTerminal {
+        @Stereotype_NonTerminal(196,13):ASTNonTerminal {
           name = "Stereotype";
           iteration = 2;
           plusKeywords = false;
         }
-        @:Block(197,4):ASTBlock {
+        @_Block(197,4):ASTBlock {
           iteration = 3;
-          @:Alt(197,5):ASTAlt {
+          @_Alt(197,5):ASTAlt {
             rightAssoc = false;
-            @:ConstantGroup(197,5):ASTConstantGroup {
+            @_ConstantGroup(197,5):ASTConstantGroup {
               iteration = 0;
-              @abstract:Constant(197,6):ASTConstant {
+              @abstract_Constant(197,6):ASTConstant {
                 name = "abstract";
               }
             }
           }
-          @:Alt(198,8):ASTAlt {
+          @_Alt(198,8):ASTAlt {
             rightAssoc = false;
-            @:ConstantGroup(198,8):ASTConstantGroup {
+            @_ConstantGroup(198,8):ASTConstantGroup {
               iteration = 0;
-              @final:Constant(198,9):ASTConstant {
+              @final_Constant(198,9):ASTConstant {
                 name = "final";
               }
             }
           }
-          @:Alt(199,8):ASTAlt {
+          @_Alt(199,8):ASTAlt {
             rightAssoc = false;
-            @:ConstantGroup(199,8):ASTConstantGroup {
+            @_ConstantGroup(199,8):ASTConstantGroup {
               iteration = 0;
-              @static:Constant(199,9):ASTConstant {
+              @static_Constant(199,9):ASTConstant {
                 name = "static";
               }
             }
           }
-          @:Alt(200,8):ASTAlt {
+          @_Alt(200,8):ASTAlt {
             rightAssoc = false;
-            @Private:ConstantGroup(200,8):ASTConstantGroup {
+            @Private_ConstantGroup(200,8):ASTConstantGroup {
               usageName = "Private";
               iteration = 0;
-              @private:Constant(200,17):ASTConstant {
+              @private_Constant(200,17):ASTConstant {
                 name = "private";
               }
             }
           }
-          @:Alt(200,30):ASTAlt {
+          @_Alt(200,30):ASTAlt {
             rightAssoc = false;
-            @:ConstantGroup(200,30):ASTConstantGroup {
+            @_ConstantGroup(200,30):ASTConstantGroup {
               iteration = 0;
-              @MINUS:Constant(200,31):ASTConstant {
-                humanName = "Private";
+              @-_Constant(200,31):ASTConstant {
+                humanName = Private;
                 name = "-";
               }
             }
           }
-          @:Alt(201,8):ASTAlt {
+          @_Alt(201,8):ASTAlt {
             rightAssoc = false;
-            @Protected:ConstantGroup(201,8):ASTConstantGroup {
+            @Protected_ConstantGroup(201,8):ASTConstantGroup {
               usageName = "Protected";
               iteration = 0;
-              @protected:Constant(201,19):ASTConstant {
+              @protected_Constant(201,19):ASTConstant {
                 name = "protected";
               }
             }
           }
-          @:Alt(201,34):ASTAlt {
+          @_Alt(201,34):ASTAlt {
             rightAssoc = false;
-            @:ConstantGroup(201,34):ASTConstantGroup {
+            @_ConstantGroup(201,34):ASTConstantGroup {
               iteration = 0;
-              @HASH:Constant(201,35):ASTConstant {
-                humanName = "Protected";
+              @HASH_Constant(201,35):ASTConstant {
+                humanName = Protected;
                 name = "#";
               }
             }
           }
-          @:Alt(202,8):ASTAlt {
+          @_Alt(202,8):ASTAlt {
             rightAssoc = false;
-            @Public:ConstantGroup(202,8):ASTConstantGroup {
+            @Public_ConstantGroup(202,8):ASTConstantGroup {
               usageName = "Public";
               iteration = 0;
-              @public:Constant(202,16):ASTConstant {
+              @public_Constant(202,16):ASTConstant {
                 name = "public";
               }
             }
           }
-          @:Alt(202,28):ASTAlt {
+          @_Alt(202,28):ASTAlt {
             rightAssoc = false;
-            @:ConstantGroup(202,28):ASTConstantGroup {
+            @_ConstantGroup(202,28):ASTConstantGroup {
               iteration = 0;
-              @PLUS:Constant(202,29):ASTConstant {
-                humanName = "Public";
+              @+_Constant(202,29):ASTConstant {
+                humanName = Public;
                 name = "+";
               }
             }
           }
-          @:Alt(203,8):ASTAlt {
+          @_Alt(203,8):ASTAlt {
             rightAssoc = false;
-            @Derived:ConstantGroup(203,8):ASTConstantGroup {
+            @Derived_ConstantGroup(203,8):ASTConstantGroup {
               usageName = "Derived";
               iteration = 0;
-              @derived:Constant(203,17):ASTConstant {
+              @derived_Constant(203,17):ASTConstant {
                 name = "derived";
               }
             }
           }
-          @:Alt(203,30):ASTAlt {
+          @_Alt(203,30):ASTAlt {
             rightAssoc = false;
-            @:ConstantGroup(203,30):ASTConstantGroup {
+            @_ConstantGroup(203,30):ASTConstantGroup {
               iteration = 0;
-              @SLASH:Constant(203,31):ASTConstant {
-                humanName = "Derived";
+              @SLASH_Constant(203,31):ASTConstant {
+                humanName = Derived;
                 name = "/";
               }
             }
@@ -1159,95 +1159,95 @@ astobjectdiagram CD4Analysis {
         }
       }
     }
-    @Cardinality:ClassProd(212,2):ASTClassProd {
+    @Cardinality_ClassProd(212,2):ASTClassProd {
       name = "Cardinality";
-      @:Alt(212,16):ASTAlt {
+      @_Alt(212,16):ASTAlt {
         rightAssoc = false;
-        @many:ConstantGroup(212,16):ASTConstantGroup {
+        @many_ConstantGroup(212,16):ASTConstantGroup {
           usageName = "many";
           iteration = 0;
-          @LBRACKSTARRBRACK:Constant(212,22):ASTConstant {
+          @LBRACKSTARRBRACK_Constant(212,22):ASTConstant {
             name = "[*]";
           }
         }
       }
-      @:Alt(212,31):ASTAlt {
+      @_Alt(212,31):ASTAlt {
         rightAssoc = false;
-        @one:ConstantGroup(212,31):ASTConstantGroup {
+        @one_ConstantGroup(212,31):ASTConstantGroup {
           usageName = "one";
           iteration = 0;
-          @LBRACK1RBRACK:Constant(212,36):ASTConstant {
+          @LBRACK1RBRACK_Constant(212,36):ASTConstant {
             name = "[1]";
           }
         }
       }
-      @:Alt(212,45):ASTAlt {
+      @_Alt(212,45):ASTAlt {
         rightAssoc = false;
-        @oneToMany:ConstantGroup(212,45):ASTConstantGroup {
+        @oneToMany_ConstantGroup(212,45):ASTConstantGroup {
           usageName = "oneToMany";
           iteration = 0;
-          @_1____:Constant(212,56):ASTConstant {
+          @_1_____Constant(212,56):ASTConstant {
             name = "[1..*]";
           }
         }
       }
-      @:Alt(212,68):ASTAlt {
+      @_Alt(212,68):ASTAlt {
         rightAssoc = false;
-        @optional:ConstantGroup(212,68):ASTConstantGroup {
+        @optional_ConstantGroup(212,68):ASTConstantGroup {
           usageName = "optional";
           iteration = 0;
-          @_0__1_:Constant(212,78):ASTConstant {
+          @_0__1__Constant(212,78):ASTConstant {
             name = "[0..1]";
           }
         }
       }
     }
-    @CDQualifier:ClassProd(219,2):ASTClassProd {
+    @CDQualifier_ClassProd(219,2):ASTClassProd {
       name = "CDQualifier";
-      @:Alt(219,16):ASTAlt {
+      @_Alt(219,16):ASTAlt {
         rightAssoc = false;
-        @Name:NonTerminal(219,16):ASTNonTerminal {
+        @Name_NonTerminal(219,16):ASTNonTerminal {
           name = "Name";
           iteration = 0;
           plusKeywords = false;
         }
       }
-      @:Alt(219,23):ASTAlt {
+      @_Alt(219,23):ASTAlt {
         rightAssoc = false;
-        @Type:NonTerminal(219,23):ASTNonTerminal {
+        @Type_NonTerminal(219,23):ASTNonTerminal {
           name = "Type";
           iteration = 0;
           plusKeywords = false;
         }
       }
     }
-    @Stereotype:ClassProd(225,2):ASTClassProd {
+    @Stereotype_ClassProd(225,2):ASTClassProd {
       name = "Stereotype";
-      @:Alt(225,15):ASTAlt {
+      @_Alt(225,15):ASTAlt {
         rightAssoc = false;
-        @LTLT:Terminal(225,15):ASTTerminal {
+        @LTLT_Terminal(225,15):ASTTerminal {
           iteration = 0;
           name = "<<";
         }
-        @:Block(1,0)!11!:ASTBlock {
+        @_Block(1,0!11):ASTBlock {
           iteration = 0;
-          @:Alt(1,1)!7!:ASTAlt {
+          @_Alt(1,1!7):ASTAlt {
             rightAssoc = false;
-            @StereoValue:NonTerminal(1,1):ASTNonTerminal {
+            @StereoValue_NonTerminal(1,1):ASTNonTerminal {
               usageName = "values";
               name = "StereoValue";
               iteration = 0;
               plusKeywords = false;
             }
-            @:Block(1,22):ASTBlock {
+            @_Block(1,22):ASTBlock {
               iteration = 3;
-              @:Alt(1,23):ASTAlt {
+              @_Alt(1,23):ASTAlt {
                 rightAssoc = false;
-                @COMMA:Terminal(1,23):ASTTerminal {
+                @COMMA_Terminal(1,23):ASTTerminal {
                   iteration = 0;
                   name = ",";
                 }
-                @StereoValue:NonTerminal(1,27):ASTNonTerminal {
+                @StereoValue_NonTerminal(1,27):ASTNonTerminal {
                   usageName = "values";
                   name = "StereoValue";
                   iteration = 0;
@@ -1257,30 +1257,30 @@ astobjectdiagram CD4Analysis {
             }
           }
         }
-        @GTGT:Terminal(225,49):ASTTerminal {
+        @GTGT_Terminal(225,49):ASTTerminal {
           iteration = 0;
           name = ">>";
         }
       }
     }
-    @StereoValue:ClassProd(231,2):ASTClassProd {
+    @StereoValue_ClassProd(231,2):ASTClassProd {
       name = "StereoValue";
-      @:Alt(231,16):ASTAlt {
+      @_Alt(231,16):ASTAlt {
         rightAssoc = false;
-        @Name:NonTerminal(231,16):ASTNonTerminal {
+        @Name_NonTerminal(231,16):ASTNonTerminal {
           name = "Name";
           iteration = 0;
           plusKeywords = false;
         }
-        @:Block(231,21):ASTBlock {
+        @_Block(231,21):ASTBlock {
           iteration = 2;
-          @:Alt(231,22):ASTAlt {
+          @_Alt(231,22):ASTAlt {
             rightAssoc = false;
-            @EQUALS:Terminal(231,22):ASTTerminal {
+            @EQUALS_Terminal(231,22):ASTTerminal {
               iteration = 0;
               name = "=";
             }
-            @String:NonTerminal(231,26):ASTNonTerminal {
+            @String_NonTerminal(231,26):ASTNonTerminal {
               usageName = "value";
               name = "String";
               iteration = 0;
@@ -1290,11 +1290,11 @@ astobjectdiagram CD4Analysis {
         }
       }
     }
-    @Value:ClassProd(236,2):ASTClassProd {
+    @Value_ClassProd(236,2):ASTClassProd {
       name = "Value";
-      @:Alt(236,10):ASTAlt {
+      @_Alt(236,10):ASTAlt {
         rightAssoc = false;
-        @Literal:NonTerminal(236,10):ASTNonTerminal {
+        @Literal_NonTerminal(236,10):ASTNonTerminal {
           name = "Literal";
           iteration = 0;
           plusKeywords = false;
