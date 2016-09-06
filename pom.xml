@@ -29,9 +29,11 @@
         <compiler.plugin>3.3</compiler.plugin>
         <source.plugin>2.4</source.plugin>
         <monticore.plugin>4.4.1</monticore.plugin>
+        <shade.plugin>2.4.3</shade.plugin>
 
         <!-- Classifiers -->
         <grammars.classifier>grammars</grammars.classifier>
+        <cli.classifier>cli</cli.classifier>
 
         <!-- .. Misc .......................................................... -->
         <java.version>1.8</java.version>
@@ -113,19 +115,6 @@
                 </dependencies>
                 <executions>
                     <execution>
-                        <id>default-jar</id>
-                        <configuration>
-                            <archive>
-                                <manifest>
-                                    <mainClass>de.monticore.lang.od.ODCLI</mainClass>
-                                </manifest>
-                            </archive>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <id>grammars</id>
                         <configuration>
                             <finalName>${project.artifactId}-${project.version}</finalName>
@@ -159,6 +148,42 @@
                 <configuration>
                     <excludeResources>true</excludeResources>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${shade.plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>de.monticore.lang.od.ODCLI</mainClass>
+                                </transformer>
+                            </transformers>
+                            <shadedClassifierName>${cli.classifier}</shadedClassifierName>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
