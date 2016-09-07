@@ -14,8 +14,7 @@ import de.monticore.prettyprint.IndentPrinter;
 public class HierachicalODPrettyPrinterConcreteVisitor extends ODPrettyPrinterConcreteVisitor {
   
   /**
-   * Constructor for
-   * de.monticore.lang.od.prettyprint.HierachicalODPrettyPrinterConcreteVisitor
+   * Constructor for de.monticore.lang.od.prettyprint.HierachicalODPrettyPrinterConcreteVisitor
    * 
    * @param printer
    */
@@ -78,17 +77,10 @@ public class HierachicalODPrettyPrinterConcreteVisitor extends ODPrettyPrinterCo
    */
   @Override
   public void handle(ASTODInnerLink a) {
-    if (a.getODObject().isPresent()) {
-      if (a.getLinkName().isPresent()) {
-        getPrinter().print(a.getLinkName().get() + " = ");
-      }
-      a.getODObject().get().accept(getRealThis());
+    if (a.getLinkName().isPresent()) {
+      getPrinter().print(a.getLinkName().get() + " = ");
     }
-    if (a.getObjectName().isPresent()) {
-      getPrinter().print(a.getLinkName().get() + " -> ");
-      getPrinter().print(a.getObjectName().get());
-      getPrinter().print(";\n");
-    }
+    a.getODObject().accept(getRealThis());
   }
   
 }

@@ -146,8 +146,7 @@ grammar OD extends de.monticore.common.Common {
       ";";
       
     ODInnerLink = 
-      (linkName:Name "=")? ODObject
-      | linkName:Name ("=" | "->") (objectName:ODName | objectName:Name) ";";
+	  (linkName:Name ("=" | "->"))? ODObject;
       
     ODValueCollection = 
       "[" values:Value ("," values:Value)* "]" ;
