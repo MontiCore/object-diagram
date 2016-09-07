@@ -152,6 +152,10 @@ grammar OD extends de.monticore.common.Common {
     ODValueCollection = 
       "[" values:Value ("," values:Value)* "]" ;
           
-    token ODName = '@' ( 'a'..'z' | 'A'..'Z' | '_' | '0'..'9' | '$' | '-' | '+' | '.')* ('('.*?')')?;
+    token ODName = '@'
+    	( 'a'..'z' | 'A'..'Z' | '0'..'9' 
+    	| '_' | '$' | '-' | '+' | '.' | '!' | '§' | '$' | '%' | '@' | '*'
+    	| 'ä' | 'Ä' | 'ö' | 'Ö' | 'ü' | 'Ü' | 'ß')* 
+    	('('.*?')')?;
         
 }
