@@ -21,14 +21,29 @@ grammar OD extends de.monticore.common.Common {
     /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
     /*========================================================================*/
 
-        /** ASTODElement represents all Elements of a UML Objectdiagram
-        */
-        abstract ODElement;
+    /** ASTODElement represents all Elements of a UML Objectdiagram
+     */
+    abstract ODElement;
 
-        // TODO external Value;
-        Value = SignedLiteral;
+    /** ASTODObject represents an Object in a UML Objectdiagram
+      @attribute completeness Optional Comleteness of this Object
+      @attribute modifier     Optional Modifier of this Object
+      @attribute name         Optional Name of this Object
+      @attribute type         Optional Type of this Object
+      @attribute oDAttributes List of Attributes of this Object
+    */
+    interface ODCommonObject =
+      Completeness?
+      Modifier?
+	  ( Name | type:ReferenceType)
+      (
+        ((oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection)* )
+      );
+   
+     // TODO external Value;
+     Value = SignedLiteral;
 
-        Version = "version" StringLiteral ";";
+     Version = "version" StringLiteral ";";
 
     /*========================================================================*/
     /*============================== Grammar =================================*/
@@ -61,14 +76,14 @@ grammar OD extends de.monticore.common.Common {
       @attribute type         Optional Type of this Object
       @attribute oDAttributes List of Attributes of this Object
     */
-    ODObject@! extends ODElement =
+    ODObject@! extends ODElement implements ODCommonObject=
       Completeness?
       Modifier?
 	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
         ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection ";")* "}")
         |
-        ";"
+        ";"?
       );
     
     
@@ -146,8 +161,24 @@ grammar OD extends de.monticore.common.Common {
       ";";
       
     ODInnerLink = 
-	  (linkName:Name ("=" | "->"))? ODObject;
+	  (linkName:Name ("=" | "->"))? (ODInnerObject || ",")+ ";";
       
+    /** ASTODInnerObject represents an Object in a UML Objectdiagram
+      @attribute completeness Optional Comleteness of this Object
+      @attribute modifier     Optional Modifier of this Object
+      @attribute name         Optional Name of this Object
+      @attribute type         Optional Type of this Object
+      @attribute oDAttributes List of Attributes of this Object
+    */
+    ODInnerObject@! implements ODCommonObject=
+      Completeness?
+      Modifier?
+	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
+      (
+        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection ";")* "}")?
+      );
+    
+    
     ODValueCollection = 
       "[" values:Value ("," values:Value)* "]" ;
           

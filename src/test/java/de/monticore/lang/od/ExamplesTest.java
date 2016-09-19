@@ -15,6 +15,7 @@ import de.se_rwth.commons.logging.Slf4jLog;
 
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -81,6 +82,7 @@ public class ExamplesTest {
     test("src/test/resources/examples/valuecollections/ValueCollection.od", true);
   }
 
+  @Ignore
   @Test
   public void testAstOd() throws RecognitionException, IOException {
     test("src/test/resources/examples/od/AstOd.od", true);

@@ -2,6 +2,7 @@ package de.monticore.lang.od.prettyprint;
 
 import de.monticore.lang.od._ast.ASTODAttribute;
 import de.monticore.lang.od._ast.ASTODInnerLink;
+import de.monticore.lang.od._ast.ASTODInnerObject;
 import de.monticore.lang.od._ast.ASTODObject;
 import de.monticore.lang.od._ast.ASTODValueCollection;
 import de.monticore.prettyprint.IndentPrinter;
@@ -80,7 +81,13 @@ public class HierachicalODPrettyPrinterConcreteVisitor extends ODPrettyPrinterCo
     if (a.getLinkName().isPresent()) {
       getPrinter().print(a.getLinkName().get() + " = ");
     }
-    a.getODObject().accept(getRealThis());
+    String delim = "";
+    for (ASTODInnerObject odObject: a.getODInnerObjects()) {
+      getPrinter().print(delim);
+      odObject.accept(getRealThis());
+      delim = ", ";
+    }
+    getPrinter().print(";");
   }
   
 }

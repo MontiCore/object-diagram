@@ -1,220 +1,224 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <!-- == PROJECT COORDINATES ============================================= -->
+  <!-- == PROJECT COORDINATES ============================================= -->
 
-    <groupId>de.monticore.lang</groupId>
-    <artifactId>od</artifactId>
-    <version>0.2.2-SNAPSHOT</version>
+  <groupId>de.monticore.lang</groupId>
+  <artifactId>od</artifactId>
+  <version>0.2.2-SNAPSHOT</version>
 
-    <!-- == PROJECT PROPERTIES ============================================== -->
+  <!-- == PROJECT PROPERTIES ============================================== -->
 
-    <properties>
+  <properties>
 
-        <!-- .. Libraries ..................................................... -->
-        <monticore.version>4.4.2-SNAPSHOT</monticore.version>
+    <!-- .. Libraries ..................................................... -->
+    <monticore.version>4.4.3-SNAPSHOT</monticore.version>
 
-        <antlr.version>4.5</antlr.version>
-        <guava.version>18.0</guava.version>
-        <jsr305.version>3.0.0</jsr305.version>
-        <junit.version>4.12</junit.version>
-        <logback.version>1.1.2</logback.version>
-        <mc.grammars.assembly.version>0.0.6</mc.grammars.assembly.version>
-        <se-commons.version>1.7.6</se-commons.version>
+    <antlr.version>4.5</antlr.version>
+    <guava.version>18.0</guava.version>
+    <jsr305.version>3.0.0</jsr305.version>
+    <junit.version>4.12</junit.version>
+    <logback.version>1.1.2</logback.version>
+    <mc.grammars.assembly.version>0.0.6</mc.grammars.assembly.version>
+    <se-commons.version>1.7.6</se-commons.version>
 
-        <!-- .. Plugins ....................................................... -->
-        <assembly.plugin>2.5.4</assembly.plugin>
-        <compiler.plugin>3.3</compiler.plugin>
-        <source.plugin>2.4</source.plugin>
-        <monticore.plugin>4.4.2-SNAPSHOT</monticore.plugin>
-        <shade.plugin>2.4.3</shade.plugin>
+    <!-- .. Plugins ....................................................... -->
+    <assembly.plugin>2.5.4</assembly.plugin>
+    <compiler.plugin>3.3</compiler.plugin>
+    <source.plugin>2.4</source.plugin>
+    <monticore.plugin>4.4.3-SNAPSHOT</monticore.plugin>
+    <shade.plugin>2.4.3</shade.plugin>
 
-        <!-- Classifiers -->
-        <grammars.classifier>grammars</grammars.classifier>
-        <cli.classifier>cli</cli.classifier>
+    <!-- Classifiers -->
+    <grammars.classifier>grammars</grammars.classifier>
+    <cli.classifier>cli</cli.classifier>
 
-        <!-- .. Misc .......................................................... -->
-        <java.version>1.8</java.version>
+    <!-- .. Misc .......................................................... -->
+    <java.version>1.8</java.version>
 
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
 
-    <!-- == PROJECT DEPENDENCIES ============================================= -->
+  <!-- == PROJECT DEPENDENCIES ============================================= -->
 
-    <dependencies>
-        <dependency>
+  <dependencies>
+    <dependency>
+      <groupId>de.monticore</groupId>
+      <artifactId>monticore-grammar</artifactId>
+      <version>${monticore.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>de.monticore</groupId>
+      <artifactId>monticore-grammar</artifactId>
+      <version>${monticore.version}</version>
+      <classifier>${grammars.classifier}</classifier>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- .. Test Libraries ............................................... -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <!-- == PROJECT BUILD SETTINGS =========================================== -->
+
+  <build>
+    <plugins>
+      <!-- MontiCore Generation -->
+      <plugin>
+        <groupId>de.monticore.mojo</groupId>
+        <artifactId>monticore-maven-plugin</artifactId>
+        <version>${monticore.plugin}</version>
+        <configuration>
+          <skip>false</skip>
+          <!-- No EMF because of errors -->
+          <script>de/monticore/monticore_noemf.groovy</script>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Other Configuration -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${compiler.plugin}</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>${assembly.plugin}</version>
+        <dependencies>
+          <dependency>
             <groupId>de.monticore</groupId>
-            <artifactId>monticore-grammar</artifactId>
-            <version>${monticore.version}</version>
-        </dependency>
+            <artifactId>mc-assemblies</artifactId>
+            <version>${mc.grammars.assembly.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>grammars</id>
+            <configuration>
+              <finalName>${project.artifactId}-${project.version}</finalName>
+              <descriptorRefs>
+                <descriptorRef>grammars-assembly</descriptorRef>
+              </descriptorRefs>
+              <formats>
+                <format>jar</format>
+              </formats>
+            </configuration>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-        <dependency>
-            <groupId>de.monticore</groupId>
-            <artifactId>monticore-grammar</artifactId>
-            <version>${monticore.version}</version>
-            <classifier>${grammars.classifier}</classifier>
-            <scope>provided</scope>
-        </dependency>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${source.plugin}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <excludeResources>true</excludeResources>
+        </configuration>
+      </plugin>
 
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-            <scope>runtime</scope>
-        </dependency>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>${shade.plugin}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <minimizeJar>true</minimizeJar>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer
+                  implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>de.monticore.lang.od.ODCLI</mainClass>
+                </transformer>
+              </transformers>
+              <shadedClassifierName>${cli.classifier}</shadedClassifierName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-        <!-- .. Test Libraries ............................................... -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    </plugins>
+  </build>
 
-    <!-- == PROJECT BUILD SETTINGS =========================================== -->
+  <!-- == DEPENDENCY & PLUGIN REPOSITORIES ================================= -->
 
-    <build>
-        <plugins>
-            <!-- MontiCore Generation -->
-            <plugin>
-                <groupId>de.monticore.mojo</groupId>
-                <artifactId>monticore-maven-plugin</artifactId>
-                <version>${monticore.plugin}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+  <repositories>
+    <repository>
+      <id>se-public</id>
+      <url>http://nexus.se.rwth-aachen.de/content/groups/public</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>se-public</id>
+      <url>http://nexus.se.rwth-aachen.de/content/groups/public</url>
+    </pluginRepository>
+  </pluginRepositories>
 
-            <!-- Other Configuration -->
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler.plugin}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
+  <!-- == DISTRIBUTION ==================================================== -->
 
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>${assembly.plugin}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>de.monticore</groupId>
-                        <artifactId>mc-assemblies</artifactId>
-                        <version>${mc.grammars.assembly.version}</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>grammars</id>
-                        <configuration>
-                            <finalName>${project.artifactId}-${project.version}</finalName>
-                            <descriptorRefs>
-                                <descriptorRef>grammars-assembly</descriptorRef>
-                            </descriptorRefs>
-                            <formats>
-                                <format>jar</format>
-                            </formats>
-                        </configuration>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${source.plugin}</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <excludeResources>true</excludeResources>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>${shade.plugin}</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <minimizeJar>true</minimizeJar>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>de.monticore.lang.od.ODCLI</mainClass>
-                                </transformer>
-                            </transformers>
-                            <shadedClassifierName>${cli.classifier}</shadedClassifierName>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
-    </build>
-
-    <!-- == DEPENDENCY & PLUGIN REPOSITORIES ================================= -->
-
-    <repositories>
-        <repository>
-            <id>se-public</id>
-            <url>http://nexus.se.rwth-aachen.de/content/groups/public</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>se-public</id>
-            <url>http://nexus.se.rwth-aachen.de/content/groups/public</url>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <!-- == DISTRIBUTION ==================================================== -->
-
-    <distributionManagement>
-        <repository>
-            <id>se-nexus</id>
-            <url>http://nexus.se.rwth-aachen.de/content/repositories/monticore-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>se-nexus</id>
-            <url>http://nexus.se.rwth-aachen.de/content/repositories/monticore-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+  <distributionManagement>
+    <repository>
+      <id>se-nexus</id>
+      <url>http://nexus.se.rwth-aachen.de/content/repositories/monticore-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>se-nexus</id>
+      <url>http://nexus.se.rwth-aachen.de/content/repositories/monticore-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 
 </project>

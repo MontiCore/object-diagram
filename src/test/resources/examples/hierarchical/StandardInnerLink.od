@@ -9,7 +9,7 @@ objectdiagram StandardInnerLink {
       someInt = 1783;
       someString = "Theobald Schmidt";
       someBool = false;
-    }    
+    };  
   }
   
   myObject2:ObjectType {
@@ -17,7 +17,7 @@ objectdiagram StandardInnerLink {
       someInt = 1784;
       someString = "Elisabeth Müller";
       someBool = true;
-    }    
+    };
   }
   
 }
