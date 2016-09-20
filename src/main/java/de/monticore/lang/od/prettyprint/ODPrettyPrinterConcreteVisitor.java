@@ -145,40 +145,6 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     }
   }
   
-  /**
-   * Prints an object in an object diagram
-   * 
-   * @param a object
-   */
-  @Override
-  public void handle(ASTODInnerObject a) {
-    // print completeness
-    if (a.getCompleteness().isPresent()) {
-      a.getCompleteness().get().accept(getRealThis());
-    }
-    // print object modifier
-    if (a.getModifier().isPresent()) {
-      a.getModifier().get().accept(getRealThis());
-    }
-    // print object name and type
-    if (a.getName().isPresent()) {
-      getPrinter().print(a.getName().get());
-    }
-    if (a.getType().isPresent()) {
-      getPrinter().print(":");
-      a.getType().get().accept(getRealThis());
-    }
-    // print object body
-    if (!a.getODAttributes().isEmpty()) {
-      getPrinter().println(" {");
-      getPrinter().indent();
-      for (ASTODAttribute ast: a.getODAttributes()) {
-        ast.accept(getRealThis());
-      }      
-      getPrinter().unindent();
-      getPrinter().println("}");
-    }
-  }
   
   /**
    * Prints an attribute of an object in an object diagram

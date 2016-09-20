@@ -85,8 +85,8 @@
         <version>${monticore.plugin}</version>
         <configuration>
           <skip>false</skip>
-          <!-- No EMF because of errors -->
-          <script>de/monticore/monticore_noemf.groovy</script>
+          <!-- Enable/disable EMF-Generation -->
+          <!-- <script>de/monticore/monticore_noemf.groovy</script> -->
         </configuration>
         <executions>
           <execution>
