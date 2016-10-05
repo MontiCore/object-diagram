@@ -6,14 +6,14 @@
 
   <groupId>de.monticore.lang</groupId>
   <artifactId>od</artifactId>
-  <version>0.2.2-SNAPSHOT</version>
+  <version>0.2.2</version>
 
   <!-- == PROJECT PROPERTIES ============================================== -->
 
   <properties>
 
     <!-- .. Libraries ..................................................... -->
-    <monticore.version>4.4.3-SNAPSHOT</monticore.version>
+    <monticore.version>4.5.0</monticore.version>
 
     <antlr.version>4.5</antlr.version>
     <guava.version>18.0</guava.version>
@@ -21,13 +21,13 @@
     <junit.version>4.12</junit.version>
     <logback.version>1.1.2</logback.version>
     <mc.grammars.assembly.version>0.0.6</mc.grammars.assembly.version>
-    <se-commons.version>1.7.6</se-commons.version>
+    <se-commons.version>1.7.7</se-commons.version>
 
     <!-- .. Plugins ....................................................... -->
     <assembly.plugin>2.5.4</assembly.plugin>
     <compiler.plugin>3.3</compiler.plugin>
     <source.plugin>2.4</source.plugin>
-    <monticore.plugin>4.4.3-SNAPSHOT</monticore.plugin>
+    <monticore.plugin>4.5.0</monticore.plugin>
     <shade.plugin>2.4.3</shade.plugin>
 
     <!-- Classifiers -->
