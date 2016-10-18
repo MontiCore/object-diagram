@@ -175,7 +175,7 @@ grammar OD extends de.monticore.common.Common {
       Modifier?
 	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
-        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection ";")* "}")?
+        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection)* "}")?
       );
     
     

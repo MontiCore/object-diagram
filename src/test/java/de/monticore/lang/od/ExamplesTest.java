@@ -5,6 +5,18 @@
  */
 package de.monticore.lang.od;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
+
+import org.antlr.v4.runtime.RecognitionException;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import de.monticore.lang.od._ast.ASTODCompilationUnit;
 import de.monticore.lang.od._parser.ODParser;
 import de.monticore.lang.od.prettyprint.HierachicalODPrettyPrinterConcreteVisitor;
@@ -12,19 +24,6 @@ import de.monticore.lang.od.prettyprint.ODPrettyPrinterConcreteVisitor;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.Slf4jLog;
-
-import org.antlr.v4.runtime.RecognitionException;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Optional;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * This test compares the ASTs of the files in the examples folder with the
@@ -121,7 +120,7 @@ public class ExamplesTest {
 
     pp.handle(odDef.get());
     String ppResult = pp.getPrinter().getContent();
-    System.out.println(ppResult);
+    // System.out.println(ppResult);
 
     // parse the printers content
     Optional<ASTODCompilationUnit> ppOd = parser.parseString_ODCompilationUnit(ppResult);
