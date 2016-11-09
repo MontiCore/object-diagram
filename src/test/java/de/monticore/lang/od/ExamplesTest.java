@@ -87,6 +87,11 @@ public class ExamplesTest {
   }
 
   @Test
+  public void testSymTabOd() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/SymTabOd.od", true);
+  }
+
+  @Test
   public void testActionObservation102406() throws RecognitionException, IOException {
     test("src/test/resources/examples/action/ActionObservation102406.od", true);
   }

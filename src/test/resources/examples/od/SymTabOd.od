@@ -1,0 +1,548 @@
+//========================================================== Symbol Table
+objectdiagram SymTabOd {
+  @Example1!Symbol: CDSymbol{
+    name = "Example1";
+    astNode = @Example1!CDDefinition;
+    symbols =
+      // *size: 21
+      @member!Symbol: CDAssociationSymbolKind {
+        name = "member";
+        astNode = @Person-Group!CDAssociation;
+        assocName = "member";
+        relationShip = "ASSOCIATION";
+        sourceCard = "[0..*]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @member!Symbol(!2): CDAssociationSymbolKind {
+        name = "member";
+        astNode = @Person-Group!CDAssociation;
+        assocName = "member";
+        relationShip = "ASSOCIATION";
+        sourceCard = "[0..*]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @!Symbol: CDAssociationSymbolKind {
+        name = "";
+        astNode = @!CDAssociation;
+        relationShip = "ASSOCIATION";
+        role = "organized";
+        sourceCard = "[1..1]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @!Symbol(!2): CDAssociationSymbolKind {
+        name = "";
+        astNode = @!CDAssociation;
+        relationShip = "ASSOCIATION";
+        role = "organizer";
+        sourceCard = "[0..*]";
+        targetCard = "[1..1]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @!Symbol(!3): CDAssociationSymbolKind {
+        name = "";
+        astNode = @!CDAssociation(!2);
+        relationShip = "ASSOCIATION";
+        sourceCard = "[1..1]";
+        targetCard = "[1..1]";
+        isBidirectional = false;
+        isDerived = false;
+      },
+      @!Symbol(!4): CDAssociationSymbolKind {
+        name = "";
+        astNode = @!CDAssociation(!3);
+        relationShip = "ASSOCIATION";
+        role = "replyTo";
+        sourceCard = "[0..*]";
+        targetCard = "[1..1]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @!Symbol(!5): CDAssociationSymbolKind {
+        name = "";
+        astNode = @!CDAssociation(!3);
+        relationShip = "ASSOCIATION";
+        sourceCard = "[1..1]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @!Symbol(!6): CDAssociationSymbolKind {
+        name = "";
+        astNode = @!CDAssociation(!4);
+        relationShip = "ASSOCIATION";
+        sourceCard = "[0..*]";
+        targetCard = "[1..1]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @!Symbol(!7): CDAssociationSymbolKind {
+        name = "";
+        astNode = @!CDAssociation(!4);
+        relationShip = "ASSOCIATION";
+        role = "picture";
+        sourceCard = "[1..1]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @!Symbol(!8): CDAssociationSymbolKind {
+        name = "";
+        astNode = @!CDAssociation(!5);
+        relationShip = "ASSOCIATION";
+        sourceCard = "[1..1]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @!Symbol(!9): CDAssociationSymbolKind {
+        name = "";
+        astNode = @!CDAssociation(!5);
+        relationShip = "ASSOCIATION";
+        role = "tagged";
+        sourceCard = "[0..*]";
+        targetCard = "[1..1]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @!Symbol(!10): CDAssociationSymbolKind {
+        name = "";
+        astNode = @!CDAssociation(!6);
+        relationShip = "ASSOCIATION";
+        sourceCard = "[0..*]";
+        targetCard = "[1..1]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @!Symbol(!11): CDAssociationSymbolKind {
+        name = "";
+        astNode = @!CDAssociation(!6);
+        relationShip = "ASSOCIATION";
+        sourceCard = "[1..1]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @invited!Symbol: CDAssociationSymbolKind {
+        name = "invited";
+        astNode = @Relationship-Profile!CDAssociation;
+        assocName = "invited";
+        relationShip = "ASSOCIATION";
+        sourceCard = "[0..*]";
+        targetCard = "[1..1]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @invited!Symbol(!2): CDAssociationSymbolKind {
+        name = "invited";
+        astNode = @Relationship-Profile!CDAssociation;
+        assocName = "invited";
+        relationShip = "ASSOCIATION";
+        sourceCard = "[1..1]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @initiated!Symbol: CDAssociationSymbolKind {
+        name = "initiated";
+        astNode = @Relationship-Profile!CDAssociation(!2);
+        assocName = "initiated";
+        relationShip = "ASSOCIATION";
+        sourceCard = "[0..*]";
+        targetCard = "[1..1]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @initiated!Symbol(!2): CDAssociationSymbolKind {
+        name = "initiated";
+        astNode = @Relationship-Profile!CDAssociation(!2);
+        assocName = "initiated";
+        relationShip = "ASSOCIATION";
+        sourceCard = "[1..1]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @received!Symbol: CDAssociationSymbolKind {
+        name = "received";
+        astNode = @Profile-Post!CDAssociation;
+        assocName = "received";
+        relationShip = "ASSOCIATION";
+        sourceCard = "[0..*]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @received!Symbol(!2): CDAssociationSymbolKind {
+        name = "received";
+        astNode = @Profile-Post!CDAssociation;
+        assocName = "received";
+        relationShip = "ASSOCIATION";
+        sourceCard = "[0..*]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @sent!Symbol: CDAssociationSymbolKind {
+        name = "sent";
+        astNode = @Profile-Post!CDAssociation(!2);
+        assocName = "sent";
+        relationShip = "ASSOCIATION";
+        sourceCard = "[1..1]";
+        targetCard = "[0..*]";
+        isBidirectional = true;
+        isDerived = false;
+      },
+      @sent!Symbol(!2): CDAssociationSymbolKind {
+        name = "sent";
+        astNode = @Profile-Post!CDAssociation(!2);
+        assocName = "sent";
+        relationShip = "ASSOCIATION";
+        sourceCard = "[0..*]";
+        targetCard = "[1..1]";
+        isBidirectional = true;
+        isDerived = false;
+      };
+    scopes =
+      // *size: 10
+      @Profile!Symbol: CDTypeSymbolKind{
+        name = "Profile";
+        astNode = @Profile!CDClass;
+        accesModifier = "public";
+        symbols =
+          // *size: 3
+          @profileName!Symbol: CDFieldSymbolKind {
+            name = "profileName";
+            astNode = @profileName!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @String!SymbolReference;
+          },
+          @numOfPosts!Symbol: CDFieldSymbolKind {
+            name = "numOfPosts";
+            astNode = @numOfPosts!CDAttribute;
+            accesModifier = "public";
+            isDerived = true;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @int!SymbolReference;
+          },
+          @friends!Symbol: CDFieldSymbolKind {
+            name = "friends";
+            astNode = @friends!CDAttribute;
+            accesModifier = "public";
+            isDerived = true;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @int!SymbolReference(!2);
+          };
+      },
+      @Person!Symbol: CDTypeSymbolKind{
+        name = "Person";
+        astNode = @Person!CDClass;
+        accesModifier = "public";
+        superClass = @Profile!SymbolReference(0,0);
+        symbols =
+          // *size: 7
+          @lastVisit!Symbol: CDFieldSymbolKind {
+            name = "lastVisit";
+            astNode = @lastVisit!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @Date!SymbolReference;
+          },
+          @firstName!Symbol: CDFieldSymbolKind {
+            name = "firstName";
+            astNode = @firstName!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @String!SymbolReference(!2);
+          },
+          @secondName!Symbol: CDFieldSymbolKind {
+            name = "secondName";
+            astNode = @secondName!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @String!SymbolReference(!3);
+          },
+          @dateOfBirth!Symbol: CDFieldSymbolKind {
+            name = "dateOfBirth";
+            astNode = @dateOfBirth!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @Date!SymbolReference(!2);
+          },
+          @zip!Symbol: CDFieldSymbolKind {
+            name = "zip";
+            astNode = @zip!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @int!SymbolReference(!3);
+          },
+          @city!Symbol: CDFieldSymbolKind {
+            name = "city";
+            astNode = @city!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @String!SymbolReference(!4);
+          },
+          @country!Symbol: CDFieldSymbolKind {
+            name = "country";
+            astNode = @country!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @String!SymbolReference(!5);
+          };
+      },
+      @Group!Symbol: CDTypeSymbolKind{
+        name = "Group";
+        astNode = @Group!CDClass;
+        accesModifier = "public";
+        superClass = @Profile!SymbolReference(0,0!2);
+        symbols =
+          // *size: 4
+          @isOpen!Symbol: CDFieldSymbolKind {
+            name = "isOpen";
+            astNode = @isOpen!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @boolean!SymbolReference;
+          },
+          @created!Symbol: CDFieldSymbolKind {
+            name = "created";
+            astNode = @created!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @Date!SymbolReference(!3);
+          },
+          @purpose!Symbol: CDFieldSymbolKind {
+            name = "purpose";
+            astNode = @purpose!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @String!SymbolReference(!6);
+          },
+          @members!Symbol: CDFieldSymbolKind {
+            name = "members";
+            astNode = @members!CDAttribute;
+            accesModifier = "public";
+            isDerived = true;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @int!SymbolReference(!4);
+          };
+      },
+      @Relationship!Symbol: CDTypeSymbolKind{
+        name = "Relationship";
+        astNode = @Relationship!CDClass;
+        accesModifier = "public";
+        symbols =
+          // *size: 3
+          @isPending!Symbol: CDFieldSymbolKind {
+            name = "isPending";
+            astNode = @isPending!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @boolean!SymbolReference(!2);
+          },
+          @requested!Symbol: CDFieldSymbolKind {
+            name = "requested";
+            astNode = @requested!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @Date!SymbolReference(!4);
+          },
+          @accepted!Symbol: CDFieldSymbolKind {
+            name = "accepted";
+            astNode = @accepted!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @Date!SymbolReference(!5);
+          };
+      },
+      @InstantMessage!Symbol: CDTypeSymbolKind{
+        name = "InstantMessage";
+        astNode = @InstantMessage!CDClass;
+        accesModifier = "public";
+        interface = @Post!SymbolReference(0,0);
+        symbols =
+          // *size: 2
+          @timestamp!Symbol: CDFieldSymbolKind {
+            name = "timestamp";
+            astNode = @timestamp!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @Date!SymbolReference(!6);
+          },
+          @content!Symbol: CDFieldSymbolKind {
+            name = "content";
+            astNode = @content!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @String!SymbolReference(!7);
+          };
+      },
+      @PhotoMessage!Symbol: CDTypeSymbolKind{
+        name = "PhotoMessage";
+        astNode = @PhotoMessage!CDClass;
+        accesModifier = "public";
+        superClass = @InstantMessage!SymbolReference(0,0);
+      },
+      @Photo!Symbol: CDTypeSymbolKind{
+        name = "Photo";
+        astNode = @Photo!CDClass;
+        accesModifier = "public";
+        symbols =
+          // *size: 2
+          @height!Symbol: CDFieldSymbolKind {
+            name = "height";
+            astNode = @height!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @double!SymbolReference;
+          },
+          @width!Symbol: CDFieldSymbolKind {
+            name = "width";
+            astNode = @width!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @double!SymbolReference(!2);
+          };
+      },
+      @Tag!Symbol: CDTypeSymbolKind{
+        name = "Tag";
+        astNode = @Tag!CDClass;
+        accesModifier = "public";
+        symbols =
+          // *size: 1
+          @confirmed!Symbol: CDFieldSymbolKind {
+            name = "confirmed";
+            astNode = @confirmed!CDAttribute;
+            accesModifier = "public";
+            isDerived = false;
+            isEnumConstant = false;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @boolean!SymbolReference(!3);
+          };
+      },
+      @Post!Symbol: CDTypeSymbolKind{
+        name = "Post";
+        astNode = @Post!CDInterface;
+        accesModifier = "public";
+      },
+      @RelationType!Symbol: CDTypeSymbolKind{
+        name = "RelationType";
+        astNode = @RelationType!CDEnum;
+        accesModifier = "public";
+        symbols =
+          // *size: 5
+          @FRIEND!Symbol(0,0): CDFieldSymbolKind {
+            name = "FRIEND";
+            isDerived = false;
+            isEnumConstant = true;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @RelationType!SymbolReference(0,0);
+          },
+          @FAMILY!Symbol(0,0): CDFieldSymbolKind {
+            name = "FAMILY";
+            isDerived = false;
+            isEnumConstant = true;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @RelationType!SymbolReference(0,0!2);
+          },
+          @FOLLOWER!Symbol(0,0): CDFieldSymbolKind {
+            name = "FOLLOWER";
+            isDerived = false;
+            isEnumConstant = true;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @RelationType!SymbolReference(0,0!3);
+          },
+          @COLLEAGUE!Symbol(0,0): CDFieldSymbolKind {
+            name = "COLLEAGUE";
+            isDerived = false;
+            isEnumConstant = true;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @RelationType!SymbolReference(0,0!4);
+          },
+          @OTHER!Symbol(0,0): CDFieldSymbolKind {
+            name = "OTHER";
+            isDerived = false;
+            isEnumConstant = true;
+            isInitialized = false;
+            isReadOnly = false;
+            type = @RelationType!SymbolReference(0,0!5);
+          };
+      };
+  }
+}
+
+//========================================================== Explanation
+//Shows symbol table after finishing the generation process.
