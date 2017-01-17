@@ -22,6 +22,7 @@
     <logback.version>1.1.2</logback.version>
     <mc.grammars.assembly.version>0.0.6</mc.grammars.assembly.version>
     <se-commons.version>1.7.7</se-commons.version>
+    <antlr.version>4.5.1</antlr.version>
 
     <!-- .. Plugins ....................................................... -->
     <assembly.plugin>2.5.4</assembly.plugin>
@@ -44,6 +45,36 @@
   <!-- == PROJECT DEPENDENCIES ============================================= -->
 
   <dependencies>
+    <dependency>
+      <groupId>de.se_rwth.commons</groupId>
+      <artifactId>se-commons-logging</artifactId>
+      <version>${se-commons.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>de.se_rwth.commons</groupId>
+      <artifactId>se-commons-utilities</artifactId>
+      <version>${se-commons.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4-runtime</artifactId>
+      <version>${antlr.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>de.monticore</groupId>
+      <artifactId>monticore-runtime</artifactId>
+      <version>${monticore.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>de.monticore</groupId>
       <artifactId>monticore-grammar</artifactId>
@@ -86,7 +117,7 @@
         <configuration>
           <skip>false</skip>
           <!-- Enable/disable EMF-Generation -->
-          <!-- <script>de/monticore/monticore_noemf.groovy</script> -->
+          <script>de/monticore/monticore_noemf.groovy</script>
         </configuration>
         <executions>
           <execution>
