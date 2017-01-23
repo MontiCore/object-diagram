@@ -5,7 +5,7 @@ import examples.cd.Associations;
 objectdiagram ValueCollection {
 
   kupfer912:Auction {
-    [912, "420t Kupfer", 0];  
+    a = [912, "420t Kupfer", 0];  
   }
   
 }

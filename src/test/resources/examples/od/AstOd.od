@@ -1,1058 +1,336 @@
-objectdiagram AS_ObjectDiagram {
-  @Example1!CDDefinition:ASTCDDefinition {
-    symbol = @Example1!Symbol;
-    name = "Example1";
-    cDClasses = 
-      // *size: 8
-      @Profile!CDClass:ASTCDClass {
-        symbol = @Profile!Symbol;
-        modifier = @_!Modifier:ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = true;
-        };
-        name = "Profile";
-        cDAttributes = 
-          // *size: 3
-          @profileName!CDAttribute:ASTCDAttribute {
-            symbol = @profileName!Symbol;
-            modifier = @_!Modifier(!2):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @String!SimpleReferenceType:ASTSimpleReferenceType {
-              names = ["String"];
-            };
-            name = "profileName";
-          },
-          @numOfPosts!CDAttribute:ASTCDAttribute {
-            symbol = @numOfPosts!Symbol;
-            modifier = @_!Modifier(!3):ASTModifier {
-              r__derived = true;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @4!PrimitiveType:ASTPrimitiveType {
-              primitive = 4;
-            };
-            name = "numOfPosts";
-          },
-          @friends!CDAttribute:ASTCDAttribute {
-            symbol = @friends!Symbol;
-            modifier = @_!Modifier(!4):ASTModifier {
-              r__derived = true;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @4!PrimitiveType(!2):ASTPrimitiveType {
-              primitive = 4;
-            };
-            name = "friends";
-          };
-      },
-      @Person!CDClass:ASTCDClass {
-        symbol = @Person!Symbol;
-        modifier = @_!Modifier(!5):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        name = "Person";
-        superclass = @Profile!SimpleReferenceType:ASTSimpleReferenceType {
-          names = ["Profile"];
-        };
-        cDAttributes = 
-          // *size: 7
-          @lastVisit!CDAttribute:ASTCDAttribute {
-            symbol = @lastVisit!Symbol;
-            modifier = @_!Modifier(!6):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @Date!SimpleReferenceType:ASTSimpleReferenceType {
-              names = ["Date"];
-            };
-            name = "lastVisit";
-          },
-          @firstName!CDAttribute:ASTCDAttribute {
-            symbol = @firstName!Symbol;
-            modifier = @_!Modifier(!7):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @String!SimpleReferenceType(!2):ASTSimpleReferenceType {
-              names = ["String"];
-            };
-            name = "firstName";
-          },
-          @secondName!CDAttribute:ASTCDAttribute {
-            symbol = @secondName!Symbol;
-            modifier = @_!Modifier(!8):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @String!SimpleReferenceType(!3):ASTSimpleReferenceType {
-              names = ["String"];
-            };
-            name = "secondName";
-          },
-          @dateOfBirth!CDAttribute:ASTCDAttribute {
-            symbol = @dateOfBirth!Symbol;
-            modifier = @_!Modifier(!9):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @Date!SimpleReferenceType(!2):ASTSimpleReferenceType {
-              names = ["Date"];
-            };
-            name = "dateOfBirth";
-          },
-          @zip!CDAttribute:ASTCDAttribute {
-            symbol = @zip!Symbol;
-            modifier = @_!Modifier(!10):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @4!PrimitiveType(!3):ASTPrimitiveType {
-              primitive = 4;
-            };
-            name = "zip";
-          },
-          @city!CDAttribute:ASTCDAttribute {
-            symbol = @city!Symbol;
-            modifier = @_!Modifier(!11):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @String!SimpleReferenceType(!4):ASTSimpleReferenceType {
-              names = ["String"];
-            };
-            name = "city";
-          },
-          @country!CDAttribute:ASTCDAttribute {
-            symbol = @country!Symbol;
-            modifier = @_!Modifier(!12):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @String!SimpleReferenceType(!5):ASTSimpleReferenceType {
-              names = ["String"];
-            };
-            name = "country";
-          };
-      },
-      @Group!CDClass:ASTCDClass {
-        symbol = @Group!Symbol;
-        modifier = @_!Modifier(!13):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        name = "Group";
-        superclass = @Profile!SimpleReferenceType(!2):ASTSimpleReferenceType {
-          names = ["Profile"];
-        };
-        cDAttributes = 
-          // *size: 4
-          @isOpen!CDAttribute:ASTCDAttribute {
-            symbol = @isOpen!Symbol;
-            modifier = @_!Modifier(!14):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @1!PrimitiveType:ASTPrimitiveType {
-              primitive = 1;
-            };
-            name = "isOpen";
-          },
-          @created!CDAttribute:ASTCDAttribute {
-            symbol = @created!Symbol;
-            modifier = @_!Modifier(!15):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @Date!SimpleReferenceType(!3):ASTSimpleReferenceType {
-              names = ["Date"];
-            };
-            name = "created";
-          },
-          @purpose!CDAttribute:ASTCDAttribute {
-            symbol = @purpose!Symbol;
-            modifier = @_!Modifier(!16):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @String!SimpleReferenceType(!6):ASTSimpleReferenceType {
-              names = ["String"];
-            };
-            name = "purpose";
-          },
-          @members!CDAttribute:ASTCDAttribute {
-            symbol = @members!Symbol;
-            modifier = @_!Modifier(!17):ASTModifier {
-              r__derived = true;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @4!PrimitiveType(!4):ASTPrimitiveType {
-              primitive = 4;
-            };
-            name = "members";
-          };
-      },
-      @Relationship!CDClass:ASTCDClass {
-        symbol = @Relationship!Symbol;
-        modifier = @_!Modifier(!18):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        name = "Relationship";
-        cDAttributes = 
-          // *size: 3
-          @isPending!CDAttribute:ASTCDAttribute {
-            symbol = @isPending!Symbol;
-            modifier = @_!Modifier(!19):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @1!PrimitiveType(!2):ASTPrimitiveType {
-              primitive = 1;
-            };
-            name = "isPending";
-          },
-          @requested!CDAttribute:ASTCDAttribute {
-            symbol = @requested!Symbol;
-            modifier = @_!Modifier(!20):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @Date!SimpleReferenceType(!4):ASTSimpleReferenceType {
-              names = ["Date"];
-            };
-            name = "requested";
-          },
-          @accepted!CDAttribute:ASTCDAttribute {
-            symbol = @accepted!Symbol;
-            modifier = @_!Modifier(!21):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @Date!SimpleReferenceType(!5):ASTSimpleReferenceType {
-              names = ["Date"];
-            };
-            name = "accepted";
-          };
-      },
-      @InstantMessage!CDClass:ASTCDClass {
-        symbol = @InstantMessage!Symbol;
-        modifier = @_!Modifier(!22):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        name = "InstantMessage";
-        interfaces = 
-          // *size: 1
-          @Post!SimpleReferenceType:ASTSimpleReferenceType {
-            names = ["Post"];
-          };
-        cDAttributes = 
-          // *size: 2
-          @timestamp!CDAttribute:ASTCDAttribute {
-            symbol = @timestamp!Symbol;
-            modifier = @_!Modifier(!23):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @Date!SimpleReferenceType(!6):ASTSimpleReferenceType {
-              names = ["Date"];
-            };
-            name = "timestamp";
-          },
-          @content!CDAttribute:ASTCDAttribute {
-            symbol = @content!Symbol;
-            modifier = @_!Modifier(!24):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @String!SimpleReferenceType(!7):ASTSimpleReferenceType {
-              names = ["String"];
-            };
-            name = "content";
-          };
-      },
-      @PhotoMessage!CDClass:ASTCDClass {
-        symbol = @PhotoMessage!Symbol;
-        modifier = @_!Modifier(!25):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        name = "PhotoMessage";
-        superclass = @InstantMessage!SimpleReferenceType:ASTSimpleReferenceType {
-          names = ["InstantMessage"];
-        };
-      },
-      @Photo!CDClass:ASTCDClass {
-        symbol = @Photo!Symbol;
-        modifier = @_!Modifier(!26):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        name = "Photo";
-        cDAttributes = 
-          // *size: 2
-          @height!CDAttribute:ASTCDAttribute {
-            symbol = @height!Symbol;
-            modifier = @_!Modifier(!27):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @8!PrimitiveType:ASTPrimitiveType {
-              primitive = 8;
-            };
-            name = "height";
-          },
-          @width!CDAttribute:ASTCDAttribute {
-            symbol = @width!Symbol;
-            modifier = @_!Modifier(!28):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @8!PrimitiveType(!2):ASTPrimitiveType {
-              primitive = 8;
-            };
-            name = "width";
-          };
-      },
-      @Tag!CDClass:ASTCDClass {
-        symbol = @Tag!Symbol;
-        modifier = @_!Modifier(!29):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        name = "Tag";
-        cDAttributes = 
-          // *size: 1
-          @confirmed!CDAttribute:ASTCDAttribute {
-            symbol = @confirmed!Symbol;
-            modifier = @_!Modifier(!30):ASTModifier {
-              r__derived = false;
-              r__public = false;
-              r__protected = false;
-              r__private = false;
-              r__static = false;
-              r__final = false;
-              r__abstract = false;
-            };
-            type = @1!PrimitiveType(!3):ASTPrimitiveType {
-              primitive = 1;
-            };
-            name = "confirmed";
-          };
+/*
+ * ========================================================== AST for JavaDSL
+ */
+objectdiagram HelloWorld_AST {
+  @!CompilationUnit(1,0):ASTCompilationUnit {
+    symbol = Optional_emptypty;
+    enclosingScope = @HelloWorld!ArtifactScope;
+    spannedScope = Optional_empty;
+    packageDeclaration = @!PackageDeclaration(1,0):ASTPackageDeclaration {
+      symbol = Optional_emptypty;
+      enclosingScope = @HelloWorld!ArtifactScope;
+      spannedScope = Optional_empty;
+      annotations = []; // *size: 0
+      qualifiedName = @simpleTestClasses!QualifiedName(1,8):ASTQualifiedName {
+        parts = ["simpleTestClasses"];
       };
-    cDInterfaces = 
-      // *size: 1
-      @Post!CDInterface:ASTCDInterface {
-        symbol = @Post!Symbol;
-        modifier = @_!Modifier(!31):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        name = "Post";
-      };
-    cDEnums = 
-      // *size: 1
-      @RelationType!CDEnum:ASTCDEnum {
-        symbol = @RelationType!Symbol;
-        modifier = @_!Modifier(!32):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        name = "RelationType";
-        cDEnumConstants = 
-          // *size: 5
-          @FRIEND!CDEnumConstant:ASTCDEnumConstant {
-            name = "FRIEND";
-          },
-          @FAMILY!CDEnumConstant:ASTCDEnumConstant {
-            name = "FAMILY";
-          },
-          @FOLLOWER!CDEnumConstant:ASTCDEnumConstant {
-            name = "FOLLOWER";
-          },
-          @COLLEAGUE!CDEnumConstant:ASTCDEnumConstant {
-            name = "COLLEAGUE";
-          },
-          @OTHER!CDEnumConstant:ASTCDEnumConstant {
-            name = "OTHER";
+    };
+    importDeclarations = []; // *size: 0
+    typeDeclarations = // *size: 1
+      @HelloWorld!ClassDeclaration(3,0):ASTClassDeclaration {
+        symbol = @HelloWorld!Symbol(3,0);
+        enclosingScope = @HelloWorld!ArtifactScope;
+        spanningScope = @HelloWorld!Scope;
+        modifiers = // *size: 1
+          @!PrimitiveModifier(3,0):ASTPrimitiveModifier {
+            symbol = Optional_emptypty;
+            enclosingScope = @HelloWorld!Scope;
+            spannedScope = Optional_empty;
+            modifier = 2;
           };
-      };
-    cDAssociations = 
-      // *size: 11
-      @Person-Group!CDAssociation:ASTCDAssociation {
-        symbol = @member!Symbol;
-        name = "member";
-        leftModifier = @_!Modifier(!33):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        leftCardinality = @*!Cardinality:ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        leftReferenceName = @Person!!mc.javadsl._ast.ASTQualifiedName:ASTQualifiedName {
-          parts = ["Person"];
-        };
-        rightReferenceName = @Group!!mc.javadsl._ast.ASTQualifiedName:ASTQualifiedName {
-          parts = ["Group"];
-        };
-        rightCardinality = @*!Cardinality(!2):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        rightModifier = @_!Modifier(!34):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        r__composition = false;
-        r__association = true;
-        r__derived = false;
-        unspecified = false;
-        bidirectional = true;
-        rightToLeft = false;
-        leftToRight = false;
-      },
-      @!CDAssociation:ASTCDAssociation {
-        leftModifier = @_!Modifier(!35):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        leftCardinality = @1!Cardinality:ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = true;
-          many = false;
-        };
-        leftReferenceName = @Person!!mc.javadsl._ast.ASTQualifiedName(!2):ASTQualifiedName {
-          parts = ["Person"];
-        };
-        leftRole = "organizer";
-        rightRole = "organized";
-        rightQualifier = @!CDQualifier:ASTCDQualifier {
-          symbol = @profileName!Symbol(!2);
-          type = @profileName!SimpleReferenceType:ASTSimpleReferenceType {
-            names = ["profileName"];
-          };
-        };
-        rightReferenceName = @Group!!mc.javadsl._ast.ASTQualifiedName(!2):ASTQualifiedName {
-          parts = ["Group"];
-        };
-        rightCardinality = @*!Cardinality(!3):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        rightModifier = @_!Modifier(!36):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        r__composition = false;
-        r__association = true;
-        r__derived = false;
-        unspecified = false;
-        bidirectional = true;
-        rightToLeft = false;
-        leftToRight = false;
-      },
-      @Relationship-Profile!CDAssociation:ASTCDAssociation {
-        symbol = @invited!Symbol;
-        name = "invited";
-        leftModifier = @_!Modifier(!37):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        leftCardinality = @*!Cardinality(!4):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        leftReferenceName = @Relationship!!mc.javadsl._ast.ASTQualifiedName:ASTQualifiedName {
-          parts = ["Relationship"];
-        };
-        rightReferenceName = @Profile!!mc.javadsl._ast.ASTQualifiedName:ASTQualifiedName {
-          parts = ["Profile"];
-        };
-        rightCardinality = @1!Cardinality(!2):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = true;
-          many = false;
-        };
-        rightModifier = @_!Modifier(!38):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        r__composition = false;
-        r__association = true;
-        r__derived = false;
-        unspecified = false;
-        bidirectional = true;
-        rightToLeft = false;
-        leftToRight = false;
-      },
-      @Relationship-Profile!CDAssociation(!2):ASTCDAssociation {
-        symbol = @initiated!Symbol;
-        name = "initiated";
-        leftModifier = @_!Modifier(!39):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        leftCardinality = @*!Cardinality(!5):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        leftReferenceName = @Relationship!!mc.javadsl._ast.ASTQualifiedName(!2):ASTQualifiedName {
-          parts = ["Relationship"];
-        };
-        rightReferenceName = @Profile!!mc.javadsl._ast.ASTQualifiedName(!2):ASTQualifiedName {
-          parts = ["Profile"];
-        };
-        rightCardinality = @1!Cardinality(!3):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = true;
-          many = false;
-        };
-        rightModifier = @_!Modifier(!40):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        r__composition = false;
-        r__association = true;
-        r__derived = false;
-        unspecified = false;
-        bidirectional = true;
-        rightToLeft = false;
-        leftToRight = false;
-      },
-      @!CDAssociation(!2):ASTCDAssociation {
-        leftModifier = @_!Modifier(!41):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        leftReferenceName = @Relationship!!mc.javadsl._ast.ASTQualifiedName(!3):ASTQualifiedName {
-          parts = ["Relationship"];
-        };
-        rightReferenceName = @RelationType!!mc.javadsl._ast.ASTQualifiedName:ASTQualifiedName {
-          parts = ["RelationType"];
-        };
-        rightCardinality = @1!Cardinality(!4):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = true;
-          many = false;
-        };
-        rightModifier = @_!Modifier(!42):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        r__composition = false;
-        r__association = true;
-        r__derived = false;
-        unspecified = false;
-        bidirectional = false;
-        rightToLeft = false;
-        leftToRight = true;
-      },
-      @Profile-Post!CDAssociation:ASTCDAssociation {
-        symbol = @received!Symbol;
-        name = "received";
-        leftModifier = @_!Modifier(!43):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        leftCardinality = @*!Cardinality(!6):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        leftReferenceName = @Profile!!mc.javadsl._ast.ASTQualifiedName(!3):ASTQualifiedName {
-          parts = ["Profile"];
-        };
-        rightReferenceName = @Post!!mc.javadsl._ast.ASTQualifiedName:ASTQualifiedName {
-          parts = ["Post"];
-        };
-        rightCardinality = @*!Cardinality(!7):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        rightModifier = @_!Modifier(!44):ASTModifier {
-          stereotype = @ordered!Stereotype:ASTStereotype {
-            values = 
-              // *size: 1
-              @ordered!StereoValue:ASTStereoValue {
-                name = "ordered";
+        name = "HelloWorld";
+        typeParameters = Optional_empty;
+        superClass = Optional_empty;
+        implementedInterfaces = []; // *size: 0
+        classBody = @!ClassBody(3,24):ASTClassBody {
+          symbol = Optional_emptypty;
+          enclosingScope = @HelloWorld!Scope;
+          spannedScope = Optional_empty;
+          classBodyDeclarations = // *size: 1
+            @!MethodDeclaration(4,2):ASTMethodDeclaration {
+              symbol = @main!Symbol(4,2);
+              enclosingScope = @HelloWorld!Scope;
+              spanningScope = @main!Scope;
+              methodSignature = @main!MethodSignature(4,2):ASTMethodSignature {
+                symbol = Optional_emptypty;
+                enclosingScope = @main!Scope;
+                spannedScope = Optional_empty;
+                modifiers = // *size: 2
+                  @!PrimitiveModifier(4,2):ASTPrimitiveModifier {
+                    symbol = Optional_emptypty;
+                    enclosingScope = @main!Scope;
+                    spannedScope = Optional_empty;
+                    modifier = 2;
+                  },
+                  @!PrimitiveModifier(4,9):ASTPrimitiveModifier {
+                    symbol = Optional_emptypty;
+                    enclosingScope = @main!Scope;
+                    spannedScope = Optional_empty;
+                    modifier = 4;
+                  };
+                typeParameters = Optional_empty;
+                returnType = @!VoidType(4,16):ASTVoidType {
+                };
+                name = "main";
+                formalParameters = @!FormalParameters(4,25):ASTFormalParameters {
+                  symbol = Optional_emptypty;
+                  enclosingScope = @main!Scope;
+                  spannedScope = Optional_empty;
+                  formalParameterListing = @!FormalParameterListing(4,26):ASTFormalParameterListing {
+                    symbol = Optional_emptypty;
+                    enclosingScope = @main!Scope;
+                    spannedScope = Optional_empty;
+                    formalParameters = // *size: 1
+                      @args!FormalParameter(4,26):ASTFormalParameter {
+                        symbol = @args!Symbol(4,26);
+                        enclosingScope = @main!Scope;
+                        spannedScope = Optional_empty;
+                        primitiveModifiers = []; // *size: 0
+                        type = @!ComplexArrayType(4,26):ASTComplexArrayType {
+                          componentType = @!ComplexReferenceType(4,26):ASTComplexReferenceType {
+                            simpleReferenceTypes = 
+                              @String!SimpleReferenceType(4,26):ASTSimpleReferenceType {
+                                names = ["String"];
+                              };
+                          };
+                          dimensions = 1;
+                        };
+                        declaratorId = @args!DeclaratorId(4,35):ASTDeclaratorId {
+                          symbol = Optional_emptypty;
+                          enclosingScope = @main!Scope;
+                          spannedScope = Optional_empty;
+                          name = "args";
+                          dim = [];
+                        };
+                      };
+                    lastFormalParameter = Optional_empty;
+                  };
+                };
+                r__throws = Optional_empty;
+                dim = [];
               };
-          };
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        r__composition = false;
-        r__association = true;
-        r__derived = false;
-        unspecified = false;
-        bidirectional = true;
-        rightToLeft = false;
-        leftToRight = false;
-      },
-      @Profile-Post!CDAssociation(!2):ASTCDAssociation {
-        symbol = @sent!Symbol;
-        name = "sent";
-        leftModifier = @_!Modifier(!45):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        leftCardinality = @1!Cardinality(!5):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = true;
-          many = false;
-        };
-        leftReferenceName = @Profile!!mc.javadsl._ast.ASTQualifiedName(!4):ASTQualifiedName {
-          parts = ["Profile"];
-        };
-        rightReferenceName = @Post!!mc.javadsl._ast.ASTQualifiedName(!2):ASTQualifiedName {
-          parts = ["Post"];
-        };
-        rightCardinality = @*!Cardinality(!8):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        rightModifier = @_!Modifier(!46):ASTModifier {
-          stereotype = @ordered!Stereotype(!2):ASTStereotype {
-            values = 
-              // *size: 1
-              @ordered!StereoValue(!2):ASTStereoValue {
-                name = "ordered";
+              methodBody = @!JavaBlock(4,41):ASTJavaBlock {
+                symbol = Optional_emptypty;
+                enclosingScope = @main!Scope;
+                spannedScope = Optional_empty;
+                blockStatements = // *size: 1
+                  @!ExpressionStatement(5,4):ASTExpressionStatement {
+                    symbol = Optional_emptypty;
+                    enclosingScope = @main!Scope;
+                    spannedScope = Optional_empty;
+                    expression = @!Expression(5,4):ASTExpression {
+                      symbol = Optional_emptypty;
+                      enclosingScope = @main!Scope;
+                      spannedScope = Optional_empty;
+                      primaryExpression = Optional_empty;
+                      name = Optional_empty;
+                      innerCreator = Optional_empty;
+                      superSuffix = Optional_empty;
+                      explicitGenericInvocation = Optional_empty;
+                      arrayExpression = Optional_empty;
+                      indexExpression = Optional_empty;
+                      callExpression = @println!Expression(5,4):ASTExpression {
+                        symbol = Optional_emptypty;
+                        enclosingScope = @main!Scope;
+                        spannedScope = Optional_empty;
+                        primaryExpression = Optional_empty;
+                        name = "println";
+                        innerCreator = Optional_empty;
+                        superSuffix = Optional_empty;
+                        explicitGenericInvocation = Optional_empty;
+                        arrayExpression = Optional_empty;
+                        indexExpression = Optional_empty;
+                        callExpression = Optional_empty;
+                        parameterExpression = []; // *size: 0
+                        creator = Optional_empty;
+                        typeCastType = Optional_empty;
+                        expression = @out!Expression(5,4):ASTExpression {
+                          symbol = Optional_emptypty;
+                          enclosingScope = @main!Scope;
+                          spannedScope = Optional_empty;
+                          primaryExpression = Optional_empty;
+                          name = "out";
+                          innerCreator = Optional_empty;
+                          superSuffix = Optional_empty;
+                          explicitGenericInvocation = Optional_empty;
+                          arrayExpression = Optional_empty;
+                          indexExpression = Optional_empty;
+                          callExpression = Optional_empty;
+                          parameterExpression = []; // *size: 0
+                          creator = Optional_empty;
+                          typeCastType = Optional_empty;
+                          expression = @!Expression(5,4!2):ASTExpression {
+                            symbol = Optional_emptypty;
+                            enclosingScope = @main!Scope;
+                            spannedScope = Optional_empty;
+                            primaryExpression = @System!PrimaryExpression(5,4):ASTPrimaryExpression {
+                              symbol = Optional_emptypty;
+                              enclosingScope = @main!Scope;
+                              spannedScope = Optional_empty;
+                              expression = Optional_empty;
+                              literal = Optional_empty;
+                              name = "System";
+                              returnType = Optional_empty;
+                              explicitGenericInvocation = Optional_empty;
+                              typeArguments = Optional_empty;
+                              arguments = Optional_empty;
+                              r__super = false;
+                              r__this = false;
+                            };
+                            name = Optional_empty;
+                            innerCreator = Optional_empty;
+                            superSuffix = Optional_empty;
+                            explicitGenericInvocation = Optional_empty;
+                            arrayExpression = Optional_empty;
+                            indexExpression = Optional_empty;
+                            callExpression = Optional_empty;
+                            parameterExpression = []; // *size: 0
+                            creator = Optional_empty;
+                            typeCastType = Optional_empty;
+                            expression = Optional_empty;
+                            instanceofType = Optional_empty;
+                            condition = Optional_empty;
+                            trueExpression = Optional_empty;
+                            falseExpression = Optional_empty;
+                            leftExpression = Optional_empty;
+                            rightExpression = Optional_empty;
+                            suffixOp = Optional_empty;
+                            prefixOp = Optional_empty;
+                            booleanNot = Optional_empty;
+                            multiplicativeOp = Optional_empty;
+                            additiveOp = Optional_empty;
+                            shiftOp = Optional_empty;
+                            comparison = Optional_empty;
+                            identityTest = Optional_empty;
+                            binaryAndOp = Optional_empty;
+                            binaryXorOp = Optional_empty;
+                            binaryOrOp = Optional_empty;
+                            booleanAndOp = Optional_empty;
+                            booleanOrOp = Optional_empty;
+                            assignment = Optional_empty;
+                            r__this = false;
+                          };
+                          instanceofType = Optional_empty;
+                          condition = Optional_empty;
+                          trueExpression = Optional_empty;
+                          falseExpression = Optional_empty;
+                          leftExpression = Optional_empty;
+                          rightExpression = Optional_empty;
+                          suffixOp = Optional_empty;
+                          prefixOp = Optional_empty;
+                          booleanNot = Optional_empty;
+                          multiplicativeOp = Optional_empty;
+                          additiveOp = Optional_empty;
+                          shiftOp = Optional_empty;
+                          comparison = Optional_empty;
+                          identityTest = Optional_empty;
+                          binaryAndOp = Optional_empty;
+                          binaryXorOp = Optional_empty;
+                          binaryOrOp = Optional_empty;
+                          booleanAndOp = Optional_empty;
+                          booleanOrOp = Optional_empty;
+                          assignment = Optional_empty;
+                          r__this = false;
+                        };
+                        instanceofType = Optional_empty;
+                        condition = Optional_empty;
+                        trueExpression = Optional_empty;
+                        falseExpression = Optional_empty;
+                        leftExpression = Optional_empty;
+                        rightExpression = Optional_empty;
+                        suffixOp = Optional_empty;
+                        prefixOp = Optional_empty;
+                        booleanNot = Optional_empty;
+                        multiplicativeOp = Optional_empty;
+                        additiveOp = Optional_empty;
+                        shiftOp = Optional_empty;
+                        comparison = Optional_empty;
+                        identityTest = Optional_empty;
+                        binaryAndOp = Optional_empty;
+                        binaryXorOp = Optional_empty;
+                        binaryOrOp = Optional_empty;
+                        booleanAndOp = Optional_empty;
+                        booleanOrOp = Optional_empty;
+                        assignment = Optional_empty;
+                        r__this = false;
+                      };
+                      parameterExpression = // *size: 1
+                        @!Expression(5,23):ASTExpression {
+                          symbol = Optional_emptypty;
+                          enclosingScope = @main!Scope;
+                          spannedScope = Optional_empty;
+                          primaryExpression = @!PrimaryExpression(5,23):ASTPrimaryExpression {
+                            symbol = Optional_emptypty;
+                            enclosingScope = @main!Scope;
+                            spannedScope = Optional_empty;
+                            expression = Optional_empty;
+                            literal = @Hello_World_!StringLiteral(5,23):ASTStringLiteral {
+                              source = "Hello World!";
+                            };
+                            name = Optional_empty;
+                            returnType = Optional_empty;
+                            explicitGenericInvocation = Optional_empty;
+                            typeArguments = Optional_empty;
+                            arguments = Optional_empty;
+                            r__super = false;
+                            r__this = false;
+                          };
+                          name = Optional_empty;
+                          innerCreator = Optional_empty;
+                          superSuffix = Optional_empty;
+                          explicitGenericInvocation = Optional_empty;
+                          arrayExpression = Optional_empty;
+                          indexExpression = Optional_empty;
+                          callExpression = Optional_empty;
+                          parameterExpression = []; // *size: 0
+                          creator = Optional_empty;
+                          typeCastType = Optional_empty;
+                          expression = Optional_empty;
+                          instanceofType = Optional_empty;
+                          condition = Optional_empty;
+                          trueExpression = Optional_empty;
+                          falseExpression = Optional_empty;
+                          leftExpression = Optional_empty;
+                          rightExpression = Optional_empty;
+                          suffixOp = Optional_empty;
+                          prefixOp = Optional_empty;
+                          booleanNot = Optional_empty;
+                          multiplicativeOp = Optional_empty;
+                          additiveOp = Optional_empty;
+                          shiftOp = Optional_empty;
+                          comparison = Optional_empty;
+                          identityTest = Optional_empty;
+                          binaryAndOp = Optional_empty;
+                          binaryXorOp = Optional_empty;
+                          binaryOrOp = Optional_empty;
+                          booleanAndOp = Optional_empty;
+                          booleanOrOp = Optional_empty;
+                          assignment = Optional_empty;
+                          r__this = false;
+                        };
+                      creator = Optional_empty;
+                      typeCastType = Optional_empty;
+                      expression = Optional_empty;
+                      instanceofType = Optional_empty;
+                      condition = Optional_empty;
+                      trueExpression = Optional_empty;
+                      falseExpression = Optional_empty;
+                      leftExpression = Optional_empty;
+                      rightExpression = Optional_empty;
+                      suffixOp = Optional_empty;
+                      prefixOp = Optional_empty;
+                      booleanNot = Optional_empty;
+                      multiplicativeOp = Optional_empty;
+                      additiveOp = Optional_empty;
+                      shiftOp = Optional_empty;
+                      comparison = Optional_empty;
+                      identityTest = Optional_empty;
+                      binaryAndOp = Optional_empty;
+                      binaryXorOp = Optional_empty;
+                      binaryOrOp = Optional_empty;
+                      booleanAndOp = Optional_empty;
+                      booleanOrOp = Optional_empty;
+                      assignment = Optional_empty;
+                      r__this = false;
+                    };
+                  };
               };
-          };
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
+            };
         };
-        r__composition = false;
-        r__association = true;
-        r__derived = false;
-        unspecified = false;
-        bidirectional = true;
-        rightToLeft = false;
-        leftToRight = false;
-      },
-      @!CDAssociation(!3):ASTCDAssociation {
-        leftModifier = @_!Modifier(!47):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        leftCardinality = @*!Cardinality(!9):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        leftReferenceName = @InstantMessage!!mc.javadsl._ast.ASTQualifiedName:ASTQualifiedName {
-          parts = ["InstantMessage"];
-        };
-        rightRole = "replyTo";
-        rightReferenceName = @InstantMessage!!mc.javadsl._ast.ASTQualifiedName(!2):ASTQualifiedName {
-          parts = ["InstantMessage"];
-        };
-        rightCardinality = @1!Cardinality(!6):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = true;
-          many = false;
-        };
-        rightModifier = @_!Modifier(!48):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        r__composition = false;
-        r__association = true;
-        r__derived = false;
-        unspecified = false;
-        bidirectional = true;
-        rightToLeft = false;
-        leftToRight = false;
-      },
-      @!CDAssociation(!4):ASTCDAssociation {
-        leftModifier = @_!Modifier(!49):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        leftCardinality = @*!Cardinality(!10):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        leftReferenceName = @Photo!!mc.javadsl._ast.ASTQualifiedName:ASTQualifiedName {
-          parts = ["Photo"];
-        };
-        leftRole = "picture";
-        rightReferenceName = @PhotoMessage!!mc.javadsl._ast.ASTQualifiedName:ASTQualifiedName {
-          parts = ["PhotoMessage"];
-        };
-        rightModifier = @_!Modifier(!50):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        r__composition = false;
-        r__association = true;
-        r__derived = false;
-        unspecified = false;
-        bidirectional = true;
-        rightToLeft = false;
-        leftToRight = false;
-      },
-      @!CDAssociation(!5):ASTCDAssociation {
-        leftModifier = @_!Modifier(!51):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        leftCardinality = @1!Cardinality(!7):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = true;
-          many = false;
-        };
-        leftReferenceName = @Person!!mc.javadsl._ast.ASTQualifiedName(!3):ASTQualifiedName {
-          parts = ["Person"];
-        };
-        leftRole = "tagged";
-        rightReferenceName = @Tag!!mc.javadsl._ast.ASTQualifiedName:ASTQualifiedName {
-          parts = ["Tag"];
-        };
-        rightCardinality = @*!Cardinality(!11):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        rightModifier = @_!Modifier(!52):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        r__composition = false;
-        r__association = true;
-        r__derived = false;
-        unspecified = false;
-        bidirectional = true;
-        rightToLeft = false;
-        leftToRight = false;
-      },
-      @!CDAssociation(!6):ASTCDAssociation {
-        leftModifier = @_!Modifier(!53):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        leftCardinality = @*!Cardinality(!12):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = false;
-          many = true;
-        };
-        leftReferenceName = @Tag!!mc.javadsl._ast.ASTQualifiedName(!2):ASTQualifiedName {
-          parts = ["Tag"];
-        };
-        rightReferenceName = @Photo!!mc.javadsl._ast.ASTQualifiedName(!2):ASTQualifiedName {
-          parts = ["Photo"];
-        };
-        rightCardinality = @1!Cardinality(!8):ASTCardinality {
-          optional = false;
-          oneToMany = false;
-          one = true;
-          many = false;
-        };
-        rightModifier = @_!Modifier(!54):ASTModifier {
-          r__derived = false;
-          r__public = false;
-          r__protected = false;
-          r__private = false;
-          r__static = false;
-          r__final = false;
-          r__abstract = false;
-        };
-        r__composition = false;
-        r__association = true;
-        r__derived = false;
-        unspecified = false;
-        bidirectional = true;
-        rightToLeft = false;
-        leftToRight = false;
       };
 }}
+
+/*
+ * ========================================================== Explanation
+ * Shows the AST with all attributes as object diagram
+ */

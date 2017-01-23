@@ -1,0 +1,13 @@
+package examples.od;
+
+(...) objectdiagram Examples {
+
+@3Multiplicity(7,3,2):Rule {content = "R1:";}
+  @A1:ActionA {
+    rule1 = @3Multiplicity(7,3,2);
+    rule2 = @R2_:Rule;
+  }
+  @A2:ActionB{}
+  link @A1 -> @A2;
+
+}

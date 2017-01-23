@@ -15,6 +15,7 @@ grammar OD extends de.monticore.common.Common {
       ("package" package:(Name& || ".")+ ";")?
       Version? 
       (ImportStatement)*
+      ConformsStatement?
       ODDefinition;
 
     /*========================================================================*/
@@ -25,30 +26,23 @@ grammar OD extends de.monticore.common.Common {
      */
     abstract ODElement;
 
-    /** ASTODObject represents an Object in a UML Objectdiagram
-      @attribute completeness Optional Comleteness of this Object
-      @attribute modifier     Optional Modifier of this Object
-      @attribute name         Optional Name of this Object
-      @attribute type         Optional Type of this Object
-      @attribute oDAttributes List of Attributes of this Object
+    /** ASTODCommonObject represents an Object in a UML Objectdiagram
     */
-    interface ODCommonObject =
-      Completeness?
-      Modifier?
-	  ( Name | type:ReferenceType)
-      (
-        ((oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection)* )
-      );
+    interface ODCommonObject;
    
-     // TODO external Value;
-     Value = SignedLiteral;
-
      Version = "version" StringLiteral ";";
 
     /*========================================================================*/
     /*============================== Grammar =================================*/
     /*========================================================================*/
 
+    /** ASTODDefinition represents a ASTConformsStatement
+      @attribute conformedModels    List of conformed models 
+    */
+  	ConformsStatement = 
+	  "conformsTo" conformedModels:(QualifiedName || ",")+ ";";
+	  
+	  
     /** ASTODDefinition represents a UML Objectdiagram
       @attribute completeness Optional Comleteness of this Objectdiagramm
       @attribute stereotype   Optional Stereotype
@@ -59,7 +53,7 @@ grammar OD extends de.monticore.common.Common {
     ODDefinition@! =
       Completeness?
       Stereotype?
-      ("objectdiagram" | "astobjectdiagram") Name
+      "objectdiagram" Name
       "{"
       (
         oDObjects:ODObject
@@ -81,7 +75,7 @@ grammar OD extends de.monticore.common.Common {
       Modifier?
 	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
-        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection ";")* "}")
+        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink)* "}")
         |
         ";"?
       );
@@ -97,7 +91,7 @@ grammar OD extends de.monticore.common.Common {
       Modifier?
       Type?
       Name
-      ("=" (Value | ODValueCollection))? ";";
+      ("=" (ODValue | ODValueCollection | ODValueMap))? ";";
         
         
     /** ASTODLinkQualifier represents a reference to a Qualifier of Links 
@@ -106,7 +100,7 @@ grammar OD extends de.monticore.common.Common {
       @attribute name     Name of a referenced attribute (if set)
       @attribute value    Concrete value of this qualifier (if set)
     */
-    ODLinkQualifier = "[[" Name "]]" | "[" Value "]";
+    ODLinkQualifier = "[[" Name "]]" | "[" ODValue "]";
 
     
     /** ASTODLink represents a Link between Objects
@@ -161,8 +155,8 @@ grammar OD extends de.monticore.common.Common {
       ";";
       
     ODInnerLink = 
-	  (linkName:Name ("=" | "->"))? (ODInnerObject || ",")+ ";";
-      
+	  (linkName:Name ("=" | aggregable:["->"]))? ((ODInnerObject || ",")+ | ("[" (ODQualifiedInnerObject || ",")* "]"))";";
+	  
     /** ASTODInnerObject represents an Object in a UML Objectdiagram
       @attribute completeness Optional Comleteness of this Object
       @attribute modifier     Optional Modifier of this Object
@@ -175,13 +169,22 @@ grammar OD extends de.monticore.common.Common {
       Modifier?
 	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
-        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink | valueCollections:ODValueCollection)* "}")?
+        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink)* "}")?
       );
-    
-    
+        
+	ODQualifiedInnerObject =
+	  ((Name | ODValue) "->")? ODInnerObject;	  
+      
     ODValueCollection = 
-      "[" values:Value ("," values:Value)* "]" ;
+      "[" values:(ODValue || ",")* "]" ;
           
+    ODValueMap = 
+      "[" entries:(ODEntry || ",")* "]" ;
+      
+    ODEntry = key:ODValue "->" value:ODValue;
+    
+    ODValue = SignedLiteral | ["Optional_empty"]; 
+ 
     token ODName = '@'
     	( 'a'..'z' | 'A'..'Z' | '0'..'9' 
     	| '_' | '$' | '-' | '+' | '.' | '!' | '§' | '$' | '%' | '@' | '*'

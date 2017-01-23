@@ -23,12 +23,12 @@ objectdiagram QualifiedLinks {
     isActive = false;
   }
 
-link o1 -> a1;
+  link o1 -> a1;
 
-//  link o1 [[auctionIdent]] -> a1;
+  link o1 [[auctionIdent]] -> a1;
 
-//  link o1 [[auctionIdent]] -> a2;
+  link o1 [[auctionIdent]] -> a2;
 
-//  link o1 ["xyz"] -> p1;
+  link o1 ["xyz"] -> p1;
 
 }
