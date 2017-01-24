@@ -1,17 +1,15 @@
 package examples.od;
 
-version "1.0.9";
-
-(...) <<global_stereotypes>>
+<<global_stereotypes>>
 objectdiagram Variants {
 
 //TODO  ocl:[context o3 inv: attr3 > 0;]
 //TODO  java:[o3.attr6 > 0]
 //TODO  [o3.attr7 == 0]
 
-  (...) <<object_specific_stereotypes>> o1:type1;
-  (...) local o2:type2<T>;
-  (c) o3:type3 {
+  <<object_specific_stereotypes>> o1:type1;
+  local o2:type2<T>;
+  o3:type3 {
     public int attr1;
     private static type1 attr2;
     protected final attr3 = 5;

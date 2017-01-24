@@ -46,7 +46,7 @@ objectdiagram HelloWorld_AST {
                 enclosingScope = @main!Scope;
                 spannedScope = Optional_empty;
                 modifiers = // *size: 2
-                  @!PrimitiveModifier(4,2):ASTPrimitiveModifier {
+                  [@!PrimitiveModifier(4,2):ASTPrimitiveModifier {
                     symbol = Optional_emptypty;
                     enclosingScope = @main!Scope;
                     spannedScope = Optional_empty;
@@ -57,7 +57,7 @@ objectdiagram HelloWorld_AST {
                     enclosingScope = @main!Scope;
                     spannedScope = Optional_empty;
                     modifier = 4;
-                  };
+                  }];
                 typeParameters = Optional_empty;
                 returnType = @!VoidType(4,16):ASTVoidType {
                 };

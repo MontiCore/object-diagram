@@ -1,0 +1,18 @@
+objectdiagram InnerObjectWithoutLink{
+
+    myObject:ObjectType{
+
+        InnerObjectWithoutLink:ObjectType2;
+
+    }
+
+    linkList1 = [
+            @objectName1:T1,
+            @objectName2:T2{
+                @objectName3:T3{
+                    content = "on4";
+                };
+            }
+        ];
+
+}

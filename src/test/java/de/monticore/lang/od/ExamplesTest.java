@@ -115,6 +115,11 @@ public class ExamplesTest {
   public void testExamples() throws RecognitionException, IOException {
     test("src/test/resources/examples/od/Examples.od");
   }
+
+  @Test
+  public void testInnerObjectWithoutLink() throws RecognitionException, IOException{
+    negativTest("src/test/resources/examples/od/InnerObjectWithoutLink.od");
+  }
   
   private void test(String modelName)
       throws RecognitionException, IOException {
@@ -141,5 +146,12 @@ public class ExamplesTest {
     // must be equal to original parsed AST.
     assertTrue("pretty printed OD: " + ppResult, odDef.get().deepEquals(ppOd.get()));
     
+  }
+
+  private void negativTest(String modelName) throws RecognitionException, IOException{
+    Path model = Paths.get(modelName);
+    ODParser parser = new ODParser();
+    parser.parseODCompilationUnit(model.toString());
+    assertTrue(parser.hasErrors());
   }
 }

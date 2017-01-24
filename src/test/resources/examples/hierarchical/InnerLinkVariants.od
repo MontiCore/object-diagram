@@ -8,23 +8,29 @@ objectdiagram InnerLinkVariants {
 
   myObject:ObjectType;
   
-  anotherObject:ObjectType {
+  objectWithoutLinkName:TypeOfObject{
+
     innerLink = myObject;
-    
-    innerLink2 = :TypeOfAnonymousObject {
-      name = "anonymous";
+
+    innerLink2 = :TypeOfAnonymousObject{
+        name = "anonymous";
     };
-    
-    objectWithoutLinkName:TypeOfAnonymousObject;
-	
-	linkname1 ->
-	  @objectname1:T1 { objectname4; },
-  	  @objectname2:T2,
-  	  @objectname3:T2 { objectname5; };
-	
-	linkname2 -> @objectname6, @objectname7; 
+
+    linkList1 = [
+        @objectName1:T1,
+        @objectName2:T2{
+            depthInnerLink = @objectName3:T3{
+                content = "on4";
+            };
+        }
+    ];
+
+    linkList2 -> @objectName4;
+    linkList2 -> @objectName5;
+
+    linkList3 -> [@objectName6, @objectName7];
+    linkList3 -> @objectName8;
 
   }
-  
   
 }

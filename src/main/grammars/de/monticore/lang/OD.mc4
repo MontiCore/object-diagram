@@ -7,51 +7,52 @@ grammar OD extends de.monticore.common.Common {
     /*========================================================================*/
     
     /** ASTODCompilationUnit represents the complete Diagram
-      @attribute package          The package declaration of this Objectdiagram
+      @attribute package The package declaration of this Objectdiagram
       @attribute importStatements List of imported elements
+      @attribute oDConformsStatement
       @attribute oDDefinition   
     */
     ODCompilationUnit =
       ("package" package:(Name& || ".")+ ";")?
-      Version? 
       (ImportStatement)*
-      ConformsStatement?
+      ODConformsStatement?
       ODDefinition;
+
 
     /*========================================================================*/
     /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
     /*========================================================================*/
 
-    /** ASTODElement represents all Elements of a UML Objectdiagram
-     */
-    abstract ODElement;
-
-    /** ASTODCommonObject represents an Object in a UML Objectdiagram
+    /** ASTODDate represents a Date Format in a UML Objectdiagram
+        @attribute year
+        @attribute month
+        @attribute day
+        @attribute hour
+        @attribute minute
+        @attribute second
     */
-    interface ODCommonObject;
-   
-     Version = "version" StringLiteral ";";
+    interface ODDate =
+        year:IntLiteral+ day:IntLiteral
+        hour:IntLiteral+ minute:IntLiteral+ second:IntLiteral+;
 
     /*========================================================================*/
     /*============================== Grammar =================================*/
     /*========================================================================*/
 
-    /** ASTODDefinition represents a ASTConformsStatement
+    /** ASTODConformsStatement represents a conform statement
       @attribute conformedModels    List of conformed models 
     */
-  	ConformsStatement = 
+  	ODConformsStatement =
 	  "conformsTo" conformedModels:(QualifiedName || ",")+ ";";
 	  
 	  
     /** ASTODDefinition represents a UML Objectdiagram
-      @attribute completeness Optional Comleteness of this Objectdiagramm
       @attribute stereotype   Optional Stereotype
       @attribute name         Name of this Objectdiagram
       @attribute oDObjects    List of Objects of this Objectdiagram
       @attribute oDLinks      List of Links of this Objectdiagram
     */
     ODDefinition@! =
-      Completeness?
       Stereotype?
       "objectdiagram" Name
       "{"
@@ -64,14 +65,12 @@ grammar OD extends de.monticore.common.Common {
     
     
     /** ASTODObject represents an Object in a UML Objectdiagram
-      @attribute completeness Optional Comleteness of this Object
       @attribute modifier     Optional Modifier of this Object
       @attribute name         Optional Name of this Object
       @attribute type         Optional Type of this Object
       @attribute oDAttributes List of Attributes of this Object
     */
-    ODObject@! extends ODElement implements ODCommonObject=
-      Completeness?
+    ODObject@! =
       Modifier?
 	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
@@ -91,7 +90,7 @@ grammar OD extends de.monticore.common.Common {
       Modifier?
       Type?
       Name
-      ("=" (ODValue | ODValueCollection | ODValueMap))? ";";
+      ("=" (ODValue | ODValueList | ODValueMap))? ";";
         
         
     /** ASTODLinkQualifier represents a reference to a Qualifier of Links 
@@ -129,7 +128,7 @@ grammar OD extends de.monticore.common.Common {
                                      right side of this Link
       @attribute rightModifier       Optional right side Modifier
     */
-    ODLink extends ODElement =
+    ODLink =
       Stereotype?
       (
         ["link"]
@@ -153,38 +152,83 @@ grammar OD extends de.monticore.common.Common {
       (rightReferenceNames:ODName |rightReferenceNames:Name) ("," (rightReferenceNames:ODName | rightReferenceNames:Name))*
       rightModifier:Modifier?
       ";";
-      
+
     ODInnerLink = 
-	  (linkName:Name ("=" | aggregable:["->"]))? ((ODInnerObject || ",")+ | ("[" (ODQualifiedInnerObject || ",")* "]"))";";
+	  linkName:Name ("=" | aggregable:["->"]) (ODInnerObject | ("[" ((ODInnerObject || ",")* | (ODQualifiedInnerObject || ",")*) "]"))";";
 	  
     /** ASTODInnerObject represents an Object in a UML Objectdiagram
-      @attribute completeness Optional Comleteness of this Object
-      @attribute modifier     Optional Modifier of this Object
       @attribute name         Optional Name of this Object
       @attribute type         Optional Type of this Object
       @attribute oDAttributes List of Attributes of this Object
+      @attribute oDInnerLink List of inner OD links
     */
-    ODInnerObject@! implements ODCommonObject=
-      Completeness?
-      Modifier?
+    ODInnerObject@! =
 	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
         ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink)* "}")?
       );
-        
+
+    /** ASTODInnerObject represents an Object in a UML Objectdiagram
+      @attribute name         Optional Name of this Object
+      @attribute type         Optional Type of this Object
+      @attribute oDAttributes List of Attributes of this Object
+      @attribute oDInnerLink List of inner OD links
+    */
 	ODQualifiedInnerObject =
-	  ((Name | ODValue) "->")? ODInnerObject;	  
-      
-    ODValueCollection = 
+	  (Name | ODValue) "->" ODInnerObject;
+
+    /** ASTODValueList represents a List in a UML Objectdiagram
+      @attribute values List of possible values
+    */
+    ODValueList =
       "[" values:(ODValue || ",")* "]" ;
-          
+
+    /** ASTODValueMap represents a Map in a UML Objectdiagram
+      @attribute entries List of Mappings
+    */
     ODValueMap = 
       "[" entries:(ODEntry || ",")* "]" ;
-      
+
+    /** ASTODEntry represents a (Key, Value)-Pair in a UML Objectdiagram
+      @attribute key
+      @attribute value
+    */
     ODEntry = key:ODValue "->" value:ODValue;
-    
-    ODValue = SignedLiteral | ["Optional_empty"]; 
- 
+
+    /** ASTODValue represents possible values in a UML Objectdiagram
+      @attribute oDOptionals Values in form of Optionals
+      @attribute oDDate ODDate object
+      @attribute signedLiteral Possible Literals
+    */
+    ODValue = ODOptionals | ODDate | SignedLiteral;
+
+    /** ASTODOptionals represents Optional Objects in a UML Objectdiagram
+      @attribute optEmpty Indicates whether the optional is empty
+      @attribute optValue Represents the optional value
+    */
+    ODOptionals = optEmpty:["Optional.Empty"] | ("Optional.of(" optValue:SignedLiteral ")");
+
+    /**
+    /*  DateFormat "yyyy-MM-dd HH:mm:ss"
+    */
+    ODDateV1 implements ODDate =
+        year:IntLiteral+ "-" month:IntLiteral+ "-" day:IntLiteral
+        hour:IntLiteral+ ":" minute:IntLiteral+ ":" second:IntLiteral+;
+
+    /**
+    /*  DateFormat "yyyy.MM.dd HH:mm:ss"
+    */
+    ODDateV2 implements ODDate =
+        year:IntLiteral+ "." month:IntLiteral+ "." day:IntLiteral
+        hour:IntLiteral+ ":" minute:IntLiteral+ ":" second:IntLiteral+;
+
+    /**
+    /*  DateFormat "yyyy/MM/dd HH:mm:ss"
+    */
+    ODDateV3 implements ODDate =
+        year:IntLiteral+ "/" month:IntLiteral+ "/" day:IntLiteral
+        hour:IntLiteral+ ":" minute:IntLiteral+ ":" second:IntLiteral+;
+
     token ODName = '@'
     	( 'a'..'z' | 'A'..'Z' | '0'..'9' 
     	| '_' | '$' | '-' | '+' | '.' | '!' | '§' | '$' | '%' | '@' | '*'
