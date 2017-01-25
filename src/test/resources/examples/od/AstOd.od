@@ -16,18 +16,18 @@ objectdiagram HelloWorld_AST {
       };
     };
     importDeclarations = []; // *size: 0
-    typeDeclarations = // *size: 1
+    typeDeclarations = [// *size: 1
       @HelloWorld!ClassDeclaration(3,0):ASTClassDeclaration {
         symbol = @HelloWorld!Symbol(3,0);
         enclosingScope = @HelloWorld!ArtifactScope;
         spanningScope = @HelloWorld!Scope;
-        modifiers = // *size: 1
+        modifiers = [// *size: 1
           @!PrimitiveModifier(3,0):ASTPrimitiveModifier {
             symbol = Optional.Empty;
             enclosingScope = @HelloWorld!Scope;
             spannedScope = Optional.Empty;
             modifier = 2;
-          };
+          }];
         name = "HelloWorld";
         typeParameters = Optional.Empty;
         superClass = Optional.Empty;
@@ -36,7 +36,7 @@ objectdiagram HelloWorld_AST {
           symbol = Optional.Empty;
           enclosingScope = @HelloWorld!Scope;
           spannedScope = Optional.Empty;
-          classBodyDeclarations = // *size: 1
+          classBodyDeclarations = [// *size: 1
             @!MethodDeclaration(4,2):ASTMethodDeclaration {
               symbol = @main!Symbol(4,2);
               enclosingScope = @HelloWorld!Scope;
@@ -45,7 +45,7 @@ objectdiagram HelloWorld_AST {
                 symbol = Optional.Empty;
                 enclosingScope = @main!Scope;
                 spannedScope = Optional.Empty;
-                modifiers = // *size: 2
+                modifiers = [// *size: 2
                   @!PrimitiveModifier(4,2):ASTPrimitiveModifier {
                     symbol = Optional.Empty;
                     enclosingScope = @main!Scope;
@@ -57,7 +57,7 @@ objectdiagram HelloWorld_AST {
                     enclosingScope = @main!Scope;
                     spannedScope = Optional.Empty;
                     modifier = 4;
-                  };
+                  }];
                 typeParameters = Optional.Empty;
                 returnType = @!VoidType(4,16):ASTVoidType {
                 };
@@ -70,7 +70,7 @@ objectdiagram HelloWorld_AST {
                     symbol = Optional.Empty;
                     enclosingScope = @main!Scope;
                     spannedScope = Optional.Empty;
-                    formalParameters = // *size: 1
+                    formalParameters = [// *size: 1
                       @args!FormalParameter(4,26):ASTFormalParameter {
                         symbol = @args!Symbol(4,26);
                         enclosingScope = @main!Scope;
@@ -92,7 +92,7 @@ objectdiagram HelloWorld_AST {
                           name = "args";
                           dim = [];
                         };
-                      };
+                      }];
                     lastFormalParameter = Optional.Empty;
                   };
                 };
@@ -103,7 +103,7 @@ objectdiagram HelloWorld_AST {
                 symbol = Optional.Empty;
                 enclosingScope = @main!Scope;
                 spannedScope = Optional.Empty;
-                blockStatements = // *size: 1
+                blockStatements = [// *size: 1
                   @!ExpressionStatement(5,4):ASTExpressionStatement {
                     symbol = Optional.Empty;
                     enclosingScope = @main!Scope;
@@ -244,7 +244,7 @@ objectdiagram HelloWorld_AST {
                         assignment = Optional.Empty;
                         r__this = false;
                       };
-                      parameterExpression = // *size: 1
+                      parameterExpression = [// *size: 1
                         @!Expression(5,23):ASTExpression {
                           symbol = Optional.Empty;
                           enclosingScope = @main!Scope;
@@ -297,7 +297,7 @@ objectdiagram HelloWorld_AST {
                           booleanOrOp = Optional.Empty;
                           assignment = Optional.Empty;
                           r__this = false;
-                        };
+                        }];
                       creator = Optional.Empty;
                       typeCastType = Optional.Empty;
                       expression = Optional.Empty;
@@ -323,11 +323,11 @@ objectdiagram HelloWorld_AST {
                       assignment = Optional.Empty;
                       r__this = false;
                     };
-                  };
+                  }];
               };
-            };
+            }];
         };
-      };
+      }];
 }}
 
 /*
