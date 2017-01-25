@@ -5,21 +5,20 @@
  */
 package de.monticore.lang.od._symboltable;
 
-import de.monticore.lang.od._ast.ASTODDefinition;
-import de.monticore.lang.od._ast.ASTODObject;
-import de.monticore.symboltable.ArtifactScope;
-import de.monticore.symboltable.MutableScope;
-import de.monticore.symboltable.ResolverConfiguration;
-import de.monticore.symboltable.Scope;
+import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static java.util.Objects.requireNonNull;
+import de.monticore.lang.od._ast.ASTODDefinition;
+import de.monticore.symboltable.ArtifactScope;
+import de.monticore.symboltable.MutableScope;
+import de.monticore.symboltable.ResolvingConfiguration;
+import de.monticore.symboltable.Scope;
 
 public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
 
-  public ODSymbolTableCreator(ResolverConfiguration resolverConfig,
+  public ODSymbolTableCreator(ResolvingConfiguration resolverConfig,
       MutableScope enclosingScope) {
     super(resolverConfig, enclosingScope);
   }
@@ -35,21 +34,5 @@ public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
     return artifactScope;
   }
 
-  @Override
-  public void visit(final ASTODDefinition astodDefinition) {
-    final ODDefinitionSymbol od = new ODDefinitionSymbol(astodDefinition.getName());
-    addToScopeAndLinkWithNode(od, astodDefinition);
-  }
-
-  @Override
-  public void endVisit(final ASTODDefinition astodDefinition) {
-    removeCurrentScope();
-  }
-
-  @Override
-  public void visit(final ASTODObject objectNode) {
-    final ODObjectSymbol objectSymbol = new ODObjectSymbol(objectNode.getName().get());
-    addToScopeAndLinkWithNode(objectSymbol, objectNode);
-  }
 
 }

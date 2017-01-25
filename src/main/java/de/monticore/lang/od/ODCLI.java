@@ -1,10 +1,10 @@
 package de.monticore.lang.od;
 
-import de.monticore.lang.od._ast.ASTODCompilationUnit;
-import de.monticore.lang.od._parser.ODParser;
-
 import java.io.IOException;
 import java.util.Optional;
+
+import de.monticore.lang.od._ast.ASTODCompilationUnit;
+import de.monticore.lang.od._parser.ODParser;
 
 /**
  * Created by TGr on 29.04.2016.

@@ -1,4 +1,4 @@
-package examples.od;
+package examples.hierarchical;
 
 import examples.cd.Associations;
 

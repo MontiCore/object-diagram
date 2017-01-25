@@ -70,7 +70,7 @@ grammar OD extends de.monticore.common.Common {
       @attribute type         Optional Type of this Object
       @attribute oDAttributes List of Attributes of this Object
     */
-    ODObject@! =
+    ODObject =
       Modifier?
 	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
@@ -162,7 +162,7 @@ grammar OD extends de.monticore.common.Common {
       @attribute oDAttributes List of Attributes of this Object
       @attribute oDInnerLink List of inner OD links
     */
-    ODInnerObject@! =
+    ODInnerObject =
 	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
         ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink)* "}")?
