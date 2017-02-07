@@ -4,10 +4,10 @@ objectdiagram ActionObservation102530 {
 
   @Ra__b:Rule {
     content = "Ra: b" ;
-  }
+  };
   @Rb_:Rule {
     content = "Rb:" ;
-  }
+  };
 
   @A1001:Action {
     runningNr   = 1 ;
@@ -21,7 +21,7 @@ objectdiagram ActionObservation102530 {
     modifies      -> @ae3 ;
        deletes    -> @ar4 ;
        deletes    -> @ar5 ;
-  }
+  };
 
   @A1002:Action {
     runningNr   = 2 ;
@@ -36,141 +36,141 @@ objectdiagram ActionObservation102530 {
     modifies      -> @ae3 ;
        deletes    -> @an1 ;
        deletes    -> @an2 ;
-  }
+  };
 
 
   @ae3:Artifact {
     name        = "ae3" ;
     date        = "2016.09.05-15:15:37.0693749000" ;
     size        = "1099" ;
-  }
+  };
   @4:Artifact {
     name        = "4" ;
     date        = "2016.09.05-15:33:19.8703789000" ;
     size        = "0" ;
-  }
+  };
   @y1:Artifact {
     name        = "y1" ;
     date        = "2016.09.05-12:32:49.3766853000" ;
     size        = "562" ;
-  }
+  };
   @gen.7:Artifact {
     name        = "gen/7" ;
     date        = "2016.03.28-23:21:07.2264154000" ;
     size        = "0" ;
-  }
+  };
   @ar4:Artifact {
     name        = "ar4" ;
     date        = "2016.09.05-15:15:37.0359014000" ;
     size        = "0" ;
-  }
+  };
   @y2:Artifact {
     name        = "y2" ;
     date        = "2016.09.05-12:32:21.7744271000" ;
     size        = "612" ;
-  }
+  };
   @ar5:Artifact {
     name        = "ar5" ;
     date        = "2016.09.05-15:15:37.0365599000" ;
     size        = "0" ;
-  }
+  };
   @8.i:Artifact {
     name        = "8.i" ;
     date        = "2016.09.05-15:33:22.4024017000" ;
     size        = "0" ;
-  }
+  };
   @7.o:Artifact {
     name        = "7.o" ;
     date        = "2016.09.05-15:33:21.7763942000" ;
     size        = "0" ;
-  }
+  };
   @makefile.bak:Artifact {
     name        = "makefile.bak" ;
     date        = "2016.09.05-13:17:11.1103792000" ;
     size        = "1132" ;
-  }
+  };
   @ActionObservation102489.od:Artifact {
     name        = "ActionObservation102489.od" ;
     date        = "2016.09.05-15:34:49.6473077000" ;
     size        = "4197" ;
-  }
+  };
   @3a:Artifact {
     name        = "3a" ;
     date        = "2016.09.05-15:33:19.1939800000" ;
     size        = "0" ;
-  }
+  };
   @oldmakefile:Artifact {
     name        = "oldmakefile" ;
     date        = "2016.09.05-15:31:47.4807165000" ;
     size        = "1132" ;
-  }
+  };
   @ActionObservation.cd:Artifact {
     name        = "ActionObservation.cd" ;
     date        = "2016.09.05-15:21:47.9765402000" ;
     size        = "1267" ;
-  }
+  };
   @4a:Artifact {
     name        = "4a" ;
     date        = "2016.09.05-15:33:19.8710716000" ;
     size        = "0" ;
-  }
+  };
   @3b:Artifact {
     name        = "3b" ;
     date        = "2016.09.05-15:33:19.1946456000" ;
     size        = "0" ;
-  }
+  };
   @an1:Artifact {
     name        = "an1" ;
     date        = "2016.09.05-15:35:27.0089518000" ;
     size        = "0" ;
-  }
+  };
   @ActionObservation102406.od:Artifact {
     name        = "ActionObservation102406.od" ;
     date        = "2016.09.05-15:33:27.1348458000" ;
     size        = "5737" ;
-  }
+  };
   @4b:Artifact {
     name        = "4b" ;
     date        = "2016.09.05-15:33:19.8717691000" ;
     size        = "0" ;
-  }
+  };
   @an2:Artifact {
     name        = "an2" ;
     date        = "2016.09.05-15:35:27.0096397000" ;
     size        = "0" ;
-  }
+  };
   @8.o:Artifact {
     name        = "8.o" ;
     date        = "2016.09.05-15:33:23.0765149000" ;
     size        = "0" ;
-  }
+  };
   @7.i:Artifact {
     name        = "7.i" ;
     date        = "2016.09.05-15:33:21.0751218000" ;
     size        = "0" ;
-  }
+  };
   @makefile:Artifact {
     name        = "makefile" ;
     date        = "2016.09.05-15:32:26.0182262000" ;
     size        = "673" ;
-  }
+  };
   @3:Artifact {
     name        = "3" ;
     date        = "2016.09.05-15:33:19.1932569000" ;
     size        = "0" ;
-  }
+  };
   @.makefile.swp:Artifact {
     name        = ".makefile.swp" ;
     date        = "2016.09.05-15:32:26.0122358000" ;
     size        = "12288" ;
-  }
+  };
 
   @a:VirtualTarget {
     name        = "a" ;
-  }
+  };
   @b:VirtualTarget {
     name        = "b" ;
-  }
+  };
 
 }
 

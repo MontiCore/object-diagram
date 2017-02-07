@@ -4,15 +4,15 @@ objectdiagram QualifiedInnerLinks {
 
   @objectName1:T1 {
     cNumber = 1;
-  }
+  };
   @objectName2:T1{
     cNumber = 2;
-  }
+  };
   @objectName3:T2{
  
     qualLinkList1 = [
-      cNumber -> @objectName1,
+      1 -> @objectName1,
       2 -> @objectName2
     ];
-  }
+  };
 }

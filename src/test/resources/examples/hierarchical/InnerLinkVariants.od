@@ -17,20 +17,20 @@ objectdiagram InnerLinkVariants {
     };
 
     linkList1 = [
-        @objectName1:T1,
-        @objectName2:T2{
-            depthInnerLink = @objectName3:T3{
+        @fooBar1:T1,
+        @fooBar2:T2{
+            foo = @fooBar3:T3{
                 content = "on4";
             };
         }
     ];
 
-    linkList2 -> @objectName4;
-    linkList2 -> @objectName5;
+    linkList2 -> @foo1;
+    linkList2 -> @foo2;
 
-    linkList3 -> [@objectName6, @objectName7];
-    linkList3 -> @objectName8;
+    linkList3 -> [@bar1, @bar2];
+    linkList3 -> @bar3;
 
-  }
+  };
   
 }

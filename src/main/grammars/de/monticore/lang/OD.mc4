@@ -10,42 +10,25 @@ grammar OD extends de.monticore.common.Common {
       @attribute package The package declaration of this Objectdiagram
       @attribute importStatements List of imported elements
       @attribute oDConformsStatement
-      @attribute oDDefinition   
+      @attribute oDDefinition
     */
     ODCompilationUnit =
       ("package" package:(Name& || ".")+ ";")?
       (ImportStatement)*
-      ODConformsStatement?
+      (ODConformsStatement)*
       ODDefinition;
-
-
-    /*========================================================================*/
-    /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
-    /*========================================================================*/
-
-    /** ASTODDate represents a Date Format in a UML Objectdiagram
-        @attribute year
-        @attribute month
-        @attribute day
-        @attribute hour
-        @attribute minute
-        @attribute second
-    */
-    interface ODDate =
-        year:IntLiteral+ day:IntLiteral
-        hour:IntLiteral+ minute:IntLiteral+ second:IntLiteral+;
 
     /*========================================================================*/
     /*============================== Grammar =================================*/
     /*========================================================================*/
 
     /** ASTODConformsStatement represents a conform statement
-      @attribute conformedModels    List of conformed models 
+      @attribute conformedModels    List of conformed models
     */
   	ODConformsStatement =
-	  "conformsTo" conformedModels:(QualifiedName || ",")+ ";";
-	  
-	  
+	  "conformsTo" conformedModels:QualifiedName ";";
+
+
     /** ASTODDefinition represents a UML Objectdiagram
       @attribute stereotype   Optional Stereotype
       @attribute name         Name of this Objectdiagram
@@ -57,13 +40,15 @@ grammar OD extends de.monticore.common.Common {
       "objectdiagram" Name
       "{"
       (
-        oDObjects:ODObject
-        |
-        oDLinks:ODLink
+        (
+            oDObjects:ODObject
+            |
+            oDLinks:ODLink
+        )";"
       )*
       "}";
-    
-    
+
+
     /** ASTODObject represents an Object in a UML Objectdiagram
       @attribute modifier     Optional Modifier of this Object
       @attribute name         Optional Name of this Object
@@ -72,14 +57,12 @@ grammar OD extends de.monticore.common.Common {
     */
     ODObject =
       Modifier?
-	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
+	  ( name:ODReferenceName (":" type:ReferenceType)? | (":" type:ReferenceType))
       (
-        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink)* "}")
-        |
-        ";"?
+        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink)* "}")?
       );
-    
-    
+
+
     /** ASTODAttribute represents an Attribute of an Object
       @attribute modifier Optional Modifier of this Attribute
       @attribute type     Type of this Attribute
@@ -91,17 +74,16 @@ grammar OD extends de.monticore.common.Common {
       Type?
       Name
       ("=" (ODValue | ODValueList | ODValueMap))? ";";
-        
-        
-    /** ASTODLinkQualifier represents a reference to a Qualifier of Links 
-        between Objects. The reference can be either a concrete attribute
-        name or a concrete value.
+
+
+    /** ASTODLinkQualifier represents Qualifier for Links between Objects.
+        It can be either a concrete attribute name or a concrete value.
       @attribute name     Name of a referenced attribute (if set)
       @attribute value    Concrete value of this qualifier (if set)
     */
     ODLinkQualifier = "[[" Name "]]" | "[" ODValue "]";
 
-    
+
     /** ASTODLink represents a Link between Objects
       @attribute stereotype          Optional Stereotype
       @attribute Link                True if Link is of type "link"
@@ -114,13 +96,13 @@ grammar OD extends de.monticore.common.Common {
                                      left side of this Link
       @attribute leftQualifier       Qualifier of the left side of this Link
       @attribute leftRole            Role of Objects on the Links left side
-      @attribute leftToRight         True if Link is navigable from 
+      @attribute leftToRight         True if Link is navigable from
                                      left to right ("->")
-      @attribute rightToLeft         True if Link is navigable from 
+      @attribute rightToLeft         True if Link is navigable from
                                      right to left ("<-")
-      @attribute bidirectional       True if Link is navigable in 
+      @attribute bidirectional       True if Link is navigable in
                                      both directions ("<->")
-      @attribute simple              True if navigation of Link is 
+      @attribute simple              True if navigation of Link is
                                      not specified ("--")
       @attribute rightRole           Role of Objects on the Links right side
       @attribute rightQualifier      Qualifier of the right side of this Link
@@ -138,7 +120,7 @@ grammar OD extends de.monticore.common.Common {
       ([derived:"/"])?
       Name?
       leftModifier:Modifier?
-      (leftReferenceNames:ODName |leftReferenceNames:Name) ("," (leftReferenceNames:ODName | leftReferenceNames:Name))*
+      leftReferenceNames:(ODReferenceName || ",")*
       leftQualifier:ODLinkQualifier?
       ("(" leftRole:Name ")")?
       (
@@ -149,33 +131,26 @@ grammar OD extends de.monticore.common.Common {
       )
       ("(" rightRole:Name ")")?
       rightQualifier:ODLinkQualifier?
-      (rightReferenceNames:ODName |rightReferenceNames:Name) ("," (rightReferenceNames:ODName | rightReferenceNames:Name))*
-      rightModifier:Modifier?
-      ";";
+      rightReferenceNames:(ODReferenceName || ",")*
+      rightModifier:Modifier?;
 
-    ODInnerLink = 
-	  linkName:Name ("=" | aggregable:["->"]) (ODInnerObject | ("[" ((ODInnerObject || ",")* | (ODQualifiedInnerObject || ",")*) "]"))";";
-	  
-    /** ASTODInnerObject represents an Object in a UML Objectdiagram
-      @attribute name         Optional Name of this Object
-      @attribute type         Optional Type of this Object
-      @attribute oDAttributes List of Attributes of this Object
-      @attribute oDInnerLink List of inner OD links
-    */
-    ODInnerObject =
-	  ( (Name | name:ODName) (":" type:ReferenceType)? | (":" type:ReferenceType))
-      (
-        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink)* "}")?
-      );
 
-    /** ASTODInnerObject represents an Object in a UML Objectdiagram
-      @attribute name         Optional Name of this Object
-      @attribute type         Optional Type of this Object
-      @attribute oDAttributes List of Attributes of this Object
-      @attribute oDInnerLink List of inner OD links
+    ODInnerLink =
+      Stereotype?
+	  linkName:Name
+	  ("=" | aggregable:["->"])
+	  (
+	    ODObject
+	    |
+	    ("[" odObjectList:(ODObjectListElement || ",")* "]")
+	  )";";
+
+    /** ASTODQualifiedInnerObject represents a list of Objects in a UML Objectdiagram
+      @attribute ODValue Qualifier value
+      @attribute Qualified ODObject
     */
-	ODQualifiedInnerObject =
-	  (Name | ODValue) "->" ODInnerObject;
+	ODObjectListElement =
+	  (ODValue "->")? ODObject;
 
     /** ASTODValueList represents a List in a UML Objectdiagram
       @attribute values List of possible values
@@ -186,7 +161,7 @@ grammar OD extends de.monticore.common.Common {
     /** ASTODValueMap represents a Map in a UML Objectdiagram
       @attribute entries List of Mappings
     */
-    ODValueMap = 
+    ODValueMap =
       "[" entries:(ODEntry || ",")* "]" ;
 
     /** ASTODEntry represents a (Key, Value)-Pair in a UML Objectdiagram
@@ -208,26 +183,40 @@ grammar OD extends de.monticore.common.Common {
     */
     ODOptionals = optEmpty:["Optional.Empty"] | ("Optional.of(" optValue:SignedLiteral ")");
 
+    /** ASTODDate represents a Date Format in a UML Objectdiagram
+            @attribute year
+            @attribute month
+            @attribute day
+            @attribute hour
+            @attribute minute
+            @attribute second
+    */
+    interface ODDate =
+            year:IntLiteral day:IntLiteral month:IntLiteral
+            hour:IntLiteral minute:IntLiteral second:IntLiteral;
+
     /**
     /*  DateFormat "yyyy-MM-dd HH:mm:ss"
     */
     ODDateV1 implements ODDate =
-        year:IntLiteral+ "-" month:IntLiteral+ "-" day:IntLiteral
-        hour:IntLiteral+ ":" minute:IntLiteral+ ":" second:IntLiteral+;
+        year:IntLiteral "-" month:IntLiteral "-" day:IntLiteral
+        hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
 
     /**
     /*  DateFormat "yyyy.MM.dd HH:mm:ss"
     */
     ODDateV2 implements ODDate =
-        year:IntLiteral+ "." month:IntLiteral+ "." day:IntLiteral
-        hour:IntLiteral+ ":" minute:IntLiteral+ ":" second:IntLiteral+;
+        year:IntLiteral "." month:IntLiteral "." day:IntLiteral
+        hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
 
     /**
     /*  DateFormat "yyyy/MM/dd HH:mm:ss"
     */
     ODDateV3 implements ODDate =
-        year:IntLiteral+ "/" month:IntLiteral+ "/" day:IntLiteral
-        hour:IntLiteral+ ":" minute:IntLiteral+ ":" second:IntLiteral+;
+        year:IntLiteral "/" month:IntLiteral "/" day:IntLiteral
+        hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
+
+    ODReferenceName = Name | ODName;
 
     token ODName = '@'
     	( 'a'..'z' | 'A'..'Z' | '0'..'9' 

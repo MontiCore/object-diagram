@@ -10,7 +10,7 @@ objectdiagram StandardInnerLink {
       someString = "Theobald Schmidt";
       someBool = false;
     };  
-  }
+  };
   
   myObject2:ObjectType {
     innerLink = innerObject2:InnerObjectType {
@@ -18,6 +18,6 @@ objectdiagram StandardInnerLink {
       someString = "Elisabeth Müller";
       someBool = true;
     };
-  }
+  };
   
 }

@@ -5,18 +5,10 @@
  */
 package de.monticore.lang.od;
 
-import static org.junit.Assert.assertTrue;
-
-import java.nio.file.Paths;
-import java.util.Optional;
-
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import de.monticore.io.paths.ModelPath;
 import de.monticore.lang.od._ast.ASTODDefinition;
 import de.monticore.lang.od._ast.ASTODObject;
+import de.monticore.lang.od._ast.ASTODReferenceName;
 import de.monticore.lang.od._ast.ODNodeFactory;
 import de.monticore.lang.od._symboltable.ODDefinitionSymbol;
 import de.monticore.lang.od._symboltable.ODLanguage;
@@ -24,6 +16,12 @@ import de.monticore.lang.od._symboltable.ODSymbolTableCreator;
 import de.monticore.symboltable.GlobalScope;
 import de.monticore.symboltable.ResolvingConfiguration;
 import de.monticore.symboltable.Scope;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.nio.file.Paths;
+import java.util.Optional;
 
 public class ODSymbolTableCreatorTest {
 
@@ -88,7 +86,9 @@ public class ODSymbolTableCreatorTest {
     ASTODDefinition odDefinition = ODNodeFactory.createASTODDefinition();
     odDefinition.setName(OD_NAME);
     ASTODObject odObject = ODNodeFactory.createASTODObject();
-    odObject.setName(OBJECT_NAME);
+    ASTODReferenceName refName = ODNodeFactory.createASTODReferenceName();
+    refName.setName(OBJECT_NAME);
+    odObject.setName(refName);
     odDefinition.getODObjects().add(odObject);
 
     GlobalScope globalScope = new GlobalScope(new ModelPath(), odLanguage, resolverConfiguration);

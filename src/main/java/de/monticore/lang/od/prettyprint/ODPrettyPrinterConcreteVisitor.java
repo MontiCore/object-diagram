@@ -5,8 +5,6 @@ import de.monticore.lang.od._ast.*;
 import de.monticore.lang.od._visitor.ODVisitor;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.types._ast.ASTImportStatement;
-import de.monticore.types.types._ast.ASTQualifiedName;
-import de.se_rwth.commons.Joiners;
 import de.se_rwth.commons.Names;
 
 import java.util.Iterator;
@@ -55,6 +53,12 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       }
       getPrinter().println();
     }
+    if (unit.getODConformsStatements() != null && !unit.getODConformsStatements().isEmpty()) {
+      for (ASTODConformsStatement s : unit.getODConformsStatements()) {
+        getPrinter()
+            .print("conformsTo " + s.getConformedModels().toString() + ";");
+      }
+    }
     unit.getODDefinition().accept(getRealThis());
   }
 
@@ -79,15 +83,17 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
 
     for (Iterator<ASTODObject> it = a.getODObjects().iterator(); it.hasNext(); ) {
       it.next().accept(getRealThis());
+      getPrinter().print(";");
       if (it.hasNext()) {
         getPrinter().println();
       }
     }
     for (ASTODLink l : a.getODLinks()) {
       l.accept(getRealThis());
+      getPrinter().print(";");
     }
     getPrinter().unindent();
-    getPrinter().print("}\n");
+    getPrinter().print("\n}\n");
   }
 
   /**
@@ -103,7 +109,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     }
     // print object name and type
     if (a.getName().isPresent()) {
-      getPrinter().print(a.getName().get());
+      a.getName().get().accept(getRealThis());
     }
     if (a.getType().isPresent()) {
       getPrinter().print(":");
@@ -121,10 +127,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
         ast.accept(getRealThis());
       }
       getPrinter().unindent();
-      getPrinter().println("}");
-    }
-    else {
-      getPrinter().println(";");
+      getPrinter().print("}");
     }
   }
 
@@ -135,6 +138,10 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
    */
   @Override
   public void handle(ASTODInnerLink a) {
+    if (a.getStereotype().isPresent()) {
+      a.getStereotype().get().accept(getRealThis());
+      getPrinter().print(" ");
+    }
     getPrinter().print(a.getLinkName());
     if (a.isAggregable()) {
       getPrinter().print(" -> ");
@@ -142,27 +149,17 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     else {
       getPrinter().print(" = ");
     }
-    if (a.getODInnerObject().isPresent()) {
+    if (a.getODObject().isPresent()) {
       String delim = "";
       getPrinter().print(delim);
-      a.getODInnerObject().get().accept(getRealThis());
+      a.getODObject().get().accept(getRealThis());
     }
-    if (!a.getODInnerObjects().isEmpty()) {
+    if (!a.getOdObjectList().isEmpty()) {
       getPrinter().print("[");
       String delim = "";
-      for (ASTODInnerObject odObject : a.getODInnerObjects()) {
+      for (ASTODObjectListElement odListElement : a.getOdObjectList()) {
         getPrinter().print(delim);
-        odObject.accept(getRealThis());
-        delim = ", ";
-      }
-      getPrinter().print("]");
-    }
-    else if (!a.getODQualifiedInnerObjects().isEmpty()) {
-      getPrinter().print("[");
-      String delim = "";
-      for (ASTODQualifiedInnerObject odObject : a.getODQualifiedInnerObjects()) {
-        getPrinter().print(delim);
-        odObject.accept(getRealThis());
+        odListElement.accept(getRealThis());
         delim = ", ";
       }
       getPrinter().print("]");
@@ -171,66 +168,15 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   }
 
   /**
-   * @see de.monticore.lang.od._visitor.ODVisitor#handle(de.monticore.lang.od._ast.ASTODConformsStatement)
+   * @see de.monticore.lang.od._visitor.ODVisitor#handle(de.monticore.lang.od._ast.ASTODObjectListElement)
    */
   @Override
-  public void handle(ASTODConformsStatement a) {
-    if (!a.getConformedModels().isEmpty()) {
-      getPrinter().print("conformsTo");
-      String delim = "";
-      for (ASTQualifiedName qualName : a.getConformedModels()) {
-        getPrinter().print(delim);
-        qualName.accept(getRealThis());
-        delim = ", ";
-      }
-      getPrinter().print(";");
-    }
-  }
-
-  /**
-   * @see de.monticore.lang.od._visitor.ODVisitor#handle(de.monticore.lang.od._ast.ASTODQualifiedInnerObject)
-   */
-  @Override
-  public void handle(ASTODQualifiedInnerObject a) {
-    if (a.getName().isPresent()) {
-      getPrinter().print(a.getName().get() + " -> ");
-    }
+  public void handle(ASTODObjectListElement a) {
     if (a.getODValue().isPresent()) {
       a.getODValue().get().accept(getRealThis());
       getPrinter().print(" -> ");
     }
-    a.getODInnerObject().accept(getRealThis());
-  }
-
-  /**
-   * Prints an inner object in an object diagram
-   *
-   * @param a object
-   */
-  @Override
-  public void handle(ASTODInnerObject a) {
-    // print object name and type
-    if (a.getName().isPresent()) {
-      getPrinter().print(a.getName().get());
-    }
-    if (a.getType().isPresent()) {
-      getPrinter().print(":");
-      a.getType().get().accept(getRealThis());
-    }
-    // print object body
-    if (!a.getODAttributes().isEmpty() || !a.getInnerLinks().isEmpty()) {
-      getPrinter().println(" {");
-      getPrinter().indent();
-      for (ASTODAttribute ast : a.getODAttributes()) {
-        ast.accept(getRealThis());
-      }
-
-      for (ASTODInnerLink ast : a.getInnerLinks()) {
-        ast.accept(getRealThis());
-      }
-      getPrinter().unindent();
-      getPrinter().println("}");
-    }
+    a.getODObject().accept(getRealThis());
   }
 
   /**
@@ -323,7 +269,13 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       a.getLeftModifier().get().accept(getRealThis());
     }
     // print objects referenced on the left side of the link
-    getPrinter().print(Joiners.COMMA.join(a.getLeftReferenceNames()));
+    Iterator<ASTODReferenceName> refNames = a.getLeftReferenceNames().iterator();
+    while (refNames.hasNext()) {
+      refNames.next().accept(getRealThis());
+      if (refNames.hasNext()) {
+        getPrinter().print(", ");
+      }
+    }
     getPrinter().print(" ");
     // print left qualifier
     if (a.getLeftQualifier().isPresent()) {
@@ -360,13 +312,26 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     }
     // print objects referenced on the right side of the link
     getPrinter().print(" ");
-    getPrinter().print(Joiners.COMMA.join(a.getRightReferenceNames()));
-    getPrinter().print(" ");
+    refNames = a.getRightReferenceNames().iterator();
+    while (refNames.hasNext()) {
+      refNames.next().accept(getRealThis());
+      if (refNames.hasNext()) {
+        getPrinter().print(", ");
+      }
+    }
     // print right modifier
     if (a.getRightModifier().isPresent()) {
       a.getRightModifier().get().accept(getRealThis());
     }
-    getPrinter().println(";");
+  }
+
+  public void handle(ASTODReferenceName a) {
+    if (a.getODName().isPresent()) {
+      getPrinter().print(a.getODName().get());
+    }
+    if (a.getName().isPresent()) {
+      getPrinter().print(a.getName().get());
+    }
   }
 
   /**
@@ -426,6 +391,24 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     else if (a.getODOptionals().isPresent()) {
       a.getODOptionals().get().accept(getRealThis());
     }
+    else if (a.getODDate().isPresent()) {
+      a.getODDate().get().accept(getRealThis());
+    }
+  }
+
+  public void handle(ASTODDate a) {
+    getPrinter().print(a.getYear().getValue());
+    getPrinter().print(".");
+    getPrinter().print(a.getMonth().getValue());
+    getPrinter().print(".");
+    getPrinter().print(a.getDay().getValue());
+    getPrinter().print(".");
+    getPrinter().print(a.getHour().getValue());
+    getPrinter().print(":");
+    getPrinter().print(a.getMinute().getValue());
+    getPrinter().print(":");
+    getPrinter().print(a.getSecond().getValue());
+    getPrinter().print(":");
   }
 
   /**

@@ -4,7 +4,7 @@ objectdiagram InnerObjectWithoutLink{
 
         InnerObjectWithoutLink:ObjectType2;
 
-    }
+    };
 
     linkList1 = [
             @objectName1:T1,

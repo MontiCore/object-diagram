@@ -21,7 +21,7 @@ objectdiagram Variants {
     # attr8;
     / attr9;
     ? attr10;
-  }
+  };
   local o4;
   o5:type5<? extends Comparable<T>>;
   :type6;

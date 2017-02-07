@@ -6,6 +6,6 @@ objectdiagram ValueCollection {
 
   kupfer912:Auction {
     a = [912, "420t Kupfer", 0];  
-  }
+  };
   
 }
