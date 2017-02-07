@@ -50,9 +50,6 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
         name = ref.getName().get();
       } 
     }
-    else if (a.getType().isPresent()) {
-      name = a.getType().toString();
-    }
     return format(name, type);
   }
   
