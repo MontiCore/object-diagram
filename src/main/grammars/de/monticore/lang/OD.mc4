@@ -145,9 +145,9 @@ grammar OD extends de.monticore.common.Common {
 	    ("[" odObjectList:(ODObjectListElement || ",")* "]")
 	  )";";
 
-    /** ASTODQualifiedInnerObject represents a list of Objects in a UML Objectdiagram
-      @attribute ODValue Qualifier value
-      @attribute Qualified ODObject
+    /** ASTODObjectListElement represents an element of a list of ODObjects in a UML Objectdiagram
+      @attribute oDValue Qualifier value
+      @attribute oDObject Qualified ODObject
     */
 	ODObjectListElement =
 	  (ODValue "->")? ODObject;
@@ -196,27 +196,31 @@ grammar OD extends de.monticore.common.Common {
             hour:IntLiteral minute:IntLiteral second:IntLiteral;
 
     /**
-    /*  DateFormat "yyyy-MM-dd HH:mm:ss"
+        DateFormat "yyyy-MM-dd HH:mm:ss"
     */
     ODDateV1 implements ODDate =
         year:IntLiteral "-" month:IntLiteral "-" day:IntLiteral
         hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
 
     /**
-    /*  DateFormat "yyyy.MM.dd HH:mm:ss"
+        DateFormat "yyyy.MM.dd HH:mm:ss"
     */
     ODDateV2 implements ODDate =
         year:IntLiteral "." month:IntLiteral "." day:IntLiteral
         hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
 
     /**
-    /*  DateFormat "yyyy/MM/dd HH:mm:ss"
+        DateFormat "yyyy/MM/dd HH:mm:ss"
     */
     ODDateV3 implements ODDate =
         year:IntLiteral "/" month:IntLiteral "/" day:IntLiteral
         hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
 
-    ODReferenceName = Name | ODName;
+
+    /**
+        ASTODReferenceName represents the Name possibilities for ODObjects
+    */
+    ODReferenceName = Name | name:ODName;
 
     token ODName = '@'
     	( 'a'..'z' | 'A'..'Z' | '0'..'9' 
