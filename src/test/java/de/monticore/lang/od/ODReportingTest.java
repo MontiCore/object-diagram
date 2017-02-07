@@ -28,11 +28,11 @@ import java.util.Optional;
 
 import org.junit.Test;
 
-import de.monticore.generating.templateengine.reporting.commons.ASTNodeIdentHelper;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
 import de.monticore.lang.od._ast.ASTODCompilationUnit;
 import de.monticore.lang.od._parser.ODParser;
 import de.monticore.lang.od.report.AST2ODReporter;
+import de.monticore.lang.od.report.ODNodeIdentHelper;
 
 /**
  * Test for {@link ODPrinter}.
@@ -49,7 +49,7 @@ public class ODReportingTest {
     assertFalse(parser.hasErrors());
     assertTrue(odDef.isPresent());
     
-    ReportingRepository reporting = new ReportingRepository(new ASTNodeIdentHelper());
+    ReportingRepository reporting = new ReportingRepository(new ODNodeIdentHelper());
     
     // Report AST
     AST2ODReporter reporter = new AST2ODReporter("target", modelName, reporting);
