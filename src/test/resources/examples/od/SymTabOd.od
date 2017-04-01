@@ -1,11 +1,11 @@
 //========================================================== Symbol Table
 objectdiagram HelloWorld_ST {
   @!GlobalScope: GlobalScope{
-    spanningSymbol = Optional.Empty;
+    spanningSymbol = absent;
     symbols = []; // *size: 0
     subScopes = // *size: 1
       @HelloWorld!ArtifactScope: ArtifactScope{
-        spanningSymbol = Optional.Empty;
+        spanningSymbol = absent;
         symbols = []; // *size: 0
         subScopes = // *size: 1
           @HelloWorld!Scope: CommonJTypeScope{

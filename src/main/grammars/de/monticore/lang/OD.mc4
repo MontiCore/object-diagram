@@ -14,101 +14,131 @@ grammar OD extends de.monticore.common.Common {
     */
     ODCompilationUnit =
       ("package" package:(Name& || ".")+ ";")?
-      (ImportStatement)*
-      (ODConformsStatement)*
+      ImportStatement*
+      ODConformsStatement*
       ODDefinition;
+
+
+    /*========================================================================*/
+    /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
+    /*========================================================================*/
+
+    /** ASTODValue represents the interface for all possible value assignments
+    */
+    interface ODValue;
 
     /*========================================================================*/
     /*============================== Grammar =================================*/
     /*========================================================================*/
 
     /** ASTODConformsStatement represents a conform statement
-      @attribute conformedModels    List of conformed models
+      @attribute qualifiedName Qualified name of the artifact the OD is conform to
     */
   	ODConformsStatement =
-	  "conformsTo" conformedModels:QualifiedName ";";
-
+	  "conformsTo" QualifiedName ";";
 
     /** ASTODDefinition represents a UML Objectdiagram
-      @attribute stereotype   Optional Stereotype
-      @attribute name         Name of this Objectdiagram
-      @attribute oDObjects    List of Objects of this Objectdiagram
-      @attribute oDLinks      List of Links of this Objectdiagram
+      @attribute stereotype  Optional Stereotype
+      @attribute name        Name of this Objectdiagram
+      @attribute oDObject    List of Objects of this Objectdiagram
+      @attribute oDLink      List of Links of this Objectdiagram
     */
     ODDefinition@! =
       Stereotype?
       "objectdiagram" Name
       "{"
-      (
-        (
-            oDObjects:ODObject
-            |
-            oDLinks:ODLink
-        )";"
-      )*
+      ( ( ODObject | ODLink ) ";" )*
       "}";
 
 
     /** ASTODObject represents an Object in a UML Objectdiagram
-      @attribute modifier     Optional Modifier of this Object
-      @attribute name         Optional Name of this Object
-      @attribute type         Optional Type of this Object
-      @attribute oDAttributes List of Attributes of this Object
+      @attribute modifier Optional Modifier of this object
+      @attribute oDName Optional extended name of this object
+      @attribute type Optional type of this object
+      @attribute oDAttributes List of attributes of this object
     */
     ODObject =
       Modifier?
-	  ( name:ODReferenceName (":" type:ReferenceType)? | (":" type:ReferenceType))
+	  ODName? ":" ReferenceType
       (
-        ("{" (oDAttributes:ODAttribute | innerLinks:ODInnerLink)* "}")?
+        "{" ODAttribute* "}"
       );
 
-
     /** ASTODAttribute represents an Attribute of an Object
-      @attribute modifier Optional Modifier of this Attribute
-      @attribute type     Type of this Attribute
-      @attribute name     Name of this Attribute
-      @attribute value    Value of this Attribute
+      @attribute stereotype Optional stereotype of this attribute
+      @attribute modifier Optional modifier of this attribute
+      @attribute type Type of this Attribute
+      @attribute name Name of this Attribute
+      @attribute immutable True if attribute has an "immutable" assignment
+      @attribute aggregable True if attribute has an "aggregable" assignment
+      @attribute oDObject Attribute value in form of an ODObject
+      @attribute oDValue Attribute value in form of an ODValue
+      @attribute oDList Attribute value in form of an ODList
+      @attribute oDMap Attribute value in form of an ODMap
     */
     ODAttribute =
+      Stereotype?
       Modifier?
       Type?
       Name
-      ("=" (ODValue | ODValueList | ODValueMap))? ";";
+      ((immutable: ["="] | aggregable: ["->"]) (ODObject | ODValue | ODList | ODMap))? ";";
 
+    /** ASTODList represents a List of values
+      @attribute oDListElement List of ODListElements
+    */
+    ODList =
+      "[" (ODListElement || ",")* "]";
+
+    /** ASTODListElement represents List element of ODList.
+        It can be either a concrete ODObject or a concrete ODValue.
+      @attribute oDValue List element in form of an ODValue
+      @attribute oDObject List element in form of an ODObject
+    */
+    ODListElement =
+      ODValue | ODObject;
+
+    /** ASTODMap represents a Map of values
+      @attribute oDMapElement List of ODMapElements
+    */
+    ODMap =
+      "[" (ODMapElement || ",")* "]";
+
+    /** ASTODMapElement represents a Map element of ODMap.
+        It can be either a concrete ODObject or a concrete ODValue.
+      @attribute key Key element of the key value pair
+      @attribute oDObject Value element of the key value pair
+      @attribute oDValue Alternative value element of the key value pair
+    */
+    ODMapElement =
+      key:ODValue "->" (ODObject | ODValue);
 
     /** ASTODLinkQualifier represents Qualifier for Links between Objects.
         It can be either a concrete attribute name or a concrete value.
-      @attribute name     Name of a referenced attribute (if set)
-      @attribute value    Concrete value of this qualifier (if set)
+      @attribute name Name of a referenced attribute (if set)
+      @attribute oDValue Concrete value of this qualifier (if set)
     */
     ODLinkQualifier = "[[" Name "]]" | "[" ODValue "]";
 
 
     /** ASTODLink represents a Link between Objects
-      @attribute stereotype          Optional Stereotype
-      @attribute Link                True if Link is of type "link"
-      @attribute Aggregation         True if Link is of type "aggregation"
-      @attribute Composition         True if Link is of type "composition"
-      @attribute derived             True if this is a derived Link
-      @attribute Name                Name of the Association of this Link
-      @attribute leftModifier        Optional left side Modifier
-      @attribute leftReferenceNames  List of References of the Objects on the
-                                     left side of this Link
-      @attribute leftQualifier       Qualifier of the left side of this Link
-      @attribute leftRole            Role of Objects on the Links left side
-      @attribute leftToRight         True if Link is navigable from
-                                     left to right ("->")
-      @attribute rightToLeft         True if Link is navigable from
-                                     right to left ("<-")
-      @attribute bidirectional       True if Link is navigable in
-                                     both directions ("<->")
-      @attribute simple              True if navigation of Link is
-                                     not specified ("--")
-      @attribute rightRole           Role of Objects on the Links right side
-      @attribute rightQualifier      Qualifier of the right side of this Link
-      @attribute rightReferenceNames List of References of the Objects on the
-                                     right side of this Link
-      @attribute rightModifier       Optional right side Modifier
+      @attribute stereotype Optional Stereotype
+      @attribute Link True if Link is of type "link"
+      @attribute Aggregation True if Link is of type "aggregation"
+      @attribute Composition True if Link is of type "composition"
+      @attribute derived True if this is a derived Link
+      @attribute Name Name of the Association of this Link
+      @attribute leftModifier Optional left side Modifier
+      @attribute leftReferenceNames List of References of the Objects on the left side of this Link
+      @attribute leftQualifier Qualifier of the left side of this Link
+      @attribute leftRole Role of Objects on the Links left side
+      @attribute leftToRight True if Link is navigable from left to right ("->")
+      @attribute rightToLeft True if Link is navigable from right to left ("<-")
+      @attribute bidirectional True if Link is navigable in both directions ("<->")
+      @attribute unspecified True if navigation of Link is not specified ("--")
+      @attribute rightRole Role of Objects on the Links right side
+      @attribute rightQualifier Qualifier of the right side of this Link
+      @attribute rightReferenceNames List of References of the Objects on the right side of this Link
+      @attribute rightModifier Optional right side Modifier
     */
     ODLink =
       Stereotype?
@@ -120,7 +150,7 @@ grammar OD extends de.monticore.common.Common {
       ([derived:"/"])?
       Name?
       leftModifier:Modifier?
-      leftReferenceNames:(ODReferenceName || ",")*
+      leftReferenceNames:(ODName || ",")*
       leftQualifier:ODLinkQualifier?
       ("(" leftRole:Name ")")?
       (
@@ -131,101 +161,57 @@ grammar OD extends de.monticore.common.Common {
       )
       ("(" rightRole:Name ")")?
       rightQualifier:ODLinkQualifier?
-      rightReferenceNames:(ODReferenceName || ",")*
+      rightReferenceNames:(ODName || ",")*
       rightModifier:Modifier?;
 
-
-    ODInnerLink =
-      Stereotype?
-	  linkName:Name
-	  ("=" | aggregable:["->"])
-	  (
-	    ODObject
-	    |
-	    ("[" odObjectList:(ODObjectListElement || ",")* "]")
-	  )";";
-
-    /** ASTODObjectListElement represents an element of a list of ODObjects in a UML Objectdiagram
-      @attribute oDValue Qualifier value
-      @attribute oDObject Qualified ODObject
+    /** ASTODOptionals represents implementation of the ODValue interface
+        that represents an absent optional value.
+      @attribute absent True if attribute is optional and has an empty value
     */
-	ODObjectListElement =
-	  (ODValue "->")? ODObject;
+    ODOptionals implements ODValue =
+      ["absent"];
 
-    /** ASTODValueList represents a List in a UML Objectdiagram
-      @attribute values List of possible values
+    /** ASTODDate represents a Date Format
+      @attribute year
+      @attribute month
+      @attribute day
+      @attribute hour
+      @attribute minute
+      @attribute second
     */
-    ODValueList =
-      "[" values:(ODValue || ",")* "]" ;
+    interface ODDate extends ODValue =
+      year:IntLiteral day:IntLiteral month:IntLiteral
+      hour:IntLiteral minute:IntLiteral second:IntLiteral;
 
-    /** ASTODValueMap represents a Map in a UML Objectdiagram
-      @attribute entries List of Mappings
-    */
-    ODValueMap =
-      "[" entries:(ODEntry || ",")* "]" ;
-
-    /** ASTODEntry represents a (Key, Value)-Pair in a UML Objectdiagram
-      @attribute key
-      @attribute value
-    */
-    ODEntry = key:ODValue "->" value:ODValue;
-
-    /** ASTODValue represents possible values in a UML Objectdiagram
-      @attribute oDOptionals Values in form of Optionals
-      @attribute oDDate ODDate object
-      @attribute signedLiteral Possible Literals
-    */
-    ODValue = ODOptionals | ODDate | SignedLiteral;
-
-    /** ASTODOptionals represents Optional Objects in a UML Objectdiagram
-      @attribute optEmpty Indicates whether the optional is empty
-      @attribute optValue Represents the optional value
-    */
-    ODOptionals = optEmpty:["Optional.Empty"] | ("Optional.of(" optValue:SignedLiteral ")");
-
-    /** ASTODDate represents a Date Format in a UML Objectdiagram
-            @attribute year
-            @attribute month
-            @attribute day
-            @attribute hour
-            @attribute minute
-            @attribute second
-    */
-    interface ODDate =
-            year:IntLiteral day:IntLiteral month:IntLiteral
-            hour:IntLiteral minute:IntLiteral second:IntLiteral;
-
-    /**
-        DateFormat "yyyy-MM-dd HH:mm:ss"
+    /** DateFormat "yyyy-MM-dd HH:mm:ss"
     */
     ODDateV1 implements ODDate =
-        year:IntLiteral "-" month:IntLiteral "-" day:IntLiteral
-        hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
+      year:IntLiteral "-" month:IntLiteral "-" day:IntLiteral
+      hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
 
-    /**
-        DateFormat "yyyy.MM.dd HH:mm:ss"
+    /** DateFormat "yyyy.MM.dd HH:mm:ss"
     */
     ODDateV2 implements ODDate =
-        year:IntLiteral "." month:IntLiteral "." day:IntLiteral
-        hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
+      year:IntLiteral "." month:IntLiteral "." day:IntLiteral
+      hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
 
-    /**
-        DateFormat "yyyy/MM/dd HH:mm:ss"
+    /** DateFormat "yyyy/MM/dd HH:mm:ss"
     */
     ODDateV3 implements ODDate =
-        year:IntLiteral "/" month:IntLiteral "/" day:IntLiteral
-        hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
+      year:IntLiteral "/" month:IntLiteral "/" day:IntLiteral
+      hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
 
+    ODSignedLiteral implements ODValue =
+      SignedLiteral;
 
-    /**
-        ASTODReferenceName represents the Name possibilities for ODObjects
+    /** ASTODName represents the Name possibilities for ODObjects
+      @attribute name Name
+      @attribute oDSpecialName Specific naming for Objects
     */
-    ODReferenceName = Name | name:ODName;
+    ODName implements ODValue =
+      Name | ODSpecialName;
 
-    token ODName = '@'
-    	( 'a'..'z' | 'A'..'Z' | '0'..'9' 
-    	| '_' | '$' | '-' | '+' | '.' | '!' | '§' | '$' | '%' | '@' | '*'
-    	| 'ä' | 'Ä' | 'ö' | 'Ö' | 'ü' | 'Ü' | 'ß')* 
-    	('('.*?')')?;
-        
+    token ODSpecialName = '@'
+      ( 'a'..'z' | 'A'..'Z' | '0'..'9' | '!' | '_' | '.' )*
+      ('('.*?')')?;
 }

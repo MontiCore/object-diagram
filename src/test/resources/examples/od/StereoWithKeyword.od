@@ -1,6 +1,6 @@
 objectdiagram StereoWithKeyword {
 
-  src_test_resources_classes_A:JavaSourceFile;
+  src_test_resources_classes_A:JavaSourceFile{};
 
   src_test_resources_classes:Directory {
     dir = "src_test_resources_classes";

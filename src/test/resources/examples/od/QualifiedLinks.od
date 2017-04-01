@@ -2,7 +2,7 @@ package examples.od;
 
 objectdiagram QualifiedLinks {
 
-  local o1:AllData;
+  local o1:AllData{};
 
   local a1:Auction {
     long auctionIdent = 1213;

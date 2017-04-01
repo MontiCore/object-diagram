@@ -28,9 +28,9 @@ objectdiagram AuctionParticipants {
     isActive = true;
   };
 
-  <<interf>> private bp:BiddingPolicy;
+  <<interf>> private bp:BiddingPolicy{};
 
-  <<interf>> private tp:TimingPolicy;
+  <<interf>> private tp:TimingPolicy{};
 
   <<linkstereotype>>
   link participants kupfer912 <-> theo, otto, lisa;

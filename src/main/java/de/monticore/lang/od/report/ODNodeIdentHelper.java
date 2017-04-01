@@ -7,13 +7,7 @@ package de.monticore.lang.od.report;
 
 import de.monticore.ast.ASTNode;
 import de.monticore.generating.templateengine.reporting.commons.Layouter;
-import de.monticore.lang.od._ast.ASTODAttribute;
-import de.monticore.lang.od._ast.ASTODCompilationUnit;
-import de.monticore.lang.od._ast.ASTODDefinition;
-import de.monticore.lang.od._ast.ASTODInnerLink;
-import de.monticore.lang.od._ast.ASTODLink;
-import de.monticore.lang.od._ast.ASTODObject;
-import de.monticore.lang.od._ast.ASTODReferenceName;
+import de.monticore.lang.od._ast.*;
 import de.monticore.literals.literals._ast.ASTIntLiteral;
 import de.monticore.types.TypesNodeIdentHelper;
 import de.monticore.types.types._ast.ASTPrimitiveType;
@@ -28,35 +22,35 @@ import de.monticore.types.types._ast.ASTSimpleReferenceType;
  * @since TODO: add version number
  */
 public class ODNodeIdentHelper extends TypesNodeIdentHelper {
-  
+
   public String getIdent(ASTODDefinition a) {
     String type = Layouter.nodeName(a);
     String name = a.getName();
     return format(name, type);
   }
-  
+
   public String getIdent(ASTODCompilationUnit a) {
     String type = Layouter.nodeName(a);
     String name = a.getODDefinition().getName();
     return format(name, type);
   }
-  
+
   public String getIdent(ASTODObject a) {
     String type = Layouter.nodeName(a);
     String name = "";
-    if (a.getName().isPresent()) {
-      ASTODReferenceName ref = a.getName().get();
+    if (a.getODName().isPresent()) {
+      ASTODName ref = a.getODName().get();
       if (ref.getName().isPresent()) {
         name = ref.getName().get();
-      } 
+      }
     }
     return format(name, type);
   }
-  
+
   public String getIdent(ASTODAttribute a) {
     return format(a.getName(), Layouter.nodeName(a));
   }
-  
+
   public String getIdent(ASTODLink a) {
     String name = "";
     if (a.getName().isPresent()) {
@@ -67,12 +61,7 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
     }
     return format(name, Layouter.nodeName(a));
   }
-  
-  public String getIdent(ASTODInnerLink a) {
-    String name = a.getLinkName();
-    return format(name, Layouter.nodeName(a));
-  }
-  
+
   @Override
   public String getIdent(ASTNode a) {
     if (a instanceof ASTODCompilationUnit) {
@@ -83,9 +72,6 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
     }
     else if (a instanceof ASTODAttribute) {
       return getIdent((ASTODAttribute) a);
-    }
-    else if (a instanceof ASTODInnerLink) {
-      return getIdent((ASTODInnerLink) a);
     }
     else if (a instanceof ASTODLink) {
       return getIdent((ASTODLink) a);
@@ -110,5 +96,5 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
       return format(type);
     }
   }
-  
+
 }

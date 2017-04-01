@@ -4,9 +4,9 @@ import examples.cd.Associations;
 
 objectdiagram InnerLinkVariants {
 
-  :TypeOfAnonymousObject;
+  :TypeOfAnonymousObject{};
 
-  myObject:ObjectType;
+  myObject:ObjectType{};
   
   objectWithoutLinkName:TypeOfObject{
 
@@ -17,7 +17,7 @@ objectdiagram InnerLinkVariants {
     };
 
     linkList1 = [
-        @fooBar1:T1,
+        @fooBar1:T1{},
         @fooBar2:T2{
             foo = @fooBar3:T3{
                 content = "on4";

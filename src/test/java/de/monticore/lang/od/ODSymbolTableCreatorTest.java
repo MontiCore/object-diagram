@@ -7,8 +7,8 @@ package de.monticore.lang.od;
 
 import de.monticore.io.paths.ModelPath;
 import de.monticore.lang.od._ast.ASTODDefinition;
+import de.monticore.lang.od._ast.ASTODName;
 import de.monticore.lang.od._ast.ASTODObject;
-import de.monticore.lang.od._ast.ASTODReferenceName;
 import de.monticore.lang.od._ast.ODNodeFactory;
 import de.monticore.lang.od._symboltable.ODDefinitionSymbol;
 import de.monticore.lang.od._symboltable.ODLanguage;
@@ -86,9 +86,9 @@ public class ODSymbolTableCreatorTest {
     ASTODDefinition odDefinition = ODNodeFactory.createASTODDefinition();
     odDefinition.setName(OD_NAME);
     ASTODObject odObject = ODNodeFactory.createASTODObject();
-    ASTODReferenceName refName = ODNodeFactory.createASTODReferenceName();
+    ASTODName refName = ODNodeFactory.createASTODName();
     refName.setName(OBJECT_NAME);
-    odObject.setName(refName);
+    odObject.setODName(refName);
     odDefinition.getODObjects().add(odObject);
 
     GlobalScope globalScope = new GlobalScope(new ModelPath(), odLanguage, resolverConfiguration);

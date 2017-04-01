@@ -56,7 +56,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     if (unit.getODConformsStatements() != null && !unit.getODConformsStatements().isEmpty()) {
       for (ASTODConformsStatement s : unit.getODConformsStatements()) {
         getPrinter()
-            .print("conformsTo " + s.getConformedModels().toString() + ";");
+            .print("conformsTo " + s.getQualifiedName().toString() + ";");
       }
     }
     unit.getODDefinition().accept(getRealThis());
@@ -108,75 +108,23 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       a.getModifier().get().accept(getRealThis());
     }
     // print object name and type
-    if (a.getName().isPresent()) {
-      a.getName().get().accept(getRealThis());
+    if (a.getODName().isPresent()) {
+      a.getODName().get().accept(getRealThis());
     }
-    if (a.getType().isPresent()) {
+    if (a.getReferenceType() != null) {
       getPrinter().print(":");
-      a.getType().get().accept(getRealThis());
+      a.getReferenceType().accept(getRealThis());
     }
+    getPrinter().print("{");
     // print object body
-    if (!a.getODAttributes().isEmpty() || !a.getInnerLinks().isEmpty()) {
-      getPrinter().println(" {");
+    if (!a.getODAttributes().isEmpty()) {
       getPrinter().indent();
       for (ASTODAttribute ast : a.getODAttributes()) {
         ast.accept(getRealThis());
       }
-
-      for (ASTODInnerLink ast : a.getInnerLinks()) {
-        ast.accept(getRealThis());
-      }
       getPrinter().unindent();
-      getPrinter().print("}");
     }
-  }
-
-  /**
-   * Prints an object in an object diagram
-   *
-   * @param a object
-   */
-  @Override
-  public void handle(ASTODInnerLink a) {
-    if (a.getStereotype().isPresent()) {
-      a.getStereotype().get().accept(getRealThis());
-      getPrinter().print(" ");
-    }
-    getPrinter().print(a.getLinkName());
-    if (a.isAggregable()) {
-      getPrinter().print(" -> ");
-    }
-    else {
-      getPrinter().print(" = ");
-    }
-    if (a.getODObject().isPresent()) {
-      String delim = "";
-      getPrinter().print(delim);
-      a.getODObject().get().accept(getRealThis());
-    }
-    if (!a.getOdObjectList().isEmpty()) {
-      getPrinter().print("[");
-      String delim = "";
-      for (ASTODObjectListElement odListElement : a.getOdObjectList()) {
-        getPrinter().print(delim);
-        odListElement.accept(getRealThis());
-        delim = ", ";
-      }
-      getPrinter().print("]");
-    }
-    getPrinter().print(";");
-  }
-
-  /**
-   * @see de.monticore.lang.od._visitor.ODVisitor#handle(de.monticore.lang.od._ast.ASTODObjectListElement)
-   */
-  @Override
-  public void handle(ASTODObjectListElement a) {
-    if (a.getODValue().isPresent()) {
-      a.getODValue().get().accept(getRealThis());
-      getPrinter().print(" -> ");
-    }
-    a.getODObject().accept(getRealThis());
+    getPrinter().print("}");
   }
 
   /**
@@ -196,22 +144,130 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     }
     // print name
     getPrinter().print(a.getName());
-    // print value
-    if (a.getODValue().isPresent()) {
+
+    if (a.isAggregable()) {
+      getPrinter().print(" -> ");
+    }
+    else if (a.isImmutable()){
       getPrinter().print(" = ");
+    }
+
+    // print object
+    if (a.getODObject().isPresent()) {
+      a.getODObject().get().accept(getRealThis());
+    }
+    // print value
+    else if (a.getODValue().isPresent()) {
       a.getODValue().get().accept(getRealThis());
     }
     // print value collection
-    else if (a.getODValueList().isPresent()) {
-      getPrinter().print(" = ");
-      a.getODValueList().get().accept(getRealThis());
+    else if (a.getODList().isPresent()) {
+      a.getODList().get().accept(getRealThis());
     }
     // print value map
-    else if (a.getODValueMap().isPresent()) {
-      getPrinter().print(" = ");
-      a.getODValueMap().get().accept(getRealThis());
+    else if (a.getODMap().isPresent()) {
+      a.getODMap().get().accept(getRealThis());
     }
     getPrinter().println(";");
+  }
+
+  /**
+   * Prints an ODValueList in an object diagram
+   *
+   * @param a ASTODValueList
+   */
+  @Override
+  public void handle(ASTODList a) {
+    getPrinter().print("[");
+    for (Iterator<ASTODListElement> it = a.getODListElements().iterator(); it.hasNext(); ) {
+      it.next().accept(getRealThis());
+      if (it.hasNext()) {
+        getPrinter().print(",");
+      }
+    }
+    getPrinter().print("]");
+  }
+
+  /**
+   * @see de.monticore.lang.od._visitor.ODVisitor#handle(de.monticore.lang.od._ast.ASTODListElement)
+   */
+  @Override
+  public void handle(ASTODListElement a) {
+    if (a.getODValue().isPresent()) {
+      a.getODValue().get().accept(getRealThis());
+    }
+    else if (a.getODObject().isPresent()) {
+      a.getODObject().get().accept(getRealThis());
+    }
+  }
+
+  /**
+   * Prints an ODValueMap in an object diagram
+   *
+   * @param a ASTODValueMap
+   */
+  @Override
+  public void handle(ASTODMap a) {
+    getPrinter().print("[");
+    for (Iterator<ASTODMapElement> it = a.getODMapElements().iterator(); it.hasNext(); ) {
+      it.next().accept(getRealThis());
+      if (it.hasNext()) {
+        getPrinter().print(",");
+      }
+    }
+    getPrinter().print("]");
+  }
+
+  @Override public void handle(ASTODMapElement a) {
+    a.getKey().accept(getRealThis());
+    getPrinter().print(" -> ");
+    if (a.getODObject().isPresent()) {
+      a.getODObject().get().accept(getRealThis());
+    }
+    else if (a.getODValue().isPresent()) {
+      a.getODValue().get().accept(getRealThis());
+    }
+  }
+
+  /**
+   * @see de.monticore.lang.od._visitor.ODVisitor#handle(de.monticore.lang.od._ast.ASTODValue)
+   */
+  @Override
+  public void handle(ASTODValue a) {
+    a.accept(getRealThis());
+  }
+
+  public void handle(ASTODName a) {
+    if (a.getName().isPresent()) {
+      getPrinter().print(a.getName().get());
+    }
+    else if (a.getODSpecialName().isPresent()) {
+      getPrinter().print(a.getODSpecialName().get());
+    }
+  }
+
+  public void handle(ASTODDate a) {
+    getPrinter().print(a.getYear().getValue());
+    getPrinter().print(".");
+    getPrinter().print(a.getMonth().getValue());
+    getPrinter().print(".");
+    getPrinter().print(a.getDay().getValue());
+    getPrinter().print(".");
+    getPrinter().print(a.getHour().getValue());
+    getPrinter().print(":");
+    getPrinter().print(a.getMinute().getValue());
+    getPrinter().print(":");
+    getPrinter().print(a.getSecond().getValue());
+    getPrinter().print(":");
+  }
+
+  /**
+   * @see de.monticore.lang.od._visitor.ODVisitor#handle(de.monticore.lang.od._ast.ASTODOptionals)
+   */
+  @Override public void handle(ASTODOptionals a) {
+    if (a.isAbsent()) {
+      getPrinter().print("absent");
+    }
   }
 
   /**
@@ -269,7 +325,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       a.getLeftModifier().get().accept(getRealThis());
     }
     // print objects referenced on the left side of the link
-    Iterator<ASTODReferenceName> refNames = a.getLeftReferenceNames().iterator();
+    Iterator<ASTODName> refNames = a.getLeftReferenceNames().iterator();
     while (refNames.hasNext()) {
       refNames.next().accept(getRealThis());
       if (refNames.hasNext()) {
@@ -322,103 +378,6 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     // print right modifier
     if (a.getRightModifier().isPresent()) {
       a.getRightModifier().get().accept(getRealThis());
-    }
-  }
-
-  public void handle(ASTODReferenceName a) {
-    if (a.getName().isPresent()) {
-      getPrinter().print(a.getName().get());
-    }
-  }
-
-  /**
-   * Prints an ODValueList in an object diagram
-   *
-   * @param a ASTODValueList
-   */
-  @Override
-  public void handle(ASTODValueList a) {
-    getPrinter().print("[");
-    for (Iterator<ASTODValue> it = a.getValues().iterator(); it.hasNext(); ) {
-      it.next().accept(getRealThis());
-      if (it.hasNext()) {
-        getPrinter().print(",");
-      }
-    }
-    getPrinter().print("]");
-  }
-
-  /**
-   * Prints an ODValueMap in an object diagram
-   *
-   * @param a ASTODValueMap
-   */
-  @Override
-  public void handle(ASTODValueMap a) {
-    getPrinter().print("[");
-    for (Iterator<ASTODEntry> it = a.getEntries().iterator(); it.hasNext(); ) {
-      it.next().accept(getRealThis());
-      if (it.hasNext()) {
-        getPrinter().print(",");
-      }
-    }
-    getPrinter().print("]");
-  }
-
-  /**
-   * Prints an ODEntry in an object diagram
-   *
-   * @param a ASTODEntry
-   */
-  @Override
-  public void handle(ASTODEntry a) {
-    a.getKey().accept(getRealThis());
-    getPrinter().print(" -> ");
-    a.getValue().accept(getRealThis());
-  }
-
-  /**
-   * @see de.monticore.lang.od._visitor.ODVisitor#handle(de.monticore.lang.od._ast.ASTODValue)
-   */
-  @Override
-  public void handle(ASTODValue a) {
-    if (a.getSignedLiteral().isPresent()) {
-      a.getSignedLiteral().get().accept(getRealThis());
-    }
-    else if (a.getODOptionals().isPresent()) {
-      a.getODOptionals().get().accept(getRealThis());
-    }
-    else if (a.getODDate().isPresent()) {
-      a.getODDate().get().accept(getRealThis());
-    }
-  }
-
-  public void handle(ASTODDate a) {
-    getPrinter().print(a.getYear().getValue());
-    getPrinter().print(".");
-    getPrinter().print(a.getMonth().getValue());
-    getPrinter().print(".");
-    getPrinter().print(a.getDay().getValue());
-    getPrinter().print(".");
-    getPrinter().print(a.getHour().getValue());
-    getPrinter().print(":");
-    getPrinter().print(a.getMinute().getValue());
-    getPrinter().print(":");
-    getPrinter().print(a.getSecond().getValue());
-    getPrinter().print(":");
-  }
-
-  /**
-   * @see de.monticore.lang.od._visitor.ODVisitor#handle(de.monticore.lang.od._ast.ASTODOptionals)
-   */
-  @Override public void handle(ASTODOptionals a) {
-    if (a.isOptEmpty()) {
-      getPrinter().print("Optional.Empty");
-    }
-    else if (a.getOptValue().isPresent()) {
-      getPrinter().print("Optional.of(");
-      a.getOptValue().get().accept(getRealThis());
-      getPrinter().print(")");
     }
   }
 
