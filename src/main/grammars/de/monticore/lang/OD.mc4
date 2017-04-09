@@ -82,7 +82,7 @@ grammar OD extends de.monticore.common.Common {
       ((complete: ["="] | partial: ["->"]) ( ODValue | ODList | ODMap ))? ";";
 
     /** ASTODList represents a List of values
-      @attribute oDListElement List of ODListElements
+      @attribute oDValue List of ODValue
     */
     ODList =
       "[" (ODValue || ",")* "]";

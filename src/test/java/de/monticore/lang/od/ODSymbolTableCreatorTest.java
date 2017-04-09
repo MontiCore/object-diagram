@@ -11,17 +11,20 @@ import de.monticore.lang.od._ast.ASTODObject;
 import de.monticore.lang.od._ast.ASTObjectDiagram;
 import de.monticore.lang.od._ast.ODNodeFactory;
 import de.monticore.lang.od._symboltable.ODLanguage;
+import de.monticore.lang.od._symboltable.ODObjectSymbol;
 import de.monticore.lang.od._symboltable.ODSymbolTableCreator;
 import de.monticore.lang.od._symboltable.ObjectDiagramSymbol;
 import de.monticore.symboltable.GlobalScope;
 import de.monticore.symboltable.ResolvingConfiguration;
 import de.monticore.symboltable.Scope;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Optional;
+
+import static org.junit.Assert.assertTrue;
 
 public class ODSymbolTableCreatorTest {
 
@@ -48,32 +51,36 @@ public class ODSymbolTableCreatorTest {
         new ModelPath(Paths.get("src/test/resources/symboltable"));
   }
 
-  @Ignore
   @Test
   public void testResolveODObjectFromFile() {
-    /* TODO Create Symbol table
-    final ODDefinitionSymbol odDefinitionSymbol =
+    final ObjectDiagramSymbol objectDiagramSymbol =
         createODDefinitionFromFile();
 
-    Optional<ODObjectSymbol> odObject = odDefinitionSymbol.getODObject(OBJECT_NAME);
+    Collection<ODObjectSymbol> odObjects = objectDiagramSymbol.getODObjects();
 
-    assertTrue(odObject.isPresent());
-    assertTrue(odObject.get().getAstNode().isPresent());
-    */
+    assertTrue(!odObjects.isEmpty() && odObjects.size() == 6);
+    for (ODObjectSymbol obj : odObjects) {
+      assertTrue(obj.getAstNode().isPresent());
+    }
+
+    Optional<ODObjectSymbol> kupferObject = objectDiagramSymbol.getSpannedScope()
+        .resolve("kupfer912", ODObjectSymbol.KIND);
+    assertTrue(kupferObject.isPresent());
+
   }
 
-  @Ignore
   @Test
   public void testResolveODObjectFromAST() {
-    /* TODO Create Symbol table
-    final ODDefinitionSymbol odDefinitionSymbol =
-        createODDefinitionFromAST();
+    final ObjectDiagramSymbol objectDiagramSymbol =
+        createObjectDiagramFromAST();
 
-    Optional<ODObjectSymbol> odObject = odDefinitionSymbol.getODObject(OBJECT_NAME);
+    Collection<ODObjectSymbol> odObjects = objectDiagramSymbol
+        .getODObjects();//.getODObject(OBJECT_NAME);
 
-    assertTrue(odObject.isPresent());
-    assertTrue(odObject.get().getAstNode().isPresent());
-    */
+    assertTrue(!odObjects.isEmpty());
+    for (ODObjectSymbol obj : odObjects) {
+      assertTrue(obj.getAstNode().isPresent());
+    }
   }
 
   private ObjectDiagramSymbol createODDefinitionFromFile() {
@@ -82,7 +89,7 @@ public class ODSymbolTableCreatorTest {
         .orElse(null);
   }
 
-  private ObjectDiagramSymbol createODDefinitionFromAST() {
+  private ObjectDiagramSymbol createObjectDiagramFromAST() {
     ASTObjectDiagram objectDiagram = ODNodeFactory.createASTObjectDiagram();
     objectDiagram.setName(OD_NAME);
     ASTODObject odObject = ODNodeFactory.createASTODObject();

@@ -5,6 +5,7 @@
  */
 package de.monticore.lang.od._symboltable;
 
+import de.monticore.lang.od._ast.ASTODObject;
 import de.monticore.lang.od._ast.ASTObjectDiagram;
 import de.monticore.symboltable.ArtifactScope;
 import de.monticore.symboltable.MutableScope;
@@ -34,4 +35,15 @@ public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
     return artifactScope;
   }
 
+  @Override protected ODObjectSymbol create_ODObject(ASTODObject ast) {
+    if (ast.getODName().isPresent()) {
+      if (ast.getODName().get().getName().isPresent()) {
+        return new ODObjectSymbol(ast.getODName().get().getName().get());
+      }
+      else if (ast.getODName().get().getODSpecialName().isPresent()) {
+        return new ODObjectSymbol(ast.getODName().get().getODSpecialName().get());
+      }
+    }
+    return super.create_ODObject(ast);
+  }
 }
