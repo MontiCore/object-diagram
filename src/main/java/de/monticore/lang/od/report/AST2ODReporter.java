@@ -19,46 +19,47 @@
 
 package de.monticore.lang.od.report;
 
-import java.io.File;
-
 import de.monticore.ast.ASTNode;
 import de.monticore.generating.templateengine.reporting.commons.AReporter;
 import de.monticore.generating.templateengine.reporting.commons.ReportingConstants;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
-import de.monticore.lang.od._ast.ASTODCompilationUnit;
-import de.monticore.lang.od._ast.ASTODDefinition;
+import de.monticore.lang.od._ast.ASTODArtefact;
 import de.monticore.lang.od._ast.ASTODNode;
+import de.monticore.lang.od._ast.ASTObjectDiagram;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.Names;
 
+import java.io.File;
+
 public class AST2ODReporter extends AReporter {
-    
+
   private String modelName;
-  
+
   private ReportingRepository reporting;
-  
+
   public AST2ODReporter(String outputDir, String modelName, ReportingRepository reporting) {
     super(outputDir + File.separator + ReportingConstants.REPORTING_DIR + File.separator
-        + modelName,
+            + modelName,
         Names.getSimpleName(modelName) + "_AST", ReportingConstants.OD_FILE_EXTENSION);
     this.modelName = modelName;
     this.reporting = reporting;
   }
-  
+
   @Override
   protected void writeHeader() {
     writeLine("/*");
-    writeLine(" * ========================================================== AST for ObjectDiagram");
+    writeLine(
+        " * ========================================================== AST for ObjectDiagram");
     writeLine(" */");
   }
-  
+
   private void writeFooter() {
     writeLine("/*");
     writeLine(" * ========================================================== Explanation");
     writeLine(" * Shows the AST with all attributes as object diagram");
     writeLine(" */");
   }
-  
+
   @Override
   public void flush(ASTNode ast) {
     writeContent(ast);
@@ -67,16 +68,16 @@ public class AST2ODReporter extends AReporter {
   }
 
   /**
-   * @param ast
+   * @param ast {@link ASTNode}
    */
   private void writeContent(ASTNode ast) {
-    if (ast instanceof ASTODCompilationUnit || ast instanceof ASTODDefinition) {
+    if (ast instanceof ASTODArtefact || ast instanceof ASTObjectDiagram) {
       ASTODNode cd4aNode = (ASTODNode) ast;
       IndentPrinter pp = new IndentPrinter();
       ODAST2OD odPrinter = new ODAST2OD(pp, reporting);
-      odPrinter.printObjectDiagram(Names.getSimpleName(modelName)+"_AST", cd4aNode);
+      odPrinter.printObjectDiagram(Names.getSimpleName(modelName) + "_AST", cd4aNode);
       writeLine(pp.getContent());
     }
   }
-  
+
 }

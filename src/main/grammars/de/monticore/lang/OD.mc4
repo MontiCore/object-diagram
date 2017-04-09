@@ -12,11 +12,11 @@ grammar OD extends de.monticore.common.Common {
       @attribute oDConformsStatement
       @attribute oDDefinition
     */
-    ODCompilationUnit =
+    ODArtefact =
       ("package" package:(Name& || ".")+ ";")?
       ImportStatement*
       ODConformsStatement*
-      ODDefinition;
+      ObjectDiagram;
 
 
     /*========================================================================*/
@@ -43,7 +43,7 @@ grammar OD extends de.monticore.common.Common {
       @attribute oDObject    List of Objects of this Objectdiagram
       @attribute oDLink      List of Links of this Objectdiagram
     */
-    ODDefinition@! =
+    symbol scope ObjectDiagram =
       Stereotype?
       "objectdiagram" Name
       "{"
@@ -57,12 +57,10 @@ grammar OD extends de.monticore.common.Common {
       @attribute type Optional type of this object
       @attribute oDAttributes List of attributes of this object
     */
-    ODObject =
+    symbol ODObject implements ODValue =
       Modifier?
 	  ODName? ":" ReferenceType
-      (
-        "{" ODAttribute* "}"
-      );
+        "{" ODAttribute* "}";
 
     /** ASTODAttribute represents an Attribute of an Object
       @attribute stereotype Optional stereotype of this attribute
@@ -81,21 +79,13 @@ grammar OD extends de.monticore.common.Common {
       Modifier?
       Type?
       Name
-      ((immutable: ["="] | aggregable: ["->"]) (ODObject | ODValue | ODList | ODMap))? ";";
+      ((complete: ["="] | partial: ["->"]) ( ODValue | ODList | ODMap ))? ";";
 
     /** ASTODList represents a List of values
       @attribute oDListElement List of ODListElements
     */
     ODList =
-      "[" (ODListElement || ",")* "]";
-
-    /** ASTODListElement represents List element of ODList.
-        It can be either a concrete ODObject or a concrete ODValue.
-      @attribute oDValue List element in form of an ODValue
-      @attribute oDObject List element in form of an ODObject
-    */
-    ODListElement =
-      ODValue | ODObject;
+      "[" (ODValue || ",")* "]";
 
     /** ASTODMap represents a Map of values
       @attribute oDMapElement List of ODMapElements
@@ -110,7 +100,7 @@ grammar OD extends de.monticore.common.Common {
       @attribute oDValue Alternative value element of the key value pair
     */
     ODMapElement =
-      key:ODValue "->" (ODObject | ODValue);
+      key:ODValue "->" val:ODValue;
 
     /** ASTODLinkQualifier represents Qualifier for Links between Objects.
         It can be either a concrete attribute name or a concrete value.
@@ -168,7 +158,7 @@ grammar OD extends de.monticore.common.Common {
         that represents an absent optional value.
       @attribute absent True if attribute is optional and has an empty value
     */
-    ODOptionals implements ODValue =
+    ODAbsent implements ODValue =
       ["absent"];
 
     /** ASTODDate represents a Date Format

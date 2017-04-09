@@ -5,16 +5,16 @@
  */
 package de.monticore.lang.od._symboltable;
 
-import static java.util.Objects.requireNonNull;
-
-import java.util.ArrayList;
-import java.util.Optional;
-
-import de.monticore.lang.od._ast.ASTODDefinition;
+import de.monticore.lang.od._ast.ASTObjectDiagram;
 import de.monticore.symboltable.ArtifactScope;
 import de.monticore.symboltable.MutableScope;
 import de.monticore.symboltable.ResolvingConfiguration;
 import de.monticore.symboltable.Scope;
+
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static java.util.Objects.requireNonNull;
 
 public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
 
@@ -23,16 +23,15 @@ public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
     super(resolverConfig, enclosingScope);
   }
 
-  public Scope createFromAST(ASTODDefinition astodDefinition) {
-    requireNonNull(astodDefinition);
+  public Scope createFromAST(ASTObjectDiagram astObjectDiagram) {
+    requireNonNull(astObjectDiagram);
 
     final ArtifactScope artifactScope = new ArtifactScope(Optional.empty(), "", new ArrayList<>());
     putOnStack(artifactScope);
 
-    astodDefinition.accept(this);
+    astObjectDiagram.accept(this);
 
     return artifactScope;
   }
-
 
 }

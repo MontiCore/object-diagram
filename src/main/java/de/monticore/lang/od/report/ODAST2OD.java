@@ -22,33 +22,30 @@ import de.monticore.common.common._od.Common2OD;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
 import de.monticore.lang.od._od.OD2OD;
 import de.monticore.lang.od._visitor.CommonODDelegatorVisitor;
-import de.monticore.lang.od._visitor.ODDelegatorVisitor;
 import de.monticore.lang.od._visitor.ODVisitor;
 import de.monticore.literals.literals._od.Literals2OD;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.types._od.Types2OD;
 
 public class ODAST2OD extends OD2OD {
-  
+
   private ODVisitor realThis = this;
-  
-  private final ODDelegatorVisitor visitor;
-  
+
+  private final CommonODDelegatorVisitor visitor;
+
   public ODAST2OD(IndentPrinter printer, ReportingRepository reporting) {
     super(printer, reporting);
     visitor = new CommonODDelegatorVisitor();
     visitor.set_de_monticore_literals_literals__visitor_LiteralsVisitor(
         new Literals2OD(printer, reporting));
     visitor.set_de_monticore_types_types__visitor_TypesVisitor(new Types2OD(printer, reporting));
-    visitor.set_de_monticore_common_common__visitor_CommonVisitor(new Common2OD(printer, reporting));
+    visitor
+        .set_de_monticore_common_common__visitor_CommonVisitor(new Common2OD(printer, reporting));
     visitor.set_de_monticore_lang_od__visitor_ODVisitor(this);
     setPrintEmptyList(true);
     setPrintEmptyOptional(true);
   }
-  
-  /**
-   * @see de.monticore.java.javadsl._od.OD2OD#setRealThis(de.monticore.java.javadsl._visitor.ODVisitor)
-   */
+
   @Override
   public void setRealThis(ODVisitor realThis) {
     if (this.realThis != realThis) {
@@ -56,13 +53,10 @@ public class ODAST2OD extends OD2OD {
       visitor.setRealThis(realThis);
     }
   }
-  
-  /**
-   * @see de.monticore.java.javadsl._od.OD2OD#getRealThis()
-   */
+
   @Override
   public ODVisitor getRealThis() {
     return realThis;
   }
-  
+
 }

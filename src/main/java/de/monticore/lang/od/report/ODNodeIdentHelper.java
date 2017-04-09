@@ -23,19 +23,19 @@ import de.monticore.types.types._ast.ASTSimpleReferenceType;
  */
 public class ODNodeIdentHelper extends TypesNodeIdentHelper {
 
-  public String getIdent(ASTODDefinition a) {
+  private String getIdent(ASTObjectDiagram a) {
     String type = Layouter.nodeName(a);
     String name = a.getName();
     return format(name, type);
   }
 
-  public String getIdent(ASTODCompilationUnit a) {
+  private String getIdent(ASTODArtefact a) {
     String type = Layouter.nodeName(a);
-    String name = a.getODDefinition().getName();
+    String name = a.getObjectDiagram().getName();
     return format(name, type);
   }
 
-  public String getIdent(ASTODObject a) {
+  private String getIdent(ASTODObject a) {
     String type = Layouter.nodeName(a);
     String name = "";
     if (a.getODName().isPresent()) {
@@ -47,11 +47,11 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
     return format(name, type);
   }
 
-  public String getIdent(ASTODAttribute a) {
+  private String getIdent(ASTODAttribute a) {
     return format(a.getName(), Layouter.nodeName(a));
   }
 
-  public String getIdent(ASTODLink a) {
+  private String getIdent(ASTODLink a) {
     String name = "";
     if (a.getName().isPresent()) {
       name = a.getName().get();
@@ -64,11 +64,11 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
 
   @Override
   public String getIdent(ASTNode a) {
-    if (a instanceof ASTODCompilationUnit) {
-      return getIdent((ASTODCompilationUnit) a);
+    if (a instanceof ASTODArtefact) {
+      return getIdent((ASTODArtefact) a);
     }
-    else if (a instanceof ASTODDefinition) {
-      return getIdent((ASTODDefinition) a);
+    else if (a instanceof ASTObjectDiagram) {
+      return getIdent((ASTObjectDiagram) a);
     }
     else if (a instanceof ASTODAttribute) {
       return getIdent((ASTODAttribute) a);

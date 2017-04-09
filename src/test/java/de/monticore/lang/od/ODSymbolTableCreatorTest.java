@@ -6,13 +6,13 @@
 package de.monticore.lang.od;
 
 import de.monticore.io.paths.ModelPath;
-import de.monticore.lang.od._ast.ASTODDefinition;
 import de.monticore.lang.od._ast.ASTODName;
 import de.monticore.lang.od._ast.ASTODObject;
+import de.monticore.lang.od._ast.ASTObjectDiagram;
 import de.monticore.lang.od._ast.ODNodeFactory;
-import de.monticore.lang.od._symboltable.ODDefinitionSymbol;
 import de.monticore.lang.od._symboltable.ODLanguage;
 import de.monticore.lang.od._symboltable.ODSymbolTableCreator;
+import de.monticore.lang.od._symboltable.ObjectDiagramSymbol;
 import de.monticore.symboltable.GlobalScope;
 import de.monticore.symboltable.ResolvingConfiguration;
 import de.monticore.symboltable.Scope;
@@ -29,11 +29,11 @@ public class ODSymbolTableCreatorTest {
 
   private static final String OBJECT_NAME = "kupfer912";
 
-  static ODLanguage odLanguage;
+  private static ODLanguage odLanguage;
 
-  static ResolvingConfiguration resolverConfiguration;
+  private static ResolvingConfiguration resolverConfiguration;
 
-  static ModelPath modelPath;
+  private static ModelPath modelPath;
 
   private Scope globalScope;
 
@@ -42,7 +42,7 @@ public class ODSymbolTableCreatorTest {
     odLanguage = new ODLanguage();
 
     resolverConfiguration = new ResolvingConfiguration();
-    resolverConfiguration.addTopScopeResolvers(odLanguage.getResolvers());
+    resolverConfiguration.addDefaultFilters(odLanguage.getResolvers());
 
     modelPath =
         new ModelPath(Paths.get("src/test/resources/symboltable"));
@@ -76,28 +76,30 @@ public class ODSymbolTableCreatorTest {
     */
   }
 
-  private ODDefinitionSymbol createODDefinitionFromFile() {
+  private ObjectDiagramSymbol createODDefinitionFromFile() {
     globalScope = new GlobalScope(modelPath, odLanguage, resolverConfiguration);
-    return globalScope.<ODDefinitionSymbol>resolve(OD_NAME, ODDefinitionSymbol.KIND)
+    return globalScope.<ObjectDiagramSymbol>resolve(OD_NAME, ObjectDiagramSymbol.KIND)
         .orElse(null);
   }
 
-  private ODDefinitionSymbol createODDefinitionFromAST() {
-    ASTODDefinition odDefinition = ODNodeFactory.createASTODDefinition();
-    odDefinition.setName(OD_NAME);
+  private ObjectDiagramSymbol createODDefinitionFromAST() {
+    ASTObjectDiagram objectDiagram = ODNodeFactory.createASTObjectDiagram();
+    objectDiagram.setName(OD_NAME);
     ASTODObject odObject = ODNodeFactory.createASTODObject();
     ASTODName refName = ODNodeFactory.createASTODName();
     refName.setName(OBJECT_NAME);
     odObject.setODName(refName);
-    odDefinition.getODObjects().add(odObject);
+    objectDiagram.getODObjects().add(odObject);
 
     GlobalScope globalScope = new GlobalScope(new ModelPath(), odLanguage, resolverConfiguration);
 
     Optional<ODSymbolTableCreator> symbolTable = odLanguage.getSymbolTableCreator(
         resolverConfiguration, globalScope);
-    symbolTable.get().createFromAST(odDefinition);
+    if (symbolTable.isPresent()) {
+      symbolTable.get().createFromAST(objectDiagram);
+    }
 
-    return globalScope.<ODDefinitionSymbol>resolve(OD_NAME, ODDefinitionSymbol.KIND)
+    return globalScope.<ObjectDiagramSymbol>resolve(OD_NAME, ObjectDiagramSymbol.KIND)
         .orElse(null);
   }
 

@@ -18,48 +18,46 @@
  */
 package de.monticore.lang.od;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
+import de.monticore.lang.od._ast.ASTODArtefact;
+import de.monticore.lang.od._parser.ODParser;
+import de.monticore.lang.od.report.AST2ODReporter;
+import de.monticore.lang.od.report.ODNodeIdentHelper;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import org.junit.Test;
-
-import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
-import de.monticore.lang.od._ast.ASTODCompilationUnit;
-import de.monticore.lang.od._parser.ODParser;
-import de.monticore.lang.od.report.AST2ODReporter;
-import de.monticore.lang.od.report.ODNodeIdentHelper;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
- * Test for {@link ODPrinter}.
+ * Test for {@link ODParser}.
  *
  * @author Marita Breuer
  */
 public class ODReportingTest {
-  
 
-  protected void createAST(String packageName, String modelName) throws IOException {
+  private void createAST(String packageName, String modelName) throws IOException {
     Path model = Paths.get("src/test/resources/" + packageName + modelName + ".od");
     ODParser parser = new ODParser();
-    Optional<ASTODCompilationUnit> odDef = parser.parseODCompilationUnit(model.toString());
+    Optional<ASTODArtefact> odDef = parser.parseODArtefact(model.toString());
     assertFalse(parser.hasErrors());
     assertTrue(odDef.isPresent());
-    
+
     ReportingRepository reporting = new ReportingRepository(new ODNodeIdentHelper());
-    
+
     // Report AST
     AST2ODReporter reporter = new AST2ODReporter("target", modelName, reporting);
     reporter.flush(odDef.get());
-    
-   }
-  
+
+  }
+
   @Test
   public void reportInnerLinkVariants() throws IOException {
-    createAST("examples/hierarchical/" ,"InnerLinkVariants");
+    createAST("examples/hierarchical/", "InnerLinkVariants");
   }
-  
+
 }

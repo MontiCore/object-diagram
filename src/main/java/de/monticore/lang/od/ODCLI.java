@@ -1,10 +1,10 @@
 package de.monticore.lang.od;
 
+import de.monticore.lang.od._ast.ASTODArtefact;
+import de.monticore.lang.od._parser.ODParser;
+
 import java.io.IOException;
 import java.util.Optional;
-
-import de.monticore.lang.od._ast.ASTODCompilationUnit;
-import de.monticore.lang.od._parser.ODParser;
 
 /**
  * Created by TGr on 29.04.2016.
@@ -12,6 +12,7 @@ import de.monticore.lang.od._parser.ODParser;
 public class ODCLI {
 
   private static String JAR_NAME = "od-<Version>-jar-with-dependencies.jar";
+
   private static String PARSING_SUCCESSFUL = "Parsing Successful!";
 
   public static void main(String[] args) throws IOException {
@@ -19,7 +20,7 @@ public class ODCLI {
     cli.run(args);
   }
 
-  public void run(String[] args) throws IOException {
+  private void run(String[] args) throws IOException {
     handleArgs(args);
   }
 
@@ -39,14 +40,15 @@ public class ODCLI {
 
   private void doParse(String file) throws IOException {
     ODParser parser = new ODParser();
-    Optional<ASTODCompilationUnit> odDef = parser.parseODCompilationUnit(file);
+    Optional<ASTODArtefact> odDef = parser.parseODArtefact(file);
 
     System.out.println(PARSING_SUCCESSFUL);
   }
 
   private void printUsage() {
     System.out.println("Usage: " + JAR_NAME + " [OPTION] [ODFILE]");
-    System.out.println("Parses the ODFILE. Displays parsing error or \""+ PARSING_SUCCESSFUL +"\" message\n");
+    System.out.println(
+        "Parses the ODFILE. Displays parsing error or \"" + PARSING_SUCCESSFUL + "\" message\n");
     System.out.println("  -h   display this help and exit");
   }
 
