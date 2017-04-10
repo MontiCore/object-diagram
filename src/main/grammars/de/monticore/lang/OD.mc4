@@ -9,8 +9,8 @@ grammar OD extends de.monticore.common.Common {
     /** ASTODCompilationUnit represents the complete Diagram
       @attribute package The package declaration of this Objectdiagram
       @attribute importStatements List of imported elements
-      @attribute oDConformsStatement
-      @attribute oDDefinition
+      @attribute oDConformsStatement List of conform statements
+      @attribute objectDiagram the ObjectDiagram
     */
     ODArtefact =
       ("package" package:(Name& || ".")+ ";")?
@@ -37,7 +37,7 @@ grammar OD extends de.monticore.common.Common {
   	ODConformsStatement =
 	  "conformsTo" QualifiedName ";";
 
-    /** ASTODDefinition represents a UML Objectdiagram
+    /** ASTObjectDiagram represents a UML Objectdiagram
       @attribute stereotype  Optional Stereotype
       @attribute name        Name of this Objectdiagram
       @attribute oDObject    List of Objects of this Objectdiagram
@@ -54,7 +54,7 @@ grammar OD extends de.monticore.common.Common {
     /** ASTODObject represents an Object in a UML Objectdiagram
       @attribute modifier Optional Modifier of this object
       @attribute oDName Optional extended name of this object
-      @attribute type Optional type of this object
+      @attribute referenceType Required type of this object
       @attribute oDAttributes List of attributes of this object
     */
     symbol ODObject implements ODValue =
@@ -65,11 +65,10 @@ grammar OD extends de.monticore.common.Common {
     /** ASTODAttribute represents an Attribute of an Object
       @attribute stereotype Optional stereotype of this attribute
       @attribute modifier Optional modifier of this attribute
-      @attribute type Type of this Attribute
+      @attribute type Optional type of this attribute
       @attribute name Name of this Attribute
-      @attribute immutable True if attribute has an "immutable" assignment
-      @attribute aggregable True if attribute has an "aggregable" assignment
-      @attribute oDObject Attribute value in form of an ODObject
+      @attribute complete True if attribute has a "complete" assignment
+      @attribute partial True if attribute has a "partial" assignment
       @attribute oDValue Attribute value in form of an ODValue
       @attribute oDList Attribute value in form of an ODList
       @attribute oDMap Attribute value in form of an ODMap
@@ -81,7 +80,7 @@ grammar OD extends de.monticore.common.Common {
       Name
       ((complete: ["="] | partial: ["->"]) ( ODValue | ODList | ODMap ))? ";";
 
-    /** ASTODList represents a List of values
+    /** ASTODList represents a List of ODValues
       @attribute oDValue List of ODValue
     */
     ODList =
@@ -96,8 +95,7 @@ grammar OD extends de.monticore.common.Common {
     /** ASTODMapElement represents a Map element of ODMap.
         It can be either a concrete ODObject or a concrete ODValue.
       @attribute key Key element of the key value pair
-      @attribute oDObject Value element of the key value pair
-      @attribute oDValue Alternative value element of the key value pair
+      @attribute val Value element of the key value pair
     */
     ODMapElement =
       key:ODValue "->" val:ODValue;

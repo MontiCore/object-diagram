@@ -19,10 +19,19 @@
 package de.monticore.lang.od;
 
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
+import de.monticore.io.paths.ModelPath;
 import de.monticore.lang.od._ast.ASTODArtefact;
 import de.monticore.lang.od._parser.ODParser;
+import de.monticore.lang.od._symboltable.ODLanguage;
+import de.monticore.lang.od._symboltable.ODSymbolTableCreator;
+import de.monticore.lang.od._symboltable.ObjectDiagramSymbol;
 import de.monticore.lang.od.report.AST2ODReporter;
 import de.monticore.lang.od.report.ODNodeIdentHelper;
+import de.monticore.lang.od.report.ST2ODReporter;
+import de.monticore.symboltable.GlobalScope;
+import de.monticore.symboltable.ResolvingConfiguration;
+import de.monticore.symboltable.Scope;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -40,18 +49,51 @@ import static org.junit.Assert.assertTrue;
  */
 public class ODReportingTest {
 
+  private static ODLanguage odLanguage;
+
+  private static ResolvingConfiguration resolverConfiguration;
+
+  private static ModelPath modelPath;
+
+  private Scope globalScope;
+
+  @BeforeClass
+  public static void setup() {
+    odLanguage = new ODLanguage();
+
+    resolverConfiguration = new ResolvingConfiguration();
+    resolverConfiguration.addDefaultFilters(odLanguage.getResolvers());
+  }
+
   private void createAST(String packageName, String modelName) throws IOException {
     Path model = Paths.get("src/test/resources/" + packageName + modelName + ".od");
+    modelPath =
+        new ModelPath(Paths.get("src/test/resources/" + packageName));
     ODParser parser = new ODParser();
-    Optional<ASTODArtefact> odDef = parser.parseODArtefact(model.toString());
+    Optional<ASTODArtefact> astodArtefact = parser.parseODArtefact(model.toString());
     assertFalse(parser.hasErrors());
-    assertTrue(odDef.isPresent());
+    assertTrue(astodArtefact.isPresent());
+
+    GlobalScope globalScope = new GlobalScope(modelPath, odLanguage, resolverConfiguration);
+
+    Optional<ODSymbolTableCreator> symbolTable = odLanguage.getSymbolTableCreator(
+        resolverConfiguration, globalScope);
+
+    if (symbolTable.isPresent()) {
+      symbolTable.get().createFromAST(astodArtefact.get().getObjectDiagram());
+    }
+
+    globalScope.<ObjectDiagramSymbol>resolve(modelName, ObjectDiagramSymbol.KIND).orElse(null);
 
     ReportingRepository reporting = new ReportingRepository(new ODNodeIdentHelper());
 
     // Report AST
     AST2ODReporter reporter = new AST2ODReporter("target", modelName, reporting);
-    reporter.flush(odDef.get());
+    reporter.flush(astodArtefact.get().getObjectDiagram());
+
+    // Report ST
+    ST2ODReporter st2ODReporter = new ST2ODReporter("target", modelName, reporting);
+    st2ODReporter.flush(astodArtefact.get().getObjectDiagram());
 
   }
 
