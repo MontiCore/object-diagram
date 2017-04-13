@@ -35,6 +35,14 @@ public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
     return artifactScope;
   }
 
+  @Override public void visit(ASTODObject ast) {
+    ODObjectSymbol oDObject = create_ODObject(ast);
+    if (!oDObject.getName().isEmpty()) {
+      initialize_ODObject(oDObject, ast);
+      addToScopeAndLinkWithNode(oDObject, ast);
+    }
+  }
+
   @Override protected ODObjectSymbol create_ODObject(ASTODObject ast) {
     if (ast.getODName().isPresent()) {
       if (ast.getODName().get().getName().isPresent()) {

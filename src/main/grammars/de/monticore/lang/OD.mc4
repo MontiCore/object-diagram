@@ -28,6 +28,19 @@ grammar OD extends de.monticore.common.Common {
     interface ODValue;
 
     /*========================================================================*/
+    /*============================ ENUMERATIONS ==============================*/
+    /*========================================================================*/
+
+    enum LINKDIRECTION =
+      LEFTTORIGHT:"->" | RIGHTTOLEFT:"<-"| BIDIRECTIONAL:"<->" | UNSPECIFIED:"--";
+
+    enum LINKKIND =
+      LINK: "link" | AGGREGATION: "aggregation" | COMPOSITION: "composition";
+
+    enum ASSIGNMENTINTEGRITY =
+          COMPLETE: "=" | PARTIAL: "->";
+
+    /*========================================================================*/
     /*============================== Grammar =================================*/
     /*========================================================================*/
 
@@ -78,7 +91,7 @@ grammar OD extends de.monticore.common.Common {
       Modifier?
       Type?
       Name
-      ((complete: ["="] | partial: ["->"]) ( ODValue | ODList | ODMap ))? ";";
+      ( ASSIGNMENTINTEGRITY ( ODValue | ODList | ODMap ) )? ";";
 
     /** ASTODList represents a List of ODValues
       @attribute oDValue List of ODValue
@@ -130,23 +143,14 @@ grammar OD extends de.monticore.common.Common {
     */
     ODLink =
       Stereotype?
-      (
-        ["link"]
-        | ["aggregation"]
-        | ["composition"]
-      )
+      LINKKIND
       ([derived:"/"])?
       Name?
       leftModifier:Modifier?
       leftReferenceNames:(ODName || ",")*
       leftQualifier:ODLinkQualifier?
       ("(" leftRole:Name ")")?
-      (
-        leftToRight:["->"]
-        | rightToLeft:["<-"]
-        | bidirectional:["<->"]
-        | unspecified:["--"]
-      )
+      LINKDIRECTION
       ("(" rightRole:Name ")")?
       rightQualifier:ODLinkQualifier?
       rightReferenceNames:(ODName || ",")*
@@ -200,6 +204,6 @@ grammar OD extends de.monticore.common.Common {
       Name | ODSpecialName;
 
     token ODSpecialName = '@'
-      ( 'a'..'z' | 'A'..'Z' | '0'..'9' | '!' | '_' | '.' )*
+      ( 'a'..'z' | 'A'..'Z' | '0'..'9' | '!' | '_' | '.')*
       ('('.*?')')?;
 }

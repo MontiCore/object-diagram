@@ -145,24 +145,29 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     // print name
     getPrinter().print(a.getName());
 
-    if (a.isPartial()) {
-      getPrinter().print(" -> ");
+    if (a.getASSIGNMENTINTEGRITY().isPresent()) {
+      if (a.getASSIGNMENTINTEGRITY().get() == ASTASSIGNMENTINTEGRITY.PARTIAL) {
+        getPrinter().print(" -> ");
+      }
+      else if (a.getASSIGNMENTINTEGRITY().get() == ASTASSIGNMENTINTEGRITY.COMPLETE) {
+        getPrinter().print(" = ");
+      }
+
+      // print value
+      if (a.getODValue().isPresent()) {
+        a.getODValue().get().accept(getRealThis());
+      }
+      // print value collection
+      else if (a.getODList().isPresent()) {
+        a.getODList().get().accept(getRealThis());
+      }
+      // print value map
+      else if (a.getODMap().isPresent()) {
+        a.getODMap().get().accept(getRealThis());
+      }
+
     }
-    else if (a.isComplete()) {
-      getPrinter().print(" = ");
-    }
-    // print value
-    if (a.getODValue().isPresent()) {
-      a.getODValue().get().accept(getRealThis());
-    }
-    // print value collection
-    else if (a.getODList().isPresent()) {
-      a.getODList().get().accept(getRealThis());
-    }
-    // print value map
-    else if (a.getODMap().isPresent()) {
-      a.getODMap().get().accept(getRealThis());
-    }
+
     getPrinter().println(";");
   }
 
@@ -217,7 +222,8 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   public void handle(ASTODName a) {
     if (a.getName().isPresent()) {
       getPrinter().print(a.getName().get());
-    } else if (a.getODSpecialName().isPresent()){
+    }
+    else if (a.getODSpecialName().isPresent()) {
       getPrinter().print(a.getODSpecialName().get());
     }
   }
@@ -280,13 +286,13 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       getPrinter().print(" ");
     }
     // print type of the link
-    if (a.isLink()) {
+    if (a.getLINKKIND() == ASTLINKKIND.LINK) {
       getPrinter().print("link ");
     }
-    else if (a.isAggregation()) {
+    else if (a.getLINKKIND() == ASTLINKKIND.AGGREGATION) {
       getPrinter().print("aggregation ");
     }
-    else if (a.isComposition()) {
+    else if (a.getLINKKIND() == ASTLINKKIND.COMPOSITION) {
       getPrinter().print("composition ");
     }
     // print name
@@ -320,16 +326,16 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       getPrinter().print(") ");
     }
     // print arrow
-    if (a.isLeftToRight()) {
+    if (a.getLINKDIRECTION() == ASTLINKDIRECTION.LEFTTORIGHT) {
       getPrinter().print("->");
     }
-    if (a.isRightToLeft()) {
+    else if (a.getLINKDIRECTION() == ASTLINKDIRECTION.RIGHTTOLEFT) {
       getPrinter().print("<-");
     }
-    if (a.isBidirectional()) {
+    else if (a.getLINKDIRECTION() == ASTLINKDIRECTION.BIDIRECTIONAL) {
       getPrinter().print("<->");
     }
-    if (a.isUnspecified()) {
+    else if (a.getLINKDIRECTION() == ASTLINKDIRECTION.UNSPECIFIED) {
       getPrinter().print("--");
     }
     // print right role
