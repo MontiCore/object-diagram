@@ -7,8 +7,14 @@ package de.monticore.lang.od.report;
 
 import de.monticore.ast.ASTNode;
 import de.monticore.generating.templateengine.reporting.commons.Layouter;
-import de.monticore.lang.od._ast.*;
+import de.monticore.lang.od._ast.ASTODArtefact;
+import de.monticore.lang.od._ast.ASTODAttribute;
+import de.monticore.lang.od._ast.ASTODLink;
+import de.monticore.lang.od._ast.ASTODName;
+import de.monticore.lang.od._ast.ASTODObject;
+import de.monticore.lang.od._ast.ASTObjectDiagram;
 import de.monticore.literals.literals._ast.ASTIntLiteral;
+import de.monticore.symboltable.Scope;
 import de.monticore.symboltable.Symbol;
 import de.monticore.types.TypesNodeIdentHelper;
 import de.monticore.types.types._ast.ASTPrimitiveType;
@@ -116,8 +122,16 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
    * @see de.monticore.generating.templateengine.reporting.commons.IASTNodeIdentHelper#getIdent(de.monticore.symboltable.Symbol)
    */
   @Override
-  public String getIdent(Symbol symbol) {    
-    return format(maskSpecialChars(symbol.getName()), "Symbol");
+  public String getIdent(Symbol symbol) {
+    return format(maskSpecialChars(symbol.getName()), symbol.getClass().getSimpleName());
   }
+
+  /**
+   * @see de.monticore.generating.templateengine.reporting.commons.IASTNodeIdentHelper#getIdent(de.monticore.symboltable.Scope)
+   */
+  @Override
+  public String getIdent(Scope scope) {
+    return format(scope.getName().orElse(""), scope.getClass().getSimpleName());
+  }  
   
 }

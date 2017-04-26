@@ -10,6 +10,9 @@ public class ST2ODReporter extends SymbolTableReporter {
 
   public ST2ODReporter(String outputDir, String modelName, ReportingRepository repository) {
     super(outputDir, modelName, repository);
+    setPrintAllFieldsCommented(true);
+    setPrintEmptyList(true);
+    setPrintEmptyOptional(true);
   }
 
   /**
