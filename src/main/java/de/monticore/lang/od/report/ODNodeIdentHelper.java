@@ -9,6 +9,7 @@ import de.monticore.ast.ASTNode;
 import de.monticore.generating.templateengine.reporting.commons.Layouter;
 import de.monticore.lang.od._ast.*;
 import de.monticore.literals.literals._ast.ASTIntLiteral;
+import de.monticore.symboltable.Symbol;
 import de.monticore.types.TypesNodeIdentHelper;
 import de.monticore.types.types._ast.ASTPrimitiveType;
 import de.monticore.types.types._ast.ASTQualifiedName;
@@ -22,19 +23,19 @@ import de.monticore.types.types._ast.ASTSimpleReferenceType;
  * @since TODO: add version number
  */
 public class ODNodeIdentHelper extends TypesNodeIdentHelper {
-
+  
   private String getIdent(ASTObjectDiagram a) {
     String type = Layouter.nodeName(a);
     String name = a.getName();
     return format(name, type);
   }
-
+  
   private String getIdent(ASTODArtefact a) {
     String type = Layouter.nodeName(a);
     String name = a.getObjectDiagram().getName();
     return format(name, type);
   }
-
+  
   private String getIdent(ASTODObject a) {
     String type = Layouter.nodeName(a);
     String name = "";
@@ -43,14 +44,28 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
       if (ref.getName().isPresent()) {
         name = ref.getName().get();
       }
+      if (ref.getODSpecialName().isPresent()) {
+        name = ref.getODSpecialName().get();
+      }
     }
-    return format(name, type);
+        
+    return format(maskSpecialChars(name), type);
   }
-
+  
+  private String maskSpecialChars(String name) {
+    // Replace all special characters by _
+    name = name.replaceAll("[^a-zA-Z0-9_$\\-+]", "_");
+    if (name.matches("[0-9].*")) {
+      // if the name starts with a digit ...
+      name = "_".concat(name);
+    }
+    return name;
+  }
+  
   private String getIdent(ASTODAttribute a) {
     return format(a.getName(), Layouter.nodeName(a));
   }
-
+  
   private String getIdent(ASTODLink a) {
     String name = "";
     if (a.getName().isPresent()) {
@@ -61,7 +76,7 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
     }
     return format(name, Layouter.nodeName(a));
   }
-
+  
   @Override
   public String getIdent(ASTNode a) {
     if (a instanceof ASTODArtefact) {
@@ -96,5 +111,13 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
       return format(type);
     }
   }
-
+  
+  /**
+   * @see de.monticore.generating.templateengine.reporting.commons.IASTNodeIdentHelper#getIdent(de.monticore.symboltable.Symbol)
+   */
+  @Override
+  public String getIdent(Symbol symbol) {    
+    return format(maskSpecialChars(symbol.getName()), "Symbol");
+  }
+  
 }
