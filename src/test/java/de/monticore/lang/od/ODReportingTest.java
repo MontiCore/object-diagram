@@ -100,6 +100,22 @@ public class ODReportingTest {
   @Test
   public void reportInnerLinkVariants() throws IOException {
     createAST("examples/hierarchical/", "InnerLinkVariants");
+
+    Path astModel = Paths.get("target/reports/InnerLinkVariants/InnerLinkVariants_AST.od");
+    Path stModel = Paths.get("target/reports/InnerLinkVariants/InnerLinkVariants_ST.od");
+
+    ODParser parser = new ODParser();
+
+    // Parse and check AST-Report
+    Optional<ASTODArtefact> astodArtefact = parser.parseODArtefact(astModel.toString());
+    assertFalse(parser.hasErrors());
+    assertTrue(astodArtefact.isPresent());
+
+    // Parse and check ST-Report
+    astodArtefact = parser.parseODArtefact(stModel.toString());
+    assertFalse(parser.hasErrors());
+    assertTrue(astodArtefact.isPresent());
+
   }
 
 }

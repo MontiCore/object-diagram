@@ -31,10 +31,10 @@ grammar OD extends de.monticore.common.Common {
     /*============================ ENUMERATIONS ==============================*/
     /*========================================================================*/
 
-    enum LINKDIRECTION =
+    enum AssocDirection =
       LEFTTORIGHT:"->" | RIGHTTOLEFT:"<-"| BIDIRECTIONAL:"<->" | UNSPECIFIED:"--";
 
-    enum LINKKIND =
+    enum LinkForm =
       LINK: "link" | AGGREGATION: "aggregation" | COMPOSITION: "composition";
 
     enum ASSIGNMENTINTEGRITY =
@@ -70,7 +70,7 @@ grammar OD extends de.monticore.common.Common {
       @attribute referenceType Required type of this object
       @attribute oDAttributes List of attributes of this object
     */
-    symbol ODObject implements ODValue =
+    /**symbol*/ ODObject implements ODValue =
       Modifier?
 	  ODName? ":" ReferenceType
         "{" ODAttribute* "}";
@@ -91,7 +91,7 @@ grammar OD extends de.monticore.common.Common {
       Modifier?
       Type?
       Name
-      ( ASSIGNMENTINTEGRITY ( ODValue | ODList | ODMap ) )? ";";
+      ( (complete:"="|"->") ( ODValue | ODList | ODMap ) )? ";";
 
     /** ASTODList represents a List of ODValues
       @attribute oDValue List of ODValue
@@ -143,14 +143,14 @@ grammar OD extends de.monticore.common.Common {
     */
     ODLink =
       Stereotype?
-      LINKKIND
+      LinkForm
       ([derived:"/"])?
       Name?
       leftModifier:Modifier?
       leftReferenceNames:(ODName || ",")*
       leftQualifier:ODLinkQualifier?
       ("(" leftRole:Name ")")?
-      LINKDIRECTION
+      AssocDirection
       ("(" rightRole:Name ")")?
       rightQualifier:ODLinkQualifier?
       rightReferenceNames:(ODName || ",")*

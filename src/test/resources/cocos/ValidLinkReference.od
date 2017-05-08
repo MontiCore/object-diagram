@@ -1,0 +1,13 @@
+package cocos;
+
+objectdiagram ValidLinkReference {
+
+  @foo:ObjectType{};
+  @bar:ObjectType{
+   foobar = @foo;
+  };
+
+  link @foo -> @bar;
+  link bla -> @bar;
+
+}

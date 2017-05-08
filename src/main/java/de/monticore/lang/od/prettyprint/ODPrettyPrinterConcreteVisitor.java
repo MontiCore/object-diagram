@@ -145,12 +145,13 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     // print name
     getPrinter().print(a.getName());
 
-    if (a.getASSIGNMENTINTEGRITY().isPresent()) {
-      if (a.getASSIGNMENTINTEGRITY().get() == ASTASSIGNMENTINTEGRITY.PARTIAL) {
-        getPrinter().print(" -> ");
-      }
-      else if (a.getASSIGNMENTINTEGRITY().get() == ASTASSIGNMENTINTEGRITY.COMPLETE) {
+    if (a.completeIsPresent() || a.getODValue().isPresent() || a.getODMap().isPresent() || a
+        .getODList().isPresent()) {
+      if (a.completeIsPresent()) {
         getPrinter().print(" = ");
+      }
+      else {
+        getPrinter().print(" -> ");
       }
 
       // print value
@@ -286,13 +287,13 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       getPrinter().print(" ");
     }
     // print type of the link
-    if (a.getLINKKIND() == ASTLINKKIND.LINK) {
+    if (a.getLinkForm() == ASTLinkForm.LINK) {
       getPrinter().print("link ");
     }
-    else if (a.getLINKKIND() == ASTLINKKIND.AGGREGATION) {
+    else if (a.getLinkForm() == ASTLinkForm.AGGREGATION) {
       getPrinter().print("aggregation ");
     }
-    else if (a.getLINKKIND() == ASTLINKKIND.COMPOSITION) {
+    else if (a.getLinkForm() == ASTLinkForm.COMPOSITION) {
       getPrinter().print("composition ");
     }
     // print name
@@ -326,16 +327,16 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       getPrinter().print(") ");
     }
     // print arrow
-    if (a.getLINKDIRECTION() == ASTLINKDIRECTION.LEFTTORIGHT) {
+    if (a.getAssocDirection() == ASTAssocDirection.LEFTTORIGHT) {
       getPrinter().print("->");
     }
-    else if (a.getLINKDIRECTION() == ASTLINKDIRECTION.RIGHTTOLEFT) {
+    else if (a.getAssocDirection() == ASTAssocDirection.RIGHTTOLEFT) {
       getPrinter().print("<-");
     }
-    else if (a.getLINKDIRECTION() == ASTLINKDIRECTION.BIDIRECTIONAL) {
+    else if (a.getAssocDirection() == ASTAssocDirection.BIDIRECTIONAL) {
       getPrinter().print("<->");
     }
-    else if (a.getLINKDIRECTION() == ASTLINKDIRECTION.UNSPECIFIED) {
+    else if (a.getAssocDirection() == ASTAssocDirection.UNSPECIFIED) {
       getPrinter().print("--");
     }
     // print right role

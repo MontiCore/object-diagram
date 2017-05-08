@@ -13,6 +13,7 @@ import de.monticore.symboltable.ResolvingConfiguration;
 import de.monticore.symboltable.Scope;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Optional;
 
 import static java.util.Objects.requireNonNull;
@@ -22,6 +23,11 @@ public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
   public ODSymbolTableCreator(ResolvingConfiguration resolverConfig,
       MutableScope enclosingScope) {
     super(resolverConfig, enclosingScope);
+  }
+
+  public ODSymbolTableCreator(final ResolvingConfiguration resolvingConfig,
+      final Deque<MutableScope> scopeStack) {
+    super(resolvingConfig, scopeStack);
   }
 
   public Scope createFromAST(ASTObjectDiagram astObjectDiagram) {
@@ -35,23 +41,28 @@ public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
     return artifactScope;
   }
 
-  @Override public void visit(ASTODObject ast) {
-    ODObjectSymbol oDObject = create_ODObject(ast);
-    if (!oDObject.getName().isEmpty()) {
-      initialize_ODObject(oDObject, ast);
-      addToScopeAndLinkWithNode(oDObject, ast);
+  @Override
+  public void visit(ASTODObject ast) {
+    Optional<ODObjectSymbol> oDObjectOpt = create_ODObject(ast);
+    if (oDObjectOpt.isPresent()) {
+      initialize_ODObject(oDObjectOpt.get(), ast);
+      addToScopeAndLinkWithNode(oDObjectOpt.get(), ast);
     }
   }
 
-  @Override protected ODObjectSymbol create_ODObject(ASTODObject ast) {
+  protected Optional<ODObjectSymbol> create_ODObject(ASTODObject ast) {
     if (ast.getODName().isPresent()) {
       if (ast.getODName().get().getName().isPresent()) {
-        return new ODObjectSymbol(ast.getODName().get().getName().get());
+        return Optional.of(new ODObjectSymbol(ast.getODName().get().getName().get()));
       }
       else if (ast.getODName().get().getODSpecialName().isPresent()) {
-        return new ODObjectSymbol(ast.getODName().get().getODSpecialName().get());
+        return Optional.of(new ODObjectSymbol(ast.getODName().get().getODSpecialName().get()));
       }
     }
-    return super.create_ODObject(ast);
+    return Optional.empty();
+  }
+
+  protected void initialize_ODObject(ODObjectSymbol odObjectSymbol, ASTODObject astodObject) {
+    odObjectSymbol.setType(astodObject.getReferenceType());
   }
 }

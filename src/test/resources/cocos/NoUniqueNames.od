@@ -1,0 +1,8 @@
+package cocos;
+
+objectdiagram NoUniqueNames {
+
+  myObject:ObjectType{};
+  myObject:ObjectType{};
+
+}
