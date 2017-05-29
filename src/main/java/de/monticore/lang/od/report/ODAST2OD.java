@@ -33,14 +33,24 @@ public class ODAST2OD extends OD2OD {
   public ODAST2OD(IndentPrinter printer, ReportingRepository reporting) {
     super(printer, reporting);
     visitor = new CommonODDelegatorVisitor();
-    visitor.set_de_monticore_literals_literals__visitor_LiteralsVisitor(
-        new Literals2OD(printer, reporting));
-    visitor.set_de_monticore_types_types__visitor_TypesVisitor(new Types2OD(printer, reporting));
+    Literals2OD literalsVisitor = new Literals2OD(printer, reporting);
+    Types2OD typesVisitor = new Types2OD(printer, reporting);
+    Common2OD commonVisitor = new Common2OD(printer, reporting);
+    visitor.set_de_monticore_literals_literals__visitor_LiteralsVisitor(literalsVisitor);
+    visitor.set_de_monticore_types_types__visitor_TypesVisitor(typesVisitor);
     visitor
-        .set_de_monticore_common_common__visitor_CommonVisitor(new Common2OD(printer, reporting));
+        .set_de_monticore_common_common__visitor_CommonVisitor(commonVisitor);
     visitor.set_de_monticore_lang_od__visitor_ODVisitor(this);
-    setPrintEmptyList(true);
-    setPrintEmptyOptional(true);
+    boolean emptyList = true;
+    boolean emptyOptional = true;
+    setPrintEmptyList(emptyList);
+    setPrintEmptyOptional(emptyOptional);
+    literalsVisitor.setPrintEmptyList(emptyList);
+    literalsVisitor.setPrintEmptyOptional(emptyOptional);
+    typesVisitor.setPrintEmptyList(emptyList);
+    typesVisitor.setPrintEmptyOptional(emptyOptional);
+    commonVisitor.setPrintEmptyList(emptyList);
+    commonVisitor.setPrintEmptyOptional(emptyOptional);
   }
 
   @Override

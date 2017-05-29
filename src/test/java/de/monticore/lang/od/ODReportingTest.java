@@ -18,6 +18,17 @@
  */
 package de.monticore.lang.od;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.lang.od._ast.ASTODArtefact;
@@ -30,17 +41,6 @@ import de.monticore.lang.od.report.ODNodeIdentHelper;
 import de.monticore.lang.od.report.ST2ODReporter;
 import de.monticore.symboltable.GlobalScope;
 import de.monticore.symboltable.ResolvingConfiguration;
-import de.monticore.symboltable.Scope;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Optional;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Test for {@link ODParser}.
@@ -54,8 +54,6 @@ public class ODReportingTest {
   private static ResolvingConfiguration resolverConfiguration;
 
   private static ModelPath modelPath;
-
-  private Scope globalScope;
 
   @BeforeClass
   public static void setup() {
@@ -80,7 +78,7 @@ public class ODReportingTest {
         resolverConfiguration, globalScope);
 
     if (symbolTable.isPresent()) {
-      symbolTable.get().createFromAST(astodArtefact.get().getObjectDiagram());
+      symbolTable.get().createFromAST(astodArtefact.get());
     }
 
     globalScope.<ObjectDiagramSymbol>resolve(modelName, ObjectDiagramSymbol.KIND).orElse(null);

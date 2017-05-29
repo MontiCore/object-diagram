@@ -5,18 +5,15 @@
  */
 package de.monticore.lang.od._symboltable;
 
-import de.monticore.lang.od._ast.ASTODObject;
-import de.monticore.lang.od._ast.ASTObjectDiagram;
-import de.monticore.symboltable.ArtifactScope;
-import de.monticore.symboltable.MutableScope;
-import de.monticore.symboltable.ResolvingConfiguration;
-import de.monticore.symboltable.Scope;
-
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Optional;
 
-import static java.util.Objects.requireNonNull;
+import de.monticore.lang.od._ast.ASTODArtefact;
+import de.monticore.lang.od._ast.ASTODObject;
+import de.monticore.symboltable.ArtifactScope;
+import de.monticore.symboltable.MutableScope;
+import de.monticore.symboltable.ResolvingConfiguration;
 
 public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
 
@@ -30,15 +27,15 @@ public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
     super(resolvingConfig, scopeStack);
   }
 
-  public Scope createFromAST(ASTObjectDiagram astObjectDiagram) {
-    requireNonNull(astObjectDiagram);
 
+  @Override
+  public void visit(ASTODArtefact ast) {
     final ArtifactScope artifactScope = new ArtifactScope(Optional.empty(), "", new ArrayList<>());
+    artifactScope.setName(ast.getObjectDiagram().getName());
+    artifactScope.setAstNode(ast);
+    ast.setEnclosingScope(artifactScope);
     putOnStack(artifactScope);
 
-    astObjectDiagram.accept(this);
-
-    return artifactScope;
   }
 
   @Override
