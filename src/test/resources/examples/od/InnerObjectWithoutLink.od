@@ -2,7 +2,7 @@ objectdiagram InnerObjectWithoutLink{
 
     myObject:ObjectType{
 
-        InnerObjectWithoutLink:ObjectType2;
+        linkToAnObject = InnerObjectWithoutLink:ObjectType2{};
 
     };
 

@@ -5,7 +5,7 @@
  */
 package de.monticore.lang.od;
 
-import de.monticore.lang.od._ast.ASTODArtefact;
+import de.monticore.lang.od._ast.ASTODArtifact;
 import de.monticore.lang.od._parser.ODParser;
 import de.monticore.lang.od.prettyprint.ODPrettyPrinterConcreteVisitor;
 import de.monticore.prettyprint.IndentPrinter;
@@ -124,7 +124,7 @@ public class ExamplesTest {
       throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
     ODParser parser = new ODParser();
-    Optional<ASTODArtefact> odDef = parser.parseODArtefact(model.toString());
+    Optional<ASTODArtifact> odDef = parser.parseODArtifact(model.toString());
     assertFalse(parser.hasErrors());
     assertTrue(odDef.isPresent());
 
@@ -137,7 +137,7 @@ public class ExamplesTest {
     // System.out.println(ppResult);
 
     // parse the printers content
-    Optional<ASTODArtefact> ppOd = parser.parseString_ODArtefact(ppResult);
+    Optional<ASTODArtifact> ppOd = parser.parseString_ODArtifact(ppResult);
 
     assertFalse(parser.hasErrors());
     assertTrue(ppOd.isPresent());
@@ -150,7 +150,7 @@ public class ExamplesTest {
   private void negativTest(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
     ODParser parser = new ODParser();
-    parser.parseODArtefact(model.toString());
+    parser.parseODArtifact(model.toString());
     assertTrue(parser.hasErrors());
   }
 }

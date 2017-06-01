@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Optional;
 
-import de.monticore.lang.od._ast.ASTODArtefact;
+import de.monticore.lang.od._ast.ASTODArtifact;
 import de.monticore.lang.od._ast.ASTODObject;
 import de.monticore.symboltable.ArtifactScope;
 import de.monticore.symboltable.MutableScope;
@@ -29,7 +29,7 @@ public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
 
 
   @Override
-  public void visit(ASTODArtefact ast) {
+  public void visit(ASTODArtifact ast) {
     final ArtifactScope artifactScope = new ArtifactScope(Optional.empty(), "", new ArrayList<>());
     artifactScope.setName(ast.getObjectDiagram().getName());
     artifactScope.setAstNode(ast);

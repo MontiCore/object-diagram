@@ -1,6 +1,6 @@
 package de.monticore.lang.od;
 
-import de.monticore.lang.od._ast.ASTODArtefact;
+import de.monticore.lang.od._ast.ASTODArtifact;
 import de.monticore.lang.od._parser.ODParser;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 public class ODCLI {
 
-  private static String JAR_NAME = "od-<Version>-jar-with-dependencies.jar";
+  private static String JAR_NAME = "od-<Version>-tool.jar";
 
   private static String PARSING_SUCCESSFUL = "Parsing Successful!";
 
@@ -40,7 +40,9 @@ public class ODCLI {
 
   private void doParse(String file) throws IOException {
     ODParser parser = new ODParser();
-    Optional<ASTODArtefact> odDef = parser.parseODArtefact(file);
+    Optional<ASTODArtifact> odDef = parser.parseODArtifact(file);
+
+    // Todo: Add CoCo Checks
 
     System.out.println(PARSING_SUCCESSFUL);
   }

@@ -3,16 +3,16 @@ package de.monticore.lang;
 grammar OD extends de.monticore.common.Common { 
       
     /*========================================================================*/
-    /*=========================== CompilationUnit ============================*/
+    /*=========================== Artefact ===================================*/
     /*========================================================================*/
     
-    /** ASTODCompilationUnit represents the complete Diagram
+    /** ASTODArtifact represents the complete Diagram
       @attribute package The package declaration of this Objectdiagram
       @attribute importStatements List of imported elements
       @attribute oDConformsStatement List of conform statements
       @attribute objectDiagram the ObjectDiagram
     */
-    ODArtefact =
+    ODArtifact =
       ("package" package:(Name& || ".")+ ";")?
       ImportStatement*
       ODConformsStatement*
@@ -36,9 +36,6 @@ grammar OD extends de.monticore.common.Common {
 
     enum LinkForm =
       LINK: "link" | AGGREGATION: "aggregation" | COMPOSITION: "composition";
-
-    enum ASSIGNMENTINTEGRITY =
-          COMPLETE: "=" | PARTIAL: "->";
 
     /*========================================================================*/
     /*============================== Grammar =================================*/
@@ -147,16 +144,16 @@ grammar OD extends de.monticore.common.Common {
       ([derived:"/"])?
       Name?
       leftModifier:Modifier?
-      leftReferenceNames:(ODName || ",")*
+      leftReferenceNames:(ODName || ",")+
       leftQualifier:ODLinkQualifier?
       ("(" leftRole:Name ")")?
       AssocDirection
       ("(" rightRole:Name ")")?
       rightQualifier:ODLinkQualifier?
-      rightReferenceNames:(ODName || ",")*
+      rightReferenceNames:(ODName || ",")+
       rightModifier:Modifier?;
 
-    /** ASTODOptionals represents implementation of the ODValue interface
+    /** ASTODAbsent represents implementation of the ODValue interface
         that represents an absent optional value.
       @attribute absent True if attribute is optional and has an empty value
     */

@@ -31,7 +31,8 @@ import org.junit.Test;
 
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
 import de.monticore.io.paths.ModelPath;
-import de.monticore.lang.od._ast.ASTODArtefact;
+import de.monticore.lang.od._ast.ASTODArtifact;
+import de.monticore.lang.od._cocos.*;
 import de.monticore.lang.od._parser.ODParser;
 import de.monticore.lang.od._symboltable.ODLanguage;
 import de.monticore.lang.od._symboltable.ODSymbolTableCreator;
@@ -68,9 +69,9 @@ public class ODReportingTest {
     modelPath =
         new ModelPath(Paths.get("src/test/resources/" + packageName));
     ODParser parser = new ODParser();
-    Optional<ASTODArtefact> astodArtefact = parser.parseODArtefact(model.toString());
+    Optional<ASTODArtifact> ASTODArtifact = parser.parseODArtifact(model.toString());
     assertFalse(parser.hasErrors());
-    assertTrue(astodArtefact.isPresent());
+    assertTrue(ASTODArtifact.isPresent());
 
     GlobalScope globalScope = new GlobalScope(modelPath, odLanguage, resolverConfiguration);
 
@@ -78,7 +79,7 @@ public class ODReportingTest {
         resolverConfiguration, globalScope);
 
     if (symbolTable.isPresent()) {
-      symbolTable.get().createFromAST(astodArtefact.get());
+      symbolTable.get().createFromAST(ASTODArtifact.get());
     }
 
     globalScope.<ObjectDiagramSymbol>resolve(modelName, ObjectDiagramSymbol.KIND).orElse(null);
@@ -87,11 +88,11 @@ public class ODReportingTest {
 
     // Report AST
     AST2ODReporter reporter = new AST2ODReporter("target", modelName, reporting);
-    reporter.flush(astodArtefact.get().getObjectDiagram());
+    reporter.flush(ASTODArtifact.get().getObjectDiagram());
 
     // Report ST
     ST2ODReporter st2ODReporter = new ST2ODReporter("target", modelName, reporting);
-    st2ODReporter.flush(astodArtefact.get().getObjectDiagram());
+    st2ODReporter.flush(ASTODArtifact.get().getObjectDiagram());
 
   }
 
@@ -102,18 +103,27 @@ public class ODReportingTest {
     Path astModel = Paths.get("target/reports/InnerLinkVariants/InnerLinkVariants_AST.od");
     Path stModel = Paths.get("target/reports/InnerLinkVariants/InnerLinkVariants_ST.od");
 
+    // Initialize the CoCoChecker
+    // ODCoCoChecker odCoCoChecker = new ODCoCoChecker();
+    // odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
+    // odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
+    // odCoCoChecker.addCoCo(new ValidLinkReferenceCoCo());
+    // odCoCoChecker.addCoCo(new LinkConsistsOfReferenceNamesCoCo());
+
+    // Get the Parser
     ODParser parser = new ODParser();
 
     // Parse and check AST-Report
-    Optional<ASTODArtefact> astodArtefact = parser.parseODArtefact(astModel.toString());
+    Optional<ASTODArtifact> ASTODArtifact = parser.parseODArtifact(astModel.toString());
     assertFalse(parser.hasErrors());
-    assertTrue(astodArtefact.isPresent());
+    assertTrue(ASTODArtifact.isPresent());
+    // odCoCoChecker.checkAll(ASTODArtifact.get());
 
     // Parse and check ST-Report
-    astodArtefact = parser.parseODArtefact(stModel.toString());
+    ASTODArtifact = parser.parseODArtifact(stModel.toString());
     assertFalse(parser.hasErrors());
-    assertTrue(astodArtefact.isPresent());
-
+    assertTrue(ASTODArtifact.isPresent());
+    // odCoCoChecker.checkAll(ASTODArtifact.get());
   }
 
 }

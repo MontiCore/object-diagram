@@ -7,12 +7,7 @@ package de.monticore.lang.od.report;
 
 import de.monticore.ast.ASTNode;
 import de.monticore.generating.templateengine.reporting.commons.Layouter;
-import de.monticore.lang.od._ast.ASTODArtefact;
-import de.monticore.lang.od._ast.ASTODAttribute;
-import de.monticore.lang.od._ast.ASTODLink;
-import de.monticore.lang.od._ast.ASTODName;
-import de.monticore.lang.od._ast.ASTODObject;
-import de.monticore.lang.od._ast.ASTObjectDiagram;
+import de.monticore.lang.od._ast.*;
 import de.monticore.literals.literals._ast.ASTIntLiteral;
 import de.monticore.symboltable.Scope;
 import de.monticore.symboltable.Symbol;
@@ -36,7 +31,7 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
     return format(name, type);
   }
   
-  private String getIdent(ASTODArtefact a) {
+  private String getIdent(ASTODArtifact a) {
     String type = Layouter.nodeName(a);
     String name = a.getObjectDiagram().getName();
     return format(name, type);
@@ -85,8 +80,8 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
   
   @Override
   public String getIdent(ASTNode a) {
-    if (a instanceof ASTODArtefact) {
-      return getIdent((ASTODArtefact) a);
+    if (a instanceof ASTODArtifact) {
+      return getIdent((ASTODArtifact) a);
     }
     else if (a instanceof ASTObjectDiagram) {
       return getIdent((ASTObjectDiagram) a);

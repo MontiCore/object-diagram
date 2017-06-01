@@ -10,7 +10,6 @@ import de.monticore.lang.od._ast.ASTODName;
 import de.monticore.lang.od._ast.ASTODObject;
 import de.monticore.lang.od._ast.ASTObjectDiagram;
 import de.monticore.lang.od._ast.ODNodeFactory;
-import de.monticore.lang.od._parser.ODParser;
 import de.monticore.lang.od._symboltable.ODLanguage;
 import de.monticore.lang.od._symboltable.ODObjectSymbol;
 import de.monticore.lang.od._symboltable.ODSymbolTableCreator;
@@ -35,8 +34,6 @@ public class ODSymbolTableCreatorTest {
 
   private static ModelPath modelPath;
 
-  private static ODParser odParser;
-
   private Scope globalScope;
 
   @BeforeClass
@@ -45,8 +42,6 @@ public class ODSymbolTableCreatorTest {
 
     resolverConfiguration = new ResolvingConfiguration();
     resolverConfiguration.addDefaultFilters(odLanguage.getResolvers());
-
-    odParser = new ODParser();
 
     modelPath =
         new ModelPath(Paths.get("src/test/resources/symboltable"));

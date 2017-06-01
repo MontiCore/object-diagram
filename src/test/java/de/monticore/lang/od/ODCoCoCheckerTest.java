@@ -6,7 +6,7 @@
 package de.monticore.lang.od;
 
 import de.monticore.io.paths.ModelPath;
-import de.monticore.lang.od._ast.ASTODArtefact;
+import de.monticore.lang.od._ast.ASTODArtifact;
 import de.monticore.lang.od._cocos.*;
 import de.monticore.lang.od._symboltable.ODLanguage;
 import de.monticore.lang.od._symboltable.ODSymbolTableCreator;
@@ -54,15 +54,15 @@ public class ODCoCoCheckerTest {
 
   }
 
-  private Optional<ASTODArtefact> createASTandSTFromFile(String odName) {
+  private Optional<ASTODArtifact> createASTandSTFromFile(String odName) {
 
-    Optional<ASTODArtefact> astodArtefact = Optional.empty();
+    Optional<ASTODArtifact> ASTODArtifact = Optional.empty();
 
     try {
-      astodArtefact = odLanguage.getParser()
-          .parseODArtefact(path.toString() + "/" + odName + ".od");
+      ASTODArtifact = odLanguage.getParser()
+          .parseODArtifact(path.toString() + "/" + odName + ".od");
       assertFalse(odLanguage.getParser().hasErrors());
-      assertTrue(astodArtefact.isPresent());
+      assertTrue(ASTODArtifact.isPresent());
     }
     catch (IOException e) {
       Log.error("Cannot parse model: " + odName + " in " + path.toString());
@@ -74,22 +74,22 @@ public class ODCoCoCheckerTest {
         resolverConfiguration, globalScope);
 
     if (symbolTable.isPresent()) {
-      symbolTable.get().createFromAST(astodArtefact.get().getObjectDiagram());
+      symbolTable.get().createFromAST(ASTODArtifact.get().getObjectDiagram());
     }
 
-    return astodArtefact;
+    return ASTODArtifact;
   }
 
   @Test
   public void checkUniqueObjectNamesCoCo() {
 
-    Optional<ASTODArtefact> odAstodArtefact = createASTandSTFromFile("NoUniqueNames");
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("NoUniqueNames");
 
-    if (odAstodArtefact.isPresent()) {
+    if (odASTODArtifact.isPresent()) {
 
       odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
 
-      odCoCoChecker.checkAll(odAstodArtefact.get());
+      odCoCoChecker.checkAll(odASTODArtifact.get());
 
       //assertTrue(Log.getErrorCount() == 2);
 
@@ -100,15 +100,15 @@ public class ODCoCoCheckerTest {
   @Test
   public void checkValidReferenceCoCo() {
 
-    Optional<ASTODArtefact> odAstodArtefact = createASTandSTFromFile("ValidLinkReference");
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("ValidLinkReference");
 
-    if (odAstodArtefact.isPresent()) {
+    if (odASTODArtifact.isPresent()) {
 
       odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
       odCoCoChecker.addCoCo(new ValidLinkReferenceCoCo());
       odCoCoChecker.addCoCo(new LinkConsistsOfReferenceNamesCoCo());
 
-      odCoCoChecker.checkAll(odAstodArtefact.get());
+      odCoCoChecker.checkAll(odASTODArtifact.get());
 
       //assertTrue(Log.getErrorCount() == 2);
 

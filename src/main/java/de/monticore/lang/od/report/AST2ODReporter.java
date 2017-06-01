@@ -23,7 +23,7 @@ import de.monticore.ast.ASTNode;
 import de.monticore.generating.templateengine.reporting.commons.AReporter;
 import de.monticore.generating.templateengine.reporting.commons.ReportingConstants;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
-import de.monticore.lang.od._ast.ASTODArtefact;
+import de.monticore.lang.od._ast.ASTODArtifact;
 import de.monticore.lang.od._ast.ASTODNode;
 import de.monticore.lang.od._ast.ASTObjectDiagram;
 import de.monticore.prettyprint.IndentPrinter;
@@ -71,7 +71,7 @@ public class AST2ODReporter extends AReporter {
    * @param ast {@link ASTNode}
    */
   private void writeContent(ASTNode ast) {
-    if (ast instanceof ASTODArtefact || ast instanceof ASTObjectDiagram) {
+    if (ast instanceof ASTODArtifact || ast instanceof ASTObjectDiagram) {
       ASTODNode cd4aNode = (ASTODNode) ast;
       IndentPrinter pp = new IndentPrinter();
       ODAST2OD odPrinter = new ODAST2OD(pp, reporting);

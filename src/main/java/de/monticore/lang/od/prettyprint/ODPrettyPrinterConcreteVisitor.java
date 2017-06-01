@@ -36,7 +36,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
    * @param unit a OD compilation unit
    */
   @Override
-  public void handle(ASTODArtefact unit) {
+  public void handle(ASTODArtifact unit) {
     if (unit.getPackage() != null && !unit.getPackage().isEmpty()) {
       getPrinter()
           .println("package " + Names.getQualifiedName(unit.getPackage()) + ";\n");
