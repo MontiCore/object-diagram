@@ -1,0 +1,8 @@
+objectdiagram SimpleOD{
+
+    myObject1:ObjectType{};
+
+	@myObject2:ObjectType2{};
+
+	link myObject1 -> @myObject2;
+}

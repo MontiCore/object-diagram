@@ -120,6 +120,11 @@ public class ExamplesTest {
     negativTest("src/test/resources/examples/od/InnerObjectWithoutLink.od");
   }
 
+  @Test
+  public void testSimpleOD() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/SimpleOD.od");
+  }
+
   private void test(String modelName)
       throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
