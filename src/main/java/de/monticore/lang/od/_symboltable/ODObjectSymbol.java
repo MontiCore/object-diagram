@@ -19,9 +19,7 @@ public class ODObjectSymbol extends CommonSymbol {
   }
 
   public void setType(ASTReferenceType referenceType) {
-    if (this.type == null) {
-      this.type = referenceType;
-    }
+    this.type = referenceType;
   }
 
   public ASTReferenceType getType() {

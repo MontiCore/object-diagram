@@ -5,15 +5,15 @@
  */
 package de.monticore.lang.od._symboltable;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Optional;
-
 import de.monticore.lang.od._ast.ASTODArtifact;
 import de.monticore.lang.od._ast.ASTODObject;
 import de.monticore.symboltable.ArtifactScope;
 import de.monticore.symboltable.MutableScope;
 import de.monticore.symboltable.ResolvingConfiguration;
+
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.Optional;
 
 public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
 
@@ -26,7 +26,6 @@ public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
       final Deque<MutableScope> scopeStack) {
     super(resolvingConfig, scopeStack);
   }
-
 
   @Override
   public void visit(ASTODArtifact ast) {

@@ -1,9 +1,8 @@
 package de.monticore.lang.od.report;
 
+import de.monticore.ast.ASTNode;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
 import de.monticore.prettyprint.IndentPrinter;
-import de.monticore.symboltable.Scope;
-import de.monticore.symboltable.Symbol;
 import de.monticore.types.types._ast.*;
 import de.monticore.types.types._visitor.TypesVisitor;
 import de.se_rwth.commons.Names;
@@ -31,35 +30,11 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTQualifiedName");
     this.pp.indent();
-    String sep;
-    if (node.getSymbol().isPresent()) {
-      sep = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + sep + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
 
-    if (node.getEnclosingScope().isPresent()) {
-      sep = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + sep + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      sep = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + sep + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
-    sep = "";
+    String sep = "";
     String str = "\"";
     Iterator<?> it = node.getParts().iterator();
     boolean isEmpty = true;
@@ -86,33 +61,9 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTComplexArrayType");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
 
     if (null != node.getComponentType()) {
       this.pp.print("componentType");
@@ -130,33 +81,9 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTPrimitiveArrayType");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
 
     if (null != node.getComponentType()) {
       this.pp.print("componentType");
@@ -174,34 +101,9 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTVoidType");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
     this.pp.unindent();
     this.pp.print("}");
   }
@@ -210,34 +112,9 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTPrimitiveType");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
     this.printAttribute("primitive", String.valueOf(node.getPrimitive()));
     this.pp.unindent();
     this.pp.print("}");
@@ -247,35 +124,11 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTSimpleReferenceType");
     this.pp.indent();
-    String sep;
-    if (node.getSymbol().isPresent()) {
-      sep = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + sep + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
 
-    if (node.getEnclosingScope().isPresent()) {
-      sep = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + sep + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      sep = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + sep + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
-    sep = "";
+    String sep = "";
     String str = "\"";
     Iterator<?> it = node.getNames().iterator();
     boolean isEmpty = true;
@@ -297,7 +150,7 @@ public class Types2OD implements TypesVisitor {
     if (node.getTypeArguments().isPresent()) {
       this.pp.print("typeArguments");
       this.pp.print(" = ");
-      ((ASTTypeArguments) node.getTypeArguments().get()).accept(this.getRealThis());
+      node.getTypeArguments().get().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
@@ -312,34 +165,9 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTComplexReferenceType");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
     Iterator<ASTSimpleReferenceType> iter_simpleReferenceTypes = node.getSimpleReferenceTypes()
         .iterator();
     boolean isEmpty = true;
@@ -363,7 +191,7 @@ public class Types2OD implements TypesVisitor {
       }
 
       isFirst = false;
-      ((ASTSimpleReferenceType) iter_simpleReferenceTypes.next()).accept(this.getRealThis());
+      iter_simpleReferenceTypes.next().accept(this.getRealThis());
     }
 
     if (!isEmpty) {
@@ -379,34 +207,9 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTTypeArguments");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
     Iterator<ASTTypeArgument> iter_typeArguments = node.getTypeArguments().iterator();
     boolean isEmpty = true;
     if (iter_typeArguments.hasNext()) {
@@ -429,7 +232,7 @@ public class Types2OD implements TypesVisitor {
       }
 
       isFirst = false;
-      ((ASTTypeArgument) iter_typeArguments.next()).accept(this.getRealThis());
+      iter_typeArguments.next().accept(this.getRealThis());
     }
 
     if (!isEmpty) {
@@ -445,38 +248,14 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTWildcardType");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
 
     if (node.getUpperBound().isPresent()) {
       this.pp.print("upperBound");
       this.pp.print(" = ");
-      ((ASTType) node.getUpperBound().get()).accept(this.getRealThis());
+      node.getUpperBound().get().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
@@ -486,7 +265,7 @@ public class Types2OD implements TypesVisitor {
     if (node.getLowerBound().isPresent()) {
       this.pp.print("lowerBound");
       this.pp.print(" = ");
-      ((ASTType) node.getLowerBound().get()).accept(this.getRealThis());
+      node.getLowerBound().get().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
@@ -501,34 +280,9 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTTypeParameters");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
     Iterator<ASTTypeVariableDeclaration> iter_typeVariableDeclarations = node
         .getTypeVariableDeclarations().iterator();
     boolean isEmpty = true;
@@ -550,10 +304,8 @@ public class Types2OD implements TypesVisitor {
       if (!isFirst) {
         this.pp.println(",");
       }
-
       isFirst = false;
-      ((ASTTypeVariableDeclaration) iter_typeVariableDeclarations.next())
-          .accept(this.getRealThis());
+      iter_typeVariableDeclarations.next().accept(this.getRealThis());
     }
 
     if (!isEmpty) {
@@ -569,34 +321,9 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTTypeVariableDeclaration");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
     this.printAttribute("name", "\"" + node.getName() + "\"");
     Iterator<ASTComplexReferenceType> iter_upperBounds = node.getUpperBounds().iterator();
     boolean isEmpty = true;
@@ -620,7 +347,7 @@ public class Types2OD implements TypesVisitor {
       }
 
       isFirst = false;
-      ((ASTComplexReferenceType) iter_upperBounds.next()).accept(this.getRealThis());
+      iter_upperBounds.next().accept(this.getRealThis());
     }
 
     if (!isEmpty) {
@@ -636,35 +363,11 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTImportStatement");
     this.pp.indent();
-    String sep;
-    if (node.getSymbol().isPresent()) {
-      sep = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + sep + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
 
-    if (node.getEnclosingScope().isPresent()) {
-      sep = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + sep + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      sep = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + sep + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
-    sep = "";
+    String sep = "";
     String str = "\"";
     Iterator<?> it = node.getImportList().iterator();
     boolean isEmpty = true;
@@ -692,33 +395,9 @@ public class Types2OD implements TypesVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.types.types._ast.ASTArrayType");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
 
     if (null != node.getComponentType()) {
       this.pp.print("componentType");
@@ -746,17 +425,37 @@ public class Types2OD implements TypesVisitor {
     this.pp.println(" {");
   }
 
-  public String printObjectDiagram(String modelName, ASTTypesNode node) {
-    this.pp.clearBuffer();
-    this.pp.setIndentLength(2);
-    this.pp.print("objectdiagram ");
-    this.pp.print(modelName);
-    this.pp.println(" {");
-    this.pp.indent();
-    node.accept(this.getRealThis());
-    this.pp.unindent();
-    this.pp.println("}");
-    return this.pp.getContent();
+  private void printSymbol(ASTNode node) {
+    if (node.getSymbol().isPresent()) {
+      String scopeName = StringTransformations
+          .uncapitalize(this.reporting.getSymbolNameFormatted(node.getSymbol().get()));
+      this.pp.println("symbol = " + scopeName + ";");
+    }
+    else if (this.printEmptyOptional) {
+      this.pp.println("symbol = absent;");
+    }
+  }
+
+  private void printEnclosingScope(ASTNode node) {
+    if (node.getEnclosingScope().isPresent()) {
+      String scopeName = StringTransformations.uncapitalize(
+          this.reporting.getScopeNameFormatted(node.getEnclosingScope().get()));
+      this.pp.println("enclosingScope = " + scopeName + ";");
+    }
+    else if (this.printEmptyOptional) {
+      this.pp.println("enclosingScope = absent;");
+    }
+  }
+
+  private void printSpannedScope(ASTNode node) {
+    if (node.getSpannedScope().isPresent()) {
+      String scopeName = StringTransformations
+          .uncapitalize(this.reporting.getScopeNameFormatted(node.getSpannedScope().get()));
+      this.pp.println("spanningScope = " + scopeName + ";");
+    }
+    else if (this.printEmptyOptional) {
+      this.pp.println("spannedScope = absent;");
+    }
   }
 
   public void setRealThis(TypesVisitor realThis) {
@@ -767,16 +466,8 @@ public class Types2OD implements TypesVisitor {
     return this.realThis;
   }
 
-  public boolean isPrintEmptyOptional() {
-    return this.printEmptyOptional;
-  }
-
   public void setPrintEmptyOptional(boolean printEmptyOptional) {
     this.printEmptyOptional = printEmptyOptional;
-  }
-
-  public boolean isPrintEmptyList() {
-    return this.printEmptyList;
   }
 
   public void setPrintEmptyList(boolean printEmptyList) {

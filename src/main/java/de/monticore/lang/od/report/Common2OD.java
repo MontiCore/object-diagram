@@ -5,13 +5,11 @@
 
 package de.monticore.lang.od.report;
 
+import de.monticore.ast.ASTNode;
 import de.monticore.common.common._ast.*;
 import de.monticore.common.common._visitor.CommonVisitor;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
-import de.monticore.literals.literals._ast.ASTIntLiteral;
 import de.monticore.prettyprint.IndentPrinter;
-import de.monticore.symboltable.Scope;
-import de.monticore.symboltable.Symbol;
 import de.se_rwth.commons.Names;
 import de.se_rwth.commons.StringTransformations;
 
@@ -20,13 +18,13 @@ import java.util.Iterator;
 public class Common2OD implements CommonVisitor {
   private CommonVisitor realThis = this;
 
-  protected IndentPrinter pp;
+  private IndentPrinter pp;
 
   protected ReportingRepository reporting;
 
-  protected boolean printEmptyOptional = false;
+  private boolean printEmptyOptional = false;
 
-  protected boolean printEmptyList = false;
+  private boolean printEmptyList = false;
 
   public Common2OD(IndentPrinter printer, ReportingRepository reporting) {
     this.reporting = reporting;
@@ -37,34 +35,9 @@ public class Common2OD implements CommonVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.common.common._ast.ASTStereotype");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
     Iterator<ASTStereoValue> iter_values = node.getValues().iterator();
     boolean isEmpty = true;
     if (iter_values.hasNext()) {
@@ -87,7 +60,7 @@ public class Common2OD implements CommonVisitor {
       }
 
       isFirst = false;
-      ((ASTStereoValue) iter_values.next()).accept(this.getRealThis());
+      iter_values.next().accept(this.getRealThis());
     }
 
     if (!isEmpty) {
@@ -103,34 +76,9 @@ public class Common2OD implements CommonVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.common.common._ast.ASTStereoValue");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
     this.printAttribute("name", "\"" + node.getName() + "\"");
     if (node.getSource().isPresent()) {
       this.printAttribute("source", "\"" + String.valueOf(node.getSource().get()) + "\"");
@@ -147,40 +95,15 @@ public class Common2OD implements CommonVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.common.common._ast.ASTCardinality");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
     this.printAttribute("lowerBound", String.valueOf(node.getLowerBound()));
     this.printAttribute("upperBound", String.valueOf(node.getUpperBound()));
     if (node.getLowerBoundLit().isPresent()) {
       this.pp.print("lowerBoundLit");
       this.pp.print(" = ");
-      ((ASTIntLiteral) node.getLowerBoundLit().get()).accept(this.getRealThis());
+      node.getLowerBoundLit().get().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
@@ -190,7 +113,7 @@ public class Common2OD implements CommonVisitor {
     if (node.getUpperBoundLit().isPresent()) {
       this.pp.print("upperBoundLit");
       this.pp.print(" = ");
-      ((ASTIntLiteral) node.getUpperBoundLit().get()).accept(this.getRealThis());
+      node.getUpperBoundLit().get().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
@@ -207,34 +130,9 @@ public class Common2OD implements CommonVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.common.common._ast.ASTCompleteness");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
-
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
     this.printAttribute("leftComplete", String.valueOf(node.isLeftComplete()));
     this.printAttribute("rightComplete", String.valueOf(node.isRightComplete()));
     this.printAttribute("complete", String.valueOf(node.isComplete()));
@@ -247,38 +145,14 @@ public class Common2OD implements CommonVisitor {
     String name = StringTransformations.uncapitalize(this.reporting.getASTNodeNameFormatted(node));
     this.printObject(name, "de.monticore.common.common._ast.ASTModifier");
     this.pp.indent();
-    String scopeName;
-    if (node.getSymbol().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted((Symbol) node.getSymbol().get()));
-      this.pp.println("symbol = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("symbol = absent;");
-    }
-
-    if (node.getEnclosingScope().isPresent()) {
-      scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted((Scope) node.getEnclosingScope().get()));
-      this.pp.println("enclosingScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("enclosingScope = absent;");
-    }
-
-    if (node.getSpannedScope().isPresent()) {
-      scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted((Scope) node.getSpannedScope().get()));
-      this.pp.println("spanningScope = " + scopeName + ";");
-    }
-    else if (this.printEmptyOptional) {
-      this.pp.println("spannedScope = absent;");
-    }
+    this.printSymbol(node);
+    this.printEnclosingScope(node);
+    this.printSpannedScope(node);
 
     if (node.getStereotype().isPresent()) {
       this.pp.print("stereotype");
       this.pp.print(" = ");
-      ((ASTStereotype) node.getStereotype().get()).accept(this.getRealThis());
+      node.getStereotype().get().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
@@ -312,17 +186,37 @@ public class Common2OD implements CommonVisitor {
     this.pp.println(" {");
   }
 
-  public String printObjectDiagram(String modelName, ASTCommonNode node) {
-    this.pp.clearBuffer();
-    this.pp.setIndentLength(2);
-    this.pp.print("objectdiagram ");
-    this.pp.print(modelName);
-    this.pp.println(" {");
-    this.pp.indent();
-    node.accept(this.getRealThis());
-    this.pp.unindent();
-    this.pp.println("}");
-    return this.pp.getContent();
+  private void printSymbol(ASTNode node) {
+    if (node.getSymbol().isPresent()) {
+      String scopeName = StringTransformations
+          .uncapitalize(this.reporting.getSymbolNameFormatted(node.getSymbol().get()));
+      this.pp.println("symbol = " + scopeName + ";");
+    }
+    else if (this.printEmptyOptional) {
+      this.pp.println("symbol = absent;");
+    }
+  }
+
+  private void printEnclosingScope(ASTNode node) {
+    if (node.getEnclosingScope().isPresent()) {
+      String scopeName = StringTransformations.uncapitalize(
+          this.reporting.getScopeNameFormatted(node.getEnclosingScope().get()));
+      this.pp.println("enclosingScope = " + scopeName + ";");
+    }
+    else if (this.printEmptyOptional) {
+      this.pp.println("enclosingScope = absent;");
+    }
+  }
+
+  private void printSpannedScope(ASTNode node) {
+    if (node.getSpannedScope().isPresent()) {
+      String scopeName = StringTransformations
+          .uncapitalize(this.reporting.getScopeNameFormatted(node.getSpannedScope().get()));
+      this.pp.println("spanningScope = " + scopeName + ";");
+    }
+    else if (this.printEmptyOptional) {
+      this.pp.println("spannedScope = absent;");
+    }
   }
 
   public void setRealThis(CommonVisitor realThis) {
@@ -333,16 +227,8 @@ public class Common2OD implements CommonVisitor {
     return this.realThis;
   }
 
-  public boolean isPrintEmptyOptional() {
-    return this.printEmptyOptional;
-  }
-
   public void setPrintEmptyOptional(boolean printEmptyOptional) {
     this.printEmptyOptional = printEmptyOptional;
-  }
-
-  public boolean isPrintEmptyList() {
-    return this.printEmptyList;
   }
 
   public void setPrintEmptyList(boolean printEmptyList) {
