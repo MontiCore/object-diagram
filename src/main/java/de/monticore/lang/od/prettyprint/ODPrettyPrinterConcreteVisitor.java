@@ -83,7 +83,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
 
     for (Iterator<ASTODObject> it = a.getODObjects().iterator(); it.hasNext(); ) {
       it.next().accept(getRealThis());
-      getPrinter().print(";");
+      getPrinter().println(";");
       if (it.hasNext()) {
         getPrinter().println();
       }
@@ -93,7 +93,8 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       getPrinter().print(";");
     }
     getPrinter().unindent();
-    getPrinter().print("\n}\n");
+    getPrinter().println();
+    getPrinter().println("}");
   }
 
   /**
@@ -103,7 +104,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
    */
   @Override
   public void handle(ASTODObject a) {
-    // print object modifier
+
     if (a.getModifier().isPresent()) {
       a.getModifier().get().accept(getRealThis());
     }
@@ -116,14 +117,17 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       a.getReferenceType().accept(getRealThis());
     }
     getPrinter().print("{");
+
     // print object body
     if (!a.getODAttributes().isEmpty()) {
+      getPrinter().println();
       getPrinter().indent();
       for (ASTODAttribute ast : a.getODAttributes()) {
         ast.accept(getRealThis());
       }
       getPrinter().unindent();
     }
+
     getPrinter().print("}");
   }
 
