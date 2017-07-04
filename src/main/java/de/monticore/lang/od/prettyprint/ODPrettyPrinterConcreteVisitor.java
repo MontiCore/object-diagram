@@ -241,18 +241,36 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
 
   @Override
   public void handle(ASTODDate a) {
+    printODDate(a);
+  }
+
+  @Override
+  public void handle(ASTODDateV1 a) {
+    printODDate(a);
+  }
+
+  @Override
+  public void handle(ASTODDateV2 a) {
+    printODDate(a);
+  }
+
+  @Override
+  public void handle(ASTODDateV3 a) {
+    printODDate(a);
+  }
+
+  private void printODDate(ASTODDate a){
     getPrinter().print(a.getYear().getValue());
-    getPrinter().print(".");
+    getPrinter().print("-");
     getPrinter().print(a.getMonth().getValue());
-    getPrinter().print(".");
+    getPrinter().print("-");
     getPrinter().print(a.getDay().getValue());
-    getPrinter().print(".");
+    getPrinter().print(" ");
     getPrinter().print(a.getHour().getValue());
     getPrinter().print(":");
     getPrinter().print(a.getMinute().getValue());
     getPrinter().print(":");
     getPrinter().print(a.getSecond().getValue());
-    getPrinter().print(":");
   }
 
   /**
