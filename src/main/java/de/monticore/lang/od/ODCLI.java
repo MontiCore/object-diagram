@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 public class ODCLI {
 
-  private static String JAR_NAME = "od-<Version>-tool.jar";
+  private static String JAR_NAME = "od-2.0.0-tool.jar";
 
   private static String PARSING_SUCCESSFUL = "Parsing Successful!";
 

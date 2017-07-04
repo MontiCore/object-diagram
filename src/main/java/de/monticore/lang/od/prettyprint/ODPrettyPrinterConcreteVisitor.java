@@ -77,20 +77,23 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     // print object diagram name and parameters
     getPrinter().print("objectdiagram " + a.getName());
     // print body
-    getPrinter().println(" {\n");
+    getPrinter().println(" {");
     getPrinter().indent();
     // print Objects
 
     for (Iterator<ASTODObject> it = a.getODObjects().iterator(); it.hasNext(); ) {
       it.next().accept(getRealThis());
-      getPrinter().println(";");
+      getPrinter().print(";");
       if (it.hasNext()) {
         getPrinter().println();
       }
     }
-    for (ASTODLink l : a.getODLinks()) {
-      l.accept(getRealThis());
+    for (Iterator<ASTODLink> it = a.getODLinks().iterator(); it.hasNext(); ) {
+      it.next().accept(getRealThis());
       getPrinter().print(";");
+      if (it.hasNext()) {
+        getPrinter().println();
+      }
     }
     getPrinter().unindent();
     getPrinter().println();
@@ -116,18 +119,20 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       getPrinter().print(":");
       a.getReferenceType().accept(getRealThis());
     }
-    getPrinter().print("{");
+    getPrinter().println("{");
+    getPrinter().indent();
 
     // print object body
     if (!a.getODAttributes().isEmpty()) {
-      getPrinter().println();
-      getPrinter().indent();
-      for (ASTODAttribute ast : a.getODAttributes()) {
-        ast.accept(getRealThis());
+      for (Iterator<ASTODAttribute> it = a.getODAttributes().iterator(); it.hasNext(); ) {
+        it.next().accept(getRealThis());
+        if (it.hasNext()) {
+          getPrinter().println();
+        }
       }
-      getPrinter().unindent();
     }
 
+    getPrinter().unindent();
     getPrinter().print("}");
   }
 
@@ -173,7 +178,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
 
     }
 
-    getPrinter().println(";");
+    getPrinter().print(";");
   }
 
   /**
