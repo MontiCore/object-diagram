@@ -72,10 +72,10 @@ public class AST2ODReporter extends AReporter {
    */
   private void writeContent(ASTNode ast) {
     if (ast instanceof ASTODArtifact || ast instanceof ASTObjectDiagram) {
-      ASTODNode cd4aNode = (ASTODNode) ast;
+      ASTODNode odNode = (ASTODNode) ast;
       IndentPrinter pp = new IndentPrinter();
       ODAST2OD odPrinter = new ODAST2OD(pp, reporting);
-      odPrinter.printObjectDiagram(Names.getSimpleName(modelName) + "_AST", cd4aNode);
+      odPrinter.printObjectDiagram(Names.getSimpleName(modelName) + "_AST", odNode);
       writeLine(pp.getContent());
     }
   }
