@@ -2,7 +2,9 @@ objectdiagram SimpleOD{
 
     myObject1:ObjectType{};
 
-	@myObject2:ObjectType2{};
+	@myObject2:ObjectType2{
+	    myDate = 2017-12-20 15:18:12;
+	};
 
 	link myObject1 -> @myObject2;
 }

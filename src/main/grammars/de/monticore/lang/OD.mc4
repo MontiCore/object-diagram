@@ -201,10 +201,6 @@ grammar OD extends de.monticore.common.Common {
       Name | ODSpecialName;
 
     token ODSpecialName = '@'
-      ( 'a'..'z' | 'A'..'Z' | '0'..'9' | '!' | '_' | '.')* ODExtension?;
-
-    fragment token ODExtension =
-      ('0'..'9')+
-      |  '(' ('0'..'9')+ ',' ('0'..'9')+ ')'
-      |  '(' ('0'..'9')+ ',' ('0'..'9')+ '!' ('0'..'9')+ ')';
+      ( 'a'..'z' | 'A'..'Z' | '0'..'9' | '!' | '_' | '.')*
+      ('('.*?')')?;
 }
