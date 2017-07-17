@@ -25,7 +25,7 @@
     <antlr.version>4.5.1</antlr.version>
 
     <!-- .. Plugins ....................................................... -->
-    <monticore.plugin>4.5.3-SNAPSHOT</monticore.plugin>
+    <monticore.plugin>4.5.4-SNAPSHOT</monticore.plugin>
 
     <assembly.plugin>2.5.4</assembly.plugin>
     <compiler.plugin>3.3</compiler.plugin>

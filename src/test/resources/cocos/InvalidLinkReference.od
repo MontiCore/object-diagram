@@ -1,10 +1,11 @@
 package cocos;
 
-objectdiagram ValidLinkReference {
+objectdiagram InvalidLinkReference {
 
   @foo:ObjectType{};
   @bar:ObjectType{
    foobar = @foo;
+   foobar2 = @bla;
   };
 
   link @foo -> @bar;

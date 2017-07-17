@@ -142,7 +142,7 @@ public class ExamplesTest {
     // System.out.println(ppResult);
 
     // parse the printers content
-    Optional<ASTODArtifact> ppOd = parser.parseString_ODArtifact(ppResult);
+    Optional<ASTODArtifact> ppOd = parser.parse_StringODArtifact(ppResult);
 
     assertFalse(parser.hasErrors());
     assertTrue(ppOd.isPresent());

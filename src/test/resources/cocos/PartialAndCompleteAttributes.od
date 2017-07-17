@@ -1,0 +1,24 @@
+package cocos;
+
+objectdiagram PartialAndCompleteAttributes {
+
+  @bar1:ObjectType{
+   foobar -> @foo;
+   foobar -> @bla;
+  };
+
+  @bar2:ObjectType2{
+   foobar -> @foo;
+   foobar = @bla;
+  };
+
+  @bar3:ObjectType3{
+   foobar = @foo;
+   foobar -> @bla;
+  };
+
+  @bar4:ObjectType4{
+   foobar = @foo;
+   foobar = @bla;
+  };
+}

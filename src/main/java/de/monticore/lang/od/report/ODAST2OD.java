@@ -20,7 +20,7 @@ package de.monticore.lang.od.report;
 
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
 import de.monticore.lang.od._od.OD2OD;
-import de.monticore.lang.od._visitor.CommonODDelegatorVisitor;
+import de.monticore.lang.od._visitor.ODDelegatorVisitor;
 import de.monticore.lang.od._visitor.ODVisitor;
 import de.monticore.prettyprint.IndentPrinter;
 
@@ -28,19 +28,18 @@ public class ODAST2OD extends OD2OD {
 
   private ODVisitor realThis = this;
 
-  private final CommonODDelegatorVisitor visitor;
+  private final ODDelegatorVisitor visitor;
 
   public ODAST2OD(IndentPrinter printer, ReportingRepository reporting) {
     super(printer, reporting);
-    visitor = new CommonODDelegatorVisitor();
+    visitor = new ODDelegatorVisitor();
     Literals2OD literalsVisitor = new Literals2OD(printer, reporting);
     Types2OD typesVisitor = new Types2OD(printer, reporting);
     Common2OD commonVisitor = new Common2OD(printer, reporting);
-    visitor.set_de_monticore_literals_literals__visitor_LiteralsVisitor(literalsVisitor);
-    visitor.set_de_monticore_types_types__visitor_TypesVisitor(typesVisitor);
-    visitor
-        .set_de_monticore_common_common__visitor_CommonVisitor(commonVisitor);
-    visitor.set_de_monticore_lang_od__visitor_ODVisitor(this);
+    visitor.setLiteralsVisitor(literalsVisitor);
+    visitor.setTypesVisitor(typesVisitor);
+    visitor.setCommonVisitor(commonVisitor);
+    visitor.setODVisitor(this);
     boolean emptyList = true;
     boolean emptyOptional = true;
     setPrintEmptyList(emptyList);

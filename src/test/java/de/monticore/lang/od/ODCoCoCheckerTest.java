@@ -13,7 +13,9 @@ import de.monticore.lang.od._symboltable.ODSymbolTableCreator;
 import de.monticore.symboltable.GlobalScope;
 import de.monticore.symboltable.ResolvingConfiguration;
 import de.se_rwth.commons.logging.Log;
-import org.junit.BeforeClass;
+import de.se_rwth.commons.logging.ODLogReset;
+import de.se_rwth.commons.logging.Slf4jLog;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -36,10 +38,14 @@ public class ODCoCoCheckerTest {
 
   private static ODCoCoChecker odCoCoChecker;
 
-  @BeforeClass
-  public static void setup() {
+  @Before
+  public void setup() {
 
-    Log.enableFailQuick(false);
+    Slf4jLog.init();
+
+    Slf4jLog.enableFailQuick(false);
+
+    ODLogReset.resetFindings();
 
     odLanguage = new ODLanguage();
 
@@ -91,7 +97,7 @@ public class ODCoCoCheckerTest {
 
       odCoCoChecker.checkAll(odASTODArtifact.get());
 
-      //assertTrue(Log.getErrorCount() == 2);
+      assertTrue(Slf4jLog.getErrorCount() == 2);
 
     }
 
@@ -100,17 +106,51 @@ public class ODCoCoCheckerTest {
   @Test
   public void checkValidReferenceCoCo() {
 
-    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("ValidLinkReference");
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("InvalidLinkReference");
 
     if (odASTODArtifact.isPresent()) {
 
       odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
       odCoCoChecker.addCoCo(new ValidLinkReferenceCoCo());
-      odCoCoChecker.addCoCo(new LinkConsistsOfReferenceNamesCoCo());
 
       odCoCoChecker.checkAll(odASTODArtifact.get());
 
-      //assertTrue(Log.getErrorCount() == 2);
+      assertTrue(Slf4jLog.getErrorCount() == 2);
+
+    }
+
+  }
+
+  @Test
+  public void checkObjectReferenceCoCo() {
+
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("InvalidObjectReference");
+
+    if (odASTODArtifact.isPresent()) {
+
+      odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
+
+      odCoCoChecker.checkAll(odASTODArtifact.get());
+
+      assertTrue(Slf4jLog.getErrorCount() == 4);
+
+    }
+
+  }
+
+  @Test
+  public void checkPartialAndCompleteAttributesCoCo() {
+
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile(
+        "PartialAndCompleteAttributes");
+
+    if (odASTODArtifact.isPresent()) {
+
+      odCoCoChecker.addCoCo(new PartialAndCompleteAttributesCoCo());
+
+      odCoCoChecker.checkAll(odASTODArtifact.get());
+
+      assertTrue(Slf4jLog.getErrorCount() == 3);
 
     }
 
