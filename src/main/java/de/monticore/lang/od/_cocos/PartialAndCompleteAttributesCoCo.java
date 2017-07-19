@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  RWTH Aachen. All rights reserved.
+ * Copyright (c) 2017 RWTH Aachen. All rights reserved.
  *
  * http://www.se-rwth.de/
  */
@@ -13,7 +13,6 @@ import de.se_rwth.commons.logging.Log;
  * TODO
  *
  * @author (last commit) $$Author$$
- * @version $$Revision$$, $$Date$$
  * @since TODO
  */
 public class PartialAndCompleteAttributesCoCo implements ODASTODObjectCoCo {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 RWTH Aachen. All rights reserved.
+ * Copyright (c) 2017 RWTH Aachen. All rights reserved.
  *
  * http://www.se-rwth.de/
  */
@@ -16,7 +16,6 @@ import de.monticore.types.TypesNodeIdentHelper;
  * TODO: Write me!
  *
  * @author (last commit) $Author$
- * @version $Revision$, $Date$
  * @since TODO: add version number
  */
 public class ODNodeIdentHelper extends TypesNodeIdentHelper {
