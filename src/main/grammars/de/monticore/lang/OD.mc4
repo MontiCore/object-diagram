@@ -42,8 +42,9 @@ grammar OD extends de.monticore.common.Common {
     /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
     /*========================================================================*/
 
-    /** ASTODValue represents the interface for all possible value assignments
-    */
+    /**
+     * ASTODValue represents the interface for all possible value assignments
+     */
     interface ODValue;
 
     /*========================================================================*/
