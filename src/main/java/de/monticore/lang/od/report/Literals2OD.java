@@ -33,10 +33,10 @@ public class Literals2OD implements LiteralsVisitor {
   private IndentPrinter pp;
 
   protected ReportingRepository reporting;
-
-  private boolean printEmptyOptional = false;
-
+  
   private boolean printEmptyList = false;
+  
+  private boolean printEmptyOptional = false;
 
   public Literals2OD(IndentPrinter printer, ReportingRepository reporting) {
     this.reporting = reporting;
