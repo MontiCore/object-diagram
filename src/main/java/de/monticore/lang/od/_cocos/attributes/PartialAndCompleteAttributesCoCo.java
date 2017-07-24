@@ -3,20 +3,20 @@
  *
  * http://www.se-rwth.de/
  */
-package de.monticore.lang.od._cocos;
+package de.monticore.lang.od._cocos.attributes;
 
 import de.monticore.lang.od._ast.ASTODAttribute;
 import de.monticore.lang.od._ast.ASTODObject;
+import de.monticore.lang.od._cocos.ODASTODObjectCoCo;
 import de.se_rwth.commons.logging.Log;
 
 /**
- * TODO
- *
- * @author (last commit) $$Author$$
- * @since TODO
+ * Attributes defined with a partial operator must not be defined in a complete attribute definition and vice versa.
  */
 public class PartialAndCompleteAttributesCoCo implements ODASTODObjectCoCo {
-  @Override public void check(ASTODObject node) {
+
+  @Override
+  public void check(ASTODObject node) {
     for (int i = 0; i < node.getODAttributes().size(); i++) {
       ASTODAttribute firstAttribute = node.getODAttributes().get(i);
       for (int j = i + 1; j < node.getODAttributes().size(); j++) {

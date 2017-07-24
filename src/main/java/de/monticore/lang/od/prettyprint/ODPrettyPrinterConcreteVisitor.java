@@ -96,23 +96,20 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     // print object diagram name and parameters
     getPrinter().print("objectdiagram " + a.getName());
     // print body
-    getPrinter().println(" {");
+    getPrinter().println(" {\n");
     getPrinter().indent();
     // print Objects
 
     for (Iterator<ASTODObject> it = a.getODObjects().iterator(); it.hasNext(); ) {
       it.next().accept(getRealThis());
-      getPrinter().print(";");
+      getPrinter().println(";");
       if (it.hasNext()) {
         getPrinter().println();
       }
     }
-    for (Iterator<ASTODLink> it = a.getODLinks().iterator(); it.hasNext(); ) {
-      it.next().accept(getRealThis());
+    for (ASTODLink l : a.getODLinks()) {
+      l.accept(getRealThis());
       getPrinter().print(";");
-      if (it.hasNext()) {
-        getPrinter().println();
-      }
     }
     getPrinter().unindent();
     getPrinter().println();
@@ -138,20 +135,18 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       getPrinter().print(":");
       a.getReferenceType().accept(getRealThis());
     }
-    getPrinter().println("{");
-    getPrinter().indent();
+    getPrinter().print("{");
 
     // print object body
     if (!a.getODAttributes().isEmpty()) {
-      for (Iterator<ASTODAttribute> it = a.getODAttributes().iterator(); it.hasNext(); ) {
-        it.next().accept(getRealThis());
-        if (it.hasNext()) {
-          getPrinter().println();
-        }
+      getPrinter().println();
+      getPrinter().indent();
+      for (ASTODAttribute ast : a.getODAttributes()) {
+        ast.accept(getRealThis());
       }
+      getPrinter().unindent();
     }
 
-    getPrinter().unindent();
     getPrinter().print("}");
   }
 
@@ -197,7 +192,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
 
     }
 
-    getPrinter().print(";");
+    getPrinter().println(";");
   }
 
   /**
@@ -248,7 +243,6 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     a.accept(getRealThis());
   }
 
-  @Override
   public void handle(ASTODName a) {
     if (a.getName().isPresent()) {
       getPrinter().print(a.getName().get());

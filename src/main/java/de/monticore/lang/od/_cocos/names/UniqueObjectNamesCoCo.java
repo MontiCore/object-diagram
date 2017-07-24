@@ -3,9 +3,10 @@
  *
  * http://www.se-rwth.de/
  */
-package de.monticore.lang.od._cocos;
+package de.monticore.lang.od._cocos.names;
 
 import de.monticore.lang.od._ast.ASTODObject;
+import de.monticore.lang.od._cocos.ODASTODObjectCoCo;
 import de.monticore.lang.od._symboltable.ODObjectSymbol;
 import de.monticore.symboltable.Symbol;
 import de.se_rwth.commons.logging.Log;

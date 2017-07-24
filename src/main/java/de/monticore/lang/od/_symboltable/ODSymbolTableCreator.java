@@ -34,7 +34,6 @@ public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
     artifactScope.setAstNode(ast);
     ast.setEnclosingScope(artifactScope);
     putOnStack(artifactScope);
-
   }
 
   @Override

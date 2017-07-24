@@ -7,7 +7,12 @@ package de.monticore.lang.od;
 
 import de.monticore.io.paths.ModelPath;
 import de.monticore.lang.od._ast.ASTODArtifact;
-import de.monticore.lang.od._cocos.*;
+import de.monticore.lang.od._cocos.ODCoCoChecker;
+import de.monticore.lang.od._cocos.attributes.PartialAndCompleteAttributesCoCo;
+import de.monticore.lang.od._cocos.link.LinkEndConsistencyCoCo;
+import de.monticore.lang.od._cocos.link.ValidLinkReferenceCoCo;
+import de.monticore.lang.od._cocos.names.UniqueObjectNamesCoCo;
+import de.monticore.lang.od._cocos.object.ValidObjectReferenceCoCo;
 import de.monticore.lang.od._symboltable.ODLanguage;
 import de.monticore.lang.od._symboltable.ODSymbolTableCreator;
 import de.monticore.symboltable.GlobalScope;
@@ -132,7 +137,7 @@ public class ODCoCoCheckerTest {
 
       odCoCoChecker.checkAll(odASTODArtifact.get());
 
-      assertTrue(Slf4jLog.getErrorCount() == 4);
+      assertTrue(Slf4jLog.getErrorCount() == 1);
 
     }
 
@@ -151,6 +156,24 @@ public class ODCoCoCheckerTest {
       odCoCoChecker.checkAll(odASTODArtifact.get());
 
       assertTrue(Slf4jLog.getErrorCount() == 3);
+
+    }
+
+  }
+
+  @Test
+  public void checkLinkEndConsistencyCoCo() {
+
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile(
+        "InvalidLinkEndConsistency");
+
+    if (odASTODArtifact.isPresent()) {
+
+      odCoCoChecker.addCoCo(new LinkEndConsistencyCoCo());
+
+      odCoCoChecker.checkAll(odASTODArtifact.get());
+
+      assertTrue(Slf4jLog.getErrorCount() == 1);
 
     }
 

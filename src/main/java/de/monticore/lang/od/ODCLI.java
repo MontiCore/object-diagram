@@ -19,15 +19,17 @@
 
 package de.monticore.lang.od;
 
-import de.monticore.io.paths.ModelPath;
 import de.monticore.lang.od._ast.ASTODArtifact;
-import de.monticore.lang.od._cocos.*;
+import de.monticore.lang.od._cocos.ODCoCoChecker;
+import de.monticore.lang.od._cocos.attributes.PartialAndCompleteAttributesCoCo;
+import de.monticore.lang.od._cocos.link.ValidLinkReferenceCoCo;
+import de.monticore.lang.od._cocos.names.UniqueObjectNamesCoCo;
+import de.monticore.lang.od._cocos.object.ValidObjectReferenceCoCo;
 import de.monticore.lang.od._parser.ODParser;
 import de.monticore.lang.od._symboltable.ODLanguage;
 import de.monticore.symboltable.ResolvingConfiguration;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Optional;
 
 /**
@@ -42,10 +44,6 @@ public class ODCLI {
   private static ODLanguage odLanguage;
 
   private static ResolvingConfiguration resolverConfiguration;
-
-  private static ModelPath modelPath;
-
-  private static Path path;
 
   private static ODCoCoChecker odCoCoChecker;
 
