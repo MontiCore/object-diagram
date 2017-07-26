@@ -111,8 +111,8 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       l.accept(getRealThis());
       getPrinter().print(";");
     }
-    getPrinter().unindent();
     getPrinter().println();
+    getPrinter().unindent();
     getPrinter().println("}");
   }
 
