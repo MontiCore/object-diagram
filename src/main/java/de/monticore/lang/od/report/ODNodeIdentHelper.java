@@ -48,7 +48,7 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
     return format(maskSpecialChars(name), type);
   }
 
-  private String maskSpecialChars(String name) {
+  public String maskSpecialChars(String name) {
     // Replace all special characters by _
     name = name.replaceAll("[^a-zA-Z0-9_$\\-+]", "_");
     if (name.matches("[0-9].*")) {
