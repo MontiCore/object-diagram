@@ -75,7 +75,7 @@ public class ODCLI {
     odLanguage = new ODLanguage();
 
     resolverConfiguration = new ResolvingConfiguration();
-    resolverConfiguration.addDefaultFilters(odLanguage.getResolvers());
+    resolverConfiguration.addDefaultFilters(odLanguage.getResolvingFilters());
 
     odCoCoChecker = new ODCoCoChecker();
     odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());

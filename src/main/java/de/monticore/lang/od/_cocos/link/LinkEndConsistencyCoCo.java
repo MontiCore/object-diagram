@@ -5,6 +5,10 @@
  */
 package de.monticore.lang.od._cocos.link;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import de.monticore.ast.ASTNode;
 import de.monticore.lang.od._ast.ASTODLink;
 import de.monticore.lang.od._ast.ASTODName;
@@ -17,29 +21,25 @@ import de.monticore.types.types._ast.ASTReferenceType;
 import de.monticore.types.types._ast.ASTSimpleReferenceType;
 import de.se_rwth.commons.logging.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 /**
  * Check whether named links consists of the same object type references on the left and right side of the definition
  */
 public class LinkEndConsistencyCoCo implements ODASTObjectDiagramCoCo {
 
   @Override public void check(ASTObjectDiagram node) {
-    node.getODLinks().forEach(link -> {
-      if (link.getName().isPresent()) {
+    node.getODLinkList().forEach(link -> {
+      if (link.isPresentName()) {
         // collect left link reference type names
         List<ASTSimpleReferenceType> leftRefTypes = getReferenceTypes(link, true, node);
         List<List<String>> leftRefNames = new ArrayList<>();
         leftRefTypes.forEach(type -> {
-          leftRefNames.add(type.getNames());
+          leftRefNames.add(type.getNameList());
         });
         // collect right link reference type names
         List<ASTSimpleReferenceType> rightRefTypes = getReferenceTypes(link, false, node);
         List<List<String>> rightRefNames = new ArrayList<>();
         rightRefTypes.forEach(type -> {
-          rightRefNames.add(type.getNames());
+          rightRefNames.add(type.getNameList());
         });
         // compare left and right reference names
         if (!((leftRefNames.isEmpty() || leftRefNames.stream()
@@ -57,7 +57,7 @@ public class LinkEndConsistencyCoCo implements ODASTObjectDiagramCoCo {
       ASTObjectDiagram astObjectDiagram) {
     List<ASTSimpleReferenceType> astRefTypes = new ArrayList<>();
     if (left) {
-      link.getLeftReferenceNames().forEach(leftName -> {
+      link.getLeftReferenceNameList().forEach(leftName -> {
         Optional<ASTReferenceType> astReferenceType = this
             .getASTReference(leftName, astObjectDiagram);
         if (astReferenceType.isPresent() && astReferenceType
@@ -67,7 +67,7 @@ public class LinkEndConsistencyCoCo implements ODASTObjectDiagramCoCo {
       });
     }
     else {
-      link.getRightReferenceNames().forEach(rightName -> {
+      link.getRightReferenceNameList().forEach(rightName -> {
         Optional<ASTReferenceType> astReferenceType = this
             .getASTReference(rightName, astObjectDiagram);
         if (astReferenceType.isPresent() && astReferenceType
@@ -83,12 +83,12 @@ public class LinkEndConsistencyCoCo implements ODASTObjectDiagramCoCo {
   private Optional<ASTReferenceType> getASTReference(ASTODName astodName,
       ASTObjectDiagram astObjectDiagram) {
     Optional<CommonSymbol> symbol = Optional.empty();
-    if (astObjectDiagram.getSymbol().isPresent()) {
-      if (astodName.getName().isPresent() || astodName.getODSpecialName().isPresent()) {
-        symbol = astObjectDiagram.getSpannedScope().get()
-            .resolve(astodName.getName().isPresent() ?
-                astodName.getName().get() :
-                astodName.getODSpecialName().get(), ODObjectSymbol.KIND);
+    if (astObjectDiagram.isPresentSymbol()) {
+      if (astodName.isPresentName() || astodName.isPresentODSpecialName()) {
+        symbol = astObjectDiagram.getSpannedScope()
+            .resolve(astodName.isPresentName() ?
+                astodName.getName() :
+                astodName.getODSpecialName(), ODObjectSymbol.KIND);
       }
     }
 

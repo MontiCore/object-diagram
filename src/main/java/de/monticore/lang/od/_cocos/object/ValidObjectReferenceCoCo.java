@@ -18,8 +18,8 @@ import java.util.Optional;
 public class ValidObjectReferenceCoCo implements ODASTODObjectCoCo {
 
   @Override public void check(ASTODObject node) {
-    node.getODAttributes().stream().forEach(astodAttribute -> {
-      Optional<ASTODValue> astodValue = astodAttribute.getODValue();
+    node.getODAttributeList().stream().forEach(astodAttribute -> {
+      Optional<ASTODValue> astodValue = astodAttribute.getODValueOpt();
       if (astodValue.isPresent() && astodValue.get() instanceof ASTODName && !this
           .checkReference((ASTODName) (astodValue.get()), node)) {
         Log.error("Violation of CoCo 'ValidObjectReferenceCoCo'", node.get_SourcePositionStart());
@@ -29,14 +29,14 @@ public class ValidObjectReferenceCoCo implements ODASTODObjectCoCo {
 
   private boolean checkReference(ASTODName astodName, ASTODObject node) {
     Optional<? extends Symbol> symbol = Optional.empty();
-    if (node.getSymbol().isPresent()) {
-      if (astodName.getName().isPresent()) {
-        symbol = node.getSymbol().get().getEnclosingScope()
-            .resolve(astodName.getName().get(), ODObjectSymbol.KIND);
+    if (node.isPresentSymbol()) {
+      if (astodName.isPresentName()) {
+        symbol = node.getSymbol().getEnclosingScope()
+            .resolve(astodName.getName(), ODObjectSymbol.KIND);
       }
-      else if (astodName.getODSpecialName().isPresent()) {
-        symbol = node.getSymbol().get().getEnclosingScope()
-            .resolve(astodName.getODSpecialName().get(), ODObjectSymbol.KIND);
+      else if (astodName.isPresentODSpecialName()) {
+        symbol = node.getSymbol().getEnclosingScope()
+            .resolve(astodName.getODSpecialName(), ODObjectSymbol.KIND);
       }
     }
     return symbol.isPresent();

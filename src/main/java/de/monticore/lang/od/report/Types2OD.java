@@ -55,7 +55,7 @@ public class Types2OD implements TypesVisitor {
 
     String sep = "";
     String str = "\"";
-    Iterator<?> it = node.getParts().iterator();
+    Iterator<?> it = node.getPartList().iterator();
     boolean isEmpty = true;
     if (it.hasNext() || this.printEmptyList) {
       this.pp.print("parts = [");
@@ -149,7 +149,7 @@ public class Types2OD implements TypesVisitor {
 
     String sep = "";
     String str = "\"";
-    Iterator<?> it = node.getNames().iterator();
+    Iterator<?> it = node.getNameList().iterator();
     boolean isEmpty = true;
     if (it.hasNext() || this.printEmptyList) {
       this.pp.print("names = [");
@@ -166,10 +166,10 @@ public class Types2OD implements TypesVisitor {
       this.pp.println("];");
     }
 
-    if (node.getTypeArguments().isPresent()) {
+    if (node.isPresentTypeArguments()) {
       this.pp.print("typeArguments");
       this.pp.print(" = ");
-      node.getTypeArguments().get().accept(this.getRealThis());
+      node.getTypeArguments().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
@@ -187,13 +187,13 @@ public class Types2OD implements TypesVisitor {
     this.printSymbol(node);
     this.printEnclosingScope(node);
     this.printSpannedScope(node);
-    Iterator<ASTSimpleReferenceType> iter_simpleReferenceTypes = node.getSimpleReferenceTypes()
+    Iterator<ASTSimpleReferenceType> iter_simpleReferenceTypes = node.getSimpleReferenceTypeList()
         .iterator();
     boolean isEmpty = true;
     if (iter_simpleReferenceTypes.hasNext()) {
       this.pp.print("simpleReferenceTypes");
       this.pp.print(" = [");
-      this.pp.println("// *size: " + node.getSimpleReferenceTypes().size());
+      this.pp.println("// *size: " + node.getSimpleReferenceTypeList().size());
       this.pp.indent();
       isEmpty = false;
     }
@@ -229,12 +229,12 @@ public class Types2OD implements TypesVisitor {
     this.printSymbol(node);
     this.printEnclosingScope(node);
     this.printSpannedScope(node);
-    Iterator<ASTTypeArgument> iter_typeArguments = node.getTypeArguments().iterator();
+    Iterator<ASTTypeArgument> iter_typeArguments = node.getTypeArgumentList().iterator();
     boolean isEmpty = true;
     if (iter_typeArguments.hasNext()) {
       this.pp.print("typeArguments");
       this.pp.print(" = [");
-      this.pp.println("// *size: " + node.getTypeArguments().size());
+      this.pp.println("// *size: " + node.getTypeArgumentList().size());
       this.pp.indent();
       isEmpty = false;
     }
@@ -271,20 +271,20 @@ public class Types2OD implements TypesVisitor {
     this.printEnclosingScope(node);
     this.printSpannedScope(node);
 
-    if (node.getUpperBound().isPresent()) {
+    if (node.isPresentUpperBound()) {
       this.pp.print("upperBound");
       this.pp.print(" = ");
-      node.getUpperBound().get().accept(this.getRealThis());
+      node.getUpperBound().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
       this.pp.println("upperBound = absent;");
     }
 
-    if (node.getLowerBound().isPresent()) {
+    if (node.isPresentLowerBound()) {
       this.pp.print("lowerBound");
       this.pp.print(" = ");
-      node.getLowerBound().get().accept(this.getRealThis());
+      node.getLowerBound().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
@@ -303,12 +303,12 @@ public class Types2OD implements TypesVisitor {
     this.printEnclosingScope(node);
     this.printSpannedScope(node);
     Iterator<ASTTypeVariableDeclaration> iter_typeVariableDeclarations = node
-        .getTypeVariableDeclarations().iterator();
+        .getTypeVariableDeclarationList().iterator();
     boolean isEmpty = true;
     if (iter_typeVariableDeclarations.hasNext()) {
       this.pp.print("typeVariableDeclarations");
       this.pp.print(" = [");
-      this.pp.println("// *size: " + node.getTypeVariableDeclarations().size());
+      this.pp.println("// *size: " + node.getTypeVariableDeclarationList().size());
       this.pp.indent();
       isEmpty = false;
     }
@@ -344,12 +344,12 @@ public class Types2OD implements TypesVisitor {
     this.printEnclosingScope(node);
     this.printSpannedScope(node);
     this.printAttribute("name", "\"" + node.getName() + "\"");
-    Iterator<ASTComplexReferenceType> iter_upperBounds = node.getUpperBounds().iterator();
+    Iterator<ASTComplexReferenceType> iter_upperBounds = node.getUpperBoundList().iterator();
     boolean isEmpty = true;
     if (iter_upperBounds.hasNext()) {
       this.pp.print("upperBounds");
       this.pp.print(" = [");
-      this.pp.println("// *size: " + node.getUpperBounds().size());
+      this.pp.println("// *size: " + node.getUpperBoundList().size());
       this.pp.indent();
       isEmpty = false;
     }
@@ -445,9 +445,9 @@ public class Types2OD implements TypesVisitor {
   }
 
   private void printSymbol(ASTNode node) {
-    if (node.getSymbol().isPresent()) {
+    if (node.isPresentSymbol()) {
       String scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted(node.getSymbol().get()));
+          .uncapitalize(this.reporting.getSymbolNameFormatted(node.getSymbol()));
       this.pp.println("symbol = " + scopeName + ";");
     }
     else if (this.printEmptyOptional) {
@@ -456,9 +456,9 @@ public class Types2OD implements TypesVisitor {
   }
 
   private void printEnclosingScope(ASTNode node) {
-    if (node.getEnclosingScope().isPresent()) {
+    if (node.isPresentEnclosingScope()) {
       String scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted(node.getEnclosingScope().get()));
+          this.reporting.getScopeNameFormatted(node.getEnclosingScope()));
       this.pp.println("enclosingScope = " + scopeName + ";");
     }
     else if (this.printEmptyOptional) {
@@ -467,9 +467,9 @@ public class Types2OD implements TypesVisitor {
   }
 
   private void printSpannedScope(ASTNode node) {
-    if (node.getSpannedScope().isPresent()) {
+    if (node.isPresentSpannedScope()) {
       String scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted(node.getSpannedScope().get()));
+          .uncapitalize(this.reporting.getScopeNameFormatted(node.getSpannedScope()));
       this.pp.println("spanningScope = " + scopeName + ";");
     }
     else if (this.printEmptyOptional) {

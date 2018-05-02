@@ -41,7 +41,7 @@ public class ODSymbolTableCreatorTest {
     odLanguage = new ODLanguage();
 
     resolverConfiguration = new ResolvingConfiguration();
-    resolverConfiguration.addDefaultFilters(odLanguage.getResolvers());
+    resolverConfiguration.addDefaultFilters(odLanguage.getResolvingFilters());
 
     modelPath =
         new ModelPath(Paths.get("src/test/resources/symboltable"));
@@ -111,7 +111,7 @@ public class ODSymbolTableCreatorTest {
     ASTODName refName = ODNodeFactory.createASTODName();
     refName.setName(objectName);
     odObject.setODName(refName);
-    objectDiagram.getODObjects().add(odObject);
+    objectDiagram.getODObjectList().add(odObject);
 
     GlobalScope globalScope = new GlobalScope(new ModelPath(), odLanguage, resolverConfiguration);
 

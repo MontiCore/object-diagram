@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 public class NoAbstractAttributesCoCo implements ODASTODAttributeCoCo {
   @Override public void check(ASTODAttribute node) {
-    Optional<ASTModifier> attrModifier = node.getModifier();
+    Optional<ASTModifier> attrModifier = node.getModifierOpt();
     if (attrModifier.isPresent() && attrModifier.get().isAbstract()) {
       Log.error("Violation of CoCo 'NoAbstractAttributesCoCo'",
           node.get_SourcePositionStart());

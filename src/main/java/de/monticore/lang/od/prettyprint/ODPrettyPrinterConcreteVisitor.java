@@ -56,12 +56,12 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
    */
   @Override
   public void handle(ASTODArtifact unit) {
-    if (unit.getPackage() != null && !unit.getPackage().isEmpty()) {
+    if (unit.getPackageList() != null && !unit.getPackageList().isEmpty()) {
       getPrinter()
-          .println("package " + Names.getQualifiedName(unit.getPackage()) + ";\n");
+          .println("package " + Names.getQualifiedName(unit.getPackageList()) + ";\n");
     }
-    if (unit.getImportStatements() != null && !unit.getImportStatements().isEmpty()) {
-      for (ASTImportStatement s : unit.getImportStatements()) {
+    if (unit.getImportStatementList() != null && !unit.getImportStatementList().isEmpty()) {
+      for (ASTImportStatement s : unit.getImportStatementList()) {
         getPrinter().print("import " + Names.getQualifiedName(s.getImportList()));
         if (s.isStar()) {
           getPrinter().println(".*;");
@@ -72,8 +72,8 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       }
       getPrinter().println();
     }
-    if (unit.getODConformsStatements() != null && !unit.getODConformsStatements().isEmpty()) {
-      for (ASTODConformsStatement s : unit.getODConformsStatements()) {
+    if (unit.getODConformsStatementList() != null && !unit.getODConformsStatementList().isEmpty()) {
+      for (ASTODConformsStatement s : unit.getODConformsStatementList()) {
         getPrinter()
             .print("conformsTo " + s.getQualifiedName().toString() + ";");
       }
@@ -89,8 +89,8 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   @Override
   public void handle(ASTObjectDiagram a) {
     // print stereotype
-    if (a.getStereotype().isPresent()) {
-      a.getStereotype().get().accept(getRealThis());
+    if (a.isPresentStereotype()) {
+      a.getStereotype().accept(getRealThis());
       getPrinter().println();
     }
     // print object diagram name and parameters
@@ -100,14 +100,14 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     getPrinter().indent();
     // print Objects
 
-    for (Iterator<ASTODObject> it = a.getODObjects().iterator(); it.hasNext(); ) {
+    for (Iterator<ASTODObject> it = a.getODObjectList().iterator(); it.hasNext(); ) {
       it.next().accept(getRealThis());
       getPrinter().println(";");
       if (it.hasNext()) {
         getPrinter().println();
       }
     }
-    for (ASTODLink l : a.getODLinks()) {
+    for (ASTODLink l : a.getODLinkList()) {
       l.accept(getRealThis());
       getPrinter().print(";");
     }
@@ -124,12 +124,12 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   @Override
   public void handle(ASTODObject a) {
 
-    if (a.getModifier().isPresent()) {
-      a.getModifier().get().accept(getRealThis());
+    if (a.isPresentModifier()) {
+      a.getModifier().accept(getRealThis());
     }
     // print object name and type
-    if (a.getODName().isPresent()) {
-      a.getODName().get().accept(getRealThis());
+    if (a.isPresentODName()) {
+      a.getODName().accept(getRealThis());
     }
     if (a.getReferenceType() != null) {
       getPrinter().print(":");
@@ -138,10 +138,10 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     getPrinter().print("{");
 
     // print object body
-    if (!a.getODAttributes().isEmpty()) {
+    if (!a.getODAttributeList().isEmpty()) {
       getPrinter().println();
       getPrinter().indent();
-      for (ASTODAttribute ast : a.getODAttributes()) {
+      for (ASTODAttribute ast : a.getODAttributeList()) {
         ast.accept(getRealThis());
       }
       getPrinter().unindent();
@@ -158,19 +158,19 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   @Override
   public void handle(ASTODAttribute a) {
     // print modifier
-    if (a.getModifier().isPresent())
-      a.getModifier().get().accept(getRealThis());
+    if (a.isPresentModifier())
+      a.getModifier().accept(getRealThis());
     // print type
-    if (a.getType().isPresent()) {
-      a.getType().get().accept(getRealThis());
+    if (a.isPresentType()) {
+      a.getType().accept(getRealThis());
       getPrinter().print(" ");
     }
     // print name
     getPrinter().print(a.getName());
 
-    if (a.completeIsPresent() || a.getODValue().isPresent() || a.getODMap().isPresent() || a
-        .getODList().isPresent()) {
-      if (a.completeIsPresent()) {
+    if (a.isPresentComplete() || a.isPresentODValue() || a.isPresentODMap() || a
+        .isPresentODList()) {
+      if (a.isPresentComplete()) {
         getPrinter().print(" = ");
       }
       else {
@@ -178,16 +178,16 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       }
 
       // print value
-      if (a.getODValue().isPresent()) {
-        a.getODValue().get().accept(getRealThis());
+      if (a.isPresentODValue()) {
+        a.getODValue().accept(getRealThis());
       }
       // print value collection
-      else if (a.getODList().isPresent()) {
-        a.getODList().get().accept(getRealThis());
+      else if (a.isPresentODList()) {
+        a.getODList().accept(getRealThis());
       }
       // print value map
-      else if (a.getODMap().isPresent()) {
-        a.getODMap().get().accept(getRealThis());
+      else if (a.isPresentODMap()) {
+        a.getODMap().accept(getRealThis());
       }
 
     }
@@ -203,7 +203,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   @Override
   public void handle(ASTODList a) {
     getPrinter().print("[");
-    for (Iterator<ASTODValue> it = a.getODValues().iterator(); it.hasNext(); ) {
+    for (Iterator<ASTODValue> it = a.getODValueList().iterator(); it.hasNext(); ) {
       it.next().accept(getRealThis());
       if (it.hasNext()) {
         getPrinter().print(",");
@@ -220,7 +220,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   @Override
   public void handle(ASTODMap a) {
     getPrinter().print("[");
-    for (Iterator<ASTODMapElement> it = a.getODMapElements().iterator(); it.hasNext(); ) {
+    for (Iterator<ASTODMapElement> it = a.getODMapElementList().iterator(); it.hasNext(); ) {
       it.next().accept(getRealThis());
       if (it.hasNext()) {
         getPrinter().print(",");
@@ -244,11 +244,11 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   }
 
   public void handle(ASTODName a) {
-    if (a.getName().isPresent()) {
-      getPrinter().print(a.getName().get());
+    if (a.isPresentName()) {
+      getPrinter().print(a.getName());
     }
-    else if (a.getODSpecialName().isPresent()) {
-      getPrinter().print(a.getODSpecialName().get());
+    else if (a.isPresentODSpecialName()) {
+      getPrinter().print(a.getODSpecialName());
     }
   }
 
@@ -290,7 +290,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
    * @see de.monticore.lang.od._visitor.ODVisitor#handle(de.monticore.lang.od._ast.ASTODAbsent)
    */
   @Override public void handle(ASTODAbsent a) {
-    if (a.isAbsent()) {
+    if (a.is_absent()) {
       getPrinter().print("absent");
     }
   }
@@ -302,14 +302,14 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
    */
   @Override
   public void handle(ASTODLinkQualifier a) {
-    if (a.getName().isPresent()) {
+    if (a.isPresentName()) {
       getPrinter().print("[[");
-      getPrinter().print(a.getName().get());
+      getPrinter().print(a.getName());
       getPrinter().print("]]");
     }
-    else if (a.getODValue().isPresent()) {
+    else if (a.isPresentODValue()) {
       getPrinter().print("[");
-      a.getODValue().get().accept(getRealThis());
+      a.getODValue().accept(getRealThis());
       getPrinter().print("]");
     }
     getPrinter().print(" ");
@@ -324,8 +324,8 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   public void handle(ASTODLink a) {
     getPrinter().println();
     // print stereotype
-    if (a.getStereotype().isPresent()) {
-      a.getStereotype().get().accept(getRealThis());
+    if (a.isPresentStereotype()) {
+      a.getStereotype().accept(getRealThis());
       getPrinter().print(" ");
     }
     // print type of the link
@@ -342,15 +342,15 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     if (a.isDerived()) {
       getPrinter().print("/");
     }
-    if (a.getName().isPresent()) {
-      getPrinter().print(a.getName().get() + " ");
+    if (a.isPresentName()) {
+      getPrinter().print(a.getName() + " ");
     }
     // print left modifier
-    if (a.getLeftModifier().isPresent()) {
-      a.getLeftModifier().get().accept(getRealThis());
+    if (a.isPresentLeftModifier()) {
+      a.getLeftModifier().accept(getRealThis());
     }
     // print objects referenced on the left side of the link
-    Iterator<ASTODName> refNames = a.getLeftReferenceNames().iterator();
+    Iterator<ASTODName> refNames = a.getLeftReferenceNameList().iterator();
     while (refNames.hasNext()) {
       refNames.next().accept(getRealThis());
       if (refNames.hasNext()) {
@@ -359,13 +359,13 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
     }
     getPrinter().print(" ");
     // print left qualifier
-    if (a.getLeftQualifier().isPresent()) {
-      a.getLeftQualifier().get().accept(getRealThis());
+    if (a.isPresentLeftQualifier()) {
+      a.getLeftQualifier().accept(getRealThis());
     }
     // print left role
-    if (a.getLeftRole().isPresent()) {
+    if (a.isPresentLeftRole()) {
       getPrinter().print("(");
-      getPrinter().print(a.getLeftRole().get());
+      getPrinter().print(a.getLeftRole());
       getPrinter().print(") ");
     }
     // print arrow
@@ -382,18 +382,18 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       getPrinter().print("--");
     }
     // print right role
-    if (a.getRightRole().isPresent()) {
+    if (a.isPresentRightRole()) {
       getPrinter().print(" (");
-      getPrinter().print(a.getRightRole().get());
+      getPrinter().print(a.getRightRole());
       getPrinter().print(")");
     }
     // print right qualifier
-    if (a.getRightQualifier().isPresent()) {
-      a.getRightQualifier().get().accept(getRealThis());
+    if (a.isPresentRightQualifier()) {
+      a.getRightQualifier().accept(getRealThis());
     }
     // print objects referenced on the right side of the link
     getPrinter().print(" ");
-    refNames = a.getRightReferenceNames().iterator();
+    refNames = a.getRightReferenceNameList().iterator();
     while (refNames.hasNext()) {
       refNames.next().accept(getRealThis());
       if (refNames.hasNext()) {
@@ -401,8 +401,8 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
       }
     }
     // print right modifier
-    if (a.getRightModifier().isPresent()) {
-      a.getRightModifier().get().accept(getRealThis());
+    if (a.isPresentRightModifier()) {
+      a.getRightModifier().accept(getRealThis());
     }
   }
 

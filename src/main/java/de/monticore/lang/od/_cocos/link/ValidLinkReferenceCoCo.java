@@ -18,9 +18,9 @@ import java.util.stream.Stream;
 public class ValidLinkReferenceCoCo implements ODASTObjectDiagramCoCo {
 
   @Override public void check(ASTObjectDiagram node) {
-    node.getODLinks().stream().forEach(astodLink -> {
-      Stream.concat(astodLink.getLeftReferenceNames().stream(),
-          astodLink.getRightReferenceNames().stream())
+    node.getODLinkList().stream().forEach(astodLink -> {
+      Stream.concat(astodLink.getLeftReferenceNameList().stream(),
+          astodLink.getRightReferenceNameList().stream())
           .forEach(astodName -> {
             if (!this.checkReference(astodName, node)) {
               Log.error("Violation of CoCo 'ValidLinkReferenceCoCo'",
@@ -32,14 +32,14 @@ public class ValidLinkReferenceCoCo implements ODASTObjectDiagramCoCo {
 
   private boolean checkReference(ASTODName astodName, ASTObjectDiagram astObjectDiagram) {
     Optional<? extends Symbol> symbol = Optional.empty();
-    if (astObjectDiagram.getSymbol().isPresent()) {
-      if (astodName.getName().isPresent() && astObjectDiagram.getSpannedScope().isPresent()) {
-        symbol = astObjectDiagram.getSpannedScope().get()
-            .resolve(astodName.getName().get(), ODObjectSymbol.KIND);
+    if (astObjectDiagram.isPresentSymbol()) {
+      if (astodName.isPresentName() && astObjectDiagram.isPresentSpannedScope()) {
+        symbol = astObjectDiagram.getSpannedScope()
+            .resolve(astodName.getName(), ODObjectSymbol.KIND);
       }
-      else if (astodName.getODSpecialName().isPresent()) {
-        symbol = astObjectDiagram.getSpannedScope().get()
-            .resolve(astodName.getODSpecialName().get(), ODObjectSymbol.KIND);
+      else if (astodName.isPresentODSpecialName()) {
+        symbol = astObjectDiagram.getSpannedScope()
+            .resolve(astodName.getODSpecialName(), ODObjectSymbol.KIND);
       }
     }
     return symbol.isPresent();

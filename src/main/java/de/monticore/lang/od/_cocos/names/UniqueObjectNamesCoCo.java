@@ -17,7 +17,7 @@ import java.util.Optional;
 public class UniqueObjectNamesCoCo implements ODASTODObjectCoCo {
 
   @Override public void check(ASTODObject node) {
-    Optional<? extends Symbol> symbol = node.getSymbol();
+    Optional<? extends Symbol> symbol = node.getSymbolOpt();
     if (symbol.isPresent() && symbol.get() instanceof ODObjectSymbol) {
       ODObjectSymbol objectSymbol = (ODObjectSymbol) symbol.get();
       Collection<ODObjectSymbol> symbols = objectSymbol.getEnclosingScope()

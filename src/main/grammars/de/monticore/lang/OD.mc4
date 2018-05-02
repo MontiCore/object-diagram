@@ -19,7 +19,7 @@
 
 package de.monticore.lang;
 
-grammar OD extends de.monticore.common.Common { 
+grammar OD extends de.monticore.common.Common {  
       
     /*========================================================================*/
     /*=========================== Artefact ===================================*/
@@ -164,13 +164,13 @@ grammar OD extends de.monticore.common.Common {
       ([derived:"/"])?
       Name?
       leftModifier:Modifier?
-      leftReferenceNames:(ODName || ",")+
+      leftReferenceName:(ODName || ",")+
       leftQualifier:ODLinkQualifier?
       ("(" leftRole:Name ")")?
       AssocDirection
       ("(" rightRole:Name ")")?
       rightQualifier:ODLinkQualifier?
-      rightReferenceNames:(ODName || ",")+
+      rightReferenceName:(ODName || ",")+
       rightModifier:Modifier?;
 
     /** ASTODAbsent represents implementation of the ODValue interface
@@ -178,7 +178,7 @@ grammar OD extends de.monticore.common.Common {
       @attribute absent True if attribute is optional and has an empty value
     */
     ODAbsent implements ODValue =
-      ["absent"];
+      _absent:["absent"];
 
     /** ASTODDate represents a Date Format
       @attribute year

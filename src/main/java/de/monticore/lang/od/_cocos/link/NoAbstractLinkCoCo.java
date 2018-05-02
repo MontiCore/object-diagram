@@ -17,13 +17,13 @@ import java.util.Optional;
  */
 public class NoAbstractLinkCoCo implements ODASTODLinkCoCo {
   @Override public void check(ASTODLink node) {
-    Optional<ASTModifier> linkLeftModifier = node.getLeftModifier();
+    Optional<ASTModifier> linkLeftModifier = node.getLeftModifierOpt();
     if (linkLeftModifier.isPresent() && linkLeftModifier.get().isAbstract()) {
       Log.error("Violation of CoCo 'NoAbstractAttributesCoCo'",
           node.get_SourcePositionStart());
     }
 
-    Optional<ASTModifier> linkRightModifier = node.getRightModifier();
+    Optional<ASTModifier> linkRightModifier = node.getRightModifierOpt();
     if (linkRightModifier.isPresent() && linkRightModifier.get().isAbstract()) {
       Log.error("Violation of CoCo 'NoAbstractAttributesCoCo'",
           node.get_SourcePositionStart());

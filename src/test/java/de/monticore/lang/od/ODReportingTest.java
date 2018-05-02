@@ -32,7 +32,6 @@ import org.junit.Test;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.lang.od._ast.ASTODArtifact;
-import de.monticore.lang.od._cocos.*;
 import de.monticore.lang.od._parser.ODParser;
 import de.monticore.lang.od._symboltable.ODLanguage;
 import de.monticore.lang.od._symboltable.ODSymbolTableCreator;
@@ -61,7 +60,7 @@ public class ODReportingTest {
     odLanguage = new ODLanguage();
 
     resolverConfiguration = new ResolvingConfiguration();
-    resolverConfiguration.addDefaultFilters(odLanguage.getResolvers());
+    resolverConfiguration.addDefaultFilters(odLanguage.getResolvingFilters());
   }
 
   private void createAST(String packageName, String modelName) throws IOException {
@@ -126,4 +125,31 @@ public class ODReportingTest {
     // odCoCoChecker.checkAll(ASTODArtifact.get());
   }
 
+  @Test
+  public void checkReportODGrammar() throws IOException {
+    Path astModel = Paths.get("target/generated-sources/monticore/sourcecode/reports/de.monticore.lang.OD/OD_AST.od");
+    Path stModel = Paths.get("target/generated-sources/monticore/sourcecode/reports/de.monticore.lang.OD/OD_ST.od");
+
+    // Initialize the CoCoChecker
+    // ODCoCoChecker odCoCoChecker = new ODCoCoChecker();
+    // odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
+    // odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
+    // odCoCoChecker.addCoCo(new ValidLinkReferenceCoCo());
+    // odCoCoChecker.addCoCo(new LinkConsistsOfReferenceNamesCoCo());
+
+    // Get the Parser
+    ODParser parser = new ODParser();
+
+    // Parse and check AST-Report
+    Optional<ASTODArtifact> ASTODArtifact = parser.parseODArtifact(astModel.toString());
+    assertFalse(parser.hasErrors());
+    assertTrue(ASTODArtifact.isPresent());
+    // odCoCoChecker.checkAll(ASTODArtifact.get());
+
+    // Parse and check ST-Report
+    ASTODArtifact = parser.parseODArtifact(stModel.toString());
+    assertFalse(parser.hasErrors());
+    assertTrue(ASTODArtifact.isPresent());
+    // odCoCoChecker.checkAll(ASTODArtifact.get());
+  }
 }

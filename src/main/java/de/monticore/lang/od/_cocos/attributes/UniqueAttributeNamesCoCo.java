@@ -19,8 +19,8 @@ public class UniqueAttributeNamesCoCo implements ODASTODObjectCoCo {
 
   @Override public void check(ASTODObject node) {
     List<String> attributeNames = new ArrayList<>();
-    node.getODAttributes().forEach(attribute -> {
-      if (attribute.completeIsPresent()) {
+    node.getODAttributeList().forEach(attribute -> {
+      if (attribute.isPresentComplete()) {
         if (attributeNames.contains(attribute.getName())) {
           Log.error("Violation of CoCo 'UniqueAttributeNamesCoCo'",
               attribute.get_SourcePositionStart());

@@ -17,13 +17,13 @@ public class PartialAndCompleteAttributesCoCo implements ODASTODObjectCoCo {
 
   @Override
   public void check(ASTODObject node) {
-    for (int i = 0; i < node.getODAttributes().size(); i++) {
-      ASTODAttribute firstAttribute = node.getODAttributes().get(i);
-      for (int j = i + 1; j < node.getODAttributes().size(); j++) {
-        ASTODAttribute secondAttribute = node.getODAttributes().get(j);
+    for (int i = 0; i < node.getODAttributeList().size(); i++) {
+      ASTODAttribute firstAttribute = node.getODAttributeList().get(i);
+      for (int j = i + 1; j < node.getODAttributeList().size(); j++) {
+        ASTODAttribute secondAttribute = node.getODAttributeList().get(j);
         if (firstAttribute.getName().equals(secondAttribute.getName())) {
-          if (firstAttribute.completeIsPresent() || (!firstAttribute.completeIsPresent()
-              && secondAttribute.completeIsPresent())) {
+          if (firstAttribute.isPresentComplete() || (!firstAttribute.isPresentComplete()
+              && secondAttribute.isPresentComplete())) {
             Log.error("Violation of CoCo 'PartialAndCompleteAttributesCoCo'",
                 node.get_SourcePositionStart());
           }

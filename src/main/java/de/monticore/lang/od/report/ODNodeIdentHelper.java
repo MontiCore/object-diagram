@@ -35,13 +35,13 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
   public String getIdent(ASTODObject a) {
     String type = Layouter.nodeName(a);
     String name = "";
-    if (a.getODName().isPresent()) {
-      ASTODName ref = a.getODName().get();
-      if (ref.getName().isPresent()) {
-        name = ref.getName().get();
+    if (a.isPresentODName()) {
+      ASTODName ref = a.getODName();
+      if (ref.isPresentName()) {
+        name = ref.getName();
       }
-      if (ref.getODSpecialName().isPresent()) {
-        name = ref.getODSpecialName().get();
+      if (ref.isPresentODSpecialName()) {
+        name = ref.getODSpecialName();
       }
     }
 
@@ -64,10 +64,10 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
 
   public String getIdent(ASTODLink a) {
     String name = "";
-    if (a.getName().isPresent()) {
-      name = a.getName().get();
+    if (a.isPresentName()) {
+      name = a.getName();
     }
-    else if (!a.getLeftReferenceNames().isEmpty() && !a.getRightReferenceNames().isEmpty()) {
+    else if (!a.getLeftReferenceNameList().isEmpty() && !a.getRightReferenceNameList().isEmpty()) {
       // TODO MB
     }
     return format(name, Layouter.nodeName(a));

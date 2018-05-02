@@ -57,12 +57,12 @@ public class Common2OD implements CommonVisitor {
     this.printSymbol(node);
     this.printEnclosingScope(node);
     this.printSpannedScope(node);
-    Iterator<ASTStereoValue> iter_values = node.getValues().iterator();
+    Iterator<ASTStereoValue> iter_values = node.getValueList().iterator();
     boolean isEmpty = true;
     if (iter_values.hasNext()) {
       this.pp.print("values");
       this.pp.print(" = [");
-      this.pp.println("// *size: " + node.getValues().size());
+      this.pp.println("// *size: " + node.getValueList().size());
       this.pp.indent();
       isEmpty = false;
     }
@@ -99,8 +99,8 @@ public class Common2OD implements CommonVisitor {
     this.printEnclosingScope(node);
     this.printSpannedScope(node);
     this.printAttribute("name", "\"" + node.getName() + "\"");
-    if (node.getSource().isPresent()) {
-      this.printAttribute("source", "\"" + String.valueOf(node.getSource().get()) + "\"");
+    if (node.isPresentSource()) {
+      this.printAttribute("source", "\"" + String.valueOf(node.getSource()) + "\"");
     }
     else if (this.printEmptyOptional) {
       this.pp.println("source = absent;");
@@ -119,20 +119,20 @@ public class Common2OD implements CommonVisitor {
     this.printSpannedScope(node);
     this.printAttribute("lowerBound", String.valueOf(node.getLowerBound()));
     this.printAttribute("upperBound", String.valueOf(node.getUpperBound()));
-    if (node.getLowerBoundLit().isPresent()) {
+    if (node.isPresentLowerBoundLit()) {
       this.pp.print("lowerBoundLit");
       this.pp.print(" = ");
-      node.getLowerBoundLit().get().accept(this.getRealThis());
+      node.getLowerBoundLit().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
       this.pp.println("lowerBoundLit = absent;");
     }
 
-    if (node.getUpperBoundLit().isPresent()) {
+    if (node.isPresentUpperBoundLit()) {
       this.pp.print("upperBoundLit");
       this.pp.print(" = ");
-      node.getUpperBoundLit().get().accept(this.getRealThis());
+      node.getUpperBoundLit().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
@@ -168,10 +168,10 @@ public class Common2OD implements CommonVisitor {
     this.printEnclosingScope(node);
     this.printSpannedScope(node);
 
-    if (node.getStereotype().isPresent()) {
+    if (node.isPresentStereotype()) {
       this.pp.print("stereotype");
       this.pp.print(" = ");
-      node.getStereotype().get().accept(this.getRealThis());
+      node.getStereotype().accept(this.getRealThis());
       this.pp.println(";");
     }
     else if (this.printEmptyOptional) {
@@ -206,9 +206,9 @@ public class Common2OD implements CommonVisitor {
   }
 
   private void printSymbol(ASTNode node) {
-    if (node.getSymbol().isPresent()) {
+    if (node.isPresentSymbol()) {
       String scopeName = StringTransformations
-          .uncapitalize(this.reporting.getSymbolNameFormatted(node.getSymbol().get()));
+          .uncapitalize(this.reporting.getSymbolNameFormatted(node.getSymbol()));
       this.pp.println("symbol = " + scopeName + ";");
     }
     else if (this.printEmptyOptional) {
@@ -217,9 +217,9 @@ public class Common2OD implements CommonVisitor {
   }
 
   private void printEnclosingScope(ASTNode node) {
-    if (node.getEnclosingScope().isPresent()) {
+    if (node.isPresentEnclosingScope()) {
       String scopeName = StringTransformations.uncapitalize(
-          this.reporting.getScopeNameFormatted(node.getEnclosingScope().get()));
+          this.reporting.getScopeNameFormatted(node.getEnclosingScope()));
       this.pp.println("enclosingScope = " + scopeName + ";");
     }
     else if (this.printEmptyOptional) {
@@ -228,9 +228,9 @@ public class Common2OD implements CommonVisitor {
   }
 
   private void printSpannedScope(ASTNode node) {
-    if (node.getSpannedScope().isPresent()) {
+    if (node.isPresentSpannedScope()) {
       String scopeName = StringTransformations
-          .uncapitalize(this.reporting.getScopeNameFormatted(node.getSpannedScope().get()));
+          .uncapitalize(this.reporting.getScopeNameFormatted(node.getSpannedScope()));
       this.pp.println("spanningScope = " + scopeName + ";");
     }
     else if (this.printEmptyOptional) {

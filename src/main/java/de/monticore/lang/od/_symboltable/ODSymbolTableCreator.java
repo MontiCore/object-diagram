@@ -46,12 +46,12 @@ public class ODSymbolTableCreator extends ODSymbolTableCreatorTOP {
   }
 
   protected Optional<ODObjectSymbol> create_ODObject(ASTODObject ast) {
-    if (ast.getODName().isPresent()) {
-      if (ast.getODName().get().getName().isPresent()) {
-        return Optional.of(new ODObjectSymbol(ast.getODName().get().getName().get()));
+    if (ast.isPresentODName()) {
+      if (ast.getODName().getNameOpt().isPresent()) {
+        return Optional.of(new ODObjectSymbol(ast.getODName().getName()));
       }
-      else if (ast.getODName().get().getODSpecialName().isPresent()) {
-        return Optional.of(new ODObjectSymbol(ast.getODName().get().getODSpecialName().get()));
+      else if (ast.getODName().isPresentODSpecialName()) {
+        return Optional.of(new ODObjectSymbol(ast.getODName().getODSpecialName()));
       }
     }
     return Optional.empty();
