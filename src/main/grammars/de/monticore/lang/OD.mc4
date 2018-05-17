@@ -221,6 +221,8 @@ grammar OD extends de.monticore.common.Common {
       Name | ODSpecialName;
 
     token ODSpecialName = '@'
-      ( 'a'..'z' | 'A'..'Z' | '0'..'9' | '!' | '_' | '.')*
-      ('('.*?')')?;
+      (Name|'!')+ 
+      ('(' NB')')?;
+      
+    fragment token NB = (DecimalNumeral ',' DecimalNumeral)? ('!' DecimalNumeral)?;
 }

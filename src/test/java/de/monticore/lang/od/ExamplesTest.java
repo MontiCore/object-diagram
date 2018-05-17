@@ -13,6 +13,7 @@ import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.Slf4jLog;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -93,21 +94,6 @@ public class ExamplesTest {
   @Test
   public void testSymTabOd() throws RecognitionException, IOException {
     test("src/test/resources/examples/od/SymTabOd.od");
-  }
-
-  @Test
-  public void testActionObservation102406() throws RecognitionException, IOException {
-    test("src/test/resources/examples/action/ActionObservation102406.od");
-  }
-
-  @Test
-  public void testActionObservation102489() throws RecognitionException, IOException {
-    test("src/test/resources/examples/action/ActionObservation102489.od");
-  }
-
-  @Test
-  public void testActionObservation102530() throws RecognitionException, IOException {
-    test("src/test/resources/examples/action/ActionObservation102530.od");
   }
 
   @Test

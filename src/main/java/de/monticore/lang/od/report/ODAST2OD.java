@@ -18,11 +18,14 @@
  */
 package de.monticore.lang.od.report;
 
+import de.monticore.common.common._od.Common2OD;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
 import de.monticore.lang.od._od.OD2OD;
 import de.monticore.lang.od._visitor.ODDelegatorVisitor;
 import de.monticore.lang.od._visitor.ODVisitor;
+import de.monticore.literals.literals._od.Literals2OD;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.types.types._od.Types2OD;
 
 public class ODAST2OD extends OD2OD {
 
