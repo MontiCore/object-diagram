@@ -19,18 +19,15 @@
 
 package de.monticore.lang.od;
 
+import java.io.IOException;
+import java.util.Optional;
+
 import de.monticore.lang.od._ast.ASTODArtifact;
 import de.monticore.lang.od._cocos.ODCoCoChecker;
-import de.monticore.lang.od._cocos.attributes.PartialAndCompleteAttributesCoCo;
-import de.monticore.lang.od._cocos.link.ValidLinkReferenceCoCo;
-import de.monticore.lang.od._cocos.names.UniqueObjectNamesCoCo;
-import de.monticore.lang.od._cocos.object.ValidObjectReferenceCoCo;
+import de.monticore.lang.od._cocos.ODCoCos;
 import de.monticore.lang.od._parser.ODParser;
 import de.monticore.lang.od._symboltable.ODLanguage;
 import de.monticore.symboltable.ResolvingConfiguration;
-
-import java.io.IOException;
-import java.util.Optional;
 
 /**
  * Created by TGr on 29.04.2016.
@@ -77,11 +74,7 @@ public class ODCLI {
     resolverConfiguration = new ResolvingConfiguration();
     resolverConfiguration.addDefaultFilters(odLanguage.getResolvingFilters());
 
-    odCoCoChecker = new ODCoCoChecker();
-    odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
-    odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
-    odCoCoChecker.addCoCo(new ValidLinkReferenceCoCo());
-    odCoCoChecker.addCoCo(new PartialAndCompleteAttributesCoCo());
+    odCoCoChecker = new ODCoCos().getChecker();
 
     ODParser parser = odLanguage.getParser();
 

@@ -222,7 +222,7 @@ grammar OD extends de.monticore.common.Common {
 
     token ODSpecialName = '@'
       (Name|'!')+ 
-      ('(' NB')')?;
+      ('(' PositionNumber')')?;
       
-    fragment token NB = (DecimalNumeral ',' DecimalNumeral)? ('!' DecimalNumeral)?;
+    fragment token PositionNumber = (DecimalNumeral ',' DecimalNumeral)? ('!' DecimalNumeral)?;
 }
