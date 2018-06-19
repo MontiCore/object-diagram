@@ -17,6 +17,8 @@ import de.monticore.lang.od._symboltable.ObjectDiagramSymbol;
 import de.monticore.symboltable.GlobalScope;
 import de.monticore.symboltable.ResolvingConfiguration;
 import de.monticore.symboltable.Scope;
+import de.se_rwth.commons.logging.Slf4jLog;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -38,6 +40,9 @@ public class ODSymbolTableCreatorTest {
 
   @BeforeClass
   public static void setup() {
+    Slf4jLog.init();
+    Slf4jLog.enableFailQuick(false);
+    
     odLanguage = new ODLanguage();
 
     resolverConfiguration = new ResolvingConfiguration();
@@ -109,7 +114,7 @@ public class ODSymbolTableCreatorTest {
     objectDiagram.setName(odName);
     ASTODObject odObject = ODNodeFactory.createASTODObject();
     ASTODName refName = ODNodeFactory.createASTODName();
-    refName.setName(objectName);
+    refName.setSimpleName(objectName);
     odObject.setODName(refName);
     objectDiagram.getODObjectList().add(odObject);
 

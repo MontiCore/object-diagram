@@ -30,14 +30,8 @@ public class ValidObjectReferenceCoCo implements ODASTODObjectCoCo {
   private boolean checkReference(ASTODName astodName, ASTODObject node) {
     Optional<? extends Symbol> symbol = Optional.empty();
     if (node.isPresentSymbol()) {
-      if (astodName.isPresentName()) {
         symbol = node.getSymbol().getEnclosingScope()
             .resolve(astodName.getName(), ODObjectSymbol.KIND);
-      }
-      else if (astodName.isPresentODSpecialName()) {
-        symbol = node.getSymbol().getEnclosingScope()
-            .resolve(astodName.getODSpecialName(), ODObjectSymbol.KIND);
-      }
     }
     return symbol.isPresent();
   }

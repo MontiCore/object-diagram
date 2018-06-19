@@ -37,12 +37,7 @@ public class ODNodeIdentHelper extends TypesNodeIdentHelper {
     String name = "";
     if (a.isPresentODName()) {
       ASTODName ref = a.getODName();
-      if (ref.isPresentName()) {
-        name = ref.getName();
-      }
-      if (ref.isPresentODSpecialName()) {
-        name = ref.getODSpecialName();
-      }
+      name = ref.getName(); 
     }
 
     return format(maskSpecialChars(name), type);

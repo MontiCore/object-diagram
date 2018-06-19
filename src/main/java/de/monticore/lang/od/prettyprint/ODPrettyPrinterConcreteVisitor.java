@@ -244,12 +244,7 @@ public class ODPrettyPrinterConcreteVisitor extends CommonPrettyPrinterConcreteV
   }
 
   public void handle(ASTODName a) {
-    if (a.isPresentName()) {
-      getPrinter().print(a.getName());
-    }
-    else if (a.isPresentODSpecialName()) {
-      getPrinter().print(a.getODSpecialName());
-    }
+    getPrinter().print(a.getName());
   }
 
   @Override

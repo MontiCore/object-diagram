@@ -218,7 +218,19 @@ grammar OD extends de.monticore.common.Common {
       @attribute oDSpecialName Specific naming for Objects
     */
     ODName implements ODValue =
-      Name | ODSpecialName;
+      simpleName:Name | specialName:ODSpecialName;
+      
+    astrule ODName = 
+      method public String getName() {
+        if (isPresentSimpleName()) {
+          return getSimpleName();
+        }
+        if (isPresentSpecialName()) {
+          return getSpecialName();
+        }
+        return "";
+       };
+    
 
     token ODSpecialName = '@'
       (Name|'!')+ 

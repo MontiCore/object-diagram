@@ -84,11 +84,9 @@ public class LinkEndConsistencyCoCo implements ODASTObjectDiagramCoCo {
       ASTObjectDiagram astObjectDiagram) {
     Optional<CommonSymbol> symbol = Optional.empty();
     if (astObjectDiagram.isPresentSymbol()) {
-      if (astodName.isPresentName() || astodName.isPresentODSpecialName()) {
+      if (astodName.isPresentSimpleName() || astodName.isPresentSpecialName()) {
         symbol = astObjectDiagram.getSpannedScope()
-            .resolve(astodName.isPresentName() ?
-                astodName.getName() :
-                astodName.getODSpecialName(), ODObjectSymbol.KIND);
+            .resolve(astodName.getName(), ODObjectSymbol.KIND);
       }
     }
 

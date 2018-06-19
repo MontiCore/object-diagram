@@ -33,13 +33,9 @@ public class ValidLinkReferenceCoCo implements ODASTObjectDiagramCoCo {
   private boolean checkReference(ASTODName astodName, ASTObjectDiagram astObjectDiagram) {
     Optional<? extends Symbol> symbol = Optional.empty();
     if (astObjectDiagram.isPresentSymbol()) {
-      if (astodName.isPresentName() && astObjectDiagram.isPresentSpannedScope()) {
+      if (astObjectDiagram.isPresentSpannedScope()) {
         symbol = astObjectDiagram.getSpannedScope()
             .resolve(astodName.getName(), ODObjectSymbol.KIND);
-      }
-      else if (astodName.isPresentODSpecialName()) {
-        symbol = astObjectDiagram.getSpannedScope()
-            .resolve(astodName.getODSpecialName(), ODObjectSymbol.KIND);
       }
     }
     return symbol.isPresent();

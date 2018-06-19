@@ -12,8 +12,8 @@ import de.se_rwth.commons.logging.Log;
 public class NoSpecialNameCoCo implements ODASTODNameCoCo {
   
   @Override public void check(ASTODName name) {
-    if (name.isPresentODSpecialName()) {
-      Log.error("The object name " + name.getODSpecialName() + " is not supported!");
+    if (name.isPresentSpecialName()) {
+      Log.error("The object name " + name.getSpecialName() + " is not supported!");
     }
   }
 }
