@@ -225,10 +225,7 @@ grammar OD extends de.monticore.common.Common {
         if (isPresentSimpleName()) {
           return getSimpleName();
         }
-        if (isPresentSpecialName()) {
-          return getSpecialName();
-        }
-        return "";
+        return getSpecialName();
        };
     
 
