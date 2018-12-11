@@ -6,10 +6,7 @@
 package de.monticore.lang.od;
 
 import de.monticore.io.paths.ModelPath;
-import de.monticore.lang.od._ast.ASTODName;
-import de.monticore.lang.od._ast.ASTODObject;
-import de.monticore.lang.od._ast.ASTObjectDiagram;
-import de.monticore.lang.od._ast.ODNodeFactory;
+import de.monticore.lang.od._ast.*;
 import de.monticore.lang.od._symboltable.ODLanguage;
 import de.monticore.lang.od._symboltable.ODObjectSymbol;
 import de.monticore.lang.od._symboltable.ODSymbolTableCreator;
@@ -110,7 +107,9 @@ public class ODSymbolTableCreatorTest {
   }
 
   private ObjectDiagramSymbol createObjectDiagramFromAST(String odName, String objectName) {
+    ASTODArtifact artifact = ODNodeFactory.createASTODArtifact();
     ASTObjectDiagram objectDiagram = ODNodeFactory.createASTObjectDiagram();
+    artifact.setObjectDiagram(objectDiagram);
     objectDiagram.setName(odName);
     ASTODObject odObject = ODNodeFactory.createASTODObject();
     ASTODName refName = ODNodeFactory.createASTODName();
@@ -124,7 +123,7 @@ public class ODSymbolTableCreatorTest {
         resolverConfiguration, globalScope);
 
     if (symbolTable.isPresent()) {
-      symbolTable.get().createFromAST(objectDiagram);
+      symbolTable.get().createFromAST(artifact);
     }
 
     return globalScope.<ObjectDiagramSymbol>resolve(odName, ObjectDiagramSymbol.KIND)

@@ -19,16 +19,20 @@
 
 package de.monticore.lang.od.report;
 
+import de.monticore.generating.templateengine.reporting.commons.ReportingConstants;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
 import de.monticore.generating.templateengine.reporting.reporter.SymbolTableReporter;
 import de.monticore.lang.od._symboltable.ODObjectSymbol;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.symboltable.Symbol;
 
+import java.io.File;
+
 public class ST2ODReporter extends SymbolTableReporter {
 
   public ST2ODReporter(String outputDir, String modelName, ReportingRepository repository) {
-    super(outputDir, modelName, repository);
+    super(outputDir + File.separator + ReportingConstants.REPORTING_DIR + File.separator,
+            modelName, repository);
     setPrintAllFieldsCommented(true);
     setPrintEmptyList(true);
     setPrintEmptyOptional(true);

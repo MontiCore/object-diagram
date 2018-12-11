@@ -14,7 +14,7 @@
   <properties>
 
     <!-- .. Libraries ..................................................... -->
-    <monticore.version>5.0.1</monticore.version>
+    <monticore.version>5.0.2</monticore.version>
 
     <antlr.version>4.7.1</antlr.version>
     <guava.version>18.0</guava.version>
@@ -22,11 +22,11 @@
     <junit.version>4.12</junit.version>
     <logback.version>1.1.2</logback.version>
     <mc.grammars.assembly.version>0.0.6</mc.grammars.assembly.version>
-    <se-commons.version>1.7.8</se-commons.version>
+    <se-commons.version>1.7.9</se-commons.version>
     <antlr.version>4.7.1</antlr.version>
 
     <!-- .. Plugins ....................................................... -->
-    <monticore.plugin>5.0.1</monticore.plugin>
+    <monticore.plugin>5.0.2</monticore.plugin>
 
     <assembly.plugin>2.5.4</assembly.plugin>
     <compiler.plugin>3.3</compiler.plugin>

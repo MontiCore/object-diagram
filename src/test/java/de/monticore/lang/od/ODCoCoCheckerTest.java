@@ -67,13 +67,13 @@ public class ODCoCoCheckerTest {
 
   private Optional<ASTODArtifact> createASTandSTFromFile(String odName) {
 
-    Optional<ASTODArtifact> ASTODArtifact = Optional.empty();
+    Optional<ASTODArtifact> artifact = Optional.empty();
 
     try {
-      ASTODArtifact = odLanguage.getParser()
+      artifact = odLanguage.getParser()
           .parseODArtifact(path.toString() + "/" + odName + ".od");
       assertFalse(odLanguage.getParser().hasErrors());
-      assertTrue(ASTODArtifact.isPresent());
+      assertTrue(artifact.isPresent());
     }
     catch (IOException e) {
       Log.error("Cannot parse model: " + odName + " in " + path.toString());
@@ -85,10 +85,10 @@ public class ODCoCoCheckerTest {
         resolverConfiguration, globalScope);
 
     if (symbolTable.isPresent()) {
-      symbolTable.get().createFromAST(ASTODArtifact.get().getObjectDiagram());
+      symbolTable.get().createFromAST(artifact.get());
     }
 
-    return ASTODArtifact;
+    return artifact;
   }
 
   @Test
