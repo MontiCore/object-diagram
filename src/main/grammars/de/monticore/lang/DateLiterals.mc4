@@ -1,0 +1,36 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+/* Beta-version: This is intended to become a MontiCore stable grammar. */
+
+package de.monticore.lang;
+
+grammar DateLiterals extends de.monticore.literals.MCJavaLiterals {
+
+    /** ASTDate represents a Date Format
+      @attribute year
+      @attribute month
+      @attribute day
+      @attribute hour
+      @attribute minute
+      @attribute second
+    */
+    interface Date =
+      year:IntLiteral day:IntLiteral month:IntLiteral
+      hour:IntLiteral minute:IntLiteral second:IntLiteral;
+
+    /** DateFormat "yyyy-MM-dd HH:mm:ss" */
+    DateV1 implements Date =
+      year:IntLiteral "-" month:IntLiteral "-" day:IntLiteral
+      hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
+
+    /** DateFormat "yyyy.MM.dd HH:mm:ss" */
+    DateV2 implements Date =
+      year:IntLiteral "." month:IntLiteral "." day:IntLiteral
+      hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
+
+    /** DateFormat "yyyy/MM/dd HH:mm:ss" */
+    DateV3 implements Date =
+      year:IntLiteral "/" month:IntLiteral "/" day:IntLiteral
+      hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
+
+}

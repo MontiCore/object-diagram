@@ -1,0 +1,33 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+/* Beta-version: This is intended to become a MontiCore stable grammar. */
+
+package de.monticore.lang;
+
+grammar OD4Report extends de.monticore.lang.ODBasics, de.monticore.lang.DateLiterals {
+
+    /** ODDate represents the Date possibilities for ODAttributes */
+    ODDate implements ODValue = Date;
+
+    /** ASTODName represents the Name possibilities for ODObjects
+      @attribute name Name
+      @attribute oDSpecialName Specific naming for Objects
+    */
+    ODName implements ODValue =
+      simpleName:Name | specialName:ODSpecialName;
+
+    astrule ODName =
+      method public String getName() {
+        if (isPresentSimpleName()) {
+          return getSimpleName();
+        }
+        return getSpecialName();
+       };
+
+    token ODSpecialName = '@'
+      (Name|'!')+
+      ('(' ODPositionNumber ')')?;
+
+    fragment token ODPositionNumber = (DecimalNumeral ("," DecimalNumeral)+)? ('!' DecimalNumeral)?;
+
+}
