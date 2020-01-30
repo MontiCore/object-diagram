@@ -187,7 +187,8 @@
         </configuration>
       </plugin>
 
-      <plugin>
+      <!-- TODO Client -->
+      <!-- plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>${shade.plugin}</version>
@@ -214,14 +215,14 @@
               <transformers>
                 <transformer
                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>de.monticore.lang.od.ODCLI</mainClass>
+                  <mainClass>de.monticore.lang.odbasics.ODCLI</mainClass>
                 </transformer>
               </transformers>
               <shadedClassifierName>${cli.classifier}</shadedClassifierName>
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin -->
 
     </plugins>
   </build>

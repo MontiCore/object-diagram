@@ -4,7 +4,7 @@
 
 package de.monticore.lang;
 
-grammar DateLiterals extends de.monticore.literals.MCJavaLiterals {
+component grammar DateLiterals extends de.monticore.literals.MCJavaLiterals {
 
     /** ASTDate represents a Date Format
       @attribute year

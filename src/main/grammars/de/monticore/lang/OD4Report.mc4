@@ -6,6 +6,8 @@ package de.monticore.lang;
 
 grammar OD4Report extends de.monticore.lang.ODBasics, de.monticore.lang.DateLiterals {
 
+    start ODArtifact;
+
     /** ODDate represents the Date possibilities for ODAttributes */
     ODDate implements ODValue = Date;
 
