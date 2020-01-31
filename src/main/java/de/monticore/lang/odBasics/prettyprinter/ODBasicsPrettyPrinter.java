@@ -2,9 +2,11 @@
 
 package de.monticore.lang.odbasics.prettyprinter;
 
+import de.monticore.MCCommonLiteralsPrettyPrinter;
 import de.monticore.lang.odbasics._ast.*;
 import de.monticore.lang.odbasics._visitor.ODBasicsVisitor;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.prettyprint.UMLModifierPrettyPrinter;
 import de.monticore.prettyprint.UMLStereotypePrettyPrinter;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
@@ -30,6 +32,10 @@ public class ODBasicsPrettyPrinter implements ODBasicsVisitor {
 
   private UMLStereotypePrettyPrinter umlStereotypePrettyPrinter;
 
+  private UMLModifierPrettyPrinter umlModifierPrettyPrinter;
+
+  private MCCommonLiteralsPrettyPrinter mcCommonLiteralsPrettyPrinter;
+
   /**
    * Constructor.
    *
@@ -39,6 +45,8 @@ public class ODBasicsPrettyPrinter implements ODBasicsVisitor {
     this.printer = printer;
     this.mcBasicTypesPrettyPrinter = new MCBasicTypesPrettyPrinter(printer);
     this.umlStereotypePrettyPrinter = new UMLStereotypePrettyPrinter(printer);
+    this.umlModifierPrettyPrinter = new UMLModifierPrettyPrinter(printer);
+    this.mcCommonLiteralsPrettyPrinter = new MCCommonLiteralsPrettyPrinter(printer);
   }
 
   /**
@@ -118,7 +126,7 @@ public class ODBasicsPrettyPrinter implements ODBasicsVisitor {
   public void handle(ASTODObject a) {
 
     if (a.isPresentModifier()) {
-      a.getModifier().accept(getRealThis());
+      a.getModifier().accept(this.umlModifierPrettyPrinter);
     }
     // print object name and type
     if (a.isPresentODName()) {
@@ -126,7 +134,7 @@ public class ODBasicsPrettyPrinter implements ODBasicsVisitor {
     }
     if (a.getMCQualifiedType() != null) {
       getPrinter().print(":");
-      getPrinter().print(String.join(".", a.getMCQualifiedType().getNameList()));
+      a.getMCQualifiedType().accept(this.mcBasicTypesPrettyPrinter);
     }
     getPrinter().print("{");
 
@@ -139,7 +147,6 @@ public class ODBasicsPrettyPrinter implements ODBasicsVisitor {
       }
       getPrinter().unindent();
     }
-
     getPrinter().print("}");
   }
 
@@ -152,10 +159,10 @@ public class ODBasicsPrettyPrinter implements ODBasicsVisitor {
   public void handle(ASTODAttribute a) {
     // print modifier
     if (a.isPresentModifier())
-      a.getModifier().accept(getRealThis());
+      a.getModifier().accept(this.umlModifierPrettyPrinter);
     // print type
     if (a.isPresentMCType()) {
-      a.getMCType().accept(getRealThis());
+      a.getMCType().accept(this.mcBasicTypesPrettyPrinter);
       getPrinter().print(" ");
     }
     // print name
@@ -237,9 +244,20 @@ public class ODBasicsPrettyPrinter implements ODBasicsVisitor {
     a.accept(getRealThis());
   }
 
+  /**
+   * @see de.monticore.lang.odbasics._visitor.ODBasicsVisitor#handle(de.monticore.lang.odbasics._ast.ASTODName)
+   */
   @Override
   public void handle(ASTODName a) {
     getPrinter().print(a.getName());
+  }
+
+  /**
+   * @see de.monticore.lang.odbasics._visitor.ODBasicsVisitor#handle(de.monticore.lang.odbasics._ast.ASTODSignedLiteral)
+   */
+  @Override
+  public void handle(ASTODSignedLiteral astodSignedLiteral) {
+    astodSignedLiteral.getSignedLiteral().accept(this.mcCommonLiteralsPrettyPrinter);
   }
 
   /**

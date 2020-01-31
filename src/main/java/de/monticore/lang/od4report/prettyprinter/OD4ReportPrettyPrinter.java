@@ -2,7 +2,6 @@
 
 package de.monticore.lang.od4report.prettyprinter;
 
-import de.monticore.lang.dateliterals._ast.ASTDate;
 import de.monticore.lang.dateliterals.prettyprinter.DateLiteralsPrettyPrinter;
 import de.monticore.lang.od4report._ast.ASTODDate;
 import de.monticore.lang.od4report._ast.ASTODName;

@@ -8,10 +8,9 @@ import de.monticore.lang.od4report._symboltable.OD4ReportArtifactScope;
 import de.monticore.lang.od4report._symboltable.OD4ReportGlobalScope;
 import de.monticore.lang.od4report._symboltable.OD4ReportLanguage;
 import de.monticore.lang.od4report._symboltable.OD4ReportSymbolTableCreatorDelegator;
+import de.monticore.lang.od4report.cocos.OD4ReportCoCos;
 import de.monticore.lang.od4report.prettyprinter.OD4ReportPrettyPrinter;
 import de.monticore.lang.odbasics._ast.ASTODArtifact;
-import de.monticore.lang.odbasics.cocos.ODBasicsCoCos;
-import de.monticore.lang.odbasics.prettyprinter.ODBasicsPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
@@ -60,7 +59,7 @@ public class OD4ReportTool {
   }
 
   public static void runDefaultCoCos(ASTODArtifact ast) {
-    new ODBasicsCoCos().getCheckerForAllCoCos().checkAll(ast);
+    new OD4ReportCoCos().getCheckerForAllCoCos().checkAll(ast);
   }
 
   /**
