@@ -102,7 +102,7 @@ grammar ODBasics extends de.monticore.literals.MCJavaLiterals, de.monticore.stat
       MCType?
       Name
       /** SH: Expression neu zur Erweiterung durch Expressions. */
-      ( (complete:"="|"->") ( ODValue | ODList | ODMap | Expression ) )? ";";
+      ( (complete:"="|"->") ( ODValue | ODList | ODMap | ODExpression ) )? ";";
 
     /** ASTODList represents a List of ODValues
       @attribute oDValue List of ODValue
@@ -173,8 +173,11 @@ grammar ODBasics extends de.monticore.literals.MCJavaLiterals, de.monticore.stat
     ODAbsent implements ODValue =
       _absent:["absent"];
 
-    ODSignedLiteral implements ODValue =
-      SignedLiteral;
+    ODLiteral implements ODValue =
+      Literal;
+
+    ODExpression implements ODValue =
+      Expression;
 
     ODName implements ODValue = Name;
 

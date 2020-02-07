@@ -2,16 +2,13 @@
 
 package de.monticore.lang.od4report.prettyprinter;
 
-import de.monticore.lang.dateliterals.prettyprinter.DateLiteralsPrettyPrinter;
 import de.monticore.lang.od4report._ast.ASTODDate;
 import de.monticore.lang.od4report._ast.ASTODName;
 import de.monticore.lang.od4report._visitor.OD4ReportVisitor;
-import de.monticore.lang.odbasics.prettyprinter.ODBasicsPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
 
-public class OD4ReportPrettyPrinter extends ODBasicsPrettyPrinter implements OD4ReportVisitor {
-
-  protected DateLiteralsPrettyPrinter dateLiteralsPrettyPrinter;
+public class OD4ReportPrettyPrinter extends MCBasicTypesPrettyPrinter implements OD4ReportVisitor {
 
   /**
    * Constructor.
@@ -20,7 +17,6 @@ public class OD4ReportPrettyPrinter extends ODBasicsPrettyPrinter implements OD4
    */
   public OD4ReportPrettyPrinter(IndentPrinter printer) {
     super(printer);
-    this.dateLiteralsPrettyPrinter = new DateLiteralsPrettyPrinter(printer);
   }
 
   @Override
@@ -30,7 +26,7 @@ public class OD4ReportPrettyPrinter extends ODBasicsPrettyPrinter implements OD4
 
   @Override
   public void handle(ASTODDate astodDate) {
-    astodDate.getDate().accept(this.dateLiteralsPrettyPrinter);
+    astodDate.getDate().accept(getRealThis());
   }
 
   private OD4ReportVisitor realThis = this;

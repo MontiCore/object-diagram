@@ -36,6 +36,9 @@ public class ODBasicsPrettyPrinterTest {
   private final Path INPUT_SIMPLEOD_PATH = Paths
       .get("src", "test", "resources", "examples", "od", "SimpleOD.od");
 
+  private final Path INPUT_STANDARDINNER_PATH = Paths
+      .get("src", "test", "resources", "examples", "hierarchical", "StandardInnerLink.od");
+
   private OD4ReportParser odBasicsParser = new OD4ReportParser();
 
   @Test
@@ -53,6 +56,8 @@ public class ODBasicsPrettyPrinterTest {
 
     assertTrue(objectDiagram.deepEquals(objectDiagram2));
 
+    //    System.out.println(OD4ReportTool.prettyPrintOD(astodArtifact.get()));
+
     ASTODArtifact astodArtifact1 = OD4ReportTool.parse(INPUT_SIMPLEOD_PATH.toString());
     OD4ReportTool.createSymbolTable(odBasicsLanguage, astodArtifact1);
 
@@ -60,6 +65,18 @@ public class ODBasicsPrettyPrinterTest {
 
     objectDiagram2 = astodArtifact1.getObjectDiagram().deepClone();
     assertTrue(astodArtifact1.getObjectDiagram().deepEquals(objectDiagram2));
+
+    //    System.out.println(OD4ReportTool.prettyPrintOD(astodArtifact1));
+
+    astodArtifact1 = OD4ReportTool.parse(INPUT_STANDARDINNER_PATH.toString());
+    OD4ReportTool.createSymbolTable(odBasicsLanguage, astodArtifact1);
+
+    assertNotNull(astodArtifact1);
+
+    objectDiagram2 = astodArtifact1.getObjectDiagram().deepClone();
+    assertTrue(astodArtifact1.getObjectDiagram().deepEquals(objectDiagram2));
+
+    //    System.out.println(OD4ReportTool.prettyPrintOD(astodArtifact1));
   }
 
 }
