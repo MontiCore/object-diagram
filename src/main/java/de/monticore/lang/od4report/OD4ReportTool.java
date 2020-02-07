@@ -9,10 +9,9 @@ import de.monticore.lang.od4report._symboltable.OD4ReportGlobalScope;
 import de.monticore.lang.od4report._symboltable.OD4ReportLanguage;
 import de.monticore.lang.od4report._symboltable.OD4ReportSymbolTableCreatorDelegator;
 import de.monticore.lang.od4report.cocos.OD4ReportCoCos;
-import de.monticore.lang.od4report.prettyprinter.OD4ReportPrettyPrinter;
 import de.monticore.lang.od4report.prettyprinter.OD4ReportPrettyPrinterDelegator;
 import de.monticore.lang.odbasics._ast.ASTODArtifact;
-import de.monticore.lang.odbasics._ast.ASTODObject;
+import de.monticore.lang.odbasics._ast.ASTObjectDiagram;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
@@ -81,15 +80,15 @@ public class OD4ReportTool {
   /**
    * Print object diagram.
    *
-   * @param astodObject object diagram to be printed
+   * @param astObjectDiagram object diagram to be printed
    * @return OD as String
    */
-  public static String prettyPrintOD(ASTODObject astodObject) {
-    if (astodObject == null) {
+  public static String prettyPrintOD(ASTObjectDiagram astObjectDiagram) {
+    if (astObjectDiagram == null) {
       return "";
     }
 
-    return new OD4ReportPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astodObject);
+    return new OD4ReportPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astObjectDiagram);
   }
 
 }

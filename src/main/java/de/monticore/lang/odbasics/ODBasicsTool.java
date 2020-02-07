@@ -4,14 +4,13 @@ package de.monticore.lang.odbasics;
 
 import de.monticore.io.paths.ModelPath;
 import de.monticore.lang.odbasics._ast.ASTODArtifact;
-import de.monticore.lang.odbasics._ast.ASTODObject;
+import de.monticore.lang.odbasics._ast.ASTObjectDiagram;
 import de.monticore.lang.odbasics._parser.ODBasicsParser;
 import de.monticore.lang.odbasics._symboltable.ODBasicsArtifactScope;
 import de.monticore.lang.odbasics._symboltable.ODBasicsGlobalScope;
 import de.monticore.lang.odbasics._symboltable.ODBasicsLanguage;
 import de.monticore.lang.odbasics._symboltable.ODBasicsSymbolTableCreatorDelegator;
 import de.monticore.lang.odbasics.cocos.ODBasicsCoCos;
-import de.monticore.lang.odbasics.prettyprinter.ODBasicsPrettyPrinter;
 import de.monticore.lang.odbasics.prettyprinter.ODPrettyPrinterDelegator;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
@@ -80,15 +79,15 @@ public class ODBasicsTool {
   /**
    * Print object diagram.
    *
-   * @param astodObject object diagram to be printed
+   * @param astObjectDiagram object diagram to be printed
    * @return OD as String
    */
-  public static String prettyPrintOD(ASTODObject astodObject) {
-    if (astodObject == null) {
+  public static String prettyPrintOD(ASTObjectDiagram astObjectDiagram) {
+    if (astObjectDiagram == null) {
       return "";
     }
 
-    return new ODPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astodObject);
+    return new ODPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astObjectDiagram);
   }
 
 }
