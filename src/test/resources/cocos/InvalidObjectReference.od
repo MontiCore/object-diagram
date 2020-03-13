@@ -4,26 +4,26 @@ package cocos;
 
 objectdiagram InvalidObjectReference {
 
-  @foo:ObjectType1{};
+  foo:ObjectType1{};
 
-  @bar:ObjectType2{
-   foobar = @foo;
-   foobar2 = @bla:ObjectType2{};
+  bar:ObjectType2{
+   foobar = foo;
+   foobar2 = bla:ObjectType2{};
    foobar3 = 3;
    foobar4 = "Test";
   };
 
-  @bar2:ObjectType3{
-   foobar = @foo;
-   foobar2 = @bla2;
+  bar2:ObjectType3{
+   foobar = foo;
+   foobar2 = bla2;
   };
 
-  @bar3:ObjectType4{
-   foobar = [@foo, @bar, @bla, @bla3];
+  bar3:ObjectType4{
+   foobar = [foo, bar, bla, bla3];
   };
 
-  @bar4:ObjectType5{
-   foobar = [ 5 -> @bar, 8 -> @bla4, @bar -> 5, @bla5 -> 8];
+  bar4:ObjectType5{
+   foobar = [ 5 -> bar, 8 -> bla4, bar -> 5, bla5 -> 8];
   };
 
 }

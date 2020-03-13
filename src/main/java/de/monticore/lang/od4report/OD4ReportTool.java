@@ -11,7 +11,9 @@ import de.monticore.lang.od4report._symboltable.OD4ReportSymbolTableCreatorDeleg
 import de.monticore.lang.od4report.cocos.OD4ReportCoCos;
 import de.monticore.lang.od4report.prettyprinter.OD4ReportPrettyPrinterDelegator;
 import de.monticore.lang.odbasics._ast.ASTODArtifact;
+import de.monticore.lang.odbasics._ast.ASTODBasicsNode;
 import de.monticore.lang.odbasics._ast.ASTObjectDiagram;
+import de.monticore.lang.odbasics.prettyprinter.ODPrettyPrinterDelegator;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
@@ -47,7 +49,7 @@ public class OD4ReportTool {
    * Create the symbol table from the parsed AST.
    *
    * @param lang ODlanguage
-   * @param ast Arifact AST
+   * @param ast ODArtifact AST
    * @return SymbolTable created from AST
    */
   public static OD4ReportArtifactScope createSymbolTable(OD4ReportLanguage lang,
@@ -64,31 +66,17 @@ public class OD4ReportTool {
   }
 
   /**
-   * Print object artifact.
+   * Print object diagram node.
    *
-   * @param astodArtifact ODArtifact to be printed
-   * @return OD as String
+   * @param astodBasicsNode object node to be printed
+   * @return node as String
    */
-  public static String prettyPrintOD(ASTODArtifact astodArtifact) {
-    if (astodArtifact == null) {
+  public static String prettyPrintODNode(ASTODBasicsNode astodBasicsNode) {
+    if (astodBasicsNode == null) {
       return "";
     }
 
-    return new OD4ReportPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astodArtifact);
-  }
-
-  /**
-   * Print object diagram.
-   *
-   * @param astObjectDiagram object diagram to be printed
-   * @return OD as String
-   */
-  public static String prettyPrintOD(ASTObjectDiagram astObjectDiagram) {
-    if (astObjectDiagram == null) {
-      return "";
-    }
-
-    return new OD4ReportPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astObjectDiagram);
+    return new OD4ReportPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astodBasicsNode);
   }
 
 }

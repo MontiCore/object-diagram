@@ -118,9 +118,9 @@ public class ODBasicsPrettyPrinter extends MCBasicTypesPrettyPrinter implements 
     if (a.isPresentODName()) {
       a.getODName().accept(getRealThis());
     }
-    if (a.getMCQualifiedType() != null) {
+    if (a.getMCType() != null) {
       getPrinter().print(":");
-      a.getMCQualifiedType().accept(getRealThis());
+      a.getMCType().accept(getRealThis());
     }
     getPrinter().print("{");
 
@@ -291,7 +291,7 @@ public class ODBasicsPrettyPrinter extends MCBasicTypesPrettyPrinter implements 
     getPrinter().println();
     // print stereotype
     if (a.isPresentStereotype()) {
-      a.accept(getRealThis());
+      a.getStereotype().accept(getRealThis());
       getPrinter().print(" ");
     }
     // print type of the link

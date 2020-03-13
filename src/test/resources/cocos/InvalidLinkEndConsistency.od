@@ -4,15 +4,15 @@ package cocos;
 
 objectdiagram InvalidLinkEndConsistency {
 
-  @foo:ObjectType{};
-  @bar:ObjectType{
-   foobar = @foo;
-   foobar2 = @bla;
+  foo:ObjectType{};
+  bar:ObjectType{
+   foobar = foo;
+   foobar2 = bla;
   };
 
-  @fooBar: ObjectType2{};
+  fooBar: ObjectType2{};
 
-  link firstLink @foo,@bar -> @fooBar;
-  link secondLink @fooBar, @foo -> @bar;
+  link firstLink foo,bar -> fooBar;
+  link secondLink fooBar, foo -> bar;
 
 }

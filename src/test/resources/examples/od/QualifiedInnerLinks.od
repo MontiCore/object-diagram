@@ -4,17 +4,19 @@ package examples.od;
 
 objectdiagram QualifiedInnerLinks {
 
-  @objectName1:T1 {
+  objectName1:T1 {
     cNumber = 1;
   };
-  @objectName2:T1{
+
+  objectName2:T1 {
     cNumber = 2;
   };
-  @objectName3:T2{
- 
+
+  objectName3:T2 {
+
     qualLinkList1 = [
-      1 -> @objectName1,
-      2 -> @objectName2
+      1 -> objectName1,
+      2 -> objectName2
     ];
   };
 }

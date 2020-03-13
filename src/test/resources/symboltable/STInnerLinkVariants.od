@@ -19,19 +19,19 @@ objectdiagram STInnerLinkVariants {
     };
 
     linkList1 = [
-        @fooBar1:T1{},
-        @fooBar2:T2{
-            foo = @fooBar3:T3{
+        fooBar1:T1{},
+        fooBar2:T2{
+            foo = fooBar3:T3{
                 content = "on4";
             };
         }
     ];
 
-    linkList2 -> @foo1;
-    linkList2 -> @foo2;
+    linkList2 -> foo1;
+    linkList2 -> foo2;
 
-    linkList3 -> [@bar1, @bar2];
-    linkList3 -> @bar3;
+    linkList3 -> [bar1, bar2];
+    linkList3 -> bar3;
 
   };
   

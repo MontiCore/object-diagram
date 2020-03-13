@@ -4,8 +4,8 @@
 
 package de.monticore.lang;
 
-grammar ODBasics extends de.monticore.literals.MCJavaLiterals, de.monticore.statements.MCCommonStatements,
-                      de.monticore.UMLModifier, de.monticore.expressions.ExpressionsBasis {
+grammar ODBasics extends de.monticore.types.MCFullGenericTypes, de.monticore.UMLModifier,
+                          de.monticore.expressions.ExpressionsBasis {
       
     /*========================================================================*/
     /*=========================== Artifact ===================================*/
@@ -72,9 +72,9 @@ grammar ODBasics extends de.monticore.literals.MCJavaLiterals, de.monticore.stat
       @attribute oDAttributes List of attributes of this object
     */
     /** SH: ODName optional -> keine Symobole für anonyme Objekte. */
-    symbol ODObject implements ODValue =
+    symbol ODObject implements ODValue <20> =
       Modifier?
-	  ODName? ":" MCQualifiedType
+	  ODName? ":" MCType
         "{" ODAttribute* "}";
 
     astrule ODObject =
@@ -170,15 +170,15 @@ grammar ODBasics extends de.monticore.literals.MCJavaLiterals, de.monticore.stat
         that represents an absent optional value.
       @attribute absent True if attribute is optional and has an empty value
     */
-    ODAbsent implements ODValue =
+    ODAbsent implements ODValue <10> =
       _absent:["absent"];
 
-    ODLiteral implements ODValue =
+    ODLiteral implements ODValue <40> =
       Literal;
 
-    ODExpression implements ODValue =
+    ODExpression implements ODValue <30> =
       Expression;
 
-    ODName implements ODValue = Name;
+    ODName implements ODValue <50> = Name;
 
 }

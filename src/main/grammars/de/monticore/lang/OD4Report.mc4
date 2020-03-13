@@ -30,6 +30,6 @@ grammar OD4Report extends de.monticore.lang.ODBasics, de.monticore.lang.DateLite
       (Name|'!')+
       ('(' ODPositionNumber ')')?;
 
-    fragment token ODPositionNumber = (DecimalNumeral ("," DecimalNumeral)+)? ('!' DecimalNumeral)?;
+    fragment token ODPositionNumber = (Digits ("," Digits)+)? ('!' Digits)?;
 
 }

@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+objectdiagram SimpleDate{
+
+    myObject1:ObjectType{};
+
+	myObject2:ObjectType2{
+	    myDateV1 = 2017-12-20 15:18:12;
+	    myDateV2 = 2017.12.20 15:18:12;
+	    myDateV3 = 2017/12/20 15:18:12;
+	};
+
+}

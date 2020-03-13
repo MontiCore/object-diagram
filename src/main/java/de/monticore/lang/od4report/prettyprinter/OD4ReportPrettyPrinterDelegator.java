@@ -15,7 +15,11 @@ import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.prettyprint.UMLModifierPrettyPrinter;
 import de.monticore.prettyprint.UMLStereotypePrettyPrinter;
 import de.monticore.types.mcbasictypes._ast.ASTMCBasicTypesNode;
+import de.monticore.types.mcbasictypes._ast.ASTMCType;
 import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
+import de.monticore.types.prettyprint.MCCollectionTypesPrettyPrinter;
+import de.monticore.types.prettyprint.MCFullGenericTypesPrettyPrinter;
+import de.monticore.types.prettyprint.MCSimpleGenericTypesPrettyPrinter;
 import de.monticore.umlmodifier._ast.ASTUMLModifierNode;
 import de.monticore.umlstereotype._ast.ASTUMLStereotypeNode;
 
@@ -57,9 +61,9 @@ public class OD4ReportPrettyPrinterDelegator extends OD4ReportDelegatorVisitor {
     return getPrinter().getContent();
   }
 
-  public String prettyprint(ASTMCBasicTypesNode astmcBasicTypesNode) {
+  public String prettyprint(ASTMCType astmcType) {
     getPrinter().clearBuffer();
-    astmcBasicTypesNode.accept(getRealThis());
+    astmcType.accept(getRealThis());
     return getPrinter().getContent();
   }
 
@@ -90,7 +94,9 @@ public class OD4ReportPrettyPrinterDelegator extends OD4ReportDelegatorVisitor {
     setUMLStereotypeVisitor(new UMLStereotypePrettyPrinter(printer));
     setUMLModifierVisitor(new UMLModifierPrettyPrinter(printer));
     setMCCommonLiteralsVisitor(new MCCommonLiteralsPrettyPrinter(printer));
-    setMCJavaLiteralsVisitor(new MCJavaLiteralsPrettyPrinter(printer));
+    setMCCollectionTypesVisitor(new MCCollectionTypesPrettyPrinter(printer));
+    setMCSimpleGenericTypesVisitor(new MCSimpleGenericTypesPrettyPrinter(printer));
+    setMCFullGenericTypesVisitor(new MCFullGenericTypesPrettyPrinter(printer));
   }
 
 }

@@ -2,6 +2,7 @@
 
 package de.monticore.lang.od4report.cocos;
 
+import de.monticore.lang.dateliterals.cocos.DateLiteralsCoCos;
 import de.monticore.lang.od4report._cocos.OD4ReportCoCoChecker;
 import de.monticore.lang.odbasics.cocos.ODBasicsCoCos;
 
@@ -10,7 +11,7 @@ public class OD4ReportCoCos {
   public OD4ReportCoCoChecker getCheckerForAllCoCos() {
     final OD4ReportCoCoChecker checker = new OD4ReportCoCoChecker();
     checker.addChecker(new ODBasicsCoCos().getCheckerForAllCoCos());
-    // TODO add Cocos
+    checker.addChecker(new DateLiteralsCoCos().getCheckerForAllCoCos());
 
     return checker;
   }

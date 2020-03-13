@@ -4,7 +4,7 @@
 
 package de.monticore.lang;
 
-component grammar DateLiterals extends de.monticore.literals.MCJavaLiterals {
+component grammar DateLiterals extends de.monticore.literals.MCCommonLiterals {
 
     /** ASTDate represents a Date Format
       @attribute year
@@ -15,22 +15,22 @@ component grammar DateLiterals extends de.monticore.literals.MCJavaLiterals {
       @attribute second
     */
     interface Date =
-      year:IntLiteral day:IntLiteral month:IntLiteral
-      hour:IntLiteral minute:IntLiteral second:IntLiteral;
+      year:NatLiteral day:NatLiteral month:NatLiteral
+      hour:NatLiteral minute:NatLiteral second:NatLiteral;
 
     /** DateFormat "yyyy-MM-dd HH:mm:ss" */
     DateV1 implements Date =
-      year:IntLiteral "-" month:IntLiteral "-" day:IntLiteral
-      hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
+      year:NatLiteral "-" month:NatLiteral "-" day:NatLiteral
+      hour:NatLiteral ":" minute:NatLiteral ":" second:NatLiteral;
 
     /** DateFormat "yyyy.MM.dd HH:mm:ss" */
     DateV2 implements Date =
-      year:IntLiteral "." month:IntLiteral "." day:IntLiteral
-      hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
+      year:NatLiteral "." month:NatLiteral "." day:NatLiteral
+      hour:NatLiteral ":" minute:NatLiteral ":" second:NatLiteral;
 
     /** DateFormat "yyyy/MM/dd HH:mm:ss" */
     DateV3 implements Date =
-      year:IntLiteral "/" month:IntLiteral "/" day:IntLiteral
-      hour:IntLiteral ":" minute:IntLiteral ":" second:IntLiteral;
+      year:NatLiteral "/" month:NatLiteral "/" day:NatLiteral
+      hour:NatLiteral ":" minute:NatLiteral ":" second:NatLiteral;
 
 }

@@ -4,13 +4,13 @@ package cocos;
 
 objectdiagram InvalidLinkReference {
 
-  @foo:ObjectType{};
-  @bar:ObjectType{
-   foobar = @foo;
-   foobar2 = @bla;
+  foo:ObjectType{};
+  bar:ObjectType{
+   foobar = foo;
+   foobar2 = bla;
   };
 
-  link @foo -> @bar;
-  link bla -> @bar;
+  link  foo -> bar;
+  link bla -> bar;
 
 }

@@ -5,11 +5,11 @@ package examples.od;
 objectdiagram Examples {
 
 @Multiplicity(7,3!2):Rule {content = "R1:";};
-  @A1:ActionA {
+  A1:ActionA {
     rule1 = @Multiplicity(7,3!2);
-    rule2 = @R2_:Rule{};
+    rule2 = R2_:Rule{};
   };
-  @A2:ActionB{};
-  link @A1 -> @A2;
+  A2:ActionB{};
+  link A1 -> A2;
 
 }

@@ -4,6 +4,7 @@ package de.monticore.lang.odbasics;
 
 import de.monticore.io.paths.ModelPath;
 import de.monticore.lang.odbasics._ast.ASTODArtifact;
+import de.monticore.lang.odbasics._ast.ASTODBasicsNode;
 import de.monticore.lang.odbasics._ast.ASTObjectDiagram;
 import de.monticore.lang.odbasics._parser.ODBasicsParser;
 import de.monticore.lang.odbasics._symboltable.ODBasicsArtifactScope;
@@ -63,31 +64,17 @@ public class ODBasicsTool {
   }
 
   /**
-   * Print object artifact.
+   * Print object diagram node.
    *
-   * @param astodArtifact ODArtifact to be printed
-   * @return OD as String
+   * @param astodBasicsNode object node to be printed
+   * @return node as String
    */
-  public static String prettyPrintOD(ASTODArtifact astodArtifact) {
-    if (astodArtifact == null) {
+  public static String prettyPrintODNode(ASTODBasicsNode astodBasicsNode) {
+    if (astodBasicsNode == null) {
       return "";
     }
 
-    return new ODPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astodArtifact);
-  }
-
-  /**
-   * Print object diagram.
-   *
-   * @param astObjectDiagram object diagram to be printed
-   * @return OD as String
-   */
-  public static String prettyPrintOD(ASTObjectDiagram astObjectDiagram) {
-    if (astObjectDiagram == null) {
-      return "";
-    }
-
-    return new ODPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astObjectDiagram);
+    return new ODPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astodBasicsNode);
   }
 
 }
