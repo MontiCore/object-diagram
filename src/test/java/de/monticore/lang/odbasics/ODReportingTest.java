@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test for {@link ODBasicsParser}.
  *
- * @author Marita Breuer
  */
 public class ODReportingTest {
 

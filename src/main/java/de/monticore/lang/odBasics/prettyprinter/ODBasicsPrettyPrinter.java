@@ -18,7 +18,6 @@ import java.util.Iterator;
  * whole subtree of a node has been traversed. The ownVisit-Methods stop the automatic traversal
  * order and allow to explictly visit subtrees by calling getVisitor().startVisit(ASTNode)
  *
- * @author Martin Schindler, Robert Heim, Steffen Hillemacher
  */
 public class ODBasicsPrettyPrinter extends MCBasicTypesPrettyPrinter implements ODBasicsVisitor {
 

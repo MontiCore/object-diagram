@@ -15,7 +15,6 @@ import de.monticore.types.MCBasicTypesNodeIdentHelper;
 /**
  * Helper for ODs.
  *
- * @author (last commit) $Author$
  */
 public class ODNodeIdentHelper extends MCBasicTypesNodeIdentHelper {
 

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 /**
  * Resets findings of the current MC-Log
  *
- * @author (last commit) $$Author$$
  */
 public class ODLogReset extends Log {
 
