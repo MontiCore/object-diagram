@@ -12,6 +12,12 @@ public class UniqueObjectNamesCoCo implements ODBasicsASTODObjectCoCo {
 
   @Override
   public void check(ASTODObject node) {
+
+    // no symbols for anonymous objects
+    if("".equals(node.getName())){
+      return;
+    }
+
     ODObjectSymbol symbol = node.getSymbol();
     Collection<ODObjectSymbol> symbols = symbol.getEnclosingScope()
         .resolveODObjectMany(symbol.getName());
