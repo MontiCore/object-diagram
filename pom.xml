@@ -187,13 +187,13 @@
         </configuration>
       </plugin>
 
-      <!-- TODO Client -->
-      <!-- plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>${shade.plugin}</version>
         <executions>
           <execution>
+            <id>odBasics</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
@@ -214,15 +214,45 @@
               </filters>
               <transformers>
                 <transformer
-                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>de.monticore.lang.odbasics.ODCLI</mainClass>
+                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>de.monticore.lang.odbasics.ODBasicsCLI</mainClass>
                 </transformer>
               </transformers>
-              <shadedClassifierName>${cli.classifier}</shadedClassifierName>
+              <shadedClassifierName>odBasics-${cli.classifier}</shadedClassifierName>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>od4Report</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <minimizeJar>true</minimizeJar>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer
+                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>de.monticore.lang.od4report.OD4ReportCLI</mainClass>
+                </transformer>
+              </transformers>
+              <shadedClassifierName>od4Report-${cli.classifier}</shadedClassifierName>
             </configuration>
           </execution>
         </executions>
-      </plugin -->
+      </plugin>
 
     </plugins>
   </build>
