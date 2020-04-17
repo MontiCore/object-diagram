@@ -92,6 +92,21 @@ public class ODCoCoCheckerTest {
   }
 
   @Test
+  public void checkAnonymusObjectsValid() {
+
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("AnonymusObject");
+
+    if (odASTODArtifact.isPresent()) {
+
+      odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
+
+      odCoCoChecker.checkAll(odASTODArtifact.get());
+
+      assertEquals(0, Slf4jLog.getErrorCount());
+    }
+  }
+
+  @Test
   public void checkValidReferenceCoCo() {
 
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("InvalidLinkReference");
