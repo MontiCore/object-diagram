@@ -3,7 +3,7 @@
 package de.monticore.lang.dateliterals;
 
 import de.monticore.io.paths.ModelPath;
-import de.monticore.lang.dateliterals.cocos.DateLiteralsCoCos;
+import de.monticore.lang.dateliterals._cocos.DateLiteralsCoCos;
 import de.monticore.lang.od4report._cocos.OD4ReportCoCoChecker;
 import de.monticore.lang.od4report._symboltable.OD4ReportGlobalScope;
 import de.monticore.lang.od4report._symboltable.OD4ReportLanguage;

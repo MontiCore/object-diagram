@@ -1,10 +1,9 @@
 // (c) https://github.com/MontiCore/monticore
 
-package de.monticore.lang.od4report.cocos;
+package de.monticore.lang.od4report._cocos;
 
-import de.monticore.lang.dateliterals.cocos.DateLiteralsCoCos;
-import de.monticore.lang.od4report._cocos.OD4ReportCoCoChecker;
-import de.monticore.lang.odbasics.cocos.ODBasicsCoCos;
+import de.monticore.lang.dateliterals._cocos.DateLiteralsCoCos;
+import de.monticore.lang.odbasics._cocos.ODBasicsCoCos;
 
 public class OD4ReportCoCos {
 

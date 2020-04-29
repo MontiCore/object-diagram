@@ -22,12 +22,8 @@ package de.monticore.lang.od4report;
 import de.monticore.lang.od4report._cocos.OD4ReportCoCoChecker;
 import de.monticore.lang.od4report._parser.OD4ReportParser;
 import de.monticore.lang.od4report._symboltable.OD4ReportLanguage;
-import de.monticore.lang.od4report.cocos.OD4ReportCoCos;
+import de.monticore.lang.od4report._cocos.OD4ReportCoCos;
 import de.monticore.lang.odbasics._ast.ASTODArtifact;
-import de.monticore.lang.odbasics._cocos.ODBasicsCoCoChecker;
-import de.monticore.lang.odbasics._parser.ODBasicsParser;
-import de.monticore.lang.odbasics._symboltable.ODBasicsLanguage;
-import de.monticore.lang.odbasics.cocos.ODBasicsCoCos;
 
 import java.io.IOException;
 import java.util.Optional;

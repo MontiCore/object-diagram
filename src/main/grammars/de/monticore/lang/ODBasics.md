@@ -21,8 +21,8 @@ The OD language the MontiCore languages
 
 ## Functionality
 ### CoCos
-The CoCos can be found in [`monticore.lang.odbasics.cocos`][cocos] and are combined
-accessible in [`monticore.lang.odbasics.cocos.ODBasicsCoCos`][ODCoCos].
+The CoCos can be found in [`monticore.lang.odbasics._cocos`][cocos] and are combined
+accessible in [`monticore.lang.odbasics._cocos.ODBasicsCoCos`][ODCoCos].
 
 The context conditions check different parts of the models, to ensure the semantic correctness.
 
@@ -37,6 +37,6 @@ loads a given OD model.
 [_ast]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src%2Fmain%2Fjava%2Fde%2Fmonticore%2Flang%2Fodbasics%2F_ast
 [_symboltable]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src%2Fmain%2Fjava%2Fde%2Fmonticore%2Flang%2Fodbasics%2F_symboltable
 [prettyprinter]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src%2Fmain%2Fjava%2Fde%2Fmonticore%2Flang%2Fodbasics%2Fprettyprinter
-[cocos]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src%2Fmain%2Fjava%2Fde%2Fmonticore%2Flang%2Fodbasics%2Fcocos
-[ODCoCos]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/java/de/monticore/lang/odbasics/cocos/ODBasicsCoCos.java
+[cocos]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src%2Fmain%2Fjava%2Fde%2Fmonticore%2Flang%2Fodbasics%2F_cocos
+[ODCoCos]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/java/de/monticore/lang/odbasics/_cocos/ODBasicsCoCos.java
 [ODCLI]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/java/de/monticore/lang/odbasics/ODBasicsCLI.java

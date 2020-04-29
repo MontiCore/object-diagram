@@ -1,5 +1,5 @@
 // (c) https://github.com/MontiCore/monticore
-package de.monticore.lang.odbasics.cocos.attributes;
+package de.monticore.lang.odbasics._cocos.attributes;
 
 import de.monticore.lang.odbasics._ast.ASTODObject;
 import de.monticore.lang.odbasics._cocos.ODBasicsASTODObjectCoCo;

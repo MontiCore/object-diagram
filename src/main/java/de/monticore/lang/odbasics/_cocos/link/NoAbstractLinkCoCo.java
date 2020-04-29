@@ -1,5 +1,5 @@
 /* (c) https://github.com/MontiCore/monticore */
-package de.monticore.lang.odbasics.cocos.link;
+package de.monticore.lang.odbasics._cocos.link;
 
 import de.monticore.lang.odbasics._ast.ASTODLink;
 import de.monticore.lang.odbasics._cocos.ODBasicsASTODLinkCoCo;

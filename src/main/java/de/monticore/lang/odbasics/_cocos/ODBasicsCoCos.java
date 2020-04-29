@@ -1,15 +1,14 @@
 // (c) https://github.com/MontiCore/monticore
 
-package de.monticore.lang.odbasics.cocos;
+package de.monticore.lang.odbasics._cocos;
 
-import de.monticore.lang.odbasics._cocos.ODBasicsCoCoChecker;
-import de.monticore.lang.odbasics.cocos.attributes.NoAbstractAttributesCoCo;
-import de.monticore.lang.odbasics.cocos.attributes.PartialAndCompleteAttributesCoCo;
-import de.monticore.lang.odbasics.cocos.attributes.UniqueAttributeNamesCoCo;
-import de.monticore.lang.odbasics.cocos.link.LinkEndConsistencyCoCo;
-import de.monticore.lang.odbasics.cocos.link.NoAbstractLinkCoCo;
-import de.monticore.lang.odbasics.cocos.link.ValidLinkReferenceCoCo;
-import de.monticore.lang.odbasics.cocos.names.UniqueObjectNamesCoCo;
+import de.monticore.lang.odbasics._cocos.attributes.NoAbstractAttributesCoCo;
+import de.monticore.lang.odbasics._cocos.attributes.PartialAndCompleteAttributesCoCo;
+import de.monticore.lang.odbasics._cocos.attributes.UniqueAttributeNamesCoCo;
+import de.monticore.lang.odbasics._cocos.link.LinkEndConsistencyCoCo;
+import de.monticore.lang.odbasics._cocos.link.NoAbstractLinkCoCo;
+import de.monticore.lang.odbasics._cocos.link.ValidLinkReferenceCoCo;
+import de.monticore.lang.odbasics._cocos.names.UniqueObjectNamesCoCo;
 
 public class ODBasicsCoCos {
 

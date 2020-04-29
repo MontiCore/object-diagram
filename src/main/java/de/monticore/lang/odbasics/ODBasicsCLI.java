@@ -23,7 +23,7 @@ import de.monticore.lang.odbasics._ast.ASTODArtifact;
 import de.monticore.lang.odbasics._cocos.ODBasicsCoCoChecker;
 import de.monticore.lang.odbasics._parser.ODBasicsParser;
 import de.monticore.lang.odbasics._symboltable.ODBasicsLanguage;
-import de.monticore.lang.odbasics.cocos.ODBasicsCoCos;
+import de.monticore.lang.odbasics._cocos.ODBasicsCoCos;
 
 import java.io.IOException;
 import java.util.Optional;

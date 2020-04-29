@@ -1,9 +1,8 @@
 // (c) https://github.com/MontiCore/monticore
 
-package de.monticore.lang.dateliterals.cocos;
+package de.monticore.lang.dateliterals._cocos;
 
-import de.monticore.lang.dateliterals._cocos.DateLiteralsCoCoChecker;
-import de.monticore.lang.dateliterals.cocos.date.DateConcistencyCoCo;
+import de.monticore.lang.dateliterals._cocos.date.DateConcistencyCoCo;
 
 public class DateLiteralsCoCos {
 

@@ -1,6 +1,6 @@
 // (c) https://github.com/MontiCore/monticore
 
-package de.monticore.lang.dateliterals.cocos.date;
+package de.monticore.lang.dateliterals._cocos.date;
 
 import de.monticore.lang.dateliterals._ast.ASTDate;
 import de.monticore.lang.dateliterals._cocos.DateLiteralsASTDateCoCo;
