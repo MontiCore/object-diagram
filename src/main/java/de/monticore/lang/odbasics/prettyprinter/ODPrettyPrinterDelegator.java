@@ -3,14 +3,12 @@
 package de.monticore.lang.odbasics.prettyprinter;
 
 import de.monticore.MCCommonLiteralsPrettyPrinter;
-import de.monticore.MCJavaLiteralsPrettyPrinter;
 import de.monticore.lang.odbasics._ast.ASTODBasicsNode;
 import de.monticore.lang.odbasics._visitor.ODBasicsDelegatorVisitor;
 import de.monticore.literals.mccommonliterals._ast.ASTMCCommonLiteralsNode;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.prettyprint.UMLModifierPrettyPrinter;
 import de.monticore.prettyprint.UMLStereotypePrettyPrinter;
-import de.monticore.types.mcbasictypes._ast.ASTMCBasicTypesNode;
 import de.monticore.types.mcbasictypes._ast.ASTMCType;
 import de.monticore.types.mcsimplegenerictypes._ast.ASTMCSimpleGenericTypesNode;
 import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;

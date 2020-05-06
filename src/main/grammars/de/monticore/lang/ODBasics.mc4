@@ -101,7 +101,6 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes, de.monticore.UML
       Modifier?
       MCType?
       Name
-      /** SH: Expression neu zur Erweiterung durch Expressions. */
       ( (complete:"="|"->") ( ODValue | ODList | ODMap | ODExpression ) )? ";";
 
     /** ASTODList represents a List of ODValues
