@@ -1,5 +1,7 @@
 <!-- (c) https://github.com/MontiCore/monticore -->
 
+<!-- Alpha-version: This is intended to become a MontiCore stable explanation. -->
+
 # (UML/P) OD
 
 Language for textual object diagrams. In its current state the language is mostly used for (i) a 
