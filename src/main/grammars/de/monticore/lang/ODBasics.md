@@ -1,5 +1,9 @@
-// (c) https://github.com/MontiCore/monticore
+<!-- (c) https://github.com/MontiCore/monticore -->
+
+<!-- Alpha-version: This is intended to become a MontiCore stable explanation. -->
+
 # (UML/P) OD
+
 Language for textual object diagrams. In its current state the language is mostly used for (i) a 
 data structure in certain projets (e.g. artifact toolchain)and (ii) as a report format for 
 languages developed with MontiCore. For its lastest version the OD language was enhanced with
