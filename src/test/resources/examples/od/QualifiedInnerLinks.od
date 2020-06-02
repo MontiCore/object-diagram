@@ -13,10 +13,10 @@ objectdiagram QualifiedInnerLinks {
   };
 
   objectName3:T2 {
-
     qualLinkList1 = [
       1 -> objectName1,
       2 -> objectName2
     ];
   };
+
 }

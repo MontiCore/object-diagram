@@ -96,7 +96,6 @@ public class OD4ReportPrettyPrinterDelegator extends OD4ReportDelegatorVisitor {
     setMCCommonLiteralsVisitor(new MCCommonLiteralsPrettyPrinter(printer));
     setMCCollectionTypesVisitor(new MCCollectionTypesPrettyPrinter(printer));
     setMCSimpleGenericTypesVisitor(new MCSimpleGenericTypesPrettyPrinter(printer));
-    setMCFullGenericTypesVisitor(new MCFullGenericTypesPrettyPrinter(printer));
   }
 
 }

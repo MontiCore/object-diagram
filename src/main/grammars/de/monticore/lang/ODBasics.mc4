@@ -74,7 +74,7 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes, de.monticore.UML
     /** SH: ODName optional -> keine Symobole für anonyme Objekte. */
     symbol ODObject implements ODValue <20> =
       Modifier?
-	  ODName? ":" MCType
+	    ODName? ":" MCType
         "{" ODAttribute* "}";
 
     astrule ODObject =

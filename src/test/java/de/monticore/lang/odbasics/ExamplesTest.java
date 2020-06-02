@@ -1,14 +1,14 @@
 // (c) https://github.com/MontiCore/monticore
 package de.monticore.lang.odbasics;
 
-import de.monticore.lang.odbasics.ODBasicsTool;
 import de.monticore.lang.odbasics._ast.ASTODArtifact;
 import de.monticore.lang.odbasics._parser.ODBasicsParser;
+import de.monticore.lang.odbasics._symboltable.ODBasicsArtifactScope;
+import de.monticore.lang.odbasics._symboltable.ODBasicsLanguage;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.Slf4jLog;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -34,19 +34,16 @@ public class ExamplesTest {
 
   @Test
   public void testSpecialValues() throws RecognitionException, IOException {
-    Log.enableFailQuick(false);
     test("src/test/resources/examples/od/SpecialValues.od");
   }
 
   @Test
   public void testQualifiedLinks() throws RecognitionException, IOException {
-    Log.enableFailQuick(false);
     test("src/test/resources/examples/od/QualifiedLinks.od");
   }
 
   @Test
   public void testQualifiedInnerLinks() throws RecognitionException, IOException {
-    Log.enableFailQuick(false);
     test("src/test/resources/examples/od/QualifiedInnerLinks.od");
   }
 
@@ -81,6 +78,11 @@ public class ExamplesTest {
   }
 
   @Test
+  public void testSimpleOD() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/SimpleOD2.od");
+  }
+
+  @Test
   public void testInnerObjectWithoutLink() throws RecognitionException, IOException {
     negativTest("src/test/resources/examples/od/InnerObjectWithoutLink.od");
   }
@@ -89,6 +91,9 @@ public class ExamplesTest {
     Path model = Paths.get(modelName);
     ODBasicsParser parser = new ODBasicsParser();
     Optional<ASTODArtifact> odDef = parser.parseODArtifact(model.toString());
+    ASTODArtifact astodArtifact = ODBasicsTool.parse(model.toString());
+    ODBasicsArtifactScope odBasicsArtifactScope =
+        ODBasicsTool.createSymbolTable(new ODBasicsLanguage(), astodArtifact);
     assertFalse(parser.hasErrors());
     assertTrue(odDef.isPresent());
 

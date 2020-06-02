@@ -1,20 +1,18 @@
 /* (c) https://github.com/MontiCore/monticore */
 
-objectdiagram InnerObjectWithoutLink{
+objectdiagram InnerObjectWithoutLink {
 
-    myObject:ObjectType{
-
-        linkToAnObject = InnerObjectWithoutLink:ObjectType2{};
-
-    };
+  myObject:ObjectType{
+    linkToAnObject = InnerObjectWithoutLink:ObjectType2{};
 
     linkList1 = [
-            objectName1:T1,
-            objectName2:T2{
-                objectName3:T3{
-                    content = "on4";
-                };
-            }
-        ];
+        objectName1:T1{},
+        objectName2:T2{
+          obj1 = objectName3:T3{
+            content = "on4";
+          }
+        }
+      ];
+    };
 
 }
