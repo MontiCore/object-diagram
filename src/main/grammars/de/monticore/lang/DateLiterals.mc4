@@ -18,6 +18,17 @@ component grammar DateLiterals extends de.monticore.literals.MCCommonLiterals {
       year:NatLiteral day:NatLiteral month:NatLiteral
       hour:NatLiteral minute:NatLiteral second:NatLiteral;
 
+// TODO: ueberall passend noSpace(2,3,...) einfuegen: wir wollen keine spaces
+/* Wahrscheinlich wirds wie folgt zu zerlegen sein: 
+    interface Date = DatePart TimePart;
+    DatePart = year:NatLiteral day:NatLiteral month:NatLiteral
+    TimePart = hour:NatLiteral minute:NatLiteral second:NatLiteral;
+
+    DateV1 implements Date = DatePartV1 TimePartV1;
+    DatePartV1 implements DatePart = year:NatLiteral "-" month:NatLiteral "-" day:NatLiteral
+    TimePartV1 implements TimePart = hour:NatLiteral ":" minute:NatLiteral ":" second:NatLiteral;
+*/
+
     /** DateFormat "yyyy-MM-dd HH:mm:ss" */
     DateV1 implements Date =
       year:NatLiteral "-" month:NatLiteral "-" day:NatLiteral
