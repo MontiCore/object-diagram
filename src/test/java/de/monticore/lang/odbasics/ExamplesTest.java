@@ -16,8 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * This test compares the ASTs of the files in the examples folder with the pretty-printed versions
@@ -96,6 +95,7 @@ public class ExamplesTest {
         ODBasicsTool.createSymbolTable(new ODBasicsLanguage(), astodArtifact);
     assertFalse(parser.hasErrors());
     assertTrue(odDef.isPresent());
+    assertNotNull(odBasicsArtifactScope);
 
     // pretty print the AST
     String ppResult = ODBasicsTool.prettyPrintODNode(odDef.get());

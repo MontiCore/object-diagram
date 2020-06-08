@@ -54,7 +54,7 @@ public class ODSymbolTableCreatorTest {
   @Test
   public void testResolveODObjectFromAST() {
     final ObjectDiagramSymbol objectDiagramSymbol = createObjectDiagramFromAST(
-        "AuctionParticipants", "kupfer912");
+        "AuctionParticipants");
 
     Collection<ODObjectSymbol> odObjects = objectDiagramSymbol.getObjects();
 
@@ -62,6 +62,8 @@ public class ODSymbolTableCreatorTest {
     for (ODObjectSymbol obj : odObjects) {
       assertTrue(obj.isPresentAstNode());
     }
+
+    assertTrue(objectDiagramSymbol.getSpannedScope().resolveODObject("kupfer912").isPresent());
   }
 
   @Test
@@ -88,24 +90,12 @@ public class ODSymbolTableCreatorTest {
     return globalScope.resolveObjectDiagram(odName).orElse(null);
   }
 
-  private ObjectDiagramSymbol createObjectDiagramFromAST(String odName, String objectName) {
-    ASTODArtifact artifact = ODBasicsNodeFactory.createASTODArtifact();
-    ASTObjectDiagram objectDiagram = ODBasicsNodeFactory.createASTObjectDiagram();
-    artifact.setObjectDiagram(objectDiagram);
-    objectDiagram.setName(odName);
-    ASTODObject odObject = ODBasicsNodeFactory.createASTODObject();
-    ASTODName refName = ODBasicsNodeFactory.createASTODName();
-    refName.setName(objectName);
-    odObject.setODName(refName);
-    objectDiagram.getODObjectList().add(odObject);
-
-    ODBasicsGlobalScope globalScope = new ODBasicsGlobalScope(new ModelPath(), odLanguage);
-
-    ODBasicsSymbolTableCreatorDelegator symTabVisitor = odLanguage
-        .getSymbolTableCreator(globalScope);
-    symTabVisitor.createFromAST(artifact);
-
-    return globalScope.resolveObjectDiagram(odName).orElse(null);
+  private ObjectDiagramSymbol createObjectDiagramFromAST(String odName) {
+    ASTODArtifact astodArtifact = ODBasicsTool
+        .parse(Paths.get("src/test/resources/symboltable", odName + ".od").toString());
+    ODBasicsArtifactScope odBasicsArtifactScope = ODBasicsTool.createSymbolTable(odLanguage,
+        astodArtifact);
+    return odBasicsArtifactScope.getObjectDiagramSymbols().get(odName).get(0);
   }
 
 }
