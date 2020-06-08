@@ -9,16 +9,24 @@ grammar OD4Report extends de.monticore.lang.ODBasics,
 
     start ODArtifact;
 
-    /** ODDate represents the Date possibilities for ODAttributes */
+    /** ODDate allows that Date values can be also part
+     * of of object diagrams in form of attribute values. 
+     */
     ODDate implements ODValue = Date;
 
-    /** ASTODName represents the Name possibilities for ODObjects
-      @attribute name Name
-      @attribute oDSpecialName Specific naming for Objects
-    */
+    /** ASTODName allows two forms of names.
+     * Special form of names (see ODSpecialName) is coming from
+     *  MontiCore reports, that generate names for 
+     *  otherwise anonymous AST nodes and encode certain forms
+     *  of information, such as line/colum of defining occurrence.
+     *
+     *  @attribute name Name
+     *  @attribute oDSpecialName Specific naming for Objects
+     */
     ODName implements ODValue =
       simpleName:Name | specialName:ODSpecialName;
 
+    // Both forms of names are returned as Name
     astrule ODName =
       method public String getName() {
         if (isPresentSimpleName()) {
@@ -27,6 +35,10 @@ grammar OD4Report extends de.monticore.lang.ODBasics,
         return getSpecialName();
        };
 
+    /** Special names start with a "@" and contain
+     * an optional Position "(4,5!2)":
+     * which stands for: line 4, col. 5, second occurence of that name 
+     */
     token ODSpecialName = '@'
       (Name|'!')+
       ('(' ODPositionNumber ')')?;

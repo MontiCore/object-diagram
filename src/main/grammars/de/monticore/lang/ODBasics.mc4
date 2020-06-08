@@ -4,6 +4,20 @@
 
 package de.monticore.lang;
 
+/**
+ * ODBasics defines the core structure of object diagrams.
+ * It contains the artifact infrastructure (import, starting keyword,
+ * a conforms statement that points to artifacts (class diagrams) that it 
+ * conforms to).
+ * An object diagrams contains objects and links.
+ * Objects have attributes of varios basic or OO types and values. 
+ * Values can be arbitrary expressions (or just single constant literals).
+ *
+ * This grammar is designed for extension, e.g.
+ * * expressions
+ * * more complex forms of values
+ *
+
 grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
                          de.monticore.UMLModifier,
                          de.monticore.expressions.ExpressionsBasis {
@@ -58,6 +72,7 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
       "conformsTo" MCQualifiedName ";";
 
     /** ASTObjectDiagram represents a UML Objectdiagram
+      consisting of object and link definitions.
       @attribute stereotype  Optional Stereotype
       @attribute name        Name of this Objectdiagram
       @attribute oDObject    List of Objects of this Objectdiagram
@@ -70,33 +85,39 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
         ( ( ODObject | ODLink ) ";" )*
       "}";
 
-    /** AST-ODObject represents an Object in a UML Objectdiagram
+    /** AST-ODObject represents an Object in a UML Objectdiagram.
+      The object contains attributes and may be hierarchically decomposed.
       @attribute modifier Optional Modifier of this object
       @attribute oDName Optional extended name of this object
       @attribute referenceType Required type of this object
       @attribute oDAttributes List of attributes of this object
     */
-    /** TODO SH: ODName optional -> keine Symobole für anonyme Objekte. */
     symbol ODObject implements ODValue <20> =
       Modifier?
       ODName? ":" MCType
         "{" ODAttribute* "}";
 
+    // ODObject does not have a Name nonterminal.
+    // This method acts as surrogate (which is accepted as well):
     astrule ODObject =
       method public String getName() {
         if (isPresentODName()) {
             return getODName().getName();
          }
+// TODO SH: Folgendes ist absolut nicht statthaft: Da muss mindestens eine Exception geworfen werden!
+// TODO SH: (Könnte man getName auch Optional liefern lassen?
         return "";
       };
 
-    /** ASTODAttribute represents an Attribute of an Object
+    /** ASTODAttribute represents an Attribute of an Object.
+      The attribute may be List, Set or Map valued.
+      Furthermore, it is possible to specify the collection as incomplete
+      using "->" or as complete with an equality "=".
       @attribute stereotype Optional stereotype of this attribute
       @attribute modifier Optional modifier of this attribute
       @attribute type Optional type of this attribute
       @attribute name Name of this Attribute
       @attribute complete True if attribute has a "complete" assignment
-      @attribute partial True if attribute has a "partial" assignment
       @attribute oDValue Attribute value in form of an ODValue
       @attribute oDList Attribute value in form of an ODList
       @attribute oDMap Attribute value in form of an ODMap
@@ -108,7 +129,9 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
       Name
       ( (complete:"="|"->") ( ODValue | ODList | ODMap | ODExpression ) )? ";";
 
-    /** ASTODList represents a List of ODValues
+    /** ASTODList represents a List of ODValues.
+        (Whether the order is relevant is not decided here.
+        Therefore, it is also possible to store sets this way.)
       @attribute oDValue List of ODValue
     */
     ODList =
@@ -136,6 +159,7 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
     ODLinkQualifier = "[[" Name "]]" | "[" ODValue "]";
 
     /** ASTODLink represents a Link between Objects
+ TODO: Attributeangaben hier nochmal prüfen (und an anderen Stellen ggf. auch)
       @attribute stereotype Optional Stereotype
       @attribute Link True if Link is of type "link"
       @attribute Aggregation True if Link is of type "aggregation"
@@ -155,6 +179,10 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
       @attribute rightReferenceNames List of References of the Objects on the right side of this Link
       @attribute rightModifier Optional right side Modifier
     */
+
+// TODO:
+// Im Klassendiagram hat SVA eine relativ elegante Lösung gefunden die beiden Teile getrennt 
+// zu definieren. Hier ähnlich übernehmen?
     ODLink =
       Stereotype?
       LinkForm
@@ -174,6 +202,8 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
         that represents an absent optional value.
       @attribute absent True if attribute is optional and has an empty value
     */
+// TODO: muss der "_" sein? Muss der Name überhaupt sein? 
+// Könnten wir auch "..." hier einsetzen? (machen wir im SD ähnlich)
     ODAbsent implements ODValue <10> =
       _absent:["absent"];
 
