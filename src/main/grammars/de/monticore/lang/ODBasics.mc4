@@ -4,8 +4,9 @@
 
 package de.monticore.lang;
 
-grammar ODBasics extends de.monticore.types.MCFullGenericTypes, de.monticore.UMLModifier,
-                          de.monticore.expressions.ExpressionsBasis {
+grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
+                         de.monticore.UMLModifier,
+                         de.monticore.expressions.ExpressionsBasis {
       
     /*========================================================================*/
     /*=========================== Artifact ===================================*/
@@ -28,7 +29,7 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes, de.monticore.UML
     /*========================================================================*/
 
     /**
-     * ASTODValue represents the interface for all possible value assignments
+     * ASTODValue represents the interface for all possible values
      */
     interface ODValue;
 
@@ -36,9 +37,12 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes, de.monticore.UML
     /*============================ ENUMERATIONS ==============================*/
     /*========================================================================*/
 
+// TODO: genau so aufbauen wie SVa mit den CD's
+// bitte kleinbuchstaben
     enum AssocDirection =
       LEFTTORIGHT:"->" | RIGHTTOLEFT:"<-"| BIDIRECTIONAL:"<->" | UNSPECIFIED:"--";
 
+// TODO: bitte kleinbuchstaben; und hier können Namen ganz weggelassen werden ["link"]
     enum LinkForm =
       LINK: "link" | AGGREGATION: "aggregation" | COMPOSITION: "composition";
 
@@ -46,11 +50,12 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes, de.monticore.UML
     /*============================== Grammar =================================*/
     /*========================================================================*/
 
-    /** ASTODConformsStatement represents a conform statement
+    /** ASTODConformsStatement defins, to which artifact (normally a class diagrams)
+      the object diagram shall conform (this may act as a syntax check)
       @attribute qualifiedName Qualified name of the artifact the OD is conform to
     */
-  	ODConformsStatement =
-	  "conformsTo" MCQualifiedName ";";
+    ODConformsStatement =
+      "conformsTo" MCQualifiedName ";";
 
     /** ASTObjectDiagram represents a UML Objectdiagram
       @attribute stereotype  Optional Stereotype
@@ -62,19 +67,19 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes, de.monticore.UML
       Stereotype?
       "objectdiagram" Name
       "{"
-      ( ( ODObject | ODLink ) ";" )*
+        ( ( ODObject | ODLink ) ";" )*
       "}";
 
-    /** ASTODObject represents an Object in a UML Objectdiagram
+    /** AST-ODObject represents an Object in a UML Objectdiagram
       @attribute modifier Optional Modifier of this object
       @attribute oDName Optional extended name of this object
       @attribute referenceType Required type of this object
       @attribute oDAttributes List of attributes of this object
     */
-    /** SH: ODName optional -> keine Symobole für anonyme Objekte. */
+    /** TODO SH: ODName optional -> keine Symobole für anonyme Objekte. */
     symbol ODObject implements ODValue <20> =
       Modifier?
-	    ODName? ":" MCType
+      ODName? ":" MCType
         "{" ODAttribute* "}";
 
     astrule ODObject =
