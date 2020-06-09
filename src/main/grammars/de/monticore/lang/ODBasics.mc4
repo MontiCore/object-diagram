@@ -16,11 +16,11 @@ package de.monticore.lang;
  * This grammar is designed for extension, e.g.
  * * expressions
  * * more complex forms of values
- *
-
+ */
 grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
                          de.monticore.UMLModifier,
-                         de.monticore.expressions.ExpressionsBasis {
+                         de.monticore.expressions.ExpressionsBasis,
+                         de.monticore.types.TypeSymbols {
       
     /*========================================================================*/
     /*=========================== Artifact ===================================*/

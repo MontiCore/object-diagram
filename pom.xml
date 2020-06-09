@@ -15,7 +15,7 @@
   <properties>
 
     <!-- .. Libraries ..................................................... -->
-    <monticore.version>6.1.0</monticore.version>
+    <monticore.version>6.2.0-SNAPSHOT</monticore.version>
 
     <antlr.version>4.7.1</antlr.version>
     <guava.version>18.0</guava.version>
@@ -27,7 +27,7 @@
     <antlr.version>4.7.1</antlr.version>
 
     <!-- .. Plugins ....................................................... -->
-    <monticore.plugin>6.1.0</monticore.plugin>
+    <monticore.plugin>6.2.0-SNAPSHOT</monticore.plugin>
 
     <assembly.plugin>2.5.4</assembly.plugin>
     <compiler.plugin>3.3</compiler.plugin>

@@ -39,13 +39,13 @@ public class ODBasicsSymbolTableCreator extends ODBasicsSymbolTableCreatorTOP {
     super.endVisit(node);
 
     // create SymTypeExperssion
-    Optional<IODBasicsScope> currentScope = getCurrentScope();
-    if (currentScope.isPresent()) {
-      SymTypeExpression objectType = new SymTypeOfObject(new TypeSymbolLoader(
-          node.getMCType().printType(new MCFullGenericTypesPrettyPrinter(new IndentPrinter())),
-          currentScope.get()));
-      node.getSymbol().setObjectType(objectType);
-    }
+//    Optional<IODBasicsScope> currentScope = getCurrentScope();
+//    if (currentScope.isPresent()) {
+//      SymTypeExpression objectType = new SymTypeOfObject(new TypeSymbolLoader(
+//          node.getMCType().printType(new MCFullGenericTypesPrettyPrinter(new IndentPrinter())),
+//          currentScope.get()));
+//      node.getSymbol().setObjectType(objectType);
+//    }
   }
 
 }
