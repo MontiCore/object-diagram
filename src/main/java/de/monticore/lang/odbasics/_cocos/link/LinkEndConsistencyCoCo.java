@@ -52,7 +52,7 @@ public class LinkEndConsistencyCoCo implements ODBasicsASTObjectDiagramCoCo {
       ASTObjectDiagram astObjectDiagram) {
     List<ASTMCType> astRefTypes = new ArrayList<>();
     if (left) {
-      link.getLeftReferenceNameList().forEach(leftName -> {
+      link.getODLinkLeftSide().getReferenceNameList().forEach(leftName -> {
         Optional<ASTMCType> astReferenceType = this.getASTReference(leftName, astObjectDiagram);
         if (astReferenceType.isPresent() && astReferenceType.get() instanceof ASTMCQualifiedType) {
           astRefTypes.add(astReferenceType.get());
@@ -60,7 +60,7 @@ public class LinkEndConsistencyCoCo implements ODBasicsASTObjectDiagramCoCo {
       });
     }
     else {
-      link.getRightReferenceNameList().forEach(rightName -> {
+      link.getODLinkRightSide().getReferenceNameList().forEach(rightName -> {
         Optional<ASTMCType> astReferenceType = this.getASTReference(rightName, astObjectDiagram);
         if (astReferenceType.isPresent() && astReferenceType.get() instanceof ASTMCQualifiedType) {
           astRefTypes.add(astReferenceType.get());

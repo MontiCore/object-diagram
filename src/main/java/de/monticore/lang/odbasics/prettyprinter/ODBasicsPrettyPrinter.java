@@ -17,7 +17,6 @@ import java.util.Iterator;
  * ownVisit-methods are called when a node is traversed, the endVisit methods are called when the
  * whole subtree of a node has been traversed. The ownVisit-Methods stop the automatic traversal
  * order and allow to explictly visit subtrees by calling getVisitor().startVisit(ASTNode)
- *
  */
 public class ODBasicsPrettyPrinter extends MCBasicTypesPrettyPrinter implements ODBasicsVisitor {
 
@@ -294,13 +293,13 @@ public class ODBasicsPrettyPrinter extends MCBasicTypesPrettyPrinter implements 
       getPrinter().print(" ");
     }
     // print type of the link
-    if (a.getLinkForm() == ASTLinkForm.LINK) {
+    if (a.isLink()) {
       getPrinter().print("link ");
     }
-    else if (a.getLinkForm() == ASTLinkForm.AGGREGATION) {
+    else if (a.isAggregation()) {
       getPrinter().print("aggregation ");
     }
-    else if (a.getLinkForm() == ASTLinkForm.COMPOSITION) {
+    else if (a.isComposition()) {
       getPrinter().print("composition ");
     }
     // print name
@@ -311,54 +310,47 @@ public class ODBasicsPrettyPrinter extends MCBasicTypesPrettyPrinter implements 
       getPrinter().print(a.getName() + " ");
     }
     // print left modifier
-    if (a.isPresentLeftModifier()) {
-      a.getLeftModifier().accept(getRealThis());
+    if (a.getODLinkLeftSide().isPresentModifier()) {
+      a.getODLinkLeftSide().getModifier().accept(getRealThis());
     }
+
     // print objects referenced on the left side of the link
-    Iterator<ASTODName> refNames = a.getLeftReferenceNameList().iterator();
+    Iterator<ASTODName> refNames = a.getODLinkLeftSide().getReferenceNameList().iterator();
     while (refNames.hasNext()) {
       refNames.next().accept(getRealThis());
       if (refNames.hasNext()) {
         getPrinter().print(", ");
       }
     }
+
     getPrinter().print(" ");
+
     // print left qualifier
-    if (a.isPresentLeftQualifier()) {
-      a.getLeftQualifier().accept(getRealThis());
+    if (a.getODLinkLeftSide().isPresentODLinkQualifier()) {
+      a.getODLinkLeftSide().getODLinkQualifier().accept(getRealThis());
     }
     // print left role
-    if (a.isPresentLeftRole()) {
+    if (a.getODLinkLeftSide().isPresentRole()) {
       getPrinter().print("(");
-      getPrinter().print(a.getLeftRole());
+      getPrinter().print(a.getODLinkLeftSide().getRole());
       getPrinter().print(") ");
     }
     // print arrow
-    if (a.getAssocDirection() == ASTAssocDirection.LEFTTORIGHT) {
-      getPrinter().print("->");
-    }
-    else if (a.getAssocDirection() == ASTAssocDirection.RIGHTTOLEFT) {
-      getPrinter().print("<-");
-    }
-    else if (a.getAssocDirection() == ASTAssocDirection.BIDIRECTIONAL) {
-      getPrinter().print("<->");
-    }
-    else if (a.getAssocDirection() == ASTAssocDirection.UNSPECIFIED) {
-      getPrinter().print("--");
-    }
+    a.getODLinkDirection().accept(getRealThis());
+
     // print right role
-    if (a.isPresentRightRole()) {
+    if (a.getODLinkRightSide().isPresentRole()) {
       getPrinter().print(" (");
-      getPrinter().print(a.getRightRole());
+      getPrinter().print(a.getODLinkRightSide().getRole());
       getPrinter().print(")");
     }
     // print right qualifier
-    if (a.isPresentRightQualifier()) {
-      a.getRightQualifier().accept(getRealThis());
+    if (a.getODLinkRightSide().isPresentODLinkQualifier()) {
+      a.getODLinkRightSide().getODLinkQualifier().accept(getRealThis());
     }
     // print objects referenced on the right side of the link
     getPrinter().print(" ");
-    refNames = a.getRightReferenceNameList().iterator();
+    refNames = a.getODLinkRightSide().getReferenceNameList().iterator();
     while (refNames.hasNext()) {
       refNames.next().accept(getRealThis());
       if (refNames.hasNext()) {
@@ -366,9 +358,29 @@ public class ODBasicsPrettyPrinter extends MCBasicTypesPrettyPrinter implements 
       }
     }
     // print right modifier
-    if (a.isPresentRightModifier()) {
-      a.getRightModifier().accept(getRealThis());
+    if (a.getODLinkRightSide().isPresentModifier()) {
+      a.getODLinkRightSide().getModifier().accept(getRealThis());
     }
+  }
+
+  @Override
+  public void handle(ASTODLeftToRightDir leftToRightDir) {
+    getPrinter().print("->");
+  }
+
+  @Override
+  public void handle(ASTODRightToLeftDir rightToLeftDir) {
+    getPrinter().print("<-");
+  }
+
+  @Override
+  public void handle(ASTODBiDir biDir) {
+    getPrinter().print("<->");
+  }
+
+  @Override
+  public void handle(ASTODUnspecifiedDir unspecifiedDir) {
+    getPrinter().print("--");
   }
 
   private ODBasicsVisitor realThis = this;

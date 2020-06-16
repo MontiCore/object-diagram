@@ -10,7 +10,6 @@ import de.monticore.types.MCBasicTypesNodeIdentHelper;
 
 /**
  * Helper for ODs.
- *
  */
 public class ODNodeIdentHelper extends MCBasicTypesNodeIdentHelper {
 
@@ -56,7 +55,8 @@ public class ODNodeIdentHelper extends MCBasicTypesNodeIdentHelper {
     if (a.isPresentName()) {
       name = a.getName();
     }
-    else if (!a.getLeftReferenceNameList().isEmpty() && !a.getRightReferenceNameList().isEmpty()) {
+    else if (!a.getODLinkLeftSide().getReferenceNameList().isEmpty() && !a.getODLinkRightSide()
+        .getReferenceNameList().isEmpty()) {
       // TODO MB
     }
     return format(name, Layouter.nodeName(a));

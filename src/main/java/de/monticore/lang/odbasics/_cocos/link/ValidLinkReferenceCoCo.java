@@ -15,8 +15,8 @@ public class ValidLinkReferenceCoCo implements ODBasicsASTObjectDiagramCoCo {
   @Override
   public void check(ASTObjectDiagram node) {
     node.getODLinkList().forEach(astodLink -> Stream
-        .concat(astodLink.getLeftReferenceNameList().stream(),
-            astodLink.getRightReferenceNameList().stream()).forEach(astodName -> {
+        .concat(astodLink.getODLinkLeftSide().getReferenceNameList().stream(),
+            astodLink.getODLinkRightSide().getReferenceNameList().stream()).forEach(astodName -> {
           if (!this.checkReference(astodName, node)) {
             Log.error("Violation of CoCo 'ValidLinkReferenceCoCo'",
                 astodLink.get_SourcePositionStart());

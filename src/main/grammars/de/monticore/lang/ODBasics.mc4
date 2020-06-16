@@ -20,7 +20,7 @@ package de.monticore.lang;
 grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
                          de.monticore.UMLModifier,
                          de.monticore.expressions.ExpressionsBasis,
-                         de.monticore.types.TypeSymbols {
+                         de.monticore.types.BasicTypeSymbols {
       
     /*========================================================================*/
     /*=========================== Artifact ===================================*/
@@ -51,14 +51,10 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
     /*============================ ENUMERATIONS ==============================*/
     /*========================================================================*/
 
-// TODO: genau so aufbauen wie SVa mit den CD's
-// bitte kleinbuchstaben
-    enum AssocDirection =
-      LEFTTORIGHT:"->" | RIGHTTOLEFT:"<-"| BIDIRECTIONAL:"<->" | UNSPECIFIED:"--";
-
-// TODO: bitte kleinbuchstaben; und hier können Namen ganz weggelassen werden ["link"]
-    enum LinkForm =
-      LINK: "link" | AGGREGATION: "aggregation" | COMPOSITION: "composition";
+    /**
+    *enum AssocDirection =
+    *  LEFTTORIGHT:"->" | RIGHTTOLEFT:"<-"| BIDIRECTIONAL:"<->" | UNSPECIFIED:"--";
+    */
 
     /*========================================================================*/
     /*============================== Grammar =================================*/
@@ -104,10 +100,10 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
         if (isPresentODName()) {
             return getODName().getName();
          }
-// TODO SH: Folgendes ist absolut nicht statthaft: Da muss mindestens eine Exception geworfen werden!
-// TODO SH: (Könnte man getName auch Optional liefern lassen?
+    // TODO SH: Folgendes ist absolut nicht statthaft: Da muss mindestens eine Exception geworfen werden!
+    // TODO SH: (Könnte man getName auch Optional liefern lassen?
         return "";
-      };
+    };
 
     /** ASTODAttribute represents an Attribute of an Object.
       The attribute may be List, Set or Map valued.
@@ -127,7 +123,7 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
       Modifier?
       MCType?
       Name
-      ( (complete:"="|"->") ( ODValue | ODList | ODMap | ODExpression ) )? ";";
+      ( (complete:"="|{noSpace(2)}? "-" ">") ( ODValue | ODList | ODMap | ODExpression ) )? ";";
 
     /** ASTODList represents a List of ODValues.
         (Whether the order is relevant is not decided here.
@@ -149,7 +145,7 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
       @attribute val Value element of the key value pair
     */
     ODMapElement =
-      key:ODValue "->" val:ODValue;
+      key:ODValue {noSpace(2)}? "-" ">" val:ODValue;
 
     /** ASTODLinkQualifier represents Qualifier for Links between Objects.
         It can be either a concrete attribute name or a concrete value.
@@ -179,24 +175,39 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
       @attribute rightReferenceNames List of References of the Objects on the right side of this Link
       @attribute rightModifier Optional right side Modifier
     */
-
-// TODO:
-// Im Klassendiagram hat SVA eine relativ elegante Lösung gefunden die beiden Teile getrennt 
-// zu definieren. Hier ähnlich übernehmen?
     ODLink =
       Stereotype?
-      LinkForm
+      (["link"] | ["aggregation"] | ["composition"])
       ([derived:"/"])?
       Name?
-      leftModifier:Modifier?
-      leftReferenceName:(ODName || ",")+
-      leftQualifier:ODLinkQualifier?
-      ("(" leftRole:Name ")")?
-      AssocDirection
-      ("(" rightRole:Name ")")?
-      rightQualifier:ODLinkQualifier?
-      rightReferenceName:(ODName || ",")+
-      rightModifier:Modifier?;
+      ODLinkLeftSide
+      ODLinkDirection
+      ODLinkRightSide;
+
+    interface ODLinkDirection;
+
+    ODLeftToRightDir implements ODLinkDirection = {noSpace(2)}? "-" ">";
+    ODRightToLeftDir implements ODLinkDirection = {noSpace(2)}? "<" "-";
+    ODBiDir          implements ODLinkDirection = {noSpace(2, 3)}? "<" "-" ">";
+    ODUnspecifiedDir implements ODLinkDirection = {noSpace(2)}? "-" "-";
+
+    interface ODLinkSide =
+      Modifier?
+      referenceName:(ODName || ",")+
+      ODLinkQualifier?
+      ("(" role:Name ")")?;
+
+    ODLinkLeftSide implements ODLinkSide =
+      Modifier?
+      referenceName:(ODName || ",")+
+      ODLinkQualifier?
+      ("(" role:Name ")")?;
+
+    ODLinkRightSide implements ODLinkSide =
+       ("(" role:Name ")")?
+       ODLinkQualifier?
+       referenceName:(ODName || ",")+
+       Modifier?;
 
     /** ASTODAbsent represents implementation of the ODValue interface
         that represents an absent optional value.

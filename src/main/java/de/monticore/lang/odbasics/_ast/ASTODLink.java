@@ -13,7 +13,7 @@ public class ASTODLink extends ASTODLinkTOP {
    */
   public ArrayList<String> getLeftReferenceNames() {
     ArrayList<String> leftNames = new ArrayList<>();
-    getLeftReferenceNameList().stream().forEach(astodName -> leftNames.add(astodName.getName()));
+    getODLinkLeftSide().getReferenceNameList().stream().forEach(astodName -> leftNames.add(astodName.getName()));
     return leftNames;
   }
 
@@ -24,7 +24,7 @@ public class ASTODLink extends ASTODLinkTOP {
    */
   public ArrayList<String> getRightReferenceNames() {
     ArrayList<String> rightNames = new ArrayList<>();
-    getRightReferenceNameList().stream().forEach(astodName -> rightNames.add(astodName.getName()));
+    getODLinkRightSide().getReferenceNameList().stream().forEach(astodName -> rightNames.add(astodName.getName()));
     return rightNames;
   }
 
