@@ -191,11 +191,14 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
     ODBiDir          implements ODLinkDirection = {noSpace(2, 3)}? "<" "-" ">";
     ODUnspecifiedDir implements ODLinkDirection = {noSpace(2)}? "-" "-";
 
+    /** ODLinkSide:
+        Common parts for left and right sides of a link
+     */
     interface ODLinkSide =
       Modifier?
-      referenceName:(ODName || ",")+
+      referenceName:ODName+
       ODLinkQualifier?
-      ("(" role:Name ")")?;
+      role:Name?;
 
     ODLinkLeftSide implements ODLinkSide =
       Modifier?
