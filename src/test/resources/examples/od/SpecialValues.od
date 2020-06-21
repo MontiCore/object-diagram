@@ -7,6 +7,7 @@ objectdiagram SpecialValues {
   o1:type1 {
     myString = "abc\\def";
     myList = ["a", "b"];
+    myEmpty = ...;
   };
 
 }

@@ -254,9 +254,7 @@ public class ODBasicsPrettyPrinter extends MCBasicTypesPrettyPrinter implements 
    */
   @Override
   public void handle(ASTODAbsent a) {
-    if (a.is_absent()) {
-      getPrinter().print("absent");
-    }
+    getPrinter().print("...");
   }
 
   /**

@@ -48,16 +48,7 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
     interface ODValue;
 
     /*========================================================================*/
-    /*============================ ENUMERATIONS ==============================*/
-    /*========================================================================*/
-
-    /**
-    *enum AssocDirection =
-    *  LEFTTORIGHT:"->" | RIGHTTOLEFT:"<-"| BIDIRECTIONAL:"<->" | UNSPECIFIED:"--";
-    */
-
-    /*========================================================================*/
-    /*============================== Grammar =================================*/
+    /*===================== Grammar, Diagramm, and Object ====================*/
     /*========================================================================*/
 
     /** ASTODConformsStatement defins, to which artifact (normally a class diagrams)
@@ -105,6 +96,10 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
         return "";
     };
 
+    /*========================================================================*/
+    /*============================ Attribute =================================*/
+    /*========================================================================*/
+
     /** ASTODAttribute represents an Attribute of an Object.
       The attribute may be List, Set or Map valued.
       Furthermore, it is possible to specify the collection as incomplete
@@ -147,33 +142,20 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
     ODMapElement =
       key:ODValue {noSpace(2)}? "-" ">" val:ODValue;
 
-    /** ASTODLinkQualifier represents Qualifier for Links between Objects.
-        It can be either a concrete attribute name or a concrete value.
-      @attribute name Name of a referenced attribute (if set)
-      @attribute oDValue Concrete value of this qualifier (if set)
-    */
-    ODLinkQualifier = "[[" Name "]]" | "[" ODValue "]";
+    /*========================================================================*/
+    /*================================ Link ==================================*/
+    /*========================================================================*/
 
     /** ASTODLink represents a Link between Objects
- TODO: Attributeangaben hier nochmal prüfen (und an anderen Stellen ggf. auch)
-      @attribute stereotype Optional Stereotype
-      @attribute Link True if Link is of type "link"
-      @attribute Aggregation True if Link is of type "aggregation"
-      @attribute Composition True if Link is of type "composition"
-      @attribute derived True if this is a derived Link
-      @attribute Name Name of the Association of this Link
-      @attribute leftModifier Optional left side Modifier
-      @attribute leftReferenceNames List of References of the Objects on the left side of this Link
-      @attribute leftQualifier Qualifier of the left side of this Link
-      @attribute leftRole Role of Objects on the Links left side
-      @attribute leftToRight True if Link is navigable from left to right ("->")
-      @attribute rightToLeft True if Link is navigable from right to left ("<-")
-      @attribute bidirectional True if Link is navigable in both directions ("<->")
-      @attribute unspecified True if navigation of Link is not specified ("--")
-      @attribute rightRole Role of Objects on the Links right side
-      @attribute rightQualifier Qualifier of the right side of this Link
-      @attribute rightReferenceNames List of References of the Objects on the right side of this Link
-      @attribute rightModifier Optional right side Modifier
+      @attribute stereotype Optional Stereotype of the link
+      @attribute link True if the link is of a plain "link"
+      @attribute aggregation True if the link is a "aggregation"
+      @attribute composition True if the link is a "composition"
+      @attribute derived True if it is is a derived link
+      @attribute name Optional name of the link
+      @attribute oDLinkLeftSide Left side of the link
+      @attribute oDLinkDirection Direction of the link
+      @attribute oDLinkRightSide Right side of the link
     */
     ODLink =
       Stereotype?
@@ -184,15 +166,23 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
       ODLinkDirection
       ODLinkRightSide;
 
+    /* Interface for all link directions */
     interface ODLinkDirection;
 
+    /* All possible link directions available as variants of ODLinkDirection */
     ODLeftToRightDir implements ODLinkDirection = {noSpace(2)}? "-" ">";
     ODRightToLeftDir implements ODLinkDirection = {noSpace(2)}? "<" "-";
     ODBiDir          implements ODLinkDirection = {noSpace(2, 3)}? "<" "-" ">";
     ODUnspecifiedDir implements ODLinkDirection = {noSpace(2)}? "-" "-";
 
-    /** ODLinkSide:
-        Common parts for left and right sides of a link (no concrete syntax)
+    /** Common parts for left and right sides of a link (no concrete syntax)
+      ODLinkSide defines the properties of one side of a link. This construction
+      allows developers to access both sides of the link using the same interface,
+      even though the concrete syntax differs in their order.
+      @attribute modifier Optional link modifier for respective side
+      @attribute referenceName Non-empty List of object names on the respective ink side
+      @attribute oDLinkQualifier Qualifier of the respective side of the link
+      @attribute role Role of the objects on the respective link side
      */
     interface ODLinkSide =
       Modifier?
@@ -200,32 +190,39 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
       ODLinkQualifier?
       role:Name?;
 
+    /* Variant of ODLinkSide for the left side adding concrete syntax */
     ODLinkLeftSide implements ODLinkSide =
       Modifier?
       referenceName:(ODName || ",")+
       ODLinkQualifier?
       ("(" role:Name ")")?;
 
+    /* Variant of ODLinkSide for the right side adding concrete syntax */
     ODLinkRightSide implements ODLinkSide =
        ("(" role:Name ")")?
        ODLinkQualifier?
        referenceName:(ODName || ",")+
        Modifier?;
 
+    /** ASTODLinkQualifier represents Qualifier for Links between Objects.
+      It can be either a concrete attribute name or a concrete value.
+      @attribute name Name of a referenced attribute (if set)
+      @attribute oDValue Concrete value of this qualifier (if set)
+    */
+    ODLinkQualifier = "[[" Name "]]" | "[" ODValue "]";
+
+    /*========================================================================*/
+    /*============================= Values ===================================*/
+    /*========================================================================*/
+
     /** ASTODAbsent represents implementation of the ODValue interface
         that represents an absent optional value.
-      @attribute absent True if attribute is optional and has an empty value
     */
-// TODO: muss der "_" sein? Muss der Name überhaupt sein? 
-// Könnten wir auch "..." hier einsetzen? (machen wir im SD ähnlich)
-    ODAbsent implements ODValue <10> =
-      _absent:["absent"];
+    ODAbsent implements ODValue <10> = "...";
 
-    ODLiteral implements ODValue <40> =
-      Literal;
+    ODLiteral implements ODValue <40> = Literal;
 
-    ODExpression implements ODValue <30> =
-      Expression;
+    ODExpression implements ODValue <30> = Expression;
 
     ODName implements ODValue <50> = Name;
 

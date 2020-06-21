@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 /**
  * This test compares the ASTs of the files in the examples folder with the pretty-printed versions
  * of these files.
- *
  */
 public class ExamplesTest {
 
@@ -88,17 +87,18 @@ public class ExamplesTest {
 
   private void test(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
+
     ODBasicsParser parser = new ODBasicsParser();
-    Optional<ASTODArtifact> odDef = parser.parseODArtifact(model.toString());
-    ASTODArtifact astodArtifact = ODBasicsTool.parse(model.toString());
-    ODBasicsArtifactScope odBasicsArtifactScope =
-        ODBasicsTool.createSymbolTable(new ODBasicsLanguage(), astodArtifact);
+    Optional<ASTODArtifact> astodArtifact = parser.parseODArtifact(model.toString());
     assertFalse(parser.hasErrors());
-    assertTrue(odDef.isPresent());
+    assertTrue(astodArtifact.isPresent());
+
+    ODBasicsArtifactScope odBasicsArtifactScope = ODBasicsTool
+        .createSymbolTable(new ODBasicsLanguage(), astodArtifact.get());
     assertNotNull(odBasicsArtifactScope);
 
     // pretty print the AST
-    String ppResult = ODBasicsTool.prettyPrintODNode(odDef.get());
+    String ppResult = ODBasicsTool.prettyPrintODNode(astodArtifact.get());
 
     // parse the printers content
     Optional<ASTODArtifact> ppOd = parser.parse_StringODArtifact(ppResult);
@@ -107,7 +107,7 @@ public class ExamplesTest {
     assertTrue(ppOd.isPresent());
 
     // must be equal to original parsed AST.
-    assertTrue("pretty printed OD: " + ppResult, odDef.get().deepEquals(ppOd.get()));
+    assertTrue("pretty printed OD: " + ppResult, astodArtifact.get().deepEquals(ppOd.get()));
   }
 
   private void negativTest(String modelName) throws RecognitionException, IOException {
