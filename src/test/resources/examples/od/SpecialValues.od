@@ -8,6 +8,7 @@ objectdiagram SpecialValues {
     myString = "abc\\def";
     myList = ["a", "b"];
     myEmpty = ...;
+    negativ = -111;
   };
 
 }

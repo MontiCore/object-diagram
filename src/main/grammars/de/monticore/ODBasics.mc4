@@ -1,0 +1,230 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+/* Beta-version: This is intended to become a MontiCore stable grammar. */
+
+package de.monticore;
+
+/**
+ * ODBasics defines the core structure of object diagrams.
+ * It contains the artifact infrastructure (import, starting keyword,
+ * a conforms statement that points to artifacts (class diagrams) that it 
+ * conforms to).
+ * An object diagrams contains objects and links.
+ * Objects have attributes of varios basic or OO types and values. 
+ * Values can be arbitrary expressions (or just single constant literals).
+ *
+ * This grammar is designed for extension, e.g.
+ * * expressions
+ * * more complex forms of values
+ */
+grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
+                         de.monticore.UMLModifier,
+                         de.monticore.expressions.ExpressionsBasis,
+                         de.monticore.types.BasicTypeSymbols,
+                         de.monticore.literals.MCCommonLiterals {
+      
+    /*========================================================================*/
+    /*=========================== Artifact ===================================*/
+    /*========================================================================*/
+    
+    /** ASTODArtifact represents the complete Diagram
+      @attribute package The package declaration of this Objectdiagram
+      @attribute importStatements List of imported elements
+      @attribute oDConformsStatement List of conform statements
+      @attribute objectDiagram the ObjectDiagram
+    */
+    ODArtifact =
+      ("package" package:(Name& || ".")+ ";")?
+      MCImportStatement*
+      ODConformsStatement*
+      ObjectDiagram;
+
+    /*========================================================================*/
+    /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
+    /*========================================================================*/
+
+    /**
+     * ASTODValue represents the interface for all possible values
+     */
+    interface ODValue;
+
+    /*========================================================================*/
+    /*===================== Grammar, Diagramm, and Object ====================*/
+    /*========================================================================*/
+
+    /** ASTODConformsStatement defins, to which artifact (normally a class diagrams)
+      the object diagram shall conform (this may act as a syntax check)
+      @attribute qualifiedName Qualified name of the artifact the OD is conform to
+    */
+    ODConformsStatement =
+      "conformsTo" MCQualifiedName ";";
+
+    /** ASTObjectDiagram represents a UML Objectdiagram
+      consisting of object and link definitions.
+      @attribute stereotype  Optional Stereotype
+      @attribute name        Name of this Objectdiagram
+      @attribute oDObject    List of Objects of this Objectdiagram
+      @attribute oDLink      List of Links of this Objectdiagram
+    */
+    symbol scope ObjectDiagram =
+      Stereotype?
+      "objectdiagram" Name
+      "{"
+        ( ( ODObject | ODLink ) ";" )*
+      "}";
+
+    /** AST-ODObject represents an Object in a UML Objectdiagram.
+      The object contains attributes and may be hierarchically decomposed.
+      @attribute modifier Optional Modifier of this object
+      @attribute oDName Optional extended name of this object
+      @attribute referenceType Required type of this object
+      @attribute oDAttributes List of attributes of this object
+    */
+    symbol ODObject implements ODValue <20> =
+      Modifier?
+      ODName? ":" MCObjectType
+        "{" ODAttribute* "}";
+
+    // ODObject does not have a Name nonterminal.
+    // This method acts as surrogate (which is accepted as well):
+    astrule ODObject =
+      method public String getName() {
+        if (isPresentODName()) {
+            return getODName().getName();
+         }
+    // TODO SH: Folgendes ist absolut nicht statthaft: Da muss mindestens eine Exception geworfen werden!
+    // TODO SH: (Könnte man getName auch Optional liefern lassen?
+        return "";
+    };
+
+    /*========================================================================*/
+    /*============================ Attribute =================================*/
+    /*========================================================================*/
+
+    /** ASTODAttribute represents an Attribute of an Object.
+      The attribute may be List, Set or Map valued.
+      Furthermore, it is possible to specify the collection as incomplete
+      using "->" or as complete with an equality "=".
+      @attribute stereotype Optional stereotype of this attribute
+      @attribute modifier Optional modifier of this attribute
+      @attribute type Optional type of this attribute
+      @attribute name Name of this Attribute
+      @attribute complete True if attribute has a "complete" assignment
+      @attribute oDValue Attribute value in form of an ODValue
+      @attribute oDList Attribute value in form of an ODList
+      @attribute oDMap Attribute value in form of an ODMap
+    */
+    ODAttribute =
+      Stereotype?
+      Modifier?
+      MCType?
+      Name
+      ( (complete:"="|{noSpace(2)}? "-" ">") ( ODValue | ODList | ODMap | ODExpression ) )? ";";
+
+    /** ASTODList represents a List of ODValues.
+        (Whether the order is relevant is not decided here.
+        Therefore, it is also possible to store sets this way.)
+      @attribute oDValue List of ODValue
+    */
+    ODList =
+      "[" (ODValue || ",")* "]";
+
+    /** ASTODMap represents a Map of values
+      @attribute oDMapElement List of ODMapElements
+    */
+    ODMap =
+      "[" (ODMapElement || ",")* "]";
+
+    /** ASTODMapElement represents a Map element of ODMap.
+        It can be either a concrete ODObject or a concrete ODValue.
+      @attribute key Key element of the key value pair
+      @attribute val Value element of the key value pair
+    */
+    ODMapElement =
+      key:ODValue {noSpace(2)}? "-" ">" val:ODValue;
+
+    /*========================================================================*/
+    /*================================ Link ==================================*/
+    /*========================================================================*/
+
+    /** ASTODLink represents a Link between Objects
+      @attribute stereotype Optional Stereotype of the link
+      @attribute link True if the link is of a plain "link"
+      @attribute aggregation True if the link is a "aggregation"
+      @attribute composition True if the link is a "composition"
+      @attribute derived True if it is is a derived link
+      @attribute name Optional name of the link
+      @attribute oDLinkLeftSide Left side of the link
+      @attribute oDLinkDirection Direction of the link
+      @attribute oDLinkRightSide Right side of the link
+    */
+    ODLink =
+      Stereotype?
+      (["link"] | ["aggregation"] | ["composition"])
+      ([derived:"/"])?
+      Name?
+      ODLinkLeftSide
+      ODLinkDirection
+      ODLinkRightSide;
+
+    /* Interface for all link directions */
+    interface ODLinkDirection;
+
+    /* All possible link directions available as variants of ODLinkDirection */
+    ODLeftToRightDir implements ODLinkDirection = {noSpace(2)}? "-" ">";
+    ODRightToLeftDir implements ODLinkDirection = {noSpace(2)}? "<" "-";
+    ODBiDir          implements ODLinkDirection = {noSpace(2, 3)}? "<" "-" ">";
+    ODUnspecifiedDir implements ODLinkDirection = {noSpace(2)}? "-" "-";
+
+    /** Common parts for left and right sides of a link (no concrete syntax)
+      ODLinkSide defines the properties of one side of a link. This construction
+      allows developers to access both sides of the link using the same interface,
+      even though the concrete syntax differs in their order.
+      @attribute modifier Optional link modifier for respective side
+      @attribute referenceName Non-empty List of object names on the respective ink side
+      @attribute oDLinkQualifier Qualifier of the respective side of the link
+      @attribute role Role of the objects on the respective link side
+     */
+    interface ODLinkSide =
+      Modifier?
+      referenceNames:ODName+
+      ODLinkQualifier?
+      role:Name?;
+
+    /* Variant of ODLinkSide for the left side adding concrete syntax */
+    ODLinkLeftSide implements ODLinkSide =
+      Modifier?
+      referenceNames:(ODName || ",")+
+      ODLinkQualifier?
+      ("(" role:Name ")")?;
+
+    /* Variant of ODLinkSide for the right side adding concrete syntax */
+    ODLinkRightSide implements ODLinkSide =
+       ("(" role:Name ")")?
+       ODLinkQualifier?
+       referenceNames:(ODName || ",")+
+       Modifier?;
+
+    /** ASTODLinkQualifier represents Qualifier for Links between Objects.
+      It can be either a concrete attribute name or a concrete value.
+      @attribute name Name of a referenced attribute (if set)
+      @attribute oDValue Concrete value of this qualifier (if set)
+    */
+    ODLinkQualifier = "[[" Name "]]" | "[" ODValue "]";
+
+    /*========================================================================*/
+    /*============================= Values ===================================*/
+    /*========================================================================*/
+
+    /** ASTODAbsent represents implementation of the ODValue interface
+        that represents an absent optional value.
+    */
+    ODAbsent implements ODValue <10> = "...";
+
+    ODLiteral implements ODValue <40> = SignedLiteral;
+
+    ODExpression implements ODValue <30> = Expression;
+
+    ODName implements ODValue <50> = Name;
+
+}

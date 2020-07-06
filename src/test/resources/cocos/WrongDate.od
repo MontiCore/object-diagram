@@ -5,9 +5,9 @@ objectdiagram WrongDate{
     myObject1:ObjectType{};
 
 	myObject2:ObjectType2{
-	    wrongDateV1 = 2017-13-20 15:18:12;
-	    wrongDateV2 = 2017.12.40 15:18:12;
-	    wrongDateV3 = 2017/12/20 15:18:69;
+	    wrongDateV1 = 2017-13-20 15:18:12; // month
+	    wrongDateV2 = 2017.12.40 15:18:12; // day
+	    wrongDateV3 = 2017/12/20 15:18:69; // second
 
 	    myDateV1 = 2017-10-20 15:18:12;
 	};

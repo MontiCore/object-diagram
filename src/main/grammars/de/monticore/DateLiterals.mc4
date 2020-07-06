@@ -1,0 +1,45 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+/* Beta-version: This is intended to become a MontiCore stable grammar. */
+
+package de.monticore;
+
+component grammar DateLiterals extends de.monticore.literals.MCCommonLiterals {
+
+    /** ASTDate represents a Date Format
+      @attribute DatePart Nonterminal contain the day information.
+      @attribute Timepart Nonterminal containing the time of the day information.
+    */
+    Date = DatePart TimePart;
+
+    /** ASTDate represents a Date Format
+      @attribute year Year of the date
+      @attribute month Month of the date
+      @attribute day Day of the date
+    */
+    interface DatePart = year:NatLiteral month:NatLiteral day:NatLiteral;
+
+    /** ASTDate represents a Date Format
+      @attribute hour Hour of the day
+      @attribute minute Minute of the day
+      @attribute second Second of the day
+    */
+    interface TimePart = hour:NatLiteral minute:NatLiteral second:NatLiteral;
+
+    /** Date format "yyyy-MM-dd" */
+    DatePartHyphen implements DatePart =
+      {noSpace(2,3,4,5)}? year:NatLiteral "-" month:NatLiteral "-" day:NatLiteral;
+
+    /** Date format "yyyy.MM.dd" */
+    DatePartDot implements DatePart =
+      {noSpace(2,3,4,5)}? year:NatLiteral "." month:NatLiteral "." day:NatLiteral;
+
+    /** Date format "yyyy/MM/dd" */
+    DatePartSlash implements DatePart =
+      {noSpace(2,3,4,5)}? year:NatLiteral "/" month:NatLiteral "/" day:NatLiteral;
+
+    /** Time format "hh:mm:ss" */
+    TimePartColon implements TimePart =
+      {noSpace(2,3,4,5)}? hour:NatLiteral ":" minute:NatLiteral ":" second:NatLiteral;
+
+}
