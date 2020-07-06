@@ -6,20 +6,20 @@ package de.monticore;
 
 component grammar DateLiterals extends de.monticore.literals.MCCommonLiterals {
 
-    /** ASTDate represents a Date Format
-      @attribute DatePart Nonterminal contain the day information.
-      @attribute Timepart Nonterminal containing the time of the day information.
+    /** ASTDate represents a Date Format.
+      @attribute DatePart Nonterminal containing the day information
+      @attribute Timepart Nonterminal containing the time of the day information
     */
     Date = DatePart TimePart;
 
-    /** ASTDate represents a Date Format
+    /** ASTDatePart represents the day information (year, month, day) of a date.
       @attribute year Year of the date
       @attribute month Month of the date
       @attribute day Day of the date
     */
     interface DatePart = year:NatLiteral month:NatLiteral day:NatLiteral;
 
-    /** ASTDate represents a Date Format
+    /** ASTTimePart represents the time of the day information (hour, minute, second) of a date.
       @attribute hour Hour of the day
       @attribute minute Minute of the day
       @attribute second Second of the day
