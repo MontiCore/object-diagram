@@ -4,7 +4,7 @@
 
 package de.monticore.dateliterals.prettyprinter;
 
-import de.monticore.dateliterals._ast.ASTDate;
+import de.monticore.dateliterals._ast.*;
 import de.monticore.dateliterals._visitor.DateLiteralsVisitor;
 import de.monticore.prettyprint.IndentPrinter;
 
@@ -37,17 +37,45 @@ public class DateLiteralsPrettyPrinter implements DateLiteralsVisitor {
   }
 
   private void printODDate(ASTDate a) {
-    getPrinter().print(a.getDatePart().getYear().getValue());
-    getPrinter().print("-");
-    getPrinter().print(a.getDatePart().getMonth().getValue());
-    getPrinter().print("-");
-    getPrinter().print(a.getDatePart().getDay().getValue());
+    a.getDatePart().accept(getRealThis());
     getPrinter().print(" ");
-    getPrinter().print(a.getTimePart().getHour().getValue());
+    a.getTimePart().accept(getRealThis());
+  }
+
+  @Override
+  public void handle(ASTDatePartHyphen datePartHyphen) {
+    getPrinter().print(datePartHyphen.getYear().getValue());
+    getPrinter().print("-");
+    getPrinter().print(datePartHyphen.getMonth().getValue());
+    getPrinter().print("-");
+    getPrinter().print(datePartHyphen.getDay().getValue());
+  }
+
+  @Override
+  public void handle(ASTDatePartDot datePartDot) {
+    getPrinter().print(datePartDot.getYear().getValue());
+    getPrinter().print(".");
+    getPrinter().print(datePartDot.getMonth().getValue());
+    getPrinter().print(".");
+    getPrinter().print(datePartDot.getDay().getValue());
+  }
+
+  @Override
+  public void handle(ASTDatePartSlash datePartSlash) {
+    getPrinter().print(datePartSlash.getYear().getValue());
+    getPrinter().print("/");
+    getPrinter().print(datePartSlash.getMonth().getValue());
+    getPrinter().print("/");
+    getPrinter().print(datePartSlash.getDay().getValue());
+  }
+
+  @Override
+  public void handle(ASTTimePartColon timePartColon) {
+    getPrinter().print(timePartColon.getHour().getValue());
     getPrinter().print(":");
-    getPrinter().print(a.getTimePart().getMinute().getValue());
+    getPrinter().print(timePartColon.getMinute().getValue());
     getPrinter().print(":");
-    getPrinter().print(a.getTimePart().getSecond().getValue());
+    getPrinter().print(timePartColon.getSecond().getValue());
   }
 
   private DateLiteralsVisitor realThis = this;
