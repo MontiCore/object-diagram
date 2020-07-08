@@ -2,10 +2,7 @@
 
 package de.monticore.dateliterals;
 
-import de.monticore.dateliterals._ast.ASTDatePartDot;
-import de.monticore.dateliterals._ast.ASTDatePartHyphen;
-import de.monticore.dateliterals._ast.ASTDatePartSlash;
-import de.monticore.dateliterals._ast.ASTTimePartColon;
+import de.monticore.dateliterals._ast.*;
 import de.monticore.dateliterals.prettyprinter.DateLiteralsPrettyPrinter;
 import de.monticore.od4report._ast.ASTODDate;
 import de.monticore.od4report._parser.OD4ReportParser;
@@ -19,6 +16,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -119,6 +117,41 @@ public class DateLiteralsTest {
     assertEquals(15, astodDate.get().getDate().getTimePart().getHour().getValue());
     assertEquals(18, astodDate.get().getDate().getTimePart().getMinute().getValue());
     assertEquals(12, astodDate.get().getDate().getTimePart().getSecond().getValue());
+  }
+
+  @Test
+  public void testLocalDateTime() throws IOException {
+    OD4ReportParser od4ReportParser = new OD4ReportParser();
+
+    String dateString = "2017.12.20 15:18:12";
+    Optional<ASTODDate> astodDate = od4ReportParser.parse_StringODDate(dateString);
+    assertTrue(astodDate.isPresent());
+
+    LocalDateTime localDateTime = astodDate.get().getDate().toLocalDateTime();
+    assertEquals(2017, localDateTime.getYear());
+    assertEquals(12, localDateTime.getMonthValue());
+    assertEquals(20, localDateTime.getDayOfMonth());
+    assertEquals(15, localDateTime.getHour());
+    assertEquals(18, localDateTime.getMinute());
+    assertEquals(12, localDateTime.getSecond());
+
+  }
+
+  @Test
+  public void testSetLocalDateTime() {
+    LocalDateTime localDateTime = LocalDateTime.now();
+    ASTDate astDate = new ASTDate();
+
+    astDate.setDate(localDateTime);
+    assertEquals(localDateTime.getYear(), astDate.getDatePart().getYear().getValue());
+    assertEquals(localDateTime.getMonthValue(), astDate.getDatePart().getMonth().getValue());
+    assertEquals(localDateTime.getDayOfMonth(), astDate.getDatePart().getDay().getValue());
+    assertEquals(localDateTime.getHour(), astDate.getTimePart().getHour().getValue());
+    assertEquals(localDateTime.getMinute(), astDate.getTimePart().getMinute().getValue());
+    assertEquals(localDateTime.getSecond(), astDate.getTimePart().getSecond().getValue());
+
+    assertTrue(astDate.getDatePart() instanceof ASTDatePartHyphen && astDate
+        .getTimePart() instanceof ASTTimePartColon);
   }
 
 }
