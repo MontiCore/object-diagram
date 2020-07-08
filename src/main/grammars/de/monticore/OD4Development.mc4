@@ -1,0 +1,12 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+/* Beta-version: This is intended to become a MontiCore stable grammar. */
+
+package de.monticore;
+
+grammar OD4Development extends de.monticore.ODExpression,
+                                de.monticore.OD4Data {
+
+  start ODArtifact;
+
+}

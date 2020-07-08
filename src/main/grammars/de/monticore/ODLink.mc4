@@ -1,0 +1,78 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+/* Beta-version: This is intended to become a MontiCore stable grammar. */
+
+package de.monticore;
+
+component grammar ODLink extends de.monticore.ODBasis {
+
+  /*========================================================================*/
+  /*================================ Link ==================================*/
+  /*========================================================================*/
+
+  /** ASTODLink represents a Link between Objects
+    @attribute stereotype Optional Stereotype of the link
+    @attribute link True if the link is of a plain "link"
+    @attribute aggregation True if the link is a "aggregation"
+    @attribute composition True if the link is a "composition"
+    @attribute derived True if it is is a derived link
+    @attribute name Optional name of the link
+    @attribute oDLinkLeftSide Left side of the link
+    @attribute oDLinkDirection Direction of the link
+    @attribute oDLinkRightSide Right side of the link
+  */
+  ODLink implements ODElement =
+    Stereotype?
+    (["link"] | ["aggregation"] | ["composition"])
+    ([derived:"/"])?
+    Name?
+    ODLinkLeftSide
+    ODLinkDirection
+    ODLinkRightSide;
+
+  /* Interface for all link directions */
+  interface ODLinkDirection;
+
+  /* All possible link directions available as variants of ODLinkDirection */
+  ODLeftToRightDir implements ODLinkDirection = {noSpace(2)}? "-" ">";
+  ODRightToLeftDir implements ODLinkDirection = {noSpace(2)}? "<" "-";
+  ODBiDir          implements ODLinkDirection = {noSpace(2, 3)}? "<" "-" ">";
+  ODUnspecifiedDir implements ODLinkDirection = {noSpace(2)}? "-" "-";
+
+  /** Common parts for left and right sides of a link (no concrete syntax)
+    ODLinkSide defines the properties of one side of a link. This construction
+    allows developers to access both sides of the link using the same interface,
+    even though the concrete syntax differs in their order.
+    @attribute modifier Optional link modifier for respective side
+    @attribute referenceName Non-empty List of object names on the respective ink side
+    @attribute oDLinkQualifier Qualifier of the respective side of the link
+    @attribute role Role of the objects on the respective link side
+   */
+  interface ODLinkSide =
+    Modifier?
+    referenceNames:ODName+
+    ODLinkQualifier?
+    role:Name?;
+
+  /* Variant of ODLinkSide for the left side adding concrete syntax */
+  ODLinkLeftSide implements ODLinkSide =
+    Modifier?
+    referenceNames:(ODName || ",")+
+    ODLinkQualifier?
+    ("(" role:Name ")")?;
+
+  /* Variant of ODLinkSide for the right side adding concrete syntax */
+  ODLinkRightSide implements ODLinkSide =
+    ("(" role:Name ")")?
+    ODLinkQualifier?
+    referenceNames:(ODName || ",")+
+    Modifier?;
+
+  /** ASTODLinkQualifier represents Qualifier for Links between Objects.
+    It can be either a concrete attribute name or a concrete value.
+    @attribute name Name of a referenced attribute (if set)
+    @attribute oDValue Concrete value of this qualifier (if set)
+  */
+  ODLinkQualifier = "[[" Name "]]" | "[" ODValue "]";
+
+}

@@ -1,0 +1,117 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+/* Beta-version: This is intended to become a MontiCore stable grammar. */
+
+package de.monticore;
+
+component grammar ODBasis extends de.monticore.UMLModifier,
+                        de.monticore.types.MCBasicTypes,
+                        de.monticore.types.BasicTypeSymbols,
+                        de.monticore.literals.MCCommonLiterals {
+
+  /*========================================================================*/
+  /*=========================== Artifact ===================================*/
+  /*========================================================================*/
+
+  /** ASTODArtifact represents the complete Diagram
+    @attribute package The package declaration of this Objectdiagram
+    @attribute importStatements List of imported elements
+    @attribute oDConformsStatement List of conform statements
+    @attribute objectDiagram the ObjectDiagram
+  */
+  ODArtifact =
+    ("package" package:(Name& || ".")+ ";")?
+    MCImportStatement*
+    ObjectDiagram;
+
+  /*========================================================================*/
+  /*================== INTERFACES AND EXTERNAL SYMBOLS =====================*/
+  /*========================================================================*/
+
+  /**
+   * ASTODValue represents the interface for all possible values
+   */
+  interface ODValue;
+
+  interface ODElement;
+
+  /*========================================================================*/
+  /*===================== Grammar, Diagramm, and Object ====================*/
+  /*========================================================================*/
+
+  /** ASTObjectDiagram represents a UML Objectdiagram
+    consisting of object and link definitions.
+    @attribute stereotype  Optional Stereotype
+    @attribute name        Name of this Objectdiagram
+    @attribute oDObject    List of Objects of this Objectdiagram
+    @attribute oDLink      List of Links of this Objectdiagram
+  */
+  symbol scope ObjectDiagram =
+    Stereotype?
+    "objectdiagram" Name
+    "{"
+      ( ODElement ";" )*
+    "}";
+
+  /** AST-ODObject represents an Object in a UML Objectdiagram.
+    The object contains attributes and may be hierarchically decomposed.
+    @attribute modifier Optional Modifier of this object
+    @attribute oDName Optional extended name of this object
+    @attribute referenceType Required type of this object
+    @attribute oDAttributes List of attributes of this object
+  */
+  symbol ODObject implements ODElement, ODValue =
+    Modifier?
+    ODName? ":" MCObjectType
+      "{" ODAttribute* "}";
+
+  // ODObject does not have a Name nonterminal.
+  // This method acts as surrogate (which is accepted as well):
+  astrule ODObject =
+    method public String getName() {
+      if (isPresentODName()) {
+          return getODName().getName();
+       }
+
+      return "";
+  };
+
+  /*========================================================================*/
+  /*============================ Attribute =================================*/
+  /*========================================================================*/
+
+  /** ASTODAttribute represents an Attribute of an Object.
+    The attribute may be List, Set or Map valued.
+    Furthermore, it is possible to specify the collection as incomplete
+    using "->" or as complete with an equality "=".
+    @attribute stereotype Optional stereotype of this attribute
+    @attribute modifier Optional modifier of this attribute
+    @attribute type Optional type of this attribute
+    @attribute name Name of this Attribute
+    @attribute complete True if attribute has a "complete" assignment
+    @attribute oDValue Attribute value in form of an ODValue
+    @attribute oDList Attribute value in form of an ODList
+    @attribute oDMap Attribute value in form of an ODMap
+  */
+  ODAttribute =
+    Stereotype?
+    Modifier?
+    MCType?
+    Name
+    ( (complete:"="|{noSpace(2)}? "-" ">") ODValue )? ";";
+
+  /*========================================================================*/
+  /*============================= Values ===================================*/
+  /*========================================================================*/
+
+  /** ASTODAbsent represents implementation of the ODValue interface
+      that represents an absent optional value.
+  */
+  ODAbsent implements ODValue = "...";
+
+  ODLiteral implements ODValue = SignedLiteral;
+
+  ODName implements ODValue = Name;
+
+
+}

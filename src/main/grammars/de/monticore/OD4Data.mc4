@@ -1,0 +1,12 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+/* Beta-version: This is intended to become a MontiCore stable grammar. */
+
+package de.monticore;
+
+grammar OD4Data extends de.monticore.ODAttribute,
+                        de.monticore.ODLink {
+
+  start ODArtifact;
+
+}

@@ -1,0 +1,16 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+/* Beta-version: This is intended to become a MontiCore stable grammar. */
+
+package de.monticore;
+
+component grammar ODExpression extends de.monticore.ODBasis,
+                                       de.monticore.expressions.ExpressionsBasis {
+
+  /*========================================================================*/
+  /*============================= Values ===================================*/
+  /*========================================================================*/
+
+  ODExpression implements ODValue = Expression;
+
+}

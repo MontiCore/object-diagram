@@ -1,0 +1,35 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+/* Beta-version: This is intended to become a MontiCore stable grammar. */
+
+package de.monticore;
+
+component grammar ODAttribute extends de.monticore.ODBasis {
+
+  /*========================================================================*/
+  /*============================ Attribute =================================*/
+  /*========================================================================*/
+
+  /** ASTODList represents a List of ODValues.
+      (Whether the order is relevant is not decided here.
+      Therefore, it is also possible to store sets this way.)
+    @attribute oDValue List of ODValue
+  */
+  ODList implements ODValue =
+    "[" (ODValue || ",")* "]";
+
+  /** ASTODMap represents a Map of values
+    @attribute oDMapElement List of ODMapElements
+  */
+  ODMap implements ODValue =
+    "[" (ODMapElement || ",")* "]";
+
+  /** ASTODMapElement represents a Map element of ODMap.
+      It can be either a concrete ODObject or a concrete ODValue.
+    @attribute key Key element of the key value pair
+    @attribute val Value element of the key value pair
+  */
+  ODMapElement =
+    key:ODValue {noSpace(2)}? "-" ">" val:ODValue;
+
+}
