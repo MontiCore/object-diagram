@@ -1,8 +1,31 @@
 /* (c) https://github.com/MontiCore/monticore */
+package de.monticore;
 
 /* Beta-version: This is intended to become a MontiCore stable grammar. */
 
-package de.monticore;
+/**
+   OD4Data is used to store and transport object-oriented data sets.
+
+   OD4Data is thefore similar to e.g. JSON and XML.
+   The main difference is that OD4Data allows links to
+   be explicitely defined and thus can build complex link structures,
+   i.e. arbitrary object graphs directly (and not only trees).
+   
+   For that purpose, objects can have an explicit name.
+   
+   OD4Data fits very well to the class diagrams in CD4Analysis.
+   
+   This grammar brings together the following OD components
+   * ODBasis.mc4
+       for the core structure of ODs
+   * ODAttribute.mc4
+       for the forms of attribute values 
+   * ODLink.mc4
+       defining the links between objects
+
+   It includes MCCommonLiterals to allow a rich set of values
+   (e.g. to define attribute and enum values.)
+*/
 
 grammar OD4Data extends de.monticore.ODAttribute,
                         de.monticore.ODLink {

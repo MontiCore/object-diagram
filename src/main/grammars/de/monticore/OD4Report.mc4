@@ -1,11 +1,34 @@
 /* (c) https://github.com/MontiCore/monticore */
+package de.monticore;
 
 /* Beta-version: This is intended to become a MontiCore stable grammar. */
 
-package de.monticore;
+/**
+   OD4Report is used to capture execution traces,
+   e.g. from tool executions.   
+
+   OD4Report builds on OD4Data and provides two specific 
+   extensions:
+   1. It includes DateLiterals to describe timing
+   2. It extends the Name concept by an unusual form of names
+      that encode a lot of additional information about the 
+      object content. This is e.g. helpful in MontoCore 
+      tool execution reports.
+   
+   This grammar brings together the following OD components
+   * ODBasis.mc4
+       for the core structure of ODs
+   * ODAttribute.mc4
+       for the forms of attribute values 
+   * ODLink.mc4
+       defining the links between objects
+  * OD4Data.mc4
+       ??? TODO: clarify.       
+*/
+
 
 grammar OD4Report extends de.monticore.ODBasics,
-	                  de.monticore.DateLiterals {
+	                      de.monticore.DateLiterals {
 
     start ODArtifact;
 
@@ -26,7 +49,7 @@ grammar OD4Report extends de.monticore.ODBasics,
     ODName implements ODValue =
       simpleName:Name | specialName:ODSpecialName;
 
-    // Both forms of names are returned as Name
+    // Both forms of names are returned as Name (i.e. as String)
     astrule ODName =
       method public String getName() {
         if (isPresentSimpleName()) {
@@ -36,8 +59,9 @@ grammar OD4Report extends de.monticore.ODBasics,
        };
 
     /** Special names start with a "@" and contain
-     * an optional Position "(4,5!2)":
-     * which stands for: line 4, col. 5, second occurence of that name 
+     * an optional Position in the source model "(4,5)":
+     * which stands for: line 4, col. 5 
+     * or "(4,5!2)" : second occurence of that name 
      */
     token ODSpecialName = '@'
       (Name|'!')+

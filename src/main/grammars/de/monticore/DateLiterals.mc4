@@ -1,8 +1,19 @@
 /* (c) https://github.com/MontiCore/monticore */
-
-/* Beta-version: This is intended to become a MontiCore stable grammar. */
-
 package de.monticore;
+
+/* This is a MontiCore stable grammar.
+ * Adaptations -- if any -- are conservative. */
+ 
+/**
+ * The DateLiterals grammar component introduces
+ * the Date non-terminal, which consists of a date and a time part
+ * e.g. used in object diagrams.
+ * 
+ * This format can well be used for computer generated dates in a data set.
+ *
+ * Date forms are "yyyy-MM-dd", "yyyy.MM.dd", "yyyy/MM/dd"
+ * Time format is "hh:mm:ss"
+ */
 
 component grammar DateLiterals extends de.monticore.literals.MCCommonLiterals {
 

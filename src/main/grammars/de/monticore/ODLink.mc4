@@ -1,8 +1,15 @@
 /* (c) https://github.com/MontiCore/monticore */
+package de.monticore;
 
 /* Beta-version: This is intended to become a MontiCore stable grammar. */
 
-package de.monticore;
+/**
+   ODLink is part of the OD grammars
+   describing UML object diagrams (in the UML/P variant).
+
+   ODLink defines forms of links including normal,
+   aggregation and composition links, various directions, role names etc. 
+*/
 
 component grammar ODLink extends de.monticore.ODBasis {
 
@@ -39,6 +46,13 @@ component grammar ODLink extends de.monticore.ODBasis {
   ODBiDir          implements ODLinkDirection = {noSpace(2, 3)}? "<" "-" ">";
   ODUnspecifiedDir implements ODLinkDirection = {noSpace(2)}? "-" "-";
 
+  /* TODO: Umbau zu (analog zu CD4Analysis)
+  ODLeftToRightDir implements ODLinkDirection = "->";
+  ODRightToLeftDir implements ODLinkDirection = "<-";
+  ODBiDir          implements ODLinkDirection = "<->";
+  ODUnspecifiedDir implements ODLinkDirection = "--";
+    */
+  
   /** Common parts for left and right sides of a link (no concrete syntax)
     ODLinkSide defines the properties of one side of a link. This construction
     allows developers to access both sides of the link using the same interface,

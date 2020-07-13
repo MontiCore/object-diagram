@@ -1,8 +1,15 @@
 /* (c) https://github.com/MontiCore/monticore */
+package de.monticore;
 
 /* Beta-version: This is intended to become a MontiCore stable grammar. */
 
-package de.monticore;
+/**
+   ODAttribute is part of the OD grammars
+   describing UML object diagrams (in the UML/P variant).
+
+   ODAttribute defines additional forms of attributes, 
+   including lists and maps.   
+*/
 
 component grammar ODAttribute extends de.monticore.ODBasis {
 
@@ -30,6 +37,6 @@ component grammar ODAttribute extends de.monticore.ODBasis {
     @attribute val Value element of the key value pair
   */
   ODMapElement =
-    key:ODValue {noSpace(2)}? "-" ">" val:ODValue;
+    key:ODValue "->" val:ODValue;
 
 }

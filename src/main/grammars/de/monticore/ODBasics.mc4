@@ -1,6 +1,6 @@
 /* (c) https://github.com/MontiCore/monticore */
 
-/* Beta-version: This is intended to become a MontiCore stable grammar. */
+// TODO: This file is redundant and shall be deleted
 
 package de.monticore;
 
@@ -119,7 +119,7 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
       Modifier?
       MCType?
       Name
-      ( (complete:"="|{noSpace(2)}? "-" ">") ( ODValue | ODList | ODMap | ODExpression ) )? ";";
+      ( (complete:"="| "->") ( ODValue | ODList | ODMap | ODExpression ) )? ";";
 
     /** ASTODList represents a List of ODValues.
         (Whether the order is relevant is not decided here.
@@ -141,7 +141,8 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
       @attribute val Value element of the key value pair
     */
     ODMapElement =
-      key:ODValue {noSpace(2)}? "-" ">" val:ODValue;
+      key:ODValue "->" val:ODValue;
+
 
     /*========================================================================*/
     /*================================ Link ==================================*/
@@ -175,6 +176,7 @@ grammar ODBasics extends de.monticore.types.MCFullGenericTypes,
     ODRightToLeftDir implements ODLinkDirection = {noSpace(2)}? "<" "-";
     ODBiDir          implements ODLinkDirection = {noSpace(2, 3)}? "<" "-" ">";
     ODUnspecifiedDir implements ODLinkDirection = {noSpace(2)}? "-" "-";
+
 
     /** Common parts for left and right sides of a link (no concrete syntax)
       ODLinkSide defines the properties of one side of a link. This construction

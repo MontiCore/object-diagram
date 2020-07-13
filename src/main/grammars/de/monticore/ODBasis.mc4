@@ -1,8 +1,17 @@
 /* (c) https://github.com/MontiCore/monticore */
+package de.monticore;
 
 /* Beta-version: This is intended to become a MontiCore stable grammar. */
 
-package de.monticore;
+/**
+   ODBasis is the basis for  the OD grammars
+   describing UML object diagrams (in the UML/P variant).
+
+   ODBasis defines the core structure of object diagrams,
+   consisting of objects (with potentially hierarchical nesting)
+   and explicit links.   
+*/ 
+
 
 component grammar ODBasis extends de.monticore.UMLModifier,
                         de.monticore.types.MCBasicTypes,
@@ -33,6 +42,10 @@ component grammar ODBasis extends de.monticore.UMLModifier,
    */
   interface ODValue;
 
+  /**
+   * ASTODElement represents the interface for all possible statements 
+   * in OD (which are in the basis version: objects and links)
+   */
   interface ODElement;
 
   /*========================================================================*/
@@ -98,7 +111,8 @@ component grammar ODBasis extends de.monticore.UMLModifier,
     Modifier?
     MCType?
     Name
-    ( (complete:"="|{noSpace(2)}? "-" ">") ODValue )? ";";
+    ( (complete:"="| "->") ODValue )? ";";
+
 
   /*========================================================================*/
   /*============================= Values ===================================*/
@@ -109,8 +123,12 @@ component grammar ODBasis extends de.monticore.UMLModifier,
   */
   ODAbsent implements ODValue = "...";
 
+// TODO: Überlegen, ob hier nicht Expression genommen wird.
+// weil ja nur ExpressionBasis importiert wird sind das faktisch nur die Literals
+// (aber es besteht später die Option zum Ausbau)
   ODLiteral implements ODValue = SignedLiteral;
 
+// TODO: Name wäre dann auch in ExpressionBasis enthalten
   ODName implements ODValue = Name;
 
 
