@@ -28,7 +28,7 @@ package de.monticore;
 
 
 grammar OD4Report extends de.monticore.ODBasics,
-	                      de.monticore.DateLiterals {
+                          de.monticore.DateLiterals {
 
     start ODArtifact;
 
