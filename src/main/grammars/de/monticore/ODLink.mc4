@@ -41,17 +41,12 @@ component grammar ODLink extends de.monticore.ODBasis {
   interface ODLinkDirection;
 
   /* All possible link directions available as variants of ODLinkDirection */
-  ODLeftToRightDir implements ODLinkDirection = {noSpace(2)}? "-" ">";
-  ODRightToLeftDir implements ODLinkDirection = {noSpace(2)}? "<" "-";
-  ODBiDir          implements ODLinkDirection = {noSpace(2, 3)}? "<" "-" ">";
-  ODUnspecifiedDir implements ODLinkDirection = {noSpace(2)}? "-" "-";
-
-  /* TODO: Umbau zu (analog zu CD4Analysis)
   ODLeftToRightDir implements ODLinkDirection = "->";
   ODRightToLeftDir implements ODLinkDirection = "<-";
   ODBiDir          implements ODLinkDirection = "<->";
   ODUnspecifiedDir implements ODLinkDirection = "--";
-    */
+
+  splittoken "->", "<-", "<->", "--";
   
   /** Common parts for left and right sides of a link (no concrete syntax)
     ODLinkSide defines the properties of one side of a link. This construction

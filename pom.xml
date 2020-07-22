@@ -217,7 +217,7 @@
               <transformers>
                 <transformer
                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>de.monticore.odbasics.ODBasicsCLI</mainClass>
+                  <mainClass>de.monticore.od4data.OD4DataCLI</mainClass>
                 </transformer>
               </transformers>
               <shadedClassifierName>odBasics-${cli.classifier}</shadedClassifierName>

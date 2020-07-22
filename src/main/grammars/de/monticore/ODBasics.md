@@ -32,7 +32,7 @@ accessible in [`monticore.odbasics._cocos.ODBasicsCoCos`][ODCoCos].
 The context conditions check different parts of the models, to ensure the semantic correctness.
 
 ### CLI Application
-[`de.monticore.odbasics.ODBasicsCLI`][ODCLI] contains a standalone cli application which 
+[`de.monticore.od4data.ODBasicsCLI`][ODCLI] contains a standalone cli application which 
 loads a given OD model.
 
 [ODBasicsGrammar]: https://git.rwth-aachen.de/monticoreuages/od/-/blob/master/src/main/grammars/de/monticore/ODBasics.mc4

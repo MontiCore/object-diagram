@@ -11,8 +11,8 @@ import de.monticore.od4report._symboltable.OD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportGlobalScope;
 import de.monticore.od4report._symboltable.OD4ReportSymbolTableCreatorDelegator;
 import de.monticore.od4report.prettyprinter.OD4ReportPrettyPrinterDelegator;
-import de.monticore.odbasics._ast.ASTODArtifact;
-import de.monticore.odbasics._ast.ASTODBasicsNode;
+import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.odbasis._ast.ASTODBasisNode;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
@@ -69,7 +69,7 @@ public class OD4ReportTool {
    * @param astodBasicsNode object node to be printed
    * @return node as String
    */
-  public static String prettyPrintODNode(ASTODBasicsNode astodBasicsNode) {
+  public static String prettyPrintODNode(ASTODBasisNode astodBasicsNode) {
     if (astodBasicsNode == null) {
       return "";
     }

@@ -9,7 +9,7 @@ import de.monticore.od4report._cocos.OD4ReportCoCoChecker;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.OD4ReportGlobalScope;
 import de.monticore.od4report._symboltable.OD4ReportSymbolTableCreatorDelegator;
-import de.monticore.odbasics._ast.ASTODArtifact;
+import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.ODLogReset;
 import de.se_rwth.commons.logging.Slf4jLog;

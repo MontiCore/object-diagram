@@ -4,7 +4,7 @@
 package de.monticore.od4report;
 
 import de.monticore.od4report._parser.OD4ReportParser;
-import de.monticore.odbasics._ast.ASTODArtifact;
+import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.Slf4jLog;
 import org.antlr.v4.runtime.RecognitionException;
@@ -45,7 +45,7 @@ public class OD4ReportExamplesTest {
   private void test(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
     OD4ReportParser parser = new OD4ReportParser();
-    Optional<ASTODArtifact> odDef = parser.parseODArtifact(model.toString());
+    Optional<ASTODArtifact> odDef = parser.parse(model.toString());
     assertFalse(parser.hasErrors());
     assertTrue(odDef.isPresent());
 

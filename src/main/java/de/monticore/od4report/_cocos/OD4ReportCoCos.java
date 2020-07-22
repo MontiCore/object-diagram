@@ -5,7 +5,7 @@
 package de.monticore.od4report._cocos;
 
 import de.monticore.dateliterals._cocos.DateLiteralsCoCos;
-import de.monticore.odbasics._cocos.ODBasicsCoCos;
+import de.monticore.odbasis._cocos.ODBasicsCoCos;
 
 public class OD4ReportCoCos {
 

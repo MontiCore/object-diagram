@@ -15,7 +15,7 @@ package de.monticore;
 
 component grammar ODBasis extends de.monticore.UMLModifier,
                         de.monticore.types.MCBasicTypes,
-                        de.monticore.types.BasicTypeSymbols,
+                        de.monticore.symbols.OOSymbols,
                         de.monticore.literals.MCCommonLiterals {
 
   /*========================================================================*/
@@ -48,6 +48,8 @@ component grammar ODBasis extends de.monticore.UMLModifier,
    */
   interface ODElement;
 
+  interface ODObject = Modifier? MCObjectType ODAttribute*;
+
   /*========================================================================*/
   /*===================== Grammar, Diagramm, and Object ====================*/
   /*========================================================================*/
@@ -73,21 +75,30 @@ component grammar ODBasis extends de.monticore.UMLModifier,
     @attribute referenceType Required type of this object
     @attribute oDAttributes List of attributes of this object
   */
-  symbol ODObject implements ODElement, ODValue =
+  symbol ODNamedObject implements ODElement, ODObject, ODValue, Variable =
     Modifier?
-    ODName? ":" MCObjectType
+    Name ":" MCObjectType
       "{" ODAttribute* "}";
+
+  ODAnonymousObject implements ODElement, ODObject, ODValue =
+      Modifier?
+      ":" MCObjectType
+        "{" ODAttribute* "}";
+
+  astrule ODAnonymousObject =
+    method public String getName() {
+      return "";
+    };
 
   // ODObject does not have a Name nonterminal.
   // This method acts as surrogate (which is accepted as well):
-  astrule ODObject =
-    method public String getName() {
-      if (isPresentODName()) {
-          return getODName().getName();
-       }
-
-      return "";
-  };
+//  astrule ODObject =
+//    method public String getName() {
+//      if (isPresentODName()) {
+//          return getODName().getName();
+//       }
+//      return "";
+//  };
 
   /*========================================================================*/
   /*============================ Attribute =================================*/
@@ -124,12 +135,13 @@ component grammar ODBasis extends de.monticore.UMLModifier,
   ODAbsent implements ODValue = "...";
 
 // TODO: Überlegen, ob hier nicht Expression genommen wird.
+/* @BR: ODBasis importiert nicht ExpressionBasis, SignedLiteral und Literal sind unabhängige
+  Produktionen (Stand: 20.07.20), SignedLiteral wird z.B. für negative Zahlen benötigt. */
 // weil ja nur ExpressionBasis importiert wird sind das faktisch nur die Literals
 // (aber es besteht später die Option zum Ausbau)
   ODLiteral implements ODValue = SignedLiteral;
 
 // TODO: Name wäre dann auch in ExpressionBasis enthalten
   ODName implements ODValue = Name;
-
 
 }

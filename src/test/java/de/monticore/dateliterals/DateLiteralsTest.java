@@ -6,8 +6,8 @@ import de.monticore.dateliterals._ast.*;
 import de.monticore.dateliterals.prettyprinter.DateLiteralsPrettyPrinter;
 import de.monticore.od4report._ast.ASTODDate;
 import de.monticore.od4report._parser.OD4ReportParser;
-import de.monticore.odbasics._ast.ASTODArtifact;
-import de.monticore.odbasics._ast.ASTODObject;
+import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.odbasis._ast.ASTODObject;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.Before;
@@ -39,13 +39,14 @@ public class DateLiteralsTest {
     Optional<ASTODArtifact> astodArtifact = od4ReportParser.parseODArtifact(SIMPLEDATE.toString());
     assertTrue(astodArtifact.isPresent());
 
-    assertEquals(2, astodArtifact.get().getObjectDiagram().getODObjectList().size());
-    Optional<ASTODObject> object = astodArtifact.get().getObjectDiagram().getODObjectList().stream()
+    assertEquals(2, astodArtifact.get().getObjectDiagram().getODElementsList().size());
+    Optional<ASTODObject> object = astodArtifact.get().getObjectDiagram().getODElementsList()
+        .stream().filter(elem -> elem instanceof ASTODObject).map(elem -> (ASTODObject) elem)
         .filter(o -> "myObject2".equals(o.getName())).findFirst();
     assertTrue(object.isPresent());
-    assertEquals(3, object.get().getODAttributeList().size());
+    assertEquals(3, object.get().getODAttributesList().size());
 
-    object.get().getODAttributeList().forEach(attr -> {
+    object.get().getODAttributesList().forEach(attr -> {
       assertTrue(attr.isPresentODValue());
       assertTrue(attr.getODValue() instanceof ASTODDate);
       assertNotNull(attr.getODValue());
