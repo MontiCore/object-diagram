@@ -220,7 +220,7 @@
                   <mainClass>de.monticore.od4data.OD4DataCLI</mainClass>
                 </transformer>
               </transformers>
-              <shadedClassifierName>odBasics-${cli.classifier}</shadedClassifierName>
+              <shadedClassifierName>od4data-${cli.classifier}</shadedClassifierName>
             </configuration>
           </execution>
 
