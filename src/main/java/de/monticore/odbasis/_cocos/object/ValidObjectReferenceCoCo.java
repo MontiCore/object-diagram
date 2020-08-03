@@ -10,7 +10,7 @@ import de.monticore.odbasis._ast.ASTODName;
 import de.monticore.odbasis._ast.ASTODObject;
 import de.monticore.odbasis._ast.ASTODValue;
 import de.monticore.odbasis._cocos.ODBasisASTODObjectCoCo;
-import de.monticore.odbasis._symboltable.ODNamedObjectSymbol;
+import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.se_rwth.commons.logging.Log;
 
 import java.util.Optional;
@@ -30,9 +30,9 @@ public class ValidObjectReferenceCoCo implements ODBasisASTODObjectCoCo {
   }
 
   private boolean checkReference(ASTODName astodName, ASTODObject node) {
-    Optional<ODNamedObjectSymbol> symbol = Optional.empty();
+    Optional<VariableSymbol> symbol = Optional.empty();
     if (node.getEnclosingScope() != null) {
-      symbol = node.getEnclosingScope().resolveODNamedObject(astodName.getName());
+      symbol = node.getEnclosingScope().resolveVariable(astodName.getName());
     }
     return symbol.isPresent();
   }

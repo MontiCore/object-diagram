@@ -5,6 +5,7 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.odbasis._symboltable;
 
+import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.monticore.symboltable.ISymbol;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public class ObjectDiagramSymbol extends ObjectDiagramSymbolTOP {
     super(name);
   }
 
-  public List<ODNamedObjectSymbol> getObjects() {
-    return ISymbol.sortSymbolsByPosition(getSpannedScope().getLocalODNamedObjectSymbols());
+  public List<VariableSymbol> getObjects() {
+    return ISymbol.sortSymbolsByPosition(getSpannedScope().getLocalVariableSymbols());
   }
 
 }

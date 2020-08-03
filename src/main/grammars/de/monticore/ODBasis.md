@@ -9,7 +9,7 @@ data structure in certain projets (e.g. artifact toolchain)and (ii) as a report 
 languages developed with MontiCore. For its lastest version the OD language was enhanced with
 the possiblility of using expressions in its attributes extending its capabilities.
 
-The grammar file is [`de.monticore.ODBasics`][ODBasicsGrammar].
+The grammar file is [`de.monticore.ODBasis`][ODBasicsGrammar].
 
 The OD language the monticoreuages  
  [`de.monticore.types.MCFullGenericTypes`][MCFullGenericGrammar] and
@@ -35,13 +35,13 @@ The context conditions check different parts of the models, to ensure the semant
 [`de.monticore.od4data.ODBasicsCLI`][ODCLI] contains a standalone cli application which 
 loads a given OD model.
 
-[ODBasicsGrammar]: https://git.rwth-aachen.de/monticoreuages/od/-/blob/master/src/main/grammars/de/monticore/ODBasics.mc4
+[ODBasicsGrammar]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/grammars/de/monticore/ODBasis.mc4
 [MCFullGenericGrammar]: https://git.rwth-aachen.de/monticore/monticore/-/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCFullGenericTypes.mc4
 [MCUMLModifierGrammar]: https://git.rwth-aachen.de/monticore/monticore/-/blob/dev/monticore-grammar/src/main/grammars/de/monticore/UMLModifier.mc4
 [MCExpressionBasicsGrammar]: https://git.rwth-aachen.de/monticore/monticore/-/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/ExpressionsBasis.mc4
-[_ast]: https://git.rwth-aachen.de/monticoreuages/od/-/tree/master/src%2Fmain%2Fjava%2Fde%2Fmonticore%2Flang%2Fodbasics%2F_ast
-[_symboltable]: https://git.rwth-aachen.de/monticoreuages/od/-/tree/master/src%2Fmain%2Fjava%2Fde%2Fmonticore%2Flang%2Fodbasics%2F_symboltable
-[prettyprinter]: https://git.rwth-aachen.de/monticoreuages/od/-/tree/master/src%2Fmain%2Fjava%2Fde%2Fmonticore%2Flang%2Fodbasics%2Fprettyprinter
-[cocos]: https://git.rwth-aachen.de/monticoreuages/od/-/tree/master/src%2Fmain%2Fjava%2Fde%2Fmonticore%2Flang%2Fodbasics%2F_cocos
-[ODCoCos]: https://git.rwth-aachen.de/monticoreuages/od/-/blob/master/src/main/java/de/monticore/odbasics/_cocos/ODBasicsCoCos.java
-[ODCLI]: https://git.rwth-aachen.de/monticoreuages/od/-/blob/master/src/main/java/de/monticore/odbasics/ODBasicsCLI.java
+[_ast]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/odbasis/_ast
+[_symboltable]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/odbasis/_symboltable
+[prettyprinter]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/odbasis/prettyprinter
+[cocos]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/odbasis/_cocos
+[ODCoCos]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/java/de/monticore/odbasis/_cocos/ODBasicsCoCos.java
+[ODCLI]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/java/de/monticore/od4data/OD4DataCLI.java

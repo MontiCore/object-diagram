@@ -16,7 +16,7 @@ public class ValidLinkReferenceCoCo implements ODLinkASTODLinkCoCo {
   @Override
   public void check(ASTODLink node) {
     node.getLeftReferenceNames().forEach(refName -> {
-      if (!node.getEnclosingScope().resolveODNamedObject(refName).isPresent()) {
+      if (!node.getEnclosingScope().resolveVariable(refName).isPresent()) {
         Log.error(
             "Violation of CoCo 'ValidLinkReferenceCoCo': " + refName + " cannot be " + "resloved",
             node.get_SourcePositionStart());
@@ -24,7 +24,7 @@ public class ValidLinkReferenceCoCo implements ODLinkASTODLinkCoCo {
     });
 
     node.getRightReferenceNames().forEach(refName -> {
-      if (!node.getEnclosingScope().resolveODNamedObject(refName).isPresent()) {
+      if (!node.getEnclosingScope().resolveVariable(refName).isPresent()) {
         Log.error(
             "Violation of CoCo 'ValidLinkReferenceCoCo': " + refName + " cannot be " + "resloved",
             node.get_SourcePositionStart());

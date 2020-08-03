@@ -195,14 +195,17 @@ public class ODBasisPrettyPrinter extends MCBasicTypesPrettyPrinter
    * @see de.monticore.odbasis._visitor.ODBasisVisitor#handle(de.monticore.odbasis._ast.ASTODLiteral)
    */
   @Override
-  public void handle(ASTODLiteral astodSignedLiteral) {
-    astodSignedLiteral.getSignedLiteral().accept(getRealThis());
+  public void handle(ASTODLiteral astodLiteral) {
+    astodLiteral.getLiteral().accept(getRealThis());
   }
 
-  //  @Override
-  //  public void handle(ASTODExpression astodExpression) {
-  //    astodExpression.getExpression().accept(getRealThis());
-  //  }
+  /**
+   * @see de.monticore.odbasis._visitor.ODBasisVisitor#handle(de.monticore.odbasis._ast.ASTODSignedLiteral)
+   */
+  @Override
+  public void handle(ASTODSignedLiteral astodSignedLiteral) {
+    astodSignedLiteral.getSignedLiteral().accept(getRealThis());
+  }
 
   /**
    * @see de.monticore.odbasis._visitor.ODBasisVisitor#handle(de.monticore.odbasis._ast.ASTODAbsent)

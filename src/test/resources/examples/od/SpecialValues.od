@@ -9,6 +9,10 @@ objectdiagram SpecialValues {
     myList = ["a", "b"];
     myEmpty = ...;
     negativ = -111;
+    longValue = 20L;
+    bool = true;
+    doubleValue = 2.4444;
+    negDoubleValue = -2.444;
   };
 
 }

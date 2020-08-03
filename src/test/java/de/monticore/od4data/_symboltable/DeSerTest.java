@@ -41,8 +41,7 @@ public class DeSerTest {
     Optional<ASTODArtifact> astodArtifact = odBasicsParser.parse(TEASEROD.toString());
     assertTrue(astodArtifact.isPresent());
 
-    OD4DataArtifactScope od4DataArtifactScope = OD4DataTool
-        .createSymbolTable(astodArtifact.get());
+    OD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get());
 
     // deserialize
     OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
@@ -56,14 +55,9 @@ public class DeSerTest {
     // serialize
     OD4DataArtifactScope loadedBasicsArtifactScope = odBasicsScopeDeSer
         .load(storedSymTable.toString());
-    odBasicsScopeDeSer = new OD4DataScopeDeSer();
-    String s1 = odBasicsScopeDeSer.serialize(loadedBasicsArtifactScope);
-    odBasicsScopeDeSer = new OD4DataScopeDeSer();
-    String s2 = odBasicsScopeDeSer.serialize(od4DataArtifactScope);
-    assertEquals(s1, s2);
 
-//    assertEquals(odBasicsScopeDeSer.serialize(odBasicsArtifactScope),
-//        odBasicsScopeDeSer.serialize(loadedBasicsArtifactScope));
+    assertEquals(odBasicsScopeDeSer.serialize(od4DataArtifactScope),
+        odBasicsScopeDeSer.serialize(loadedBasicsArtifactScope));
   }
 
 }

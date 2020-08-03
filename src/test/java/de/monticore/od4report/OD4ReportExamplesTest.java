@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * This test compares the ASTs of the files in the examples folder with the pretty-printed versions
  * of these files.
- *
  */
 public class OD4ReportExamplesTest {
 

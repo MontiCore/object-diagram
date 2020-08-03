@@ -49,12 +49,11 @@ grammar OD4Development extends de.monticore.ODExpression,
 
   start ODArtifact;
 
-  // TODO: (wenn OD schon auf MC snapshot steht sollte es gehen:
-  // splittoken "->", "<-", "<->", "--";
+  splittoken "->", "<-", "<->", "--";
   
   // Certain keywords of the used grammars shall not become
   // restricted words in other context:
-//TODO:  nokeyword "aggregation", "composition", "link", "objectdiagram";
-//TODO:  nokeyword "conformsTo";
-  
+  nokeyword "aggregation", "composition", "link", "objectdiagram";
+  nokeyword "conformsTo";
+
 }

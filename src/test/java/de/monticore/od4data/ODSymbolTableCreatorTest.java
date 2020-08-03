@@ -7,8 +7,8 @@ import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data._symboltable.OD4DataArtifactScope;
 import de.monticore.od4data._symboltable.OD4DataGlobalScope;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import de.monticore.odbasis._symboltable.ODNamedObjectSymbol;
 import de.monticore.odbasis._symboltable.ObjectDiagramSymbol;
+import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,16 +38,16 @@ public class ODSymbolTableCreatorTest {
     final ObjectDiagramSymbol objectDiagramSymbol = createODDefinitionFromFile(
         "AuctionParticipants");
 
-    List<ODNamedObjectSymbol> odObjects = objectDiagramSymbol.getObjects();
+    List<VariableSymbol> odObjects = objectDiagramSymbol.getObjects();
 
     assertFalse(odObjects.isEmpty());
     assertEquals(6, odObjects.size());
-    for (ODNamedObjectSymbol obj : odObjects) {
+    for (VariableSymbol obj : odObjects) {
       assertTrue(obj.isPresentAstNode());
     }
 
-    Optional<ODNamedObjectSymbol> kupferObject = objectDiagramSymbol.getSpannedScope()
-        .resolveODNamedObject("kupfer912");
+    Optional<VariableSymbol> kupferObject = objectDiagramSymbol.getSpannedScope()
+        .resolveVariable("kupfer912");
     assertTrue(kupferObject.isPresent());
   }
 
@@ -56,14 +56,14 @@ public class ODSymbolTableCreatorTest {
     final ObjectDiagramSymbol objectDiagramSymbol = createObjectDiagramFromAST(
         "AuctionParticipants");
 
-    List<ODNamedObjectSymbol> odObjects = objectDiagramSymbol.getObjects();
+    List<VariableSymbol> odObjects = objectDiagramSymbol.getObjects();
 
     assertFalse(odObjects.isEmpty());
-    for (ODNamedObjectSymbol obj : odObjects) {
+    for (VariableSymbol obj : odObjects) {
       assertTrue(obj.isPresentAstNode());
     }
 
-    assertTrue(objectDiagramSymbol.getSpannedScope().resolveODNamedObject("kupfer912").isPresent());
+    assertTrue(objectDiagramSymbol.getSpannedScope().resolveVariable("kupfer912").isPresent());
   }
 
   @Test
@@ -71,15 +71,15 @@ public class ODSymbolTableCreatorTest {
     final ObjectDiagramSymbol objectDiagramSymbol = createODDefinitionFromFile(
         "STInnerLinkVariants");
 
-    List<ODNamedObjectSymbol> odObjects = objectDiagramSymbol.getObjects();
+    List<VariableSymbol> odObjects = objectDiagramSymbol.getObjects();
 
     assertEquals(5, odObjects.size());
-    for (ODNamedObjectSymbol obj : odObjects) {
+    for (VariableSymbol obj : odObjects) {
       assertTrue(obj.isPresentAstNode());
     }
 
-    Optional<ODNamedObjectSymbol> fooBarObject = objectDiagramSymbol.getSpannedScope()
-        .resolveODNamedObject("fooBar2");
+    Optional<VariableSymbol> fooBarObject = objectDiagramSymbol.getSpannedScope()
+        .resolveVariable("fooBar2");
     assertTrue(fooBarObject.isPresent());
   }
 

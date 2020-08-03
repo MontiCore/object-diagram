@@ -5,10 +5,10 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.odlink._cocos.link;
 
-import de.monticore.odbasis._symboltable.ODNamedObjectSymbol;
 import de.monticore.odlink._ast.ASTODLink;
 import de.monticore.odlink._cocos.ODLinkASTODLinkCoCo;
 import de.monticore.symbols.basicsymbols._symboltable.BasicSymbolsSymbolTablePrinter;
+import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.monticore.types.check.SymTypeExpression;
 import de.se_rwth.commons.logging.Log;
 
@@ -25,7 +25,7 @@ public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
   @Override
   public void check(ASTODLink node) {
     List<SymTypeExpression> leftTypes = node.getLeftReferenceNames().stream().map(refName -> {
-      Optional<ODNamedObjectSymbol> symbol = node.getEnclosingScope().resolveODNamedObject(refName);
+      Optional<VariableSymbol> symbol = node.getEnclosingScope().resolveVariable(refName);
       if (!symbol.isPresent()) {
         Log.error("Violation of CoCo 'LinkEndConsistencyCoCo'", node.get_SourcePositionStart());
       }
@@ -48,7 +48,7 @@ public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
 
     /* TODO SH: Is there any nicer way to check equality? */
     List<SymTypeExpression> rightTypes = node.getRightReferenceNames().stream().map(refName -> {
-      Optional<ODNamedObjectSymbol> symbol = node.getEnclosingScope().resolveODNamedObject(refName);
+      Optional<VariableSymbol> symbol = node.getEnclosingScope().resolveVariable(refName);
       if (!symbol.isPresent()) {
         Log.error("Violation of CoCo 'LinkEndConsistencyCoCo'", node.get_SourcePositionStart());
       }

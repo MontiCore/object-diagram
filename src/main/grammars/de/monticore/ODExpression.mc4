@@ -3,16 +3,18 @@ package de.monticore;
 
 
 // TODO: Überlegen, wie das hier genutzt wird:
-// evtl. brauchen wir das gar nicht groß, wenn in Basis bereits auf 
+/* @BR: Wenn wir ExpressionsBasis in ODBasis extenden, dann holen wir uns NameExpression und
+LiteralExpression
+ aus der ExpressionsBasis in die Basis Sprache der ODs, was ich vermeiden will. Einer der Gründe
+ wäre, dass wenn nichts an der Sprache geändert wird, einfache Namen dann als NameExpression
+ geparst werden. Als Sprachnutzer, der ggf. nicht damit rechnet, dass alle Attribute Werte, die
+ eigentlich ein Name sein sollten doch eine NameExpression sind.*/
+// evtl. brauchen wir das gar nicht groß, wenn in Basis bereits auf
 // Expression aufgesetzt wird
 // und in OD4Dev extenden wir dann MCCommonExpressions?
 
 component grammar ODExpression extends de.monticore.ODBasis,
                                        de.monticore.expressions.ExpressionsBasis {
-
-  /*========================================================================*/
-  /*============================= Values ===================================*/
-  /*========================================================================*/
 
   ODExpression implements ODValue = Expression;
 
