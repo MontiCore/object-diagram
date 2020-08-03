@@ -1,7 +1,8 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore;
 
-/* Beta-version: This is intended to become a MontiCore stable grammar. */
+/* This is a MontiCore stable grammar.
+ * Adaptations -- if any -- are conservative. */
 
 /**
    OD4Report is used to capture execution traces,
@@ -23,7 +24,7 @@ package de.monticore;
    * ODLink.mc4
        defining the links between objects
   * OD4Data.mc4
-       ??? TODO: clarify.
+       = ODAttribute.mc4 + ODLink.mc4
 */
 
 

@@ -1,6 +1,6 @@
 <!-- (c) https://github.com/MontiCore/monticore -->
 
-<!-- Beta-version: This is intended to become a MontiCore stable grammar. -->
+<!-- Beta-version: This is intended to become a MontiCore stable explanation. -->
 
 # (UML/P) OD
 

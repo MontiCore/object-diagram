@@ -13,6 +13,12 @@ LiteralExpression
 // Expression aufgesetzt wird
 // und in OD4Dev extenden wir dann MCCommonExpressions?
 
+// TODO BR4SH:
+// wie wäre es diese Grammatik in OD4Development zu expandieren?
+// sie scheint ja genau nur dort gebracht zu werden?
+
+// TODO: @Deprecated -- to delete
+
 component grammar ODExpression extends de.monticore.ODBasis,
                                        de.monticore.expressions.ExpressionsBasis {
 

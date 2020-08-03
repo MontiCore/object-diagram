@@ -34,8 +34,8 @@ package de.monticore;
        for the forms of attribute values 
    * ODLink.mc4
        defining the links between objects
-   * ODExpression.mc4
-       concretizing the values allowed (using MCExpressionBasis)
+   * Expression.mc4
+       concretizing the values allowed 
 
    It builds on MCTypes, but disllows e.g. List<int> as type, 
    because they can be represented via associations. 
@@ -45,9 +45,12 @@ package de.monticore;
 */
 
 grammar OD4Development extends de.monticore.ODExpression,
+// TODO:            de.monticore.expressions.ExpressionsBasis,
                                de.monticore.OD4Data      {
 
   start ODArtifact;
+
+// TODO:  ODExpression implements ODValue = Expression;
 
   splittoken "->", "<-", "<->", "--";
   

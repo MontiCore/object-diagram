@@ -1,10 +1,9 @@
 <!-- (c) https://github.com/MontiCore/monticore -->
 
-<!-- Beta-version: This is intended to become a MontiCore stable grammar. -->
 
 # DateLiterals
 
-TODO: Write an awesome but precise description!
+TODO: Write a very small  but precise description!
 
 The grammar file is [`de.monticore.DateLiterals`][DateLiterals].
 

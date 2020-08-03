@@ -107,8 +107,6 @@ component grammar ODBasis extends de.monticore.UMLModifier,
     @attribute name Name of this Attribute
     @attribute complete True if attribute has a "complete" assignment
     @attribute oDValue Attribute value in form of an ODValue
-    @attribute oDList Attribute value in form of an ODList
-    @attribute oDMap Attribute value in form of an ODMap
   */
   ODAttribute =
     Stereotype?
@@ -127,11 +125,12 @@ component grammar ODBasis extends de.monticore.UMLModifier,
   */
   ODAbsent implements ODValue = "...";
 
-// TODO: Überlegen, ob hier nicht Expression genommen wird.
-/* @BR: ODBasis importiert nicht ExpressionBasis, SignedLiteral und Literal sind unabhängige
-  Produktionen (Stand: 20.07.20), SignedLiteral wird z.B. für negative Zahlen benötigt. */
-// weil ja nur ExpressionBasis importiert wird sind das faktisch nur die Literals
-// (aber es besteht später die Option zum Ausbau)
+// TODO:  for SH
+// Entweder wir nehmen hier bereits die Expressions, oder wir nehmen 
+// gar keine Literals hier, sondern tun dies erst beim Einbinden in Ausbaustufen
+// SignedLiteral hier einzubinden ist jedenfalls suboptimal, da
+// später damit keine Expressions mehr definiert werden können:
+// Expressions und SignedLiterals beissen sich. Leider.
   ODSignedLiteral implements ODValue = SignedLiteral;
 
   ODLiteral implements ODValue = Literal;
