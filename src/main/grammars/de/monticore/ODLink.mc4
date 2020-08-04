@@ -47,7 +47,11 @@ component grammar ODLink extends de.monticore.ODBasis {
   ODBiDir          implements ODLinkDirection = "<->";
   ODUnspecifiedDir implements ODLinkDirection = "--";
 
-  splittoken "->", "<-", "<->", "--";
+  // this is needed to parse e.g. -3<-2 correctly:
+  splittoken "<-";
+  // if needed, the following splitting of token can be heplful,
+  // and can be added in any subgrammar:
+  // splittoken "->", "<->", "--";
   
   /** Common parts for left and right sides of a link (no concrete syntax)
     ODLinkSide defines the properties of one side of a link. This construction
