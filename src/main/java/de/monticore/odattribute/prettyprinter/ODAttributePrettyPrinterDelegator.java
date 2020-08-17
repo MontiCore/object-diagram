@@ -7,6 +7,7 @@ package de.monticore.odattribute.prettyprinter;
 import de.monticore.odattribute._ast.ASTODAttributeNode;
 import de.monticore.odattribute._visitor.ODAttributeDelegatorVisitor;
 import de.monticore.odbasis._ast.ASTODBasisNode;
+import de.monticore.odbasis.prettyprinter.ODBasisPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.prettyprint.MCCollectionTypesPrettyPrinter;
 import de.monticore.types.prettyprint.MCFullGenericTypesPrettyPrinter;
@@ -46,6 +47,7 @@ public class ODAttributePrettyPrinterDelegator extends ODAttributeDelegatorVisit
 
   private void init() {
     realThis = this;
+    setODBasisVisitor(new ODBasisPrettyPrinter(printer));
     setODAttributeVisitor(new ODAttributePrettyPrinter(printer));
 
     setMCSimpleGenericTypesVisitor(new MCSimpleGenericTypesPrettyPrinter(printer));

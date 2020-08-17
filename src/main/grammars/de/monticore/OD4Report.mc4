@@ -44,11 +44,11 @@ grammar OD4Report extends de.monticore.OD4Data,
      *  otherwise anonymous AST nodes and encode certain forms
      *  of information, such as line/colum of defining occurrence.
      *
-     *  @attribute name Name
-     *  @attribute oDSpecialName Specific naming for Objects
+     *  @attribute simpleName Name of the object
+     *  @attribute specialName Specific naming for objects
      */
     ODName implements ODValue =
-      simpleName:Name | specialName:ODSpecialName;
+      simpleName:NameExpression | specialName:ODSpecialName;
 
     ODReportObject astextends ASTODNamedObject implements ODElement, ODObject, ODValue =
         Modifier?
@@ -59,7 +59,7 @@ grammar OD4Report extends de.monticore.OD4Data,
     astrule ODName =
       method public String getName() {
         if (isPresentSimpleName()) {
-          return getSimpleName();
+          return getSimpleName().getName();
         }
         return getSpecialName();
        };

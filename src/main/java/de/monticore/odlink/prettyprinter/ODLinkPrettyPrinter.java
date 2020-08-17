@@ -8,11 +8,11 @@ import de.monticore.odbasis._ast.ASTODName;
 import de.monticore.odlink._ast.*;
 import de.monticore.odlink._visitor.ODLinkVisitor;
 import de.monticore.prettyprint.IndentPrinter;
-import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
+import de.monticore.prettyprint.MCBasicsPrettyPrinter;
 
 import java.util.Iterator;
 
-public class ODLinkPrettyPrinter extends MCBasicTypesPrettyPrinter implements ODLinkVisitor {
+public class ODLinkPrettyPrinter extends MCBasicsPrettyPrinter implements ODLinkVisitor {
 
   /**
    * Constructor.

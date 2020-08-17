@@ -7,6 +7,7 @@
 package de.monticore.odbasis.prettyprinter;
 
 import de.monticore.MCCommonLiteralsPrettyPrinter;
+import de.monticore.expressions.prettyprint.CommonExpressionsPrettyPrinter;
 import de.monticore.literals.mccommonliterals._ast.ASTMCCommonLiteralsNode;
 import de.monticore.odbasis._ast.ASTODBasisNode;
 import de.monticore.odbasis._visitor.ODBasisDelegatorVisitor;
@@ -68,22 +69,14 @@ public class ODBasisPrettyPrinterDelegator extends ODBasisDelegatorVisitor {
     return getPrinter().getContent();
   }
 
-  //  public String prettyprint(ASTMCSimpleGenericTypesNode astmcSimpleGenericTypesNode) {
-  //    getPrinter().clearBuffer();
-  //    astmcSimpleGenericTypesNode.accept(getRealThis());
-  //    return getPrinter().getContent();
-  //  }
-
   private void init() {
     realThis = this;
     setODBasisVisitor(new ODBasisPrettyPrinter(printer));
     setUMLStereotypeVisitor(new UMLStereotypePrettyPrinter(printer));
     setUMLModifierVisitor(new UMLModifierPrettyPrinter(printer));
     setMCCommonLiteralsVisitor(new MCCommonLiteralsPrettyPrinter(printer));
-    //    setMCSimpleGenericTypesVisitor(new MCSimpleGenericTypesPrettyPrinter(printer));
+    setExpressionsBasisVisitor(new CommonExpressionsPrettyPrinter(printer));
     setMCBasicTypesVisitor(new MCBasicTypesPrettyPrinter(printer));
-    //    setMCFullGenericTypesVisitor(new MCFullGenericTypesPrettyPrinter(printer));
-    //    setMCCollectionTypesVisitor(new MCCollectionTypesPrettyPrinter(printer));
   }
 
 }

@@ -12,8 +12,8 @@ import de.monticore.odbasis._ast.*;
 import de.monticore.odbasis._visitor.ODBasisInheritanceVisitor;
 import de.monticore.odbasis._visitor.ODBasisVisitor;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.prettyprint.MCBasicsPrettyPrinter;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
-import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
 import de.se_rwth.commons.Names;
 
 import java.util.Iterator;
@@ -25,7 +25,7 @@ import java.util.Iterator;
  * whole subtree of a node has been traversed. The ownVisit-Methods stop the automatic traversal
  * order and allow to explictly visit subtrees by calling getVisitor().startVisit(ASTNode)
  */
-public class ODBasisPrettyPrinter extends MCBasicTypesPrettyPrinter
+public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
     implements ODBasisInheritanceVisitor {
 
   // printer to use
@@ -192,19 +192,11 @@ public class ODBasisPrettyPrinter extends MCBasicTypesPrettyPrinter
   }
 
   /**
-   * @see de.monticore.odbasis._visitor.ODBasisVisitor#handle(de.monticore.odbasis._ast.ASTODLiteral)
+   * @see de.monticore.odbasis._visitor.ODBasisVisitor#handle(de.monticore.odbasis._ast.ASTODSimpleAttributeValue)
    */
   @Override
-  public void handle(ASTODLiteral astodLiteral) {
-    astodLiteral.getLiteral().accept(getRealThis());
-  }
-
-  /**
-   * @see de.monticore.odbasis._visitor.ODBasisVisitor#handle(de.monticore.odbasis._ast.ASTODSignedLiteral)
-   */
-  @Override
-  public void handle(ASTODSignedLiteral astodSignedLiteral) {
-    astodSignedLiteral.getSignedLiteral().accept(getRealThis());
+  public void handle(ASTODSimpleAttributeValue astodSimpleAttributeValue) {
+    astodSimpleAttributeValue.getExpression().accept(getRealThis());
   }
 
   /**

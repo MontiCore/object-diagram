@@ -10,9 +10,9 @@ import de.monticore.od4report._ast.ASTODReportObject;
 import de.monticore.od4report._visitor.OD4ReportInheritanceVisitor;
 import de.monticore.od4report._visitor.OD4ReportVisitor;
 import de.monticore.prettyprint.IndentPrinter;
-import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
+import de.monticore.prettyprint.MCBasicsPrettyPrinter;
 
-public class OD4ReportPrettyPrinter extends MCBasicTypesPrettyPrinter implements
+public class OD4ReportPrettyPrinter extends MCBasicsPrettyPrinter implements
     OD4ReportInheritanceVisitor {
 
   /**

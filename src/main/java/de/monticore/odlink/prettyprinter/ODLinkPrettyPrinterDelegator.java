@@ -5,7 +5,7 @@
 package de.monticore.odlink.prettyprinter;
 
 import de.monticore.odbasis._ast.ASTODBasisNode;
-import de.monticore.odbasis.prettyprinter.ODBasisPrettyPrinterDelegator;
+import de.monticore.odbasis.prettyprinter.ODBasisPrettyPrinter;
 import de.monticore.odlink._ast.ASTODLinkNode;
 import de.monticore.odlink._visitor.ODLinkDelegatorVisitor;
 import de.monticore.prettyprint.IndentPrinter;
@@ -45,7 +45,7 @@ public class ODLinkPrettyPrinterDelegator extends ODLinkDelegatorVisitor {
   private void init() {
     realThis = this;
     setODLinkVisitor(new ODLinkPrettyPrinter(printer));
-    setODBasisVisitor(new ODBasisPrettyPrinterDelegator(printer));
+    setODBasisVisitor(new ODBasisPrettyPrinter(printer));
   }
 
 }

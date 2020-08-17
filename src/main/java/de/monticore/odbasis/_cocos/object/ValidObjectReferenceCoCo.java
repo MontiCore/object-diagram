@@ -5,9 +5,10 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.odbasis._cocos.object;
 
+import de.monticore.expressions.expressionsbasis._ast.ASTNameExpression;
 import de.monticore.odbasis._ast.ASTODAttribute;
-import de.monticore.odbasis._ast.ASTODName;
 import de.monticore.odbasis._ast.ASTODObject;
+import de.monticore.odbasis._ast.ASTODSimpleAttributeValue;
 import de.monticore.odbasis._ast.ASTODValue;
 import de.monticore.odbasis._cocos.ODBasisASTODObjectCoCo;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
@@ -22,17 +23,22 @@ public class ValidObjectReferenceCoCo implements ODBasisASTODObjectCoCo {
     for (ASTODAttribute astodAttribute : node.getODAttributesList()) {
       if (astodAttribute.isPresentODValue()) {
         ASTODValue astodValue = astodAttribute.getODValue();
-        if (astodValue instanceof ASTODName && !this.checkReference((ASTODName) astodValue, node)) {
-          Log.error("Violation of CoCo 'ValidObjectReferenceCoCo'", node.get_SourcePositionStart());
+        if (astodValue instanceof ASTODSimpleAttributeValue) {
+          ASTODSimpleAttributeValue simpleAttributeValue = (ASTODSimpleAttributeValue) astodValue;
+          if (simpleAttributeValue.getExpression() instanceof ASTNameExpression && !this
+              .checkReference((ASTNameExpression) simpleAttributeValue.getExpression(), node)) {
+            Log.error("Violation of CoCo 'ValidObjectReferenceCoCo'",
+                node.get_SourcePositionStart());
+          }
         }
       }
     }
   }
 
-  private boolean checkReference(ASTODName astodName, ASTODObject node) {
+  private boolean checkReference(ASTNameExpression astNameExpression, ASTODObject node) {
     Optional<VariableSymbol> symbol = Optional.empty();
     if (node.getEnclosingScope() != null) {
-      symbol = node.getEnclosingScope().resolveVariable(astodName.getName());
+      symbol = node.getEnclosingScope().resolveVariable(astNameExpression.getName());
     }
     return symbol.isPresent();
   }

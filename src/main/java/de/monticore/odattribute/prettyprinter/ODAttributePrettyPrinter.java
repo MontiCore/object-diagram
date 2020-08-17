@@ -10,11 +10,11 @@ import de.monticore.odattribute._ast.ASTODMapElement;
 import de.monticore.odattribute._visitor.ODAttributeVisitor;
 import de.monticore.odbasis._ast.ASTODValue;
 import de.monticore.prettyprint.IndentPrinter;
-import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
+import de.monticore.prettyprint.MCBasicsPrettyPrinter;
 
 import java.util.Iterator;
 
-public class ODAttributePrettyPrinter extends MCBasicTypesPrettyPrinter
+public class ODAttributePrettyPrinter extends MCBasicsPrettyPrinter
     implements ODAttributeVisitor {
 
   public ODAttributePrettyPrinter(IndentPrinter printer) {

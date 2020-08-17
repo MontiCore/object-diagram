@@ -10,6 +10,8 @@ objectdiagram Examples {
     rule2 = R2_:Rule{};
   };
   A2:ActionB{};
+
   link A1 -> A2;
+  link @Multiplicity(7,3!2) -> A2;
 
 }

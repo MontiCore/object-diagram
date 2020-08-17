@@ -16,7 +16,8 @@ package de.monticore;
 component grammar ODBasis extends de.monticore.UMLModifier,
                         de.monticore.types.MCBasicTypes,
                         de.monticore.symbols.OOSymbols,
-                        de.monticore.literals.MCCommonLiterals {
+                        de.monticore.literals.MCCommonLiterals,
+                        de.monticore.expressions.CommonExpressions {
 
   /*========================================================================*/
   /*=========================== Artifact ===================================*/
@@ -74,15 +75,24 @@ component grammar ODBasis extends de.monticore.UMLModifier,
       ( ODElement ";" )*
     "}";
 
-  /** AST-ODObject represents an Object in a UML Objectdiagram.
+  /** AST-ODNamedObject represents an Object in a UML Objectdiagram.
     The object contains attributes and may be hierarchically decomposed.
-    @attribute oDName Optional extended name of this object
+      @attribute modifier Modifier of the object.
+      @attribute name Name of the object.
+      @attribute mCObjectType Type of the object.
+      @attribute oDAttribute List of attributes of the object.
   */
   ODNamedObject implements ODElement, ODObject, ODValue, Variable =
     Modifier?
     Name ":" MCObjectType
       "{" ODAttribute* "}";
 
+  /** AST-ODAnonymousObject represents an anonymous Object in a UML Objectdiagram.
+    The object contains attributes and may be hierarchically decomposed.
+      @attribute modifier Modifier of the object.
+      @attribute mCObjectType Type of the object.
+      @attribute oDAttribute List of attributes of the object.
+  */
   ODAnonymousObject implements ODElement, ODObject, ODValue =
       Modifier?
       ":" MCObjectType
@@ -115,31 +125,33 @@ component grammar ODBasis extends de.monticore.UMLModifier,
     Name
     ( (complete: "="| "->") ODValue )? ";";
 
+    // this is needed to parse e.g. attr -> 2 correctly:
+    splittoken "->";
 
   /*========================================================================*/
   /*============================= Values ===================================*/
   /*========================================================================*/
 
-  /** ASTODAbsent represents implementation of the ODValue interface
+  /** ASTODAbsent represents an implementation of the ODValue interface
       that represents an absent optional value.
   */
   ODAbsent implements ODValue = "...";
 
-// TODO:  for SH
-// Entweder wir nehmen hier bereits die Expressions, oder wir nehmen 
-// gar keine Literals hier, sondern tun dies erst beim Einbinden in Ausbaustufen
-// SignedLiteral hier einzubinden ist jedenfalls suboptimal, da
-// später damit keine Expressions mehr definiert werden können:
-// Expressions und SignedLiterals beissen sich. Leider.
-  ODSignedLiteral implements ODValue = SignedLiteral;
+  /** ODSimpleAttributeValue is an implementation of the ODValue interface
+      that represents a simple value for an attribute, e.g. ints, double or Strings.
+  */
+  ODSimpleAttributeValue implements ODValue = Expression;
 
-  ODLiteral implements ODValue = Literal;
+  /** ODName is an implementation of the ODValue interface
+      that represents a name of an object. Note that this is handled separately
+      and is not contained by the ODSimpleAttributeValue to enable name
+      adjustments in sub grammars.
+  */
+  ODName implements ODValue = NameExpression;
 
-// TODO: Name wäre dann auch in ExpressionBasis enthalten
-/* @BR: Würde über ExpressionBasis NameExpression abgebildet werden. Hier könnte es schwierig
-werden, wenn
-* der Name erweitert werden soll (wie in OD4Report).
-*/
-  ODName implements ODValue = Name;
+  astrule ODName =
+    method public String getName() {
+      return nameExpression.getName();
+    };
 
 }

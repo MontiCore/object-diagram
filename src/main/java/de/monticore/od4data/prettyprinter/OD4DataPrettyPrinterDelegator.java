@@ -5,6 +5,8 @@
 package de.monticore.od4data.prettyprinter;
 
 import de.monticore.MCCommonLiteralsPrettyPrinter;
+import de.monticore.expressions.prettyprint.CommonExpressionsPrettyPrinter;
+import de.monticore.expressions.prettyprint.ExpressionsBasisPrettyPrinter;
 import de.monticore.od4data._ast.ASTOD4DataNode;
 import de.monticore.od4data._visitor.OD4DataDelegatorVisitor;
 import de.monticore.odattribute.prettyprinter.ODAttributePrettyPrinter;
@@ -12,7 +14,6 @@ import de.monticore.odbasis._ast.ASTODBasisNode;
 import de.monticore.odbasis.prettyprinter.ODBasisPrettyPrinter;
 import de.monticore.odlink.prettyprinter.ODLinkPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
-import de.monticore.prettyprint.MCBasicsPrettyPrinter;
 import de.monticore.prettyprint.UMLModifierPrettyPrinter;
 import de.monticore.prettyprint.UMLStereotypePrettyPrinter;
 import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
@@ -59,11 +60,12 @@ public class OD4DataPrettyPrinterDelegator extends OD4DataDelegatorVisitor {
     setODLinkVisitor(new ODLinkPrettyPrinter(printer));
     setODAttributeVisitor(new ODAttributePrettyPrinter(printer));
 
-    setMCBasicsVisitor(new MCBasicsPrettyPrinter(printer));
     setMCBasicTypesVisitor(new MCBasicTypesPrettyPrinter(printer));
     setMCCommonLiteralsVisitor(new MCCommonLiteralsPrettyPrinter(printer));
     setUMLStereotypeVisitor(new UMLStereotypePrettyPrinter(printer));
     setUMLModifierVisitor(new UMLModifierPrettyPrinter(printer));
+    setCommonExpressionsVisitor(new CommonExpressionsPrettyPrinter(printer));
+    setExpressionsBasisVisitor(new ExpressionsBasisPrettyPrinter(printer));
 
     setMCSimpleGenericTypesVisitor(new MCSimpleGenericTypesPrettyPrinter(printer));
     setMCCollectionTypesVisitor(new MCCollectionTypesPrettyPrinter(printer));
