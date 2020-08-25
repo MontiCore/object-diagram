@@ -22,16 +22,8 @@ public class ODBasicsCoCos {
     checker.addCoCo(new PartialAndCompleteAttributesCoCo());
     checker.addCoCo(new UniqueAttributeNamesCoCo());
 
-    // links
-    //    checker.addCoCo(new LinkEndConsistencyCoCo());
-    //    checker.addCoCo(new NoAbstractLinkCoCo());
-    //    checker.addCoCo(new ValidLinkReferenceCoCo());
-
     // names
     checker.addCoCo(new UniqueObjectNamesCoCo());
-
-    // objects
-    //    checker.addCoCo(new ValidLinkReferenceCoCo());
 
     return checker;
   }
