@@ -6,7 +6,7 @@
 package de.monticore.od4data;
 
 import de.monticore.od4data._parser.OD4DataParser;
-import de.monticore.od4data._symboltable.OD4DataArtifactScope;
+import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.Slf4jLog;
@@ -101,7 +101,7 @@ public class ExamplesTest {
     assertFalse(parser.hasErrors());
     assertTrue(astodArtifact.isPresent());
 
-    OD4DataArtifactScope odBasicsArtifactScope = OD4DataTool
+    IOD4DataArtifactScope odBasicsArtifactScope = OD4DataTool
         .createSymbolTable(astodArtifact.get());
     assertNotNull(odBasicsArtifactScope);
 

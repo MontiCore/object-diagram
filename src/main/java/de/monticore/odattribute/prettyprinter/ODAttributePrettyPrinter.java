@@ -29,7 +29,7 @@ public class ODAttributePrettyPrinter extends MCBasicsPrettyPrinter
   @Override
   public void handle(ASTODList a) {
     getPrinter().print("[");
-    for (Iterator<ASTODValue> it = a.getODValuesList().iterator(); it.hasNext(); ) {
+    for (Iterator<ASTODValue> it = a.getODValueList().iterator(); it.hasNext(); ) {
       it.next().accept(getRealThis());
       if (it.hasNext()) {
         getPrinter().print(",");
@@ -46,7 +46,7 @@ public class ODAttributePrettyPrinter extends MCBasicsPrettyPrinter
   @Override
   public void handle(ASTODMap a) {
     getPrinter().print("[");
-    for (Iterator<ASTODMapElement> it = a.getODMapElementsList().iterator(); it.hasNext(); ) {
+    for (Iterator<ASTODMapElement> it = a.getODMapElementList().iterator(); it.hasNext(); ) {
       it.next().accept(getRealThis());
       if (it.hasNext()) {
         getPrinter().print(",");

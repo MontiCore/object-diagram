@@ -45,8 +45,7 @@ package de.monticore;
    (e.g. to define attribute and enum values.)
 */
 
-grammar OD4Development extends de.monticore.expressions.CommonExpressions,
-                               de.monticore.OD4Data      {
+grammar OD4Development extends de.monticore.OD4Data {
 
   start ODArtifact;
 

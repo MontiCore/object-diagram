@@ -20,10 +20,10 @@ public class PartialAndCompleteAttributesCoCo implements ODBasisASTODObjectCoCo 
 
   @Override
   public void check(ASTODObject node) {
-    for (int i = 0; i < node.getODAttributesList().size(); i++) {
-      ASTODAttribute firstAttribute = node.getODAttributesList().get(i);
-      for (int j = i + 1; j < node.getODAttributesList().size(); j++) {
-        ASTODAttribute secondAttribute = node.getODAttributesList().get(j);
+    for (int i = 0; i < node.getODAttributeList().size(); i++) {
+      ASTODAttribute firstAttribute = node.getODAttributeList().get(i);
+      for (int j = i + 1; j < node.getODAttributeList().size(); j++) {
+        ASTODAttribute secondAttribute = node.getODAttributeList().get(j);
         if (firstAttribute.getName().equals(secondAttribute.getName())) {
           if (firstAttribute.isPresentComplete() || (!firstAttribute.isPresentComplete()
               && secondAttribute.isPresentComplete())) {

@@ -8,7 +8,7 @@ import de.monticore.od4data.OD4DataTool;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4report.OD4ReportTool;
 import de.monticore.od4report._parser.OD4ReportParser;
-import de.monticore.od4report._symboltable.OD4ReportArtifactScope;
+import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportScopeDeSer;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
@@ -48,7 +48,7 @@ public class DeSerTest {
     Optional<ASTODArtifact> astodArtifact = odBasicsParser.parse(TEASEROD.toString());
     assertTrue(astodArtifact.isPresent());
 
-    OD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get());
+    IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get());
 
     // serialize
     OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
@@ -60,7 +60,7 @@ public class DeSerTest {
     assertTrue(storedSymTable.toFile().exists());
 
     // deserialize
-    OD4DataArtifactScope loadedBasicsArtifactScope = odBasicsScopeDeSer
+    IOD4DataArtifactScope loadedBasicsArtifactScope = odBasicsScopeDeSer
         .load(storedSymTable.toString());
 
     assertEquals(odBasicsScopeDeSer.serialize(od4DataArtifactScope),
@@ -73,7 +73,7 @@ public class DeSerTest {
     Optional<ASTODArtifact> astodArtifact = od4ReportParser.parse(EXAMPLESEOD.toString());
     assertTrue(astodArtifact.isPresent());
 
-    OD4ReportArtifactScope od4ReportArtifactScope = OD4ReportTool
+    IOD4ReportArtifactScope od4ReportArtifactScope = OD4ReportTool
         .createSymbolTable(astodArtifact.get());
 
     // serialize
@@ -86,7 +86,7 @@ public class DeSerTest {
     assertTrue(storedSymTable.toFile().exists());
 
     // deserialize
-    OD4ReportArtifactScope loadedBasicsArtifactScope = od4ReportScopeDeSer
+    IOD4ReportArtifactScope loadedBasicsArtifactScope = od4ReportScopeDeSer
         .load(storedSymTable.toString());
 
     assertEquals(od4ReportScopeDeSer.serialize(od4ReportArtifactScope),

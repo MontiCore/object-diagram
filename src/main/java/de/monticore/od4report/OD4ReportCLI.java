@@ -5,7 +5,7 @@
 package de.monticore.od4report;
 
 import de.monticore.od4report._parser.OD4ReportParser;
-import de.monticore.od4report._symboltable.OD4ReportArtifactScope;
+import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportScopeDeSer;
 import de.monticore.od4report.prettyprinter.OD4ReportPrettyPrinterDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -74,7 +74,8 @@ public class OD4ReportCLI {
       ASTODArtifact astodArtifact = parseFile(cmd.getOptionValue("i"));
 
       // create symbol table
-      OD4ReportArtifactScope OD4ReportArtifactScope = OD4ReportTool.createSymbolTable(astodArtifact);
+      IOD4ReportArtifactScope oD4ReportArtifactScope = OD4ReportTool
+          .createSymbolTable(astodArtifact);
 
       // -option pretty print
       if (cmd.hasOption("pp")) {
@@ -85,7 +86,7 @@ public class OD4ReportCLI {
       // -otion pretty print symboltable
       if (cmd.hasOption("s")) {
         String path = cmd.getOptionValue("s", StringUtils.EMPTY);
-        prettyPrintST(OD4ReportArtifactScope, path);
+        prettyPrintST(oD4ReportArtifactScope, path);
       }
     }
     catch (ParseException e) {
@@ -144,20 +145,21 @@ public class OD4ReportCLI {
 
   /**
    * Stores the contents of the symboltable to stdout or a specific file.
+   *
    * @param OD4ReportArtifactScope ArtiactScope of object diagram
-   * @param file Folder to store symboltable in.
+   * @param file                   Folder to store symboltable in.
    */
-  public void prettyPrintST(OD4ReportArtifactScope OD4ReportArtifactScope, String file) {
+  public void prettyPrintST(IOD4ReportArtifactScope OD4ReportArtifactScope, String file) {
     // serializes the symboltable
     OD4ReportScopeDeSer odBasicsScopeDeSer = new OD4ReportScopeDeSer();
     odBasicsScopeDeSer.setSymbolFileExtension("odsym");
 
     if (StringUtils.isEmpty(file)) {
       System.out.println(odBasicsScopeDeSer.serialize(OD4ReportArtifactScope));
-    } else {
+    }
+    else {
       odBasicsScopeDeSer.store(OD4ReportArtifactScope, Paths.get(file));
     }
-
   }
 
   /**
@@ -242,4 +244,5 @@ public class OD4ReportCLI {
 
     return options;
   }
+
 }

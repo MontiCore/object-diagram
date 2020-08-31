@@ -60,8 +60,8 @@ public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
     if (unit.getPackageList() != null && !unit.getPackageList().isEmpty()) {
       getPrinter().println("package " + Names.getQualifiedName(unit.getPackageList()) + ";\n");
     }
-    if (unit.getMCImportStatementsList() != null && !unit.getMCImportStatementsList().isEmpty()) {
-      for (ASTMCImportStatement s : unit.getMCImportStatementsList()) {
+    if (unit.getMCImportStatementList() != null && !unit.getMCImportStatementList().isEmpty()) {
+      for (ASTMCImportStatement s : unit.getMCImportStatementList()) {
         s.accept(getRealThis());
       }
       getPrinter().println();
@@ -89,7 +89,7 @@ public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
     getPrinter().indent();
 
     // print elements
-    for (Iterator<ASTODElement> it = a.getODElementsList().iterator(); it.hasNext(); ) {
+    for (Iterator<ASTODElement> it = a.getODElementList().iterator(); it.hasNext(); ) {
       it.next().accept(getRealThis());
       getPrinter().println(";");
       if (it.hasNext()) {
@@ -121,10 +121,10 @@ public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
     getPrinter().print("{");
 
     // print object body
-    if (!a.getODAttributesList().isEmpty()) {
+    if (!a.getODAttributeList().isEmpty()) {
       getPrinter().println();
       getPrinter().indent();
-      for (ASTODAttribute ast : a.getODAttributesList()) {
+      for (ASTODAttribute ast : a.getODAttributeList()) {
         ast.accept(getRealThis());
       }
       getPrinter().unindent();

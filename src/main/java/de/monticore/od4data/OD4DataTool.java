@@ -12,7 +12,7 @@ import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data._ast.ASTOD4DataNode;
 import de.monticore.od4data._cocos.OD4DataCoCoChecker;
 import de.monticore.od4data._parser.OD4DataParser;
-import de.monticore.od4data._symboltable.OD4DataArtifactScope;
+import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.od4data._symboltable.OD4DataGlobalScope;
 import de.monticore.od4data._symboltable.OD4DataSymbolTableCreatorDelegator;
 import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
@@ -59,7 +59,7 @@ public class OD4DataTool {
    * @param ast ODArtifact ast
    * @return Symboltable created form AST
    */
-  public static OD4DataArtifactScope createSymbolTable(ASTODArtifact ast) {
+  public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast) {
     OD4DataGlobalScope globalScope = new OD4DataGlobalScope(new ModelPath(), "od");
 
     OD4DataSymbolTableCreatorDelegator symbolTable = OD4DataMill

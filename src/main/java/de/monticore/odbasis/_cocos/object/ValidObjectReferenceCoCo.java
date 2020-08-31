@@ -20,7 +20,7 @@ public class ValidObjectReferenceCoCo implements ODBasisASTODObjectCoCo {
 
   @Override
   public void check(ASTODObject node) {
-    for (ASTODAttribute astodAttribute : node.getODAttributesList()) {
+    for (ASTODAttribute astodAttribute : node.getODAttributeList()) {
       if (astodAttribute.isPresentODValue()) {
         ASTODValue astodValue = astodAttribute.getODValue();
         if (astodValue instanceof ASTODSimpleAttributeValue) {

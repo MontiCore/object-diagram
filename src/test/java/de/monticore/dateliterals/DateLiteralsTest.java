@@ -39,14 +39,14 @@ public class DateLiteralsTest {
     Optional<ASTODArtifact> astodArtifact = od4ReportParser.parseODArtifact(SIMPLEDATE.toString());
     assertTrue(astodArtifact.isPresent());
 
-    assertEquals(2, astodArtifact.get().getObjectDiagram().getODElementsList().size());
-    Optional<ASTODObject> object = astodArtifact.get().getObjectDiagram().getODElementsList()
+    assertEquals(2, astodArtifact.get().getObjectDiagram().getODElementList().size());
+    Optional<ASTODObject> object = astodArtifact.get().getObjectDiagram().getODElementList()
         .stream().filter(elem -> elem instanceof ASTODObject).map(elem -> (ASTODObject) elem)
         .filter(o -> "myObject2".equals(o.getName())).findFirst();
     assertTrue(object.isPresent());
-    assertEquals(3, object.get().getODAttributesList().size());
+    assertEquals(3, object.get().getODAttributeList().size());
 
-    object.get().getODAttributesList().forEach(attr -> {
+    object.get().getODAttributeList().forEach(attr -> {
       assertTrue(attr.isPresentODValue());
       assertTrue(attr.getODValue() instanceof ASTODDate);
       assertNotNull(attr.getODValue());

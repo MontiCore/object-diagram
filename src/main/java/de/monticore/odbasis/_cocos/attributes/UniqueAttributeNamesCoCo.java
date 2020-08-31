@@ -22,7 +22,7 @@ public class UniqueAttributeNamesCoCo implements ODBasisASTODObjectCoCo {
   @Override
   public void check(ASTODObject node) {
     List<String> attributeNames = new ArrayList<>();
-    node.getODAttributesList().forEach(attribute -> {
+    node.getODAttributeList().forEach(attribute -> {
       if (attribute.isPresentComplete()) {
         if (attributeNames.contains(attribute.getName())) {
           Log.error("Violation of CoCo 'UniqueAttributeNamesCoCo'",

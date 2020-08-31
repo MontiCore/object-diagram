@@ -9,7 +9,7 @@
 package de.monticore.od4data;
 
 import de.monticore.od4data._parser.OD4DataParser;
-import de.monticore.od4data._symboltable.OD4DataArtifactScope;
+import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.od4data._symboltable.OD4DataScopeDeSer;
 import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -79,7 +79,7 @@ public class OD4DataCLI {
       ASTODArtifact astodArtifact = parseFile(cmd.getOptionValue("i"));
 
       // create symbol table
-      OD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact);
+      IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact);
 
       // -option pretty print
       if (cmd.hasOption("pp")) {
@@ -149,20 +149,21 @@ public class OD4DataCLI {
 
   /**
    * Stores the contents of the symboltable to stdout or a specific file.
+   *
    * @param od4DataArtifactScope ArtiactScope of object diagram
-   * @param file Folder to store symboltable in.
+   * @param file                 Folder to store symboltable in.
    */
-  public void prettyPrintST(OD4DataArtifactScope od4DataArtifactScope, String file) {
+  public void prettyPrintST(IOD4DataArtifactScope od4DataArtifactScope, String file) {
     // serializes the symboltable
     OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
     odBasicsScopeDeSer.setSymbolFileExtension("odsym");
 
     if (StringUtils.isEmpty(file)) {
       System.out.println(odBasicsScopeDeSer.serialize(od4DataArtifactScope));
-    } else {
+    }
+    else {
       odBasicsScopeDeSer.store(od4DataArtifactScope, Paths.get(file));
     }
-
   }
 
   /**
