@@ -39,7 +39,7 @@ public class DeriveSymTypeOfODBasis extends ODBasisDelegatorVisitor implements O
     return typeCheckResult;
   }
 
-  public void init() {
+  private void init() {
     typeCheckResult = new TypeCheckResult();
 
     final SynthesizeSymTypeFromMCBasicTypes synthesizeSymTypeFromMCBasicTypes =

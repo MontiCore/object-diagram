@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.od;
+
+<<global_stereotypes>>
+objectdiagram Variants2 {
+
+  local o2:type2<T>{};
+  o3:type3 {
+    Map<String, ? extends Person> m;
+  };
+
+  o5:type5<? extends Comparable<T>>{};
+
+}

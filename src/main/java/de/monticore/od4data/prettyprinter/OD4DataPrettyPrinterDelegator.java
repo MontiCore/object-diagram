@@ -1,7 +1,5 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
 package de.monticore.od4data.prettyprinter;
 
 import de.monticore.MCCommonLiteralsPrettyPrinter;
@@ -60,13 +58,13 @@ public class OD4DataPrettyPrinterDelegator extends OD4DataDelegatorVisitor {
     setODLinkVisitor(new ODLinkPrettyPrinter(printer));
     setODAttributeVisitor(new ODAttributePrettyPrinter(printer));
 
-    setMCBasicTypesVisitor(new MCBasicTypesPrettyPrinter(printer));
     setMCCommonLiteralsVisitor(new MCCommonLiteralsPrettyPrinter(printer));
     setUMLStereotypeVisitor(new UMLStereotypePrettyPrinter(printer));
     setUMLModifierVisitor(new UMLModifierPrettyPrinter(printer));
     setCommonExpressionsVisitor(new CommonExpressionsPrettyPrinter(printer));
     setExpressionsBasisVisitor(new ExpressionsBasisPrettyPrinter(printer));
 
+    setMCBasicTypesVisitor(new MCBasicTypesPrettyPrinter(printer));
     setMCSimpleGenericTypesVisitor(new MCSimpleGenericTypesPrettyPrinter(printer));
     setMCCollectionTypesVisitor(new MCCollectionTypesPrettyPrinter(printer));
     setMCFullGenericTypesVisitor(new MCFullGenericTypesPrettyPrinter(printer));

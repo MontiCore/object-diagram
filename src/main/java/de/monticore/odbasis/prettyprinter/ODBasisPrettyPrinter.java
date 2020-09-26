@@ -1,11 +1,5 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
-// (c) https://github.com/MontiCore/monticore
-
-// (c) https://github.com/MontiCore/monticore
-
 package de.monticore.odbasis.prettyprinter;
 
 import de.monticore.odbasis._ast.*;
@@ -14,7 +8,6 @@ import de.monticore.odbasis._visitor.ODBasisVisitor;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.prettyprint.MCBasicsPrettyPrinter;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
-import de.se_rwth.commons.Names;
 
 import java.util.Iterator;
 
@@ -57,8 +50,8 @@ public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
    */
   @Override
   public void handle(ASTODArtifact unit) {
-    if (unit.getPackageList() != null && !unit.getPackageList().isEmpty()) {
-      getPrinter().println("package " + Names.getQualifiedName(unit.getPackageList()) + ";\n");
+    if (unit.isPresentPackage() && !unit.getPackage().getQName().isEmpty()) {
+      getPrinter().println("package " + unit.getPackage().getQName() + ";\n");
     }
     if (unit.getMCImportStatementList() != null && !unit.getMCImportStatementList().isEmpty()) {
       for (ASTMCImportStatement s : unit.getMCImportStatementList()) {

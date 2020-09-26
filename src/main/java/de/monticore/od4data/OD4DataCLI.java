@@ -1,11 +1,5 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
-// (c) https://github.com/MontiCore/monticore
-
-// (c) https://github.com/MontiCore/monticore
-
 package de.monticore.od4data;
 
 import de.monticore.od4data._parser.OD4DataParser;
@@ -151,18 +145,17 @@ public class OD4DataCLI {
    * Stores the contents of the symboltable to stdout or a specific file.
    *
    * @param od4DataArtifactScope ArtiactScope of object diagram
-   * @param file                 Folder to store symboltable in.
+   * @param file                 Output file to store symboltable in.
    */
   public void prettyPrintST(IOD4DataArtifactScope od4DataArtifactScope, String file) {
     // serializes the symboltable
     OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
-    odBasicsScopeDeSer.setSymbolFileExtension("odsym");
 
     if (StringUtils.isEmpty(file)) {
       System.out.println(odBasicsScopeDeSer.serialize(od4DataArtifactScope));
     }
     else {
-      odBasicsScopeDeSer.store(od4DataArtifactScope, Paths.get(file));
+      odBasicsScopeDeSer.store(od4DataArtifactScope, Paths.get(file).toString());
     }
   }
 

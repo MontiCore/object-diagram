@@ -1,3 +1,7 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.od;
+
 objectdiagram MyFamily {
   alice:Person {
     age = 29;

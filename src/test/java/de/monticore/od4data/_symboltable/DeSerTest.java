@@ -1,7 +1,5 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
 package de.monticore.od4data._symboltable;
 
 import de.monticore.od4data.OD4DataTool;
@@ -11,6 +9,7 @@ import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportScopeDeSer;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.utils.Names;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.BeforeClass;
@@ -52,11 +51,12 @@ public class DeSerTest {
 
     // serialize
     OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
-    odBasicsScopeDeSer.setSymbolFileExtension(EXTENSION);
-    odBasicsScopeDeSer.store(od4DataArtifactScope, SYMBOL_TARGET);
+    String fileName = Paths.get(TEASEROD.toString()).getFileName().toString() + "." + EXTENSION;
+    String packagePath = Names.getPackageFromPath(astodArtifact.get().getPackage().getQName());
+    String storedPath = Paths.get(SYMBOL_TARGET.toString(), packagePath, fileName).toString();
+    odBasicsScopeDeSer.store(od4DataArtifactScope, storedPath);
 
-    Path storedSymTable = Paths.get(SYMBOL_TARGET.toString(),
-        astodArtifact.get().getObjectDiagram().getName() + "." + EXTENSION);
+    Path storedSymTable = Paths.get(storedPath);
     assertTrue(storedSymTable.toFile().exists());
 
     // deserialize
@@ -78,11 +78,12 @@ public class DeSerTest {
 
     // serialize
     OD4ReportScopeDeSer od4ReportScopeDeSer = new OD4ReportScopeDeSer();
-    od4ReportScopeDeSer.setSymbolFileExtension(EXTENSION);
-    od4ReportScopeDeSer.store(od4ReportArtifactScope, SYMBOL_TARGET);
+    String fileName = Paths.get(TEASEROD.toString()).getFileName().toString() + "." + EXTENSION;
+    String packagePath = Names.getPackageFromPath(astodArtifact.get().getPackage().getQName());
+    String storedPath = Paths.get(SYMBOL_TARGET.toString(), packagePath, fileName).toString();
+    od4ReportScopeDeSer.store(od4ReportArtifactScope, storedPath);
 
-    Path storedSymTable = Paths.get(SYMBOL_TARGET.toString(),
-        astodArtifact.get().getObjectDiagram().getName() + "." + EXTENSION);
+    Path storedSymTable = Paths.get(storedPath);
     assertTrue(storedSymTable.toFile().exists());
 
     // deserialize

@@ -32,7 +32,8 @@ public class OD4ReportCLITest {
 
   @Test
   public void testOD4DataStoreST() {
-    String[] input = { "-i", INPUTOD.toString(), "-s", TARGET.toString() };
+    String[] input = { "-i", INPUTOD.toString(), "-s",
+        Paths.get(TARGET.toString(), "Examples.odsym").toString() };
     OD4ReportCLI.main(input);
     assertTrue(Paths.get(TARGET.toString(), "Examples.odsym").toFile().exists());
   }

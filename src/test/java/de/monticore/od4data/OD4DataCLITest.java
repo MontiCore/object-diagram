@@ -31,7 +31,8 @@ public class OD4DataCLITest {
 
   @Test
   public void testOD4DataStoreST() {
-    String[] input = { "-i", INPUTOD.toString(), "-s", TARGET.toString() };
+    String[] input = { "-i", INPUTOD.toString(), "-s",
+        Paths.get(TARGET.toString(), "MyFamily.odsym").toString() };
     OD4DataCLI.main(input);
     assertTrue(Paths.get(TARGET.toString(), "MyFamily.odsym").toFile().exists());
   }

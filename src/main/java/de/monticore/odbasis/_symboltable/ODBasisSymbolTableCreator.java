@@ -1,14 +1,10 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
-// (c) https://github.com/MontiCore/monticore
-
-/* (c) https://github.com/MontiCore/monticore */
 package de.monticore.odbasis._symboltable;
 
 import de.monticore.odbasis._ast.ASTODNamedObject;
 import de.monticore.odbasis.typescalculator.DeriveSymTypeOfODBasis;
+import de.monticore.odbasis.typescalculator.ODTypesCalculator;
 import de.monticore.types.check.SymTypeExpression;
 import de.se_rwth.commons.logging.Log;
 
@@ -17,7 +13,7 @@ import java.util.Optional;
 
 public class ODBasisSymbolTableCreator extends ODBasisSymbolTableCreatorTOP {
 
-  private DeriveSymTypeOfODBasis typechecker = new DeriveSymTypeOfODBasis();
+  private ODTypesCalculator typechecker = new DeriveSymTypeOfODBasis();
 
   public ODBasisSymbolTableCreator(IODBasisScope enclosingScope) {
     super(enclosingScope);
@@ -47,6 +43,10 @@ public class ODBasisSymbolTableCreator extends ODBasisSymbolTableCreatorTOP {
     else {
       node.getSymbol().setType(typeResult.get());
     }
+  }
+
+  public void setTypechecker(ODTypesCalculator typechecker) {
+    this.typechecker = typechecker;
   }
 
 }

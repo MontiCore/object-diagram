@@ -1,8 +1,5 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
-// (c) https://github.com/MontiCore/monticore
 package de.monticore.od4data;
 
 import de.monticore.od4data._parser.OD4DataParser;
@@ -56,6 +53,11 @@ public class ExamplesTest {
   @Test
   public void testVariants() throws RecognitionException, IOException {
     test("src/test/resources/examples/od/Variants.od");
+  }
+
+  @Test
+  public void testVariantsGeneric() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/VariantsGenerics.od");
   }
 
   @Test
