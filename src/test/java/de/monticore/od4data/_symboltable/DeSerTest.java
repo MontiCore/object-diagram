@@ -2,14 +2,16 @@
 
 package de.monticore.od4data._symboltable;
 
+import de.monticore.io.paths.ModelPath;
+import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data.OD4DataTool;
 import de.monticore.od4data._parser.OD4DataParser;
+import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report.OD4ReportTool;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportScopeDeSer;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import de.monticore.utils.Names;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.BeforeClass;
@@ -47,12 +49,14 @@ public class DeSerTest {
     Optional<ASTODArtifact> astodArtifact = odBasicsParser.parse(TEASEROD.toString());
     assertTrue(astodArtifact.isPresent());
 
-    IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get());
+    IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get(),
+        OD4DataMill.oD4DataGlobalScopeBuilder().setModelPath(new ModelPath())
+            .setModelFileExtension("od").build());
 
     // serialize
     OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
     String fileName = Paths.get(TEASEROD.toString()).getFileName().toString() + "." + EXTENSION;
-    String packagePath = Names.constructQualifiedName(astodArtifact.get().getPackageList());
+    String packagePath = astodArtifact.get().getPackage().getMCQualifiedName().getQName();
     String storedPath = Paths.get(SYMBOL_TARGET.toString(), packagePath, fileName).toString();
     odBasicsScopeDeSer.store(od4DataArtifactScope, storedPath);
 
@@ -74,12 +78,14 @@ public class DeSerTest {
     assertTrue(astodArtifact.isPresent());
 
     IOD4ReportArtifactScope od4ReportArtifactScope = OD4ReportTool
-        .createSymbolTable(astodArtifact.get());
+        .createSymbolTable(astodArtifact.get(),
+            OD4ReportMill.oD4ReportGlobalScopeBuilder().setModelPath(new ModelPath())
+                .setModelFileExtension("od").build());
 
     // serialize
     OD4ReportScopeDeSer od4ReportScopeDeSer = new OD4ReportScopeDeSer();
     String fileName = Paths.get(TEASEROD.toString()).getFileName().toString() + "." + EXTENSION;
-    String packagePath = Names.constructQualifiedName(astodArtifact.get().getPackageList());
+    String packagePath = astodArtifact.get().getPackage().getMCQualifiedName().getQName();
     String storedPath = Paths.get(SYMBOL_TARGET.toString(), packagePath, fileName).toString();
     od4ReportScopeDeSer.store(od4ReportArtifactScope, storedPath);
 

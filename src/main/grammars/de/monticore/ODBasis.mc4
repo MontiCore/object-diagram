@@ -31,7 +31,7 @@ component grammar ODBasis extends de.monticore.UMLModifier,
     @attribute objectDiagram the ObjectDiagram
   */
   ODArtifact =
-    ("package" package:(Name& || ".")+ ";")?
+    (package:MCPackageDeclaration)?
     MCImportStatement*
     ObjectDiagram;
 

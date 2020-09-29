@@ -93,7 +93,8 @@ public class ODSymbolTableCreatorTest {
   private ObjectDiagramSymbol createObjectDiagramFromAST(String odName) {
     ASTODArtifact astodArtifact = OD4DataTool
         .parse(Paths.get("src/test/resources/symboltable", odName + ".od").toString());
-    IOD4DataArtifactScope odBasisArtifactScope = OD4DataTool.createSymbolTable(astodArtifact);
+    IOD4DataArtifactScope odBasisArtifactScope = OD4DataTool.createSymbolTable(astodArtifact,
+        new OD4DataGlobalScope(new ModelPath(), "od"));
     return odBasisArtifactScope.getObjectDiagramSymbols().get(odName).get(0);
   }
 

@@ -4,11 +4,10 @@
 
 package de.monticore.od4report;
 
-import de.monticore.io.paths.ModelPath;
 import de.monticore.od4report._cocos.OD4ReportCoCos;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
-import de.monticore.od4report._symboltable.OD4ReportGlobalScope;
+import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
 import de.monticore.od4report._symboltable.OD4ReportSymbolTableCreatorDelegator;
 import de.monticore.od4report.prettyprinter.OD4ReportPrettyPrinterDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -50,10 +49,8 @@ public class OD4ReportTool {
    * @param ast ODArtifact AST
    * @return SymbolTable created from AST
    */
-  public static IOD4ReportArtifactScope createSymbolTable(ASTODArtifact ast) {
-
-    OD4ReportGlobalScope globalScope = new OD4ReportGlobalScope(new ModelPath(), "od");
-
+  public static IOD4ReportArtifactScope createSymbolTable(ASTODArtifact ast,
+      IOD4ReportGlobalScope globalScope) {
     OD4ReportSymbolTableCreatorDelegator symbolTable = OD4ReportMill.getMill()
         ._oD4ReportSymbolTableCreatorDelegatorBuilder().setGlobalScope(globalScope).build();
     return symbolTable.createFromAST(ast);

@@ -8,12 +8,11 @@
 
 package de.monticore.od4data;
 
-import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data._ast.ASTOD4DataNode;
 import de.monticore.od4data._cocos.OD4DataCoCoChecker;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data._symboltable.OD4DataGlobalScope;
+import de.monticore.od4data._symboltable.IOD4DataGlobalScope;
 import de.monticore.od4data._symboltable.OD4DataSymbolTableCreatorDelegator;
 import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -41,8 +40,6 @@ public class OD4DataTool {
       Optional<ASTODArtifact> optODArtifact = parser.parse(model);
 
       if (!parser.hasErrors() && optODArtifact.isPresent()) {
-        createSymbolTable(optODArtifact.get());
-        runDefaultCoCos(optODArtifact.get());
         return optODArtifact.get();
       }
       Log.error("Model could not be parsed.");
@@ -59,9 +56,8 @@ public class OD4DataTool {
    * @param ast ODArtifact ast
    * @return Symboltable created form AST
    */
-  public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast) {
-    OD4DataGlobalScope globalScope = new OD4DataGlobalScope(new ModelPath(), "od");
-
+  public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast,
+      IOD4DataGlobalScope globalScope) {
     OD4DataSymbolTableCreatorDelegator symbolTable = OD4DataMill
         .oD4DataSymbolTableCreatorDelegatorBuilder().setGlobalScope(globalScope).build();
     return symbolTable.createFromAST(ast);

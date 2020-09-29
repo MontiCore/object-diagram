@@ -2,6 +2,7 @@
 
 package de.monticore.od4data;
 
+import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.od4data._symboltable.OD4DataScopeDeSer;
@@ -16,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -23,6 +25,8 @@ import java.util.Optional;
  * executes the corresponding command line options and arguments, such as --help
  */
 public class OD4DataCLI {
+
+  private static final String EXTENSION = "od";
 
   /*=================================================================*/
   /* Part 1: Handling the arguments and options
@@ -68,12 +72,21 @@ public class OD4DataCLI {
         return;
       }
 
+      // if -path is set: save the model paths
+      ModelPath modelPath = new ModelPath();
+      if (cmd.hasOption("path")) {
+        String[] paths = cmd.getOptionValues("path");
+        Arrays.stream(paths).forEach(p -> modelPath.addEntry(Paths.get(p)));
+      }
+
       // parse input file, which is now available
       // (only returns if successful)
       ASTODArtifact astodArtifact = parseFile(cmd.getOptionValue("i"));
 
       // create symbol table
-      IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact);
+      IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact,
+          OD4DataMill.oD4DataGlobalScopeBuilder().setModelPath(modelPath)
+              .setModelFileExtension(EXTENSION).build());
 
       // -option pretty print
       if (cmd.hasOption("pp")) {
@@ -227,6 +240,11 @@ public class OD4DataCLI {
     options.addOption(Option.builder("i").longOpt("input").argName("file").hasArg()
         .desc("Reads the source file (mandatory) and parses the contents as an object diagram")
         .build());
+
+    // model paths
+    options.addOption(
+        Option.builder("path").argName("dirlist").numberOfArgs(Option.UNLIMITED_VALUES).hasArg()
+            .desc("Sets the artifact path for imported symbols").build());
 
     // pretty print OD
     options.addOption(Option.builder("pp").longOpt("prettyprint").argName("file").optionalArg(true)
