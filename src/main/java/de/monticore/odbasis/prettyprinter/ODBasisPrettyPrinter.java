@@ -16,7 +16,7 @@ import java.util.Iterator;
  * Visitor pattern. The Visitor pattern traverses a tree in depth first, the visit and
  * ownVisit-methods are called when a node is traversed, the endVisit methods are called when the
  * whole subtree of a node has been traversed. The ownVisit-Methods stop the automatic traversal
- * order and allow to explictly visit subtrees by calling getVisitor().startVisit(ASTNode)
+ * order and allow to explicitly visit subtrees by calling getVisitor().startVisit(ASTNode)
  */
 public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
     implements ODBasisInheritanceVisitor {
@@ -50,9 +50,9 @@ public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
    */
   @Override
   public void handle(ASTODArtifact unit) {
-    if (unit.isPresentPackage() && !unit.getPackage().getMCQualifiedName()
+    if (unit.isPresentMCPackageDeclaration() && !unit.getMCPackageDeclaration().getMCQualifiedName()
         .getQName().isEmpty()) {
-      getPrinter().println("package " + unit.getPackage().getMCQualifiedName().getQName() + ";\n");
+      getPrinter().println("package " + unit.getMCPackageDeclaration().getMCQualifiedName().getQName() + ";\n");
     }
 
     if (unit.getMCImportStatementList() != null && !unit.getMCImportStatementList().isEmpty()) {

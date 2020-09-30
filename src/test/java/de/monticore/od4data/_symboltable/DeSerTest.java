@@ -56,7 +56,7 @@ public class DeSerTest {
     // serialize
     OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
     String fileName = Paths.get(TEASEROD.toString()).getFileName().toString() + "." + EXTENSION;
-    String packagePath = astodArtifact.get().getPackage().getMCQualifiedName().getQName();
+    String packagePath = astodArtifact.get().getMCPackageDeclaration().getMCQualifiedName().getQName();
     String storedPath = Paths.get(SYMBOL_TARGET.toString(), packagePath, fileName).toString();
     odBasicsScopeDeSer.store(od4DataArtifactScope, storedPath);
 
@@ -85,7 +85,7 @@ public class DeSerTest {
     // serialize
     OD4ReportScopeDeSer od4ReportScopeDeSer = new OD4ReportScopeDeSer();
     String fileName = Paths.get(TEASEROD.toString()).getFileName().toString() + "." + EXTENSION;
-    String packagePath = astodArtifact.get().getPackage().getMCQualifiedName().getQName();
+    String packagePath = astodArtifact.get().getMCPackageDeclaration().getMCQualifiedName().getQName();
     String storedPath = Paths.get(SYMBOL_TARGET.toString(), packagePath, fileName).toString();
     od4ReportScopeDeSer.store(od4ReportArtifactScope, storedPath);
 

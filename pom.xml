@@ -6,7 +6,7 @@
 
   <!-- == PROJECT COORDINATES ============================================= -->
 
-  <groupId>de.monticore</groupId>
+  <groupId>de.monticore.lang</groupId>
   <artifactId>od</artifactId>
   <version>6.4.0-SNAPSHOT</version>
 
