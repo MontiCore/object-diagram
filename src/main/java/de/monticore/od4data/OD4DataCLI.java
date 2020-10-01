@@ -76,7 +76,8 @@ public class OD4DataCLI {
       ModelPath modelPath = new ModelPath();
       if (cmd.hasOption("path")) {
         String[] paths = cmd.getOptionValues("path");
-        Arrays.stream(paths).forEach(p -> modelPath.addEntry(Paths.get(p)));
+        Arrays.stream(paths)
+            .forEach(p -> modelPath.addEntry(Paths.get(p)));
       }
 
       // parse input file, which is now available
@@ -85,8 +86,10 @@ public class OD4DataCLI {
 
       // create symbol table
       IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact,
-          OD4DataMill.oD4DataGlobalScopeBuilder().setModelPath(modelPath)
-              .setModelFileExtension(EXTENSION).build());
+          OD4DataMill.oD4DataGlobalScopeBuilder()
+              .setModelPath(modelPath)
+              .setModelFileExtension(EXTENSION)
+              .build());
 
       // -option pretty print
       if (cmd.hasOption("pp")) {
@@ -168,7 +171,8 @@ public class OD4DataCLI {
       System.out.println(odBasicsScopeDeSer.serialize(od4DataArtifactScope));
     }
     else {
-      odBasicsScopeDeSer.store(od4DataArtifactScope, Paths.get(file).toString());
+      odBasicsScopeDeSer.store(od4DataArtifactScope, Paths.get(file)
+          .toString());
     }
   }
 
@@ -207,7 +211,9 @@ public class OD4DataCLI {
     else {
       File f = new File(path);
       // create directories (logs error otherwise)
-      f.getAbsoluteFile().getParentFile().mkdirs();
+      f.getAbsoluteFile()
+          .getParentFile()
+          .mkdirs();
 
       FileWriter writer;
       try {
@@ -234,28 +240,45 @@ public class OD4DataCLI {
     Options options = new Options();
 
     // help dialog
-    options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").build());
+    options.addOption(Option.builder("h")
+        .longOpt("help")
+        .desc("Prints this help dialog")
+        .build());
 
     // parse input file
-    options.addOption(Option.builder("i").longOpt("input").argName("file").hasArg()
-        .desc("Reads the source file (mandatory) and parses the contents as an object diagram")
+    options.addOption(Option.builder("i")
+        .longOpt("input")
+        .argName("file")
+        .hasArg()
+        .desc("Reads the source file (mandatory) and parses the contents as an " + "object diagram")
         .build());
 
     // model paths
-    options.addOption(
-        Option.builder("path").argName("dirlist").numberOfArgs(Option.UNLIMITED_VALUES).hasArg()
-            .desc("Sets the artifact path for imported symbols").build());
+    options.addOption(Option.builder("path")
+        .argName("dirlist")
+        .numberOfArgs(Option.UNLIMITED_VALUES)
+        .hasArg()
+        .desc("Sets the artifact path for imported symbols")
+        .build());
 
     // pretty print OD
-    options.addOption(Option.builder("pp").longOpt("prettyprint").argName("file").optionalArg(true)
-        .numberOfArgs(1).desc("Prints the OD-AST to stdout or the specified file (optional)")
+    options.addOption(Option.builder("pp")
+        .longOpt("prettyprint")
+        .argName("file")
+        .optionalArg(true)
+        .numberOfArgs(1)
+        .desc("Prints the OD-AST to stdout or the specified file (optional)")
         .build());
 
     // print OD symtab
-    options.addOption(
-        Option.builder("s").longOpt("symboltable").argName("file").optionalArg(true).numberOfArgs(1)
-            .desc("Prints the symboltable of the object diagram to stdout or the specified file "
-                + "(optional)").build());
+    options.addOption(Option.builder("s")
+        .longOpt("symboltable")
+        .argName("file")
+        .optionalArg(true)
+        .numberOfArgs(1)
+        .desc("Prints the symboltable of the object diagram to stdout or the specified file "
+            + "(optional)")
+        .build());
 
     return options;
   }

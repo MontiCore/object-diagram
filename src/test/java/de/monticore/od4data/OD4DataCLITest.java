@@ -13,6 +13,8 @@ public class OD4DataCLITest {
 
   private final Path INPUTOD = Paths.get("src", "test", "resources", "examples", "od", "Teaser.od");
 
+  private final Path INPUTDIR = Paths.get("src", "resources", "examples", "od");
+
   private final Path TARGET = Paths.get("target", "cli", "od4data");
 
   @Test
@@ -22,11 +24,21 @@ public class OD4DataCLITest {
   }
 
   @Test
+  public void testOD4DataCLIPath() {
+    String[] input = { "-i", INPUTOD.toString(), "-path",
+        Paths.get(INPUTDIR.toString(), "examples").toString(),
+        Paths.get(INPUTDIR.toString(), "cocos").toString() };
+    OD4DataCLI.main(input);
+  }
+
+  @Test
   public void testOD4CLIPrettyPrint() {
     String[] input = { "-i", INPUTOD.toString(), "-pp",
         Paths.get(TARGET.toString(), "pp.od").toString() };
     OD4DataCLI.main(input);
-    assertTrue(Paths.get(TARGET.toString(), "pp.od").toFile().exists());
+    assertTrue(Paths.get(TARGET.toString(), "pp.od")
+        .toFile()
+        .exists());
   }
 
   @Test
@@ -34,7 +46,9 @@ public class OD4DataCLITest {
     String[] input = { "-i", INPUTOD.toString(), "-s",
         Paths.get(TARGET.toString(), "MyFamily.odsym").toString() };
     OD4DataCLI.main(input);
-    assertTrue(Paths.get(TARGET.toString(), "MyFamily.odsym").toFile().exists());
+    assertTrue(Paths.get(TARGET.toString(), "MyFamily.odsym")
+        .toFile()
+        .exists());
   }
 
 }

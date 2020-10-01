@@ -1,18 +1,17 @@
 // (c) https://github.com/MontiCore/monticore
 
-package de.monticore.od4report._cocos;
+package de.monticore.od4data._cocos;
 
-import de.monticore.dateliterals._cocos.DateLiteralsCoCos;
+import de.monticore.od4report._cocos.OD4ReportCoCoChecker;
 import de.monticore.odbasis._cocos.ODBasicsCoCos;
 import de.monticore.odlink._cocos.ODLinkCoCos;
 
-public class OD4ReportCoCos {
+public class OD4DataCoCos {
 
   public OD4ReportCoCoChecker getCheckerForAllCoCos() {
     final OD4ReportCoCoChecker checker = new OD4ReportCoCoChecker();
     checker.addChecker(new ODBasicsCoCos().getCheckerForAllCoCos());
     checker.addChecker(new ODLinkCoCos().getCheckerForAllCoCos());
-    checker.addChecker(new DateLiteralsCoCos().getCheckerForAllCoCos());
 
     return checker;
   }

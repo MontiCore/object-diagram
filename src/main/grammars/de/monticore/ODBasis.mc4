@@ -17,7 +17,6 @@ package de.monticore;
 component grammar ODBasis extends de.monticore.UMLModifier,
                         de.monticore.types.MCBasicTypes,
                         de.monticore.symbols.OOSymbols,
-                        de.monticore.literals.MCCommonLiterals,
                         de.monticore.expressions.CommonExpressions {
 
   /*========================================================================*/

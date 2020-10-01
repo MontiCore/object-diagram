@@ -1,15 +1,9 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
-// (c) https://github.com/MontiCore/monticore
-
-// (c) https://github.com/MontiCore/monticore
-
 package de.monticore.od4data;
 
 import de.monticore.od4data._ast.ASTOD4DataNode;
-import de.monticore.od4data._cocos.OD4DataCoCoChecker;
+import de.monticore.od4data._cocos.OD4DataCoCos;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.od4data._symboltable.IOD4DataGlobalScope;
@@ -17,8 +11,6 @@ import de.monticore.od4data._symboltable.OD4DataSymbolTableCreatorDelegator;
 import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._ast.ASTODBasisNode;
-import de.monticore.odbasis._cocos.ODBasicsCoCos;
-import de.monticore.odlink._cocos.ODLinkCoCos;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
@@ -58,16 +50,16 @@ public class OD4DataTool {
    */
   public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast,
       IOD4DataGlobalScope globalScope) {
-    OD4DataSymbolTableCreatorDelegator symbolTable = OD4DataMill
-        .oD4DataSymbolTableCreatorDelegatorBuilder().setGlobalScope(globalScope).build();
+    OD4DataSymbolTableCreatorDelegator symbolTable =
+        OD4DataMill.oD4DataSymbolTableCreatorDelegatorBuilder()
+        .setGlobalScope(globalScope)
+        .build();
     return symbolTable.createFromAST(ast);
   }
 
   public static void runDefaultCoCos(ASTODArtifact ast) {
-    OD4DataCoCoChecker od4DataCoCoChecker = new OD4DataCoCoChecker();
-    od4DataCoCoChecker.addChecker(new ODBasicsCoCos().getCheckerForAllCoCos());
-    od4DataCoCoChecker.addChecker(new ODLinkCoCos().getCheckerForAllCoCos());
-    od4DataCoCoChecker.checkAll(ast);
+    new OD4DataCoCos().getCheckerForAllCoCos()
+        .checkAll(ast);
   }
 
   /**

@@ -2,49 +2,46 @@
 
 <!-- Beta-version: This is intended to become a MontiCore stable explanation. -->
 
-# (UML/P) OD
+# (UML/P) ODBasis
 
-Language for textual object diagrams. In its current state the language is mostly used for (i) a 
-data structure in certain projets (e.g. artifact toolchain)and (ii) as a report format for 
-languages developed with MontiCore. For its lastest version the OD language was enhanced with
-the possiblility of using expressions in its attributes extending its capabilities.
+Component Grammar for textual object diagrams. ODBasis provides the basic elements and simple
+ structures for textual object diagrams: Objects adn Attributes. Additionally, it provides a
+  basic set of context conditions to ensure semantic correctnes of these elements. 
 
 The grammar file is [`de.monticore.ODBasis`][ODBasicsGrammar].
 
-The OD language the monticoreuages  
- [`de.monticore.types.MCFullGenericTypes`][MCFullGenericGrammar] and
- [`de.monticore.UMLModifier`][MCUMLModifierGrammar] and 
- [`de.monticore.expressions.ExpressionsBasis`][MCExpressionBasicsGrammar]
-
+The component grammar uses the following MontiCore languages:
+ [`de.monticore.UMLModifier`][MCUMLModifierGrammar] and  
+ [`de.monticore.types.MCFullGenericTypes`][MCBasicTypes] and
+ [`de.monticore.types.MCFullGenericTypes`][OOSymbols] and
+ [`de.monticore.types.MCFullGenericTypes`][CommonExpressions] and
+ 
 ## Handwritten Extensions
-## AST
+### AST
 - Handwritten AST nodes can be found in [`monticore.odbasics._ast`][_ast]
-## Symboltable
+### Symboltable
 - Handwritten Symbols, language, and Creator can be found in [`monticore.odbasics._symbol`][_symboltable]
-## Pretty Printer
+### Pretty Printer
 - Pretty Printer can be found in [`monticore.odbasics.prettyprinter`][prettyprinter]
 
 ## Functionality
 ### CoCos
-The CoCos can be found in [`monticore.odbasics._cocos`][cocos] and are combined
-accessible in [`monticore.odbasics._cocos.ODBasicsCoCos`][ODCoCos].
+The CoCos can be found in [`monticore.odbasics._cocos`][_cocos] and are combined
+accessible in [`monticore.odbasics._cocos.OD4ReportCoCos`][OD4ReportCoCos].
 
-The context conditions check different parts of the models, to ensure the semantic correctness.
-
-### CLI Application
-[`de.monticore.od4data.ODBasicsCLI`][ODCLI] contains a standalone cli application which 
-loads a given OD model.
+The context conditions check different parts of the models, to ensure the semantic correctness
+. See each coco for more details.
 
 [ODBasicsGrammar]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/grammars/de/monticore/ODBasis.mc4
-[MCFullGenericGrammar]: https://git.rwth-aachen.de/monticore/monticore/-/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCFullGenericTypes.mc4
-[MCUMLModifierGrammar]: https://git.rwth-aachen.de/monticore/monticore/-/blob/dev/monticore-grammar/src/main/grammars/de/monticore/UMLModifier.mc4
-[MCExpressionBasicsGrammar]: https://git.rwth-aachen.de/monticore/monticore/-/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/ExpressionsBasis.mc4
+[UMLModifier]: https://git.rwth-aachen.de/monticore/monticore/-/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCFullGenericTypes.mc4
+[MCBasicTypes]: https://git.rwth-aachen.de/monticore/monticore/-/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCBasicTypes.mc4
+[OOSymbols]: https://git.rwth-aachen.de/monticore/monticore/-/blob/dev/monticore-grammar/src/main/grammars/de/monticore/symbols/OOSymbols.mc4
+[CommonExpressions]: https://git.rwth-aachen.de/monticore/monticore/-/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/CommonExpressions.mc4
 [_ast]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/odbasis/_ast
 [_symboltable]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/odbasis/_symboltable
 [prettyprinter]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/odbasis/prettyprinter
-[cocos]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/odbasis/_cocos
+[_cocos]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/odbasis/_cocos
 [ODCoCos]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/java/de/monticore/odbasis/_cocos/ODBasicsCoCos.java
-[ODCLI]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/java/de/monticore/od4data/OD4DataCLI.java
 
 ## Further Information
 
@@ -57,4 +54,3 @@ loads a given OD model.
 * [Publications about MBSE and MontiCore](https://www.se-rwth.de/publications/)
 
 * [Licence definition](https://github.com/MontiCore/monticore/blob/master/00.org/Licenses/LICENSE-MONTICORE-3-LEVEL.md)
-
