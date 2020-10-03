@@ -19,18 +19,21 @@ component grammar DateLiterals extends de.monticore.literals.MCCommonLiterals {
 
     /** ASTDate represents a Date Format.
       @attribute DatePart Nonterminal containing the day information
-      @attribute Timepart Nonterminal containing the time of the day information
+      @attribute Timepart Nonterminal containing the time of
+                                            the day information
     */
     Date = DatePart TimePart;
 
-    /** ASTDatePart represents the day information (year, month, day) of a date.
+    /** ASTDatePart represents the day information
+                                          (year, month, day) of a date.
       @attribute year Year of the date
       @attribute month Month of the date
       @attribute day Day of the date
     */
     interface DatePart = year:NatLiteral month:NatLiteral day:NatLiteral;
 
-    /** ASTTimePart represents the time of the day information (hour, minute, second) of a date.
+    /** ASTTimePart represents the time of the day information
+                                          (hour, minute, second) of a date.
       @attribute hour Hour of the day
       @attribute minute Minute of the day
       @attribute second Second of the day
@@ -39,18 +42,22 @@ component grammar DateLiterals extends de.monticore.literals.MCCommonLiterals {
 
     /** Date format "yyyy-MM-dd" */
     DatePartHyphen implements DatePart =
-      {noSpace(2,3,4,5)}? year:NatLiteral "-" month:NatLiteral "-" day:NatLiteral;
+      {noSpace(2,3,4,5)}?
+      year:NatLiteral "-" month:NatLiteral "-" day:NatLiteral;
 
     /** Date format "yyyy.MM.dd" */
     DatePartDot implements DatePart =
-      {noSpace(2,3,4,5)}? year:NatLiteral "." month:NatLiteral "." day:NatLiteral;
+      {noSpace(2,3,4,5)}?
+      year:NatLiteral "." month:NatLiteral "." day:NatLiteral;
 
     /** Date format "yyyy/MM/dd" */
     DatePartSlash implements DatePart =
-      {noSpace(2,3,4,5)}? year:NatLiteral "/" month:NatLiteral "/" day:NatLiteral;
+      {noSpace(2,3,4,5)}?
+      year:NatLiteral "/" month:NatLiteral "/" day:NatLiteral;
 
     /** Time format "hh:mm:ss" */
     TimePartColon implements TimePart =
-      {noSpace(2,3,4,5)}? hour:NatLiteral ":" minute:NatLiteral ":" second:NatLiteral;
+      {noSpace(2,3,4,5)}?
+      hour:NatLiteral ":" minute:NatLiteral ":" second:NatLiteral;
 
 }
