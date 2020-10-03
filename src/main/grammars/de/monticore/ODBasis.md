@@ -2,27 +2,32 @@
 
 <!-- Beta-version: This is intended to become a MontiCore stable explanation. -->
 
-# (UML/P) ODBasis
+# ODBasis -- the foundation for UML/P's Object Diagrams
 
-Component Grammar for textual object diagrams. ODBasis provides the basic elements and simple
- structures for textual object diagrams: Objects adn Attributes. Additionally, it provides a
-  basic set of context conditions to ensure semantic correctnes of these elements. 
+`ODBasis` is a language component for textual object diagrams. 
+It provides the basic elements and simple
+structures for textual object diagrams: Objects and attributes. Additionally, it provides a
+basic set of context conditions to ensure semantic correctnes of these elements. 
 
-The grammar file is [`de.monticore.ODBasis`][ODBasicsGrammar].
+* The grammar file is [`de.monticore.ODBasis`][ODBasicsGrammar].
 
-The component grammar uses the following MontiCore languages:
- [`de.monticore.UMLModifier`][MCUMLModifierGrammar] and  
- [`de.monticore.types.MCFullGenericTypes`][MCBasicTypes] and
- [`de.monticore.types.MCFullGenericTypes`][OOSymbols] and
- [`de.monticore.types.MCFullGenericTypes`][CommonExpressions] and
+* The component grammar uses the following MontiCore languages:
+  * [`de.monticore.UMLModifier`][MCUMLModifierGrammar] and  
+  * [`de.monticore.types.MCFullGenericTypes`][MCBasicTypes] and
+  * [`de.monticore.types.MCFullGenericTypes`][OOSymbols] and
+  * [`de.monticore.types.MCFullGenericTypes`][CommonExpressions].
  
 ## Handwritten Extensions
 ### AST
-- Handwritten AST nodes can be found in [`monticore.odbasics._ast`][_ast]
+- There is a handwritten AST node extension for `ASTODObject`
+  in [`monticore.odbasics._ast`][_ast].
+
 ### Symboltable
+- TODO: Symbole beschreiben, die importiert exportiert werden, etc.
 - Handwritten Symbols, language, and Creator can be found in [`monticore.odbasics._symbol`][_symboltable]
+
 ### Pretty Printer
-- Pretty Printer can be found in [`monticore.odbasics.prettyprinter`][prettyprinter]
+- A pretty Printer can be found in [`monticore.odbasics.prettyprinter`][prettyprinter].
 
 ## Functionality
 ### CoCos
