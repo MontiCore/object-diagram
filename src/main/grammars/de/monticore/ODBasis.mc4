@@ -24,11 +24,11 @@ component grammar ODBasis extends de.monticore.UMLModifier,
   /*========================================================================*/
 
   /** ASTODArtifact represents the complete Diagram
-    @attribute package The package declaration of this Objectdiagram
-    @attribute importStatements List of imported elements
-    @attribute oDConformsStatement List of conform statements
-    @attribute objectDiagram the ObjectDiagram
-  */
+   * @attribute package The package declaration of this Objectdiagram
+   * @attribute importStatements List of imported elements
+   * @attribute oDConformsStatement List of conform statements
+   * @attribute objectDiagram the ObjectDiagram
+   */
   ODArtifact =
     MCPackageDeclaration?
     MCImportStatement*
@@ -50,11 +50,12 @@ component grammar ODBasis extends de.monticore.UMLModifier,
   interface ODElement;
 
   /**
-  * ODObject represents the interface for all possible variants of objects in an OD.
-  *   @attribute Modifier Optional Modifier of this object
-  *   @attribute MCObjectType Required type of this object
-  *   @attribute ODAttribute List of attributes of this object
-  */
+   * ODObject represents the interface for all possible variants of objects
+   * in an OD.
+   *   @attribute Modifier Optional Modifier of this object
+   *   @attribute MCObjectType Required type of this object
+   *   @attribute ODAttribute List of attributes of this object
+   */
   interface ODObject = Modifier? MCObjectType ODAttribute*;
 
   /*========================================================================*/
@@ -62,12 +63,12 @@ component grammar ODBasis extends de.monticore.UMLModifier,
   /*========================================================================*/
 
   /** ASTObjectDiagram represents a UML Objectdiagram
-    consisting of object and link definitions.
-    @attribute stereotype  Optional Stereotype
-    @attribute name        Name of this Objectdiagram
-    @attribute oDObject    List of Objects of this Objectdiagram
-    @attribute oDLink      List of Links of this Objectdiagram
-  */
+   *  consisting of object and link definitions.
+   *  @attribute stereotype  Optional Stereotype
+   *  @attribute name        Name of this Objectdiagram
+   *  @attribute oDObject    List of Objects of this Objectdiagram
+   *  @attribute oDLink      List of Links of this Objectdiagram
+   */
   symbol scope ObjectDiagram =
     Stereotype?
     "objectdiagram" Name
@@ -76,23 +77,24 @@ component grammar ODBasis extends de.monticore.UMLModifier,
     "}";
 
   /** AST-ODNamedObject represents an Object in a UML Objectdiagram.
-    The object contains attributes and may be hierarchically decomposed.
-      @attribute modifier Modifier of the object.
-      @attribute name Name of the object.
-      @attribute mCObjectType Type of the object.
-      @attribute oDAttribute List of attributes of the object.
-  */
+   *  The object contains attributes and may be hierarchically decomposed.
+   *  @attribute modifier Modifier of the object.
+   *  @attribute name Name of the object.
+   *  @attribute mCObjectType Type of the object.
+   *  @attribute oDAttribute List of attributes of the object.
+   */
   ODNamedObject implements ODElement, ODObject, ODValue, Variable =
     Modifier?
     Name ":" MCObjectType
       "{" ODAttribute* "}";
 
-  /** AST-ODAnonymousObject represents an anonymous Object in a UML Objectdiagram.
-    The object contains attributes and may be hierarchically decomposed.
-      @attribute modifier Modifier of the object.
-      @attribute mCObjectType Type of the object.
-      @attribute oDAttribute List of attributes of the object.
-  */
+  /** AST-ODAnonymousObject represents an anonymous Object in a UML
+   *  Objectdiagram.
+   *  The object contains attributes and may be hierarchically decomposed.
+   *   @attribute modifier Modifier of the object.
+   *   @attribute mCObjectType Type of the object.
+   *   @attribute oDAttribute List of attributes of the object.
+   */
   ODAnonymousObject implements ODElement, ODObject, ODValue =
       Modifier?
       ":" MCObjectType
@@ -108,16 +110,16 @@ component grammar ODBasis extends de.monticore.UMLModifier,
   /*========================================================================*/
 
   /** ASTODAttribute represents an Attribute of an Object.
-    The attribute may be List, Set or Map valued.
-    Furthermore, it is possible to specify the collection as incomplete
-    using "->" or as complete with an equality "=".
-    @attribute stereotype Optional stereotype of this attribute
-    @attribute modifier Optional modifier of this attribute
-    @attribute type Optional type of this attribute
-    @attribute name Name of this Attribute
-    @attribute complete True if attribute has a "complete" assignment
-    @attribute oDValue Attribute value in form of an ODValue
-  */
+   *  The attribute may be List, Set or Map valued.
+   *  Furthermore, it is possible to specify the collection as incomplete
+   *  using "->" or as complete with an equality "=".
+   *  @attribute stereotype Optional stereotype of this attribute
+   *  @attribute modifier Optional modifier of this attribute
+   *  @attribute type Optional type of this attribute
+   *  @attribute name Name of this Attribute
+   *  @attribute complete True if attribute has a "complete" assignment
+   *  @attribute oDValue Attribute value in form of an ODValue
+   */
   ODAttribute =
     Stereotype?
     Modifier?
@@ -133,20 +135,20 @@ component grammar ODBasis extends de.monticore.UMLModifier,
   /*========================================================================*/
 
   /** ASTODAbsent represents an implementation of the ODValue interface
-      that represents an absent optional value.
-  */
+   *  that represents an absent optional value.
+   */
   ODAbsent implements ODValue = "...";
 
   /** ODSimpleAttributeValue is an implementation of the ODValue interface
-      that represents a simple value for an attribute, e.g. ints, double or Strings.
-  */
+   *  that represents a simple value for an attribute, e.g. ints, double or Strings.
+   */
   ODSimpleAttributeValue implements ODValue = Expression;
 
   /** ODName is an implementation of the ODValue interface
-      that represents a name of an object. Note that this is handled separately
-      and is not contained by the ODSimpleAttributeValue to enable name
-      adjustments in sub grammars.
-  */
+   *  that represents a name of an object. Note that this is handled separately
+   *  and is not contained by the ODSimpleAttributeValue to enable name
+   *  adjustments in sub grammars.
+   */
   ODName implements ODValue = NameExpression;
 
   astrule ODName =
