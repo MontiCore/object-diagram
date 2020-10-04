@@ -31,48 +31,49 @@ package de.monticore;
 grammar OD4Report extends de.monticore.OD4Data,
                           de.monticore.DateLiterals {
 
-    start ODArtifact;
+  start ODArtifact;
 
-    /** ODDate allows that Date values can be also part
-     * of of object diagrams in form of attribute values. 
-     */
-    ODDate implements ODValue = Date;
+  /** ODDate allows that Date values can be also part
+   * of of object diagrams in form of attribute values.
+   */
+  ODDate implements ODValue = Date;
 
-    /** ASTODName allows two forms of names.
-     * Special form of names (see ODSpecialName) is coming from
-     *  MontiCore reports, that generate names for 
-     *  otherwise anonymous AST nodes and encode certain forms
-     *  of information, such as line/colum of defining occurrence.
-     *
-     *  @attribute simpleName Name of the object
-     *  @attribute specialName Specific naming for objects
-     */
-    ODName implements ODValue =
-      simpleName:NameExpression | specialName:ODSpecialName;
+  /** ASTODName allows two forms of names.
+   * Special form of names (see ODSpecialName) is coming from
+   *  MontiCore reports, that generate names for
+   *  otherwise anonymous AST nodes and encode certain forms
+   *  of information, such as line/colum of defining occurrence.
+   *
+   *  @attribute simpleName Name of the object
+   *  @attribute specialName Specific naming for objects
+   */
+  @Override
+  ODName implements ODValue =
+    simpleName:NameExpression | specialName:ODSpecialName;
 
-    ODReportObject astextends ASTODNamedObject implements ODElement, ODObject, ODValue =
-        Modifier?
-        ODSpecialName ":" MCObjectType
-          "{" ODAttribute* "}";
+  ODReportObject astextends ASTODNamedObject implements ODElement, ODObject, ODValue =
+      Modifier?
+      ODSpecialName ":" MCObjectType
+        "{" ODAttribute* "}";
 
-    // Both forms of names are returned as Name (i.e. as String)
-    astrule ODName =
-      method public String getName() {
-        if (isPresentSimpleName()) {
-          return getSimpleName().getName();
-        }
-        return getSpecialName();
-       };
+  // Both forms of names are returned as Name (i.e. as String)
+  astrule ODName =
+    method public String getName() {
+      if (isPresentSimpleName()) {
+        return getSimpleName().getName();
+      }
+      return getSpecialName();
+     };
 
-    /** Special names start with a "@" and contain
-     * an optional Position in the source model "(4,5)":
-     * which stands for: line 4, col. 5
-     * or "(4,5!2)" : second occurence of that name
-     */
-    token ODSpecialName = '@'
-      (Name|'!')+
-      ('(' ODPositionNumber ')')?;
+  /** Special names start with a "@" and contain
+   * an optional Position in the source model "(4,5)":
+   * which stands for: line 4, col. 5
+   * or "(4,5!2)" : second occurence of that name
+   */
+  token ODSpecialName = '@'
+    (Name|'!')+
+    ('(' ODPositionNumber ')')?;
 
-    fragment token ODPositionNumber = (Digits ("," Digits)+)? ('!' Digits)?;
+  fragment token ODPositionNumber = (Digits ("," Digits)+)? ('!' Digits)?;
 
 }
