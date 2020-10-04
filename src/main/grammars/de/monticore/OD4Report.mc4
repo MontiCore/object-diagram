@@ -51,7 +51,7 @@ grammar OD4Report extends de.monticore.OD4Data,
   ODName implements ODValue =
     simpleName:NameExpression | specialName:ODSpecialName;
 
-  ODReportObject astextends ASTODNamedObject implements ODElement, ODObject, ODValue =
+  ODReportObject astextends ASTODNamedObject implements ODObject, ODValue =
       Modifier?
       ODSpecialName ":" MCObjectType
         "{" ODAttribute* "}";

@@ -56,7 +56,7 @@ component grammar ODBasis extends de.monticore.UMLModifier,
    *   @attribute MCObjectType Required type of this object
    *   @attribute ODAttribute List of attributes of this object
    */
-  interface ODObject = Modifier? MCObjectType ODAttribute*;
+  interface ODObject extends ODElement = Modifier? MCObjectType ODAttribute*;
 
   /*========================================================================*/
   /*===================== Grammar, Diagramm, and Object ====================*/
@@ -83,7 +83,7 @@ component grammar ODBasis extends de.monticore.UMLModifier,
    *  @attribute mCObjectType Type of the object.
    *  @attribute oDAttribute List of attributes of the object.
    */
-  ODNamedObject implements ODElement, ODObject, ODValue, Variable =
+  ODNamedObject implements ODObject, ODValue, Variable =
     Modifier?
     Name ":" MCObjectType
       "{" ODAttribute* "}";
@@ -95,7 +95,7 @@ component grammar ODBasis extends de.monticore.UMLModifier,
    *   @attribute mCObjectType Type of the object.
    *   @attribute oDAttribute List of attributes of the object.
    */
-  ODAnonymousObject implements ODElement, ODObject, ODValue =
+  ODAnonymousObject implements ODObject, ODValue =
       Modifier?
       ":" MCObjectType
         "{" ODAttribute* "}";
