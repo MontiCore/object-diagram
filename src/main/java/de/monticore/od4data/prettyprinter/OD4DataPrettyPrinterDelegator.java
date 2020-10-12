@@ -7,9 +7,11 @@ import de.monticore.expressions.prettyprint.CommonExpressionsPrettyPrinter;
 import de.monticore.expressions.prettyprint.ExpressionsBasisPrettyPrinter;
 import de.monticore.od4data._ast.ASTOD4DataNode;
 import de.monticore.od4data._visitor.OD4DataDelegatorVisitor;
+import de.monticore.odattribute._ast.ASTODAttributeNode;
 import de.monticore.odattribute.prettyprinter.ODAttributePrettyPrinter;
 import de.monticore.odbasis._ast.ASTODBasisNode;
 import de.monticore.odbasis.prettyprinter.ODBasisPrettyPrinter;
+import de.monticore.odlink._ast.ASTODLinkNode;
 import de.monticore.odlink.prettyprinter.ODLinkPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.prettyprint.UMLModifierPrettyPrinter;
@@ -44,6 +46,18 @@ public class OD4DataPrettyPrinterDelegator extends OD4DataDelegatorVisitor {
   public String prettyprint(ASTODBasisNode astodBasisNode) {
     getPrinter().clearBuffer();
     astodBasisNode.accept(getRealThis());
+    return getPrinter().getContent();
+  }
+
+  public String prettyprint(ASTODLinkNode astodLinkNode) {
+    getPrinter().clearBuffer();
+    astodLinkNode.accept(getRealThis());
+    return getPrinter().getContent();
+  }
+
+  public String prettyprint(ASTODAttributeNode ASTODAttributeNode) {
+    getPrinter().clearBuffer();
+    ASTODAttributeNode.accept(getRealThis());
     return getPrinter().getContent();
   }
 

@@ -5,7 +5,9 @@ package de.monticore.od4data;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
+import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.Slf4jLog;
 import org.antlr.v4.runtime.RecognitionException;
@@ -105,12 +107,15 @@ public class ExamplesTest {
     assertTrue(astodArtifact.isPresent());
 
     IOD4DataArtifactScope odBasicsArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get(),
-        OD4DataMill.oD4DataGlobalScopeBuilder().setModelPath(new ModelPath())
-            .setModelFileExtension("od").build());
+        OD4DataMill.oD4DataGlobalScopeBuilder()
+            .setModelPath(new ModelPath())
+            .setModelFileExtension("od")
+            .build());
     assertNotNull(odBasicsArtifactScope);
 
     // pretty print the AST
-    String ppResult = OD4DataTool.prettyPrintODNode(astodArtifact.get());
+    String ppResult = new OD4DataPrettyPrinterDelegator(new IndentPrinter()).prettyprint(
+        astodArtifact.get());
 
     // parse the printers content
     Optional<ASTODArtifact> ppOd = parser.parse_StringODArtifact(ppResult);

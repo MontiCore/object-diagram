@@ -14,9 +14,11 @@ import de.monticore.od4report._ast.ASTOD4ReportNode;
 import de.monticore.od4report._ast.ASTODDate;
 import de.monticore.od4report._ast.ASTODName;
 import de.monticore.od4report._visitor.OD4ReportDelegatorVisitor;
+import de.monticore.odattribute._ast.ASTODAttributeNode;
 import de.monticore.odattribute.prettyprinter.ODAttributePrettyPrinter;
 import de.monticore.odbasis._ast.ASTODBasisNode;
 import de.monticore.odbasis.prettyprinter.ODBasisPrettyPrinter;
+import de.monticore.odlink._ast.ASTODLinkNode;
 import de.monticore.odlink.prettyprinter.ODLinkPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.prettyprint.UMLModifierPrettyPrinter;
@@ -61,9 +63,21 @@ public class OD4ReportPrettyPrinterDelegator extends OD4ReportDelegatorVisitor {
     return getPrinter().getContent();
   }
 
-  public String prettyprint(ASTODBasisNode astodBasicsNode) {
+  public String prettyprint(ASTODBasisNode astodBasisNode) {
     getPrinter().clearBuffer();
-    astodBasicsNode.accept(getRealThis());
+    astodBasisNode.accept(getRealThis());
+    return getPrinter().getContent();
+  }
+
+  public String prettyprint(ASTODLinkNode astodLinkNode) {
+    getPrinter().clearBuffer();
+    astodLinkNode.accept(getRealThis());
+    return getPrinter().getContent();
+  }
+
+  public String prettyprint(ASTODAttributeNode ASTODAttributeNode) {
+    getPrinter().clearBuffer();
+    ASTODAttributeNode.accept(getRealThis());
     return getPrinter().getContent();
   }
 

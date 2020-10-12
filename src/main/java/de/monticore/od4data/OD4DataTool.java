@@ -2,16 +2,12 @@
 
 package de.monticore.od4data;
 
-import de.monticore.od4data._ast.ASTOD4DataNode;
 import de.monticore.od4data._cocos.OD4DataCoCos;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.od4data._symboltable.IOD4DataGlobalScope;
 import de.monticore.od4data._symboltable.OD4DataSymbolTableCreatorDelegator;
-import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import de.monticore.odbasis._ast.ASTODBasisNode;
-import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
 
@@ -58,30 +54,7 @@ public class OD4DataTool {
   }
 
   public static void runDefaultCoCos(ASTODArtifact ast) {
-    new OD4DataCoCos().getCheckerForAllCoCos()
-        .checkAll(ast);
-  }
-
-  /**
-   * Print object diagram node.
-   *
-   * @param astod4DataNode object node to be printed
-   * @return node as String
-   */
-  public static String prettyPrintODNode(ASTOD4DataNode astod4DataNode) {
-    if (astod4DataNode == null) {
-      return "";
-    }
-
-    return new OD4DataPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astod4DataNode);
-  }
-
-  public static String prettyPrintODNode(ASTODBasisNode astodBasisNode) {
-    if (astodBasisNode == null) {
-      return "";
-    }
-
-    return new OD4DataPrettyPrinterDelegator(new IndentPrinter()).prettyprint(astodBasisNode);
+    new OD4DataCoCos().getCheckerForAllCoCos().checkAll(ast);
   }
 
 }
