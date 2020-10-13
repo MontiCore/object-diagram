@@ -3,19 +3,6 @@
 <!-- Beta-version: This is intended to become a MontiCore stable explanation. -->
 
 # ODBasis -- the foundation for UML/P's Object Diagrams
-
-`ODBasis` is a language component for textual object diagrams. 
-It provides the basic elements and simple
-structures for textual object diagrams: Objects and attributes. Additionally, it provides a
-basic set of context conditions to ensure semantic correctnes of these elements. 
-
-* The grammar file is [`de.monticore.ODBasis`][ODBasicsGrammar].
-
-* The component grammar uses the following MontiCore languages:
-  * [`de.monticore.UMLModifier`][MCUMLModifierGrammar] and  
-  * [`de.monticore.types.MCFullGenericTypes`][MCBasicTypes] and
-  * [`de.monticore.types.MCFullGenericTypes`][OOSymbols] and
-  * [`de.monticore.types.MCFullGenericTypes`][CommonExpressions].
  
 ## Handwritten Extensions
 ### AST

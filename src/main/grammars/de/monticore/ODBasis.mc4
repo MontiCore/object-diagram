@@ -69,6 +69,7 @@ component grammar ODBasis extends de.monticore.UMLModifier,
    *  @attribute oDObject    List of Objects of this Objectdiagram
    *  @attribute oDLink      List of Links of this Objectdiagram
    */
+   // TODO SH: Diagram Symbol einbauen "ObjectDiagram implements Diagram"
   symbol scope ObjectDiagram =
     Stereotype?
     "objectdiagram" Name
