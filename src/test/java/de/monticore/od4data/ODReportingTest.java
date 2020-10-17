@@ -1,6 +1,5 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
 package de.monticore.od4data;
 
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
@@ -13,7 +12,7 @@ import de.monticore.od4report.report.AST2ODReporter;
 import de.monticore.od4report.report.ODNodeIdentHelper;
 import de.monticore.od4report.report.ST2ODReporter;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import de.monticore.odbasis._symboltable.ObjectDiagramSymbol;
+import de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol;
 import de.se_rwth.commons.logging.Log;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -40,12 +39,13 @@ public class ODReportingTest {
 
     OD4ReportGlobalScope globalScope = new OD4ReportGlobalScope(modelPath, "od");
 
-    OD4ReportSymbolTableCreatorDelegator symTabVisitor = OD4ReportMill
-        .oD4ReportSymbolTableCreatorDelegatorBuilder().setGlobalScope(globalScope).build();
+    OD4ReportSymbolTableCreatorDelegator symTabVisitor =
+        OD4ReportMill.oD4ReportSymbolTableCreatorDelegatorBuilder()
+        .setGlobalScope(globalScope)
+        .build();
     symTabVisitor.createFromAST(astodArtifact.get());
 
-    ObjectDiagramSymbol objectDiagramSymbol = globalScope.resolveObjectDiagram(modelName)
-        .orElse(null);
+    DiagramSymbol objectDiagramSymbol = globalScope.resolveDiagram(modelName).orElse(null);
 
     if (objectDiagramSymbol != null && objectDiagramSymbol.isPresentAstNode()) {
       Log.warn("Cannot find AST for symbol " + modelName);
@@ -97,10 +97,10 @@ public class ODReportingTest {
   @Ignore
   @Test
   public void checkReportODGrammar() throws IOException {
-    Path astModel = Paths
-        .get("target/generated-sources/monticore/sourcecode/reports/de.monticore.OD/OD_AST.od");
-    Path stModel = Paths
-        .get("target/generated-sources/monticore/sourcecode/reports/de.monticore.OD/OD_ST.od");
+    Path astModel = Paths.get(
+        "target/generated-sources/monticore/sourcecode/reports/de.monticore.OD/OD_AST.od");
+    Path stModel = Paths.get(
+        "target/generated-sources/monticore/sourcecode/reports/de.monticore.OD/OD_ST.od");
 
     // Initialize the CoCoChecker
     // ODCoCoChecker odCoCoChecker = new ODCoCoChecker();
