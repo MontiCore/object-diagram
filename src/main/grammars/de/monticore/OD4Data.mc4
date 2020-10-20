@@ -33,4 +33,11 @@ grammar OD4Data extends de.monticore.ODAttribute,
 
   start ODArtifact;
 
+  splittoken "->", "<-", "<->", "--";
+
+  // Certain keywords of the used grammars shall not become
+  // restricted words in other context:
+  nokeyword "aggregation", "composition", "link", "objectdiagram";
+  nokeyword "conformsTo";
+
 }
