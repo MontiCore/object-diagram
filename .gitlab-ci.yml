@@ -1,0 +1,47 @@
+# (c) https://github.com/MontiCore/monticore
+
+image: maven:3.5.4-jdk-8-alpine
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  MAVEN_CLI_OPTS: "--settings settings.xml --batch-mode"
+
+cache:
+  paths:
+    - .gradle/wrapper
+  key: ${CI_COMMIT_REF_SLUG}
+
+before_script:
+  - chmod +x gradlew
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - "./gradlew assemble --refresh-dependencies $GRADLE_OPTS $ARGS1"
+  artifacts:
+    paths:
+      - "."
+    expire_in: 1 week
+
+test:
+  stage: test
+  dependencies:
+    - build
+  script:
+    - "./gradlew check $GRADLE_OPTS $ARGS2"
+
+deploy:
+  stage: deploy
+  dependencies:
+    - build
+  script:
+    - "./gradlew publish $GRADLE_OPTS $ARGS3 -PmavenPassword=$password -PmavenUser=$username"
+  only:
+    - master
+    - dev
