@@ -75,6 +75,7 @@ def grammarDependencies = ext {
     OD4Data = ["ODAttribute", "ODLink"]
     OD4Report = ["OD4Data", "DateLiterals"]
     DateLiterals = []
+    OD4Development = ["OD4Data"]
 }
 
 // one task per grammar file
