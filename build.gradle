@@ -5,16 +5,15 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id "monticore" version "6.4.0-SNAPSHOT" // MontiCore Plugin
+    id "monticore" version "$mc_version" // MontiCore Plugin
+    id "com.github.johnrengelman.shadow" version "4.0.4"
 }
 
-def mc_version = "6.4.0-SNAPSHOT"
 def commons_version = "1.7.9"
 def grammar_classifier = "grammars"
 def grammarDir = "src/main/grammars"
 
 group = "de.monticore.lang"
-version = "6.4.0-SNAPSHOT"
 description = "Object Diagram DSL"
 sourceCompatibility = "1.8"
 
@@ -49,12 +48,24 @@ dependencies {
     implementation "de.monticore:monticore-grammar:$mc_version:$grammar_classifier"
     grammar "de.monticore:monticore-grammar:$mc_version:$grammar_classifier"
     implementation "ch.qos.logback:logback-classic:1.1.7"
+    implementation "commons-cli:commons-cli:1.4"
+    implementation "org.apache.commons:commons-lang3:3.8.1"
 
+    compile 'org.apache.commons:commons-lang3:${commons-lang3.version}'
     testImplementation "junit:junit:4.11"
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.2"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:5.6.2"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.6.2"
     testImplementation "org.junit.vintage:junit-vintage-engine:5.6.2"
+}
+
+repositories {
+    maven {
+        credentials.username mavenUser
+        credentials.password mavenPassword
+        url repo
+    }
+    mavenLocal()
 }
 
 def grammarDependencies = ext {
@@ -136,6 +147,34 @@ task grammarJar(type: Jar) {
     from("$projectDir/src/main/grammars/") { include "**/*.mc4" }
     archiveClassifier = "grammars"
 }
+
+//shadowJar { // all in one jar
+//    manifest {
+//        attributes "Main-Class": "de.monticore.featurediagram.FeatureDiagramTool"
+//    }
+//    minimize() // sort out unused files automatically (does not find everything we don't need)
+//
+//    archiveFileName  =  "FeatureDiagramTool.jar"
+//}
+
+task buildOD4DataCLI(type: Jar, dependsOn: shadowJar) {
+    archiveFileName = 'OD4DataCLI.jar'
+    manifest {
+        attributes('Main-Class': 'de.monticore.od4data.OD4DataCLI')
+    }
+    from zipTree(shadowJar.archiveFile)
+}
+
+task buildOD4ReportCLI(type: Jar, dependsOn: shadowJar) {
+    archiveFileName = 'OD4ReportCLI.jar'
+    manifest {
+        attributes('Main-Class': 'de.monticore.od4report.OD4ReportCLI')
+    }
+    from zipTree(shadowJar.archiveFile)
+}
+
+jar.dependsOn(buildOD4DataCLI)
+jar.dependsOn(buildOD4ReportCLI)
 
 task testReport(type: TestReport) {
     destinationDir = file("$buildDir/reports/allTests")

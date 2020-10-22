@@ -117,7 +117,7 @@ public class OD4ReportCLI {
   public void printHelp(Options options) {
     HelpFormatter formatter = new HelpFormatter();
     formatter.setWidth(80);
-    formatter.printHelp("ODCLI", options);
+    formatter.printHelp("OD4ReportCLI", options);
   }
 
   /*=================================================================*/

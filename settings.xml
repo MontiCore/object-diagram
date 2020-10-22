@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- (c) https://github.com/MontiCore/monticore -->
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
->
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http:/maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd ">
 
 
   <servers>
@@ -11,21 +12,21 @@
       <password>${password}</password>
     </server>
 
-        <!-- insert any other requried servers (e.g. webdavs, application servers, etc. -->
+    <!-- insert any other requried servers (e.g. webdavs, application servers, etc. -->
 
-        <!-- for example:
-        <server>
-          <id>some-webdav</id>
-          <username>username</username>
-          <password>password</password>
-        </server>
-        -->
+    <!-- for example:
+    <server>
+      <id>some-webdav</id>
+      <username>username</username>
+      <password>password</password>
+    </server>
+    -->
   </servers>
 
   <mirrors>
     <mirror>
-            <!-- this sends everything except repositories named se-nexus-p2 -->
-            <!-- to our single nexus super repository -->
+      <!-- this sends everything except repositories named se-nexus-p2 -->
+      <!-- to our single nexus super repository -->
       <id>se-nexus</id>
       <mirrorOf>central,!se-nexus-p2</mirrorOf>
       <url>https://nexus.se.rwth-aachen.de/content/groups/public</url>
@@ -35,8 +36,8 @@
   <profiles>
     <profile>
       <id>se-nexus</id>
-            <!-- enable snapshots for the built in central repo to direct -->
-            <!-- all requests to nexus via the mirror -->
+      <!-- enable snapshots for the built in central repo to direct -->
+      <!-- all requests to nexus via the mirror -->
       <repositories>
         <repository>
           <id>central</id>
@@ -57,7 +58,7 @@
   </profiles>
 
   <activeProfiles>
-        <!-- make the profile active by default -->
+    <!-- make the profile active by default -->
     <activeProfile>se-nexus</activeProfile>
   </activeProfiles>
 

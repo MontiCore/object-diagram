@@ -118,7 +118,7 @@ public class OD4DataCLI {
   public void printHelp(Options options) {
     HelpFormatter formatter = new HelpFormatter();
     formatter.setWidth(80);
-    formatter.printHelp("ODCLI", options);
+    formatter.printHelp("OD4DataCLI", options);
   }
 
   /*=================================================================*/
