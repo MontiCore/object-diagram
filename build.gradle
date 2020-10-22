@@ -73,6 +73,7 @@ def grammarDependencies = ext {
     ODAttribute = ["ODBasis"]
     ODLink = ["ODBasis"]
     OD4Data = ["ODAttribute", "ODLink"]
+    OD4Development = ["OD4Data"]
     OD4Report = ["OD4Data", "DateLiterals"]
     DateLiterals = []
 }
