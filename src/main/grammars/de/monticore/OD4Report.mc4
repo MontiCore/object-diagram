@@ -48,8 +48,7 @@ grammar OD4Report extends de.monticore.OD4Data,
    *  @attribute specialName Specific naming for objects
    */
   @Override
-  ODName implements ODValue =
-    simpleName:NameExpression | specialName:ODSpecialName;
+  ODName implements ODValue = Name | ODSpecialName;
 
   ODReportObject astextends ASTODNamedObject implements ODObject, ODValue =
       Modifier?
@@ -59,10 +58,10 @@ grammar OD4Report extends de.monticore.OD4Data,
   // Both forms of names are returned as Name (i.e. as String)
   astrule ODName =
     method public String getName() {
-      if (isPresentSimpleName()) {
-        return getSimpleName().getName();
+      if (isPresentName()) {
+        return this.name.get();
       }
-      return getSpecialName();
+      return getODSpecialName();
      };
 
   /** Special names start with a "@" and contain

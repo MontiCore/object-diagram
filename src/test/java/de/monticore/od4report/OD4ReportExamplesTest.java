@@ -42,6 +42,11 @@ public class OD4ReportExamplesTest {
     test("src/test/resources/examples/od/SimpleOD.od");
   }
 
+  @Test
+  public void testProjectOD() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/ProjectListOD.od");
+  }
+
   private void test(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
     OD4ReportParser parser = new OD4ReportParser();

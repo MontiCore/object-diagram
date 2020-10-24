@@ -124,13 +124,13 @@ public class OD4ReportPrettyPrinterDelegator extends OD4ReportDelegatorVisitor {
     setODAttributeVisitor(new ODAttributePrettyPrinter(printer));
     setDateLiteralsVisitor(new DateLiteralsPrettyPrinter(printer));
 
-    setMCBasicTypesVisitor(new MCBasicTypesPrettyPrinter(printer));
     setUMLStereotypeVisitor(new UMLStereotypePrettyPrinter(printer));
     setUMLModifierVisitor(new UMLModifierPrettyPrinter(printer));
     setCommonExpressionsVisitor(new CommonExpressionsPrettyPrinter(printer));
     setMCCommonLiteralsVisitor(new MCCommonLiteralsPrettyPrinter(printer));
     setExpressionsBasisVisitor(new ExpressionsBasisPrettyPrinter(printer));
 
+    setMCBasicTypesVisitor(new MCBasicTypesPrettyPrinter(printer));
     setMCSimpleGenericTypesVisitor(new MCSimpleGenericTypesPrettyPrinter(printer));
     setMCCollectionTypesVisitor(new MCCollectionTypesPrettyPrinter(printer));
     setMCFullGenericTypesVisitor(new MCFullGenericTypesPrettyPrinter(printer));

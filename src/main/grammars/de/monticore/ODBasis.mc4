@@ -149,11 +149,6 @@ component grammar ODBasis extends de.monticore.UMLModifier,
    *  and is not contained by the ODSimpleAttributeValue to enable name
    *  adjustments in sub grammars.
    */
-  ODName implements ODValue = NameExpression;
-
-  astrule ODName =
-    method public String getName() {
-      return nameExpression.getName();
-    };
+  ODName implements ODValue = Name;
 
 }
