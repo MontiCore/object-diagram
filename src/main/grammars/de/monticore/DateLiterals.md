@@ -46,7 +46,6 @@ in [`monticore.dateliterals._cocos.DateLiteralsCoCos`][DateCoCos].
 [DateLiterals]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/grammars/de/monticore/DateLiterals.mc4
 [MCCommonLiterals]: https://git.rwth-aachen.de/monticore/monticore/-/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCFullGenericTypes.mc4
 [_ast]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/dateliterals/_ast
-[_symboltable]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/dateliterals/_symboltable
 [prettyprinter]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/java/de/monticore/dateliterals/prettyprinter/DateLiteralsPrettyPrinter.java
 [_cocos]: https://git.rwth-aachen.de/monticore/languages/od/-/tree/master/src/main/java/de/monticore/dateliterals/_cocos
 [DateCoCos]: https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/java/de/monticore/dateliterals/_cocos/DateLiteralsCoCos.java
