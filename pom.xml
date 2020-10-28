@@ -8,14 +8,14 @@
 
   <groupId>de.monticore.lang</groupId>
   <artifactId>od</artifactId>
-  <version>6.4.0-SNAPSHOT</version>
+  <version>6.5.0-SNAPSHOT</version>
 
   <!-- == PROJECT PROPERTIES ============================================== -->
 
   <properties>
 
     <!-- .. Libraries ..................................................... -->
-    <monticore.version>6.4.0-SNAPSHOT</monticore.version>
+    <monticore.version>${version}</monticore.version>
 
     <antlr.version>4.7.1</antlr.version>
     <guava.version>18.0</guava.version>
@@ -29,7 +29,7 @@
     <commons-lang3.version>3.8.1</commons-lang3.version>
 
     <!-- .. Plugins ....................................................... -->
-    <monticore.plugin>6.4.0-SNAPSHOT</monticore.plugin>
+    <monticore.plugin>${version}</monticore.plugin>
 
     <assembly.plugin>2.5.4</assembly.plugin>
     <compiler.plugin>3.3</compiler.plugin>
