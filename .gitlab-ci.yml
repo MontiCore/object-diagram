@@ -55,10 +55,6 @@ checkMDLinks:
     - test
   script:
     - "./check/downloadlinkchecker.sh $secibuildtoken"
-    - "url=https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/grammars/de/monticore/DateLiterals.md"
-    - "./check/mdlinkcheck.sh -url $url -t $secibuildtoken"
-    - "url=https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/grammars/de/monticore/OD4Data.md"
-    - "./check/mdlinkcheck.sh -url $url -t $secibuildtoken"
     - "url=https://git.rwth-aachen.de/monticore/languages/od/-/blob/master/src/main/grammars/de/monticore/OD4Report.md"
     - "./check/mdlinkcheck.sh -url $url -t $secibuildtoken"
   only:
