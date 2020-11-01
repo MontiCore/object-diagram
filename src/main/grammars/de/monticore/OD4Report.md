@@ -4,13 +4,10 @@
 
 # (UML/P) Object Diagrams
 
-Object diagrams are a sublanguage provided by the UML. 
-MontiCore language for 
-UML/P ODs. 
-
+Object diagrams are a sublanguage provided by the *UML*.
 UML/P ODs are an OD variant suited e.g. for the 
-modeling of for desired and unwanted object structures,
-or can be used as setup definitions for tests.
+modeling of for *desired and unwanted object structures*,
+or can be used as *setup definitions for tests* or their desired outcomes.
 UML/P ODs are suited for combination e.g. with the 
 object constraint language OCL
 (details can be found in [Rum16], [Rum17]).
@@ -47,6 +44,8 @@ objectdiagram MyFamily {
 }
 ```
 
+XXX TODO: Teaser mit einem nested link erweitern und mit einer Datumsangabe (zB birth ...)
+
 A graphical version is shown in Figure 1. 
 
 <img width="300" src="../../../../../doc/pics/OD_Example.png" alt="The graphical syntax of an example OD" style="float: left; margin-right: 10px;">
@@ -55,15 +54,16 @@ A graphical version is shown in Figure 1.
 
 The conceptual elements of ODs are similar to JSOM or XML, but deliver (hopefully) a better readable syntax:
 
-* Objects have a name, e.g. `alice`, which can be used for link structures.
-* Objects also have a type, e.g. `:Person` 
+* *Objects* have a name, e.g. `alice`, which can be used for link structures.
+* Objects also have a *type*, e.g. `:Person`. 
 * UML allows both to be optional, if not needed or reconstructable from context.
-* Attributes are defined with their value, e.g. `color = RED`.
-* Links can be explicitly defined, allowing arbitrary graph structures, e.g. `alice <-> bob`. 
-* All native datatypes, such as `int`, `Boolean`, `float`, `String`, are supported, 
-  as well as lists, sets and maps.
-* Nested objects are supported as well (new!), allowing to in-line object structures 
-  that finally form a tree of data:
+* *Attributes* are defined with their value, e.g. `color = RED`.
+* *Link*s can be explicitly defined, allowing *arbitrary graph structures*, e.g. 
+  use of `tiger` or the `alice <-> bob` link. 
+* All native *datatypes*, such as `int`, `Boolean`, `float`, `String`, are supported, 
+  as well as *lists*, *maps*, and compact representations of *dates*.
+* *Nested objects* are supported as well, allowing to in-line object structures 
+  that finally form a *tree of data objects*:
   This reduces the effort to write explicit links, 
   because explicit links are only needed when crossing the tree structure.
 
@@ -72,26 +72,27 @@ Below follow more detailed explanations about the project:
 
 ## Tools `OD4ReportCLI` and  `ODDataCLI`
 
-By default the project creeates two tools, stored in `OD4ReportCLI.jar` and  `ODDataCLI.jar`.
+By default the project creates two tools, stored in `OD4ReportCLI.jar` and  `ODDataCLI.jar`.
 
-The class [```OD4ReportCLI```](../../../java/de/monticore/od4report/OD4ReportCLI.java) provides typical functionality used when
+[```OD4ReportCLI```](../../../java/de/monticore/od4report/OD4ReportCLI.java) provides typical functionality used when
 processing models from commandline (CLI). To this effect, the class provides methods
 for parsing, pretty-printing, creating symbol tables, storing symbols, and 
 loading symbols. Detailed information about the methods can be found in the Javadoc documentation
 of the class [```OD4ReportCLI```](../../../java/de/monticore/od4report/OD4ReportCLI.java).
 
-The class [```OD4DataCLI```](../../../java/de/monticore/od4report/OD4DataCLI.java) ... XXX TODO
+[```OD4DataCLI```](../../../java/de/monticore/od4report/OD4DataCLI.java) ... XXX TODO
 
 Each CLI can be found in the ```target``` folder once the project build was successful. 
 Each CLI provides a ``-h`` parameter
 providing further information on how to use the CLI.
 
 Example calls:
+
 ```
   java -jar target/libs/OD4DataCLI.jar -h
   java -jar target/libs/OD4ReportCLI.jar -h
   
-  // Pretty print an OD:
+  // pretty print an OD:
   java -jar target/libs/OD4ReportCLI.jar -i src/test/resources/examples/od/Teaser.od \
            -pp
 
@@ -100,96 +101,118 @@ Example calls:
            -s Teaser.symod
 ```
 
+## Grammars (i.e. language components)
 
+This MontiCore project contains seven grammars, which provide 
+the possibility to describe object diagrams in various extensions:
 
-## Grammars
+* [ODBasis](../../../grammars/de/monticore/ODBasis.mc4), 
+* [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4), 
+* [ODLink](../../../grammars/de/monticore/ODLink.mc4), 
+* [OD4Data](../../../grammars/de/monticore/OD4Data.mc4), 
+* [OD4Report](../../../grammars/de/monticore/OD4Report.mc4), and 
+* [DateLiterals](../../../grammars/de/monticore/DateLiterals.mc4). 
 
-This module contains the six grammars [ODBasis](../../../grammars/de/monticore/ODBasis.mc4), 
-[ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4), 
-[ODLink](../../../grammars/de/monticore/ODLink.mc4), 
-[OD4Data](../../../grammars/de/monticore/OD4Data.mc4), 
-[OD4Report](../../../grammars/de/monticore/OD4Report.mc4), 
-and [DateLiterals](../../../grammars/de/monticore/DateLiterals.mc4). 
 
 ### ODBasis
-The grammar [ODBasis](../../../grammars/de/monticore/ODBasis.mc4) contains the basic constituents to define textual 
-representations of UML/P ODs. A detailed documentation of the grammar can 
-be found in the [artifact defining the grammar](../../../grammars/de/monticore/ODBasis.mc4). 
+
+The grammar [ODBasis](../../../grammars/de/monticore/ODBasis.mc4) 
+contains the basic constituents to define textual 
+representations of UML/P ODs. 
 
 The grammar [ODBasis](../../../grammars/de/monticore/ODBasis.mc4) defines the syntax for 
-* OD artifact, 
-* objects (named and anonymous), and 
+* OD artifacts, 
+* objects, which can be named and anonymous, and optionally can have types, and 
 * simple object attributes.  
                             
 The grammar [ODBasis](../../../grammars/de/monticore/ODBasis.mc4) extends the grammars
-* [MCBasicTypes](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCBasicTypes.mc4) for adding the possibility to define objects typed as 
-  MCObjectTypes, to be able to use symbols of kind Variable, and to enable typechecking. 
-  Objects and local variables are added as variable symbols to the symbol table.
-* [OOSymbols](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/symbols/OOSymbols.mc4) for using symbols of kind Diagram und Variable.
-* [CommonExpressions](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/CommonExpressions.mc4) to be able to reuse visitors for typechecking.
+* [MCBasicTypes](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCBasicTypes.mc4) that provides possible object types.
+* [OOSymbols](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/symbols/OOSymbols.mc4) for using symbols of kind `Diagram` and `Variable`.
+* [CommonExpressions](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/CommonExpressions.mc4) to be able to reuse simple forms of 
+expressions (and the typechecking functionality).
 * [UMLStereotype](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/UMLStereotype.mc4) for adding UMLStereotypes as possible extension points to the grammar. 
 
 ### ODAttribute
+
 The grammar [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4) adds more complex types of 
-attributes, e.g. lists, to UML/P ODs. A detailed documentation of the grammar can 
-be found in the [artifact defining the grammar](../../../grammars/de/monticore/ODAttribute.mc4). 
+attributes, i.e. *lists* and *maps*, to UML/P ODs. 
 
 The grammar [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4) defines the syntax for
-* Lists of values,
-* and Maps of key-value pairs.
+* lists of values,
+* and maps of key-value pairs.
 
-The grammar [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4) extends the grammars
-* [ODBasis](../../../grammars/de/monticore/ODBasis.mc4) for providing the basis.
-* [MCFullGenericTypes](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCFullGenericTypes.mc4) for using symbols of kind Diagram und Variable.
+XXX TODO: ist es notwendig dies in der Grammatik einzusetzen? 
+[MCFullGenericTypes](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCFullGenericTypes.mc4) for using symbols of kind Diagram und Variable.
+
 
 ### ODLink
 The grammar [ODLink](../../../grammars/de/monticore/ODLink.mc4) adds links to UML/P ODs. 
-A detailed documentation of the grammar can be found in the [artifact defining the grammar](../../../grammars/de/monticore/ODLink.mc4). 
+There are two main types of link representations, namely the explicit mentioning as `link` 
+that connects two objects and the nested link, that occurs when the nesting objects into a hierarchy.
 
-The grammar [ODLink](../../../grammars/de/monticore/ODLink.mc4) extends the grammars
-* [ODBasis](../../../grammars/de/monticore/ODBasis.mc4) for providing the basis.
+Furthermore, links may be *directed* and can be *ordinary*, *aggregations* or *compositions*, but also 
+*derived*.
+
 
 ### OD4Data
-The grammar [OD4Data](../../../grammars/de/monticore/OD4Data.mc4) combines the components ODAttribute 
-and ODLink to form a variant of OD language mainly used as a data format. Additionally, it offers 
-the possibility to use dates as expression in certain structures of a model, e.g. attribute values.
-A detailed documentation of the grammar can be found in the [artifact defining the grammar](../../../grammars/de/monticore/OD4Data.mc4). 
-
-The grammar [OD4Data](../../../grammars/de/monticore/OD4Data.mc4) extends the grammars
-* [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4) for complex attributes.
-* [ODLink](../../../grammars/de/monticore/ODLink.mc4) for link structures.
+The grammar [OD4Data](../../../grammars/de/monticore/OD4Data.mc4) only combines the 
+language components `ODAttribute` 
+and `ODLink` to form a variant of OD language mainly used for representing data. For that purpose, 
+the language component also offers 
+to use *dates* as expressions in certain structures of a model, e.g. attribute values.
 
 ### OD4Development
-The [OD4Development](../../../grammars/de/monticore/OD4Development.mc4) grammar extends the OD4Data language 
-by adding an extended namespace for objects and attribute values. Further, it supports time dates
-as values for attributes. It focusses on the modelling phase in typical object-oriented development
-projects and is therefore mainly used for data modelling. Consequently, it omits method signatures
-and complex generics. OD4Development fits very well to CD4Analysis.
-A detailed documentation of the grammar can be found in the [artifact defining the grammar](../../../grammars/de/monticore/OD4Development.mc4).
+The [OD4Development](../../../grammars/de/monticore/OD4Development.mc4) grammar extends the `OD4Data` language 
+by adding an extended namespace for objects and attribute values. 
 
-The grammar [OD4Development](../../../grammars/de/monticore/OD4Development.mc4) extends the grammar
-* [OD4Data](../../../grammars/de/monticore/OD4Data.mc4) for the object diagrams, attributes, and links.
+It focusses on the modelling phase in typical object-oriented development
+projects and is therefore mainly used for data modelling. Consequently, it omits method signatures
+and complex generics. 
+
+`OD4Development` is the textual representation to describe UML object diagrams
+(it uses the UML/P variant). `OD4Development` covers objects, attributes with values (and optional) types,
+and all kinds of associations and composition,  including qualified and ordered associations.
+It allows to define 
+* (1) desired object structures,
+* (2) unwanted object structures,
+* (3) initial object structures e.g. for a test setup or the specifictaion of a construction method.
+It allows incomplete structures (omitting uninteresting
+links or attributes); values can be either given directly or as
+expressions using other values and thus also allows to describe
+* (4) desired test results (oracle), and has also been used for
+* (5) object pattern, for a pattern matching algorithm.
+
+`OD4Development` fits very well to the `CD4Analysis`language component.
+
+It builds on MCTypes, but disallows e.g. List<int> as type, 
+because they can be represented via associations.
+
 
 ### OD4Report 
-The [OD4Report](../../../grammars/de/monticore/OD4Report.mc4) grammar extends the OD4Data language 
-by adding an extended namespace for objects and attribute values. Further, it supports time dates
-as values for attributes. Its main appliciation are reporting, e.g. in MontiCore's generated reports, 
+The [OD4Report](../../../grammars/de/monticore/OD4Report.mc4) grammar extends the `OD4Data` language 
+by adding an extended namespace for objects and attribute values. 
+Its main appliciation are reporting, e.g. in MontiCore's generated reports, 
 or data formats which need make use of the extended namespace, e.g. artifact-based analyses. 
+For that purpose, it mainly extends the possibility to define names by nonterminal `ODSpecialName`, 
+which encodes a number of additional information into the object name. An example for such 
+a special name is `@State(2,3)` encoding, that this state has occurred in line 2, column 3.
 
-The grammar [OD4Report](../../../grammars/de/monticore/OD4Report.mc4) extends the grammars
-* [OD4Data](../../../grammars/de/monticore/OD4Data.mc4) for the object diagrams, attributes, and links.
-* [DateLiterals](../../../grammars/de/monticore/DateLiterals.mc4) for the support of dates.  
 
 ### DateLiterals
-The grammar [DateLiterals](../../../grammars/de/monticore/DateLiterals.mc4) is a component grammar for modeling dates in simple fashion. Dates consist
+
+The grammar [DateLiterals](../../../grammars/de/monticore/DateLiterals.mc4) 
+introduces nonterminal `Date` as a mechanism to describe dates and times 
+in several forms. These forms of dates can be added to the Literals universe,
+and thus provide native language support for dates and times.
+Dates consist
 of a date part modeling year, month, and day, as well as a time part, modeling hour, minute, and 
 second. 
-A detailed documentation of the grammar can be found in the [artifact defining the grammar](../../../grammars/de/monticore/DateLiterals.mc4).
 
-The grammar [DateLiterals](../../../grammars/de/monticore/DateLiterals.mc4) extends the grammar
-* [MCCommonLiterals](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/literals/MCCommonLiterals.mc4) for describung the timestamps.
+The above defined object diagrams, especially the `OD4Report` language component
+makes heavy use of this possbility.
 
 ## Context Conditions
+
 This section lists the context conditions for the [ODBasis](../../../grammars/de/monticore/ODBasis.mc4) grammar, 
 context conditions for the [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4) grammar,
 context conditions for the [ODLink](../../../grammars/de/monticore/ODLink.mc4) grammar,
