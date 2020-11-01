@@ -260,20 +260,22 @@ The implementations of the context conditions for the [DateLiterals](../../../gr
 
 * The context condition [```DateConcistencyCoCo```](../../../java/de/monticore/dateliterals/_cocos/date/DateConcistencyCoCo.java) checks if a date is consistent in termns of day of year as well as time of day.
 
+
 ## Symbol Table
-The OD language uses the build-in symbol types [```VariableSymbol```][BasicSymbolsRef]
+The OD language family uses the built-in symbol types [```VariableSymbol```][BasicSymbolsRef]
 and [```DiagramSymbol```][BasicSymbolsRef] as well as the [type symbol types][TypeSymbolsRef] of MontiCore. 
 
 Each OD may define objects. Therefore, ODs may export [```VariableSymbols```][BasicSymbolsRef] 
-containing the information about the name and the type of the object. Possible types for objects are 
-[```MCObjectTypes```][MCBasicTypesRef].
+containing the information about the name and the type of the objects defined. 
+Possible types for objects are [```MCObjectTypes```][MCBasicTypesRef].
 Furthermore, for checking whether the types of objects and variables
-are defined, ODs may import [```TypeSymbols```][BasicSymbolsRef] 
+are existing and the OD is welldefined, ODs may import [```TypeSymbols```][BasicSymbolsRef] 
 and [```OOTypeSymbols```][OOSymbolsRef]. 
+
 
 ### Symbol Table Data Structure
 
-<img width="800" src="../../../../../doc/pics/STDataStructure.png" alt="The data structure of the symbol table of the OD language" style="float: left; margin-right: 10px;">
+<img width="300" src="../../../../../doc/pics/STDataStructure.png" alt="The data structure of the symbol table of the OD language" style="float: centered; margin-right: 10px;">
 <br><b>Figure 2:</b> The data structure of the symbol table of the OD language.
 
 &nbsp;  
