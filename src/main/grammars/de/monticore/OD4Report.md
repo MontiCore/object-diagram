@@ -48,9 +48,10 @@ XXX TODO: Teaser mit einem nested link erweitern und mit einer Datumsangabe (zB 
 
 A graphical version is shown in Figure 1. 
 
-<img width="300" src="../../../../../doc/pics/OD_Example.png" alt="The graphical syntax of an example OD" style="float: left; margin-right: 10px;">
+<img width="400" src="../../../../../doc/pics/OD_Example.png" alt="The graphical syntax of an example OD" style="float: left; margin-right: 10px;">
 <br><b>Figure 1:</b> The graphical syntax of example OD MyFamiliy. <br/>
 
+&nbsp;  
 
 The conceptual elements of ODs are similar to JSOM or XML, but deliver (hopefully) a better readable syntax:
 
@@ -275,15 +276,14 @@ and [```OOTypeSymbols```][OOSymbolsRef].
 
 ### Symbol Table Data Structure
 
-<img width="300" src="../../../../../doc/pics/STDataStructure.png" alt="The data structure of the symbol table of the OD language" style="float: centered; margin-right: 10px;">
+<img width="400" src="../../../../../doc/pics/STDataStructure.png" alt="The data structure of the symbol table of the OD language" style="float: centered; margin-right: 10px;">
 <br><b>Figure 2:</b> The data structure of the symbol table of the OD language.
 
 &nbsp;  
 
-Figure 2 depicts the symbol table data structure of the [```OD4Report```](../../../grammars/de/monticore/OD4Report.mc4)
-grammar. The ```OD4ReportGlobalScope``` is associated to an
+Figure 2 depicts the symbol table data structure of the [```OD4Report```](../../../grammars/de/monticore/OD4Report.mc4) language. The ```OD4ReportGlobalScope``` is associated to an
 ```OD4ReportArtifactScope``` for each artifact defining an OD. In each
-of these artifacts, at most one OD can be defined and each OD introduces 
+of these artifacts, at exactly one OD can be defined and each OD introduces 
 a [```DiagramSymbol```][BasicSymbolsRef]. 
 Therefore, each ```OD4DReportArtifactScope``` is associated to exactly one 
 [```DiagramSymbol```][BasicSymbolsRef]. 
@@ -291,19 +291,27 @@ The ```OD4ReportArtifactScope```
 contains a [```VariableSymbol```][BasicSymbolsRef] for each named object that is defined inside the 
 OD. 
 
+XXX TODO: Stimmt das mit dem OD4DReportArtifactScope noch? (im storage taucht der ja nicht auf)
+
 <img width="800" src="../../../../../doc/pics/STInstanceExample.png" alt="Symbol table instance of the OD depicted in Figure 1" style="float: left; margin-right: 10px;">
 <br><b>Figure 3:</b> Symbol table instance of the OD depicted in Figure 1.
 
 &nbsp;  
 
 Figure 3 depicts the symbol table instance for the OD ```MyFamily```. 
-The three objects ```alice:Person```, ```bob:Person``` and  ```tiger:Jaguar``` correspond to the 
+The three explicitly named objects 
+```alice:Person```, ```bob:Person``` and  ```tiger:Jaguar``` are stored as  
  [```VariableSymbol```][BasicSymbolsRef]
- instances linked to the ```OD4ReportArtifactScope```. 
- The object ```:DiagramSymbol``` is linked to the ```OD4ReportArtifactScope``` and has the 
- same name as the OD defining the symbol. 
- 
- The handwritten extensions of the symbol table creator can be found as follows:
+ instances and maintaiend i the ```OD4ReportArtifactScope```. 
+ The object ```:DiagramSymbol``` containing the name of the object diagram is also 
+ linked to that scope. 
+
+As usual, symbols can only be accessed, if they have an explicit name, which is why
+an anonymous object, such as `:BMW`, as well as any form of links 
+do not occur in the symbol table. Please also note, that types, such as `BMW` or `Person`
+are imported by the object diagram, but not internally defined.
+
+Handwritten extensions of the symbol table creator can be found as follows:
  * The creator for the [```ODBasis```](../../../grammars/de/monticore/ODBasis.mc4) grammar can be found in the class  [```ODBasisSymbolTableCreator```](../../../java/de/monticore/odbasis/_symboltable/ODBasisSymbolTableCreator.java). 
  * The creator for the [```ODAttribute```](../../../grammars/de/monticore/ODAttribute.mc4) grammar can be found in the class  [```ODAttributeSymbolTableCreator```](../../../java/de/monticore/odattribute/_symboltable/ODAttributeSymbolTableCreator.java). 
  * The creator for the [```ODLink```](../../../grammars/de/monticore/ODLink.mc4) grammar can be found in the class  [```ODLinkSymbolTableCreator```](../../../java/de/monticore/odlink/_symboltable/ODLinkSymbolTableCreator.java). 
