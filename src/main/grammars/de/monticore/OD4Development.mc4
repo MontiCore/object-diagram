@@ -38,11 +38,9 @@ package de.monticore;
    * Expression.mc4
        concretizing the values allowed
 
-   It builds on MCTypes, but disllows e.g. List<int> as type,
+   It builds on MCTypes, but disallows e.g. List<int> as type,
    because they can be represented via associations.
 
-   And it includes MCCommonLiterals to allow a rich set of values
-   (e.g. to define attribute and enum values.)
 */
 
 grammar OD4Development extends de.monticore.OD4Data {
