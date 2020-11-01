@@ -50,7 +50,8 @@ objectdiagram MyFamily {
 A graphical version is shown in Figure 1. 
 
 <img width="300" src="../../../../../doc/pics/OD_Example.png" alt="The graphical syntax of an example OD" style="float: left; margin-right: 10px;">
-<br><b>Figure 1:</b> The graphical syntax of example OD `MyFamiliy`.
+<br><b>Figure 1:</b> The graphical syntax of example OD MyFamiliy. <br/>
+
 
 The conceptual elements of ODs are similar to JSOM or XML, but deliver (hopefully) a better readable syntax:
 
@@ -59,24 +60,50 @@ The conceptual elements of ODs are similar to JSOM or XML, but deliver (hopefull
 * UML allows both to be optional, if not needed or reconstructable from context.
 * Attributes are defined with their value, e.g. `color = RED`.
 * Links can be explicitly defined, allowing arbitrary graph structures, e.g. `alice <-> bob`. 
+* All native datatypes, such as `int`, `Boolean`, `float`, `String`, are supported, 
+  as well as lists, sets and maps.
+* Nested objects are supported as well (new!), allowing to in-line object structures 
+  that finally form a tree of data:
+  This reduces the effort to write explicit links, 
+  because explicit links are only needed when crossing the tree structure.
+
+Below follow more detailed explanations about the project:
 
 
+## Tools `OD4ReportCLI` and  `ODDataCLI`
 
+By default the project creeates two tools, stored in `OD4ReportCLI.jar` and  `ODDataCLI.jar`.
 
-This was for us the most intuitive textual representation of ODs, also provding an easy way to define
-inner objects and more complex attributes.
-
-## Main Class ```OD4ReportCLI```
 The class [```OD4ReportCLI```](../../../java/de/monticore/od4report/OD4ReportCLI.java) provides typical functionality used when
-processing models. To this effect, the class provides methods
+processing models from commandline (CLI). To this effect, the class provides methods
 for parsing, pretty-printing, creating symbol tables, storing symbols, and 
 loading symbols. Detailed information about the methods can be found in the Javadoc documentation
 of the class [```OD4ReportCLI```](../../../java/de/monticore/od4report/OD4ReportCLI.java).
-Each CLI can be found in the ```target``` folder once the project build was successful using the
-name pattern ``od-[version]-[name of the language]-cli.jar``. Each CLI provides a ``-h`` parameter
-providing further information on how to use the CLIs.
+
+The class [```OD4DataCLI```](../../../java/de/monticore/od4report/OD4DataCLI.java) ... XXX TODO
+
+Each CLI can be found in the ```target``` folder once the project build was successful. 
+Each CLI provides a ``-h`` parameter
+providing further information on how to use the CLI.
+
+Example calls:
+```
+  java -jar target/libs/OD4DataCLI.jar -h
+  java -jar target/libs/OD4ReportCLI.jar -h
+  
+  // Pretty print an OD:
+  java -jar target/libs/OD4ReportCLI.jar -i src/test/resources/examples/od/Teaser.od \
+           -pp
+
+  // read an OD and store the symbols it defines and exports in a symboltable:
+  java -jar target/libs/OD4DataCLI.jar -i src/test/resources/examples/od/Teaser.od \
+           -s Teaser.symod
+```
+
+
 
 ## Grammars
+
 This module contains the six grammars [ODBasis](../../../grammars/de/monticore/ODBasis.mc4), 
 [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4), 
 [ODLink](../../../grammars/de/monticore/ODLink.mc4), 
