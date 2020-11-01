@@ -4,27 +4,26 @@
 
 # (UML/P) Object Diagrams
 
-The module described in this document defines a MontiCore language for 
-UML/P ODs. UML/P ODs are an OD variant suited e.g. for the 
-modeling of tests and (in combination e.g. with OCL) 
-for desired and unwanted behavior interactions. 
-UML/P ODs are defined in [Rum16], [Rum17].
+Object diagrams are a sublanguage provided by the UML. 
+MontiCore language for 
+UML/P ODs. 
 
-This module contains 
-* seven grammars, 
-* context conditions, 
-* a symbol table infrastructure including functionality for 
-  creating symbol tables and (de-)serializing symbol tables, and
+UML/P ODs are an OD variant suited e.g. for the 
+modeling of for desired and unwanted object structures,
+or can be used as setup definitions for tests.
+UML/P ODs are suited for combination e.g. with the 
+object constraint language OCL
+(details can be found in [Rum16], [Rum17]).
+
+This MontiCore project contains 
+* seven language components, defined by their own grammars, 
+* appropriate context conditions for each language component, 
+* which also includes a symbol table infrastructure 
+  for managing and storing symbol tables, and
 * pretty-printers. 
 
 ## Example Model
-<img width="800" src="../../../../../doc/pics/OD_Example.png" alt="The graphical syntax of an example OD" style="float: left; margin-right: 10px;">
-<br><b>Figure 1:</b> The graphical syntax of an example OD.
-
-&nbsp;  
-
-Figure 1 depicts the OD ```MyFamily``` in graphical syntax. In textual syntax, 
-the OD is defined as follows:
+In textual syntax, an example OD is defined as follows:
 
 ``` 
 objectdiagram MyFamily {
@@ -47,6 +46,22 @@ objectdiagram MyFamily {
   link married alice <-> bob;
 }
 ```
+
+A graphical version is shown in Figure 1. 
+
+<img width="300" src="../../../../../doc/pics/OD_Example.png" alt="The graphical syntax of an example OD" style="float: left; margin-right: 10px;">
+<br><b>Figure 1:</b> The graphical syntax of example OD `MyFamiliy`.
+
+The conceptual elements of ODs are similar to JSOM or XML, but deliver (hopefully) a better readable syntax:
+
+* Objects have a name, e.g. `alice`, which can be used for link structures.
+* Objects also have a type, e.g. `:Person` 
+* UML allows both to be optional, if not needed or reconstructable from context.
+* Attributes are defined with their value, e.g. `color = RED`.
+* Links can be explicitly defined, allowing arbitrary graph structures, e.g. `alice <-> bob`. 
+
+
+
 
 This was for us the most intuitive textual representation of ODs, also provding an easy way to define
 inner objects and more complex attributes.
