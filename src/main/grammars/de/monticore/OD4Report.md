@@ -81,7 +81,7 @@ for parsing, pretty-printing, creating symbol tables, storing symbols, and
 loading symbols. Detailed information about the methods can be found in the Javadoc documentation
 of the class [```OD4ReportCLI```](../../../java/de/monticore/od4report/OD4ReportCLI.java).
 
-[```OD4DataCLI```](../../../java/de/monticore/od4report/OD4DataCLI.java) ... XXX TODO
+[```OD4DataCLI```](../../../java/de/monticore/od4data/OD4DataCLI.java) ... XXX TODO
 
 Each CLI can be found in the ```target``` folder once the project build was successful. 
 Each CLI provides a ``-h`` parameter
