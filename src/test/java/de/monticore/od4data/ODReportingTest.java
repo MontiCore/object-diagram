@@ -40,9 +40,7 @@ public class ODReportingTest {
     OD4ReportGlobalScope globalScope = new OD4ReportGlobalScope(modelPath, "od");
 
     OD4ReportSymbolTableCreatorDelegator symTabVisitor =
-        OD4ReportMill.oD4ReportSymbolTableCreatorDelegatorBuilder()
-        .setGlobalScope(globalScope)
-        .build();
+        OD4ReportMill.oD4ReportSymbolTableCreatorDelegator();
     symTabVisitor.createFromAST(astodArtifact.get());
 
     DiagramSymbol objectDiagramSymbol = globalScope.resolveDiagram(modelName).orElse(null);

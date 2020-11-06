@@ -1,12 +1,9 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
 package de.monticore.od4data;
 
-import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data._cocos.OD4DataCoCoChecker;
 import de.monticore.od4data._parser.OD4DataParser;
-import de.monticore.od4data._symboltable.OD4DataGlobalScope;
 import de.monticore.od4data._symboltable.OD4DataSymbolTableCreatorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._cocos.attributes.PartialAndCompleteAttributesCoCo;
@@ -29,8 +26,6 @@ import static org.junit.Assert.*;
 
 public class ODCoCoCheckerTest {
 
-  private static ModelPath modelPath;
-
   private static Path path;
 
   private static OD4DataCoCoChecker odCoCoChecker;
@@ -47,11 +42,11 @@ public class ODCoCoCheckerTest {
     odCoCoChecker = new OD4DataCoCoChecker();
 
     path = Paths.get("src/test/resources/cocos");
-
-    modelPath = new ModelPath(path);
   }
 
   private Optional<ASTODArtifact> createASTandSTFromFile(String odName) {
+
+    OD4DataMill.reset();
 
     Optional<ASTODArtifact> artifact = Optional.empty();
 
@@ -65,10 +60,8 @@ public class ODCoCoCheckerTest {
       Log.error("Cannot parse model: " + odName + " in " + path.toString());
     }
 
-    OD4DataGlobalScope globalScope = new OD4DataGlobalScope(modelPath, "od");
-
-    OD4DataSymbolTableCreatorDelegator symTabVisitor = OD4DataMill
-        .oD4DataSymbolTableCreatorDelegatorBuilder().setGlobalScope(globalScope).build();
+    OD4DataSymbolTableCreatorDelegator symTabVisitor =
+        OD4DataMill.oD4DataSymbolTableCreatorDelegator();
 
     artifact.ifPresent(symTabVisitor::createFromAST);
 

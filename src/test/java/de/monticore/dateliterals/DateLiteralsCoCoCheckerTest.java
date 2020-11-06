@@ -77,8 +77,7 @@ public class DateLiteralsCoCoCheckerTest {
 
     OD4ReportGlobalScope globalScope = new OD4ReportGlobalScope(modelPath, "od");
 
-    OD4ReportSymbolTableCreatorDelegator symTabVisitor = OD4ReportMill
-        .oD4ReportSymbolTableCreatorDelegatorBuilder().setGlobalScope(globalScope).build();
+    OD4ReportSymbolTableCreatorDelegator symTabVisitor = OD4ReportMill.oD4ReportSymbolTableCreatorDelegator();
 
     artifact.ifPresent(symTabVisitor::createFromAST);
 

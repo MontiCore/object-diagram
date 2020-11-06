@@ -46,11 +46,9 @@ public class OD4ReportTool {
    */
   public static IOD4ReportArtifactScope createSymbolTable(ASTODArtifact ast,
       IOD4ReportGlobalScope globalScope) {
-    OD4ReportSymbolTableCreatorDelegator symbolTable = OD4ReportMill.getMill()
-        ._oD4ReportSymbolTableCreatorDelegatorBuilder()
-        .setGlobalScope(globalScope)
-        .build();
-    return symbolTable.createFromAST(ast);
+    OD4ReportSymbolTableCreatorDelegator symbolTableCreatorDelegator =
+        OD4ReportMill.oD4ReportSymbolTableCreatorDelegator();
+    return symbolTableCreatorDelegator.createFromAST(ast);
   }
 
   public static void runDefaultCoCos(ASTODArtifact ast) {

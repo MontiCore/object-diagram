@@ -3,7 +3,6 @@
 package de.monticore.od4data._symboltable;
 
 import de.monticore.io.paths.ModelPath;
-import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data.OD4DataTool;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4report.OD4ReportMill;
@@ -49,9 +48,7 @@ public class DeSerTest {
     Optional<ASTODArtifact> astodArtifact = odBasicsParser.parse(TEASEROD.toString());
     assertTrue(astodArtifact.isPresent());
 
-    IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get(),
-        OD4DataMill.oD4DataGlobalScopeBuilder().setModelPath(new ModelPath())
-            .setModelFileExtension("od").build());
+    IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get());
 
     // serialize
     OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();

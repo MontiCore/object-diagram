@@ -34,7 +34,7 @@ public class ODSymbolTableCreatorTest {
 
   @Test
   public void testResolveODObjectFromFile() {
-    final DiagramSymbol objectDiagramSymbol = createODDefinitionFromFile("AuctionParticipants");
+    final DiagramSymbol objectDiagramSymbol = createObjectDiagramFromAST("AuctionParticipants");
 
     List<VariableSymbol> odObjects = objectDiagramSymbol.getEnclosingScope()
         .getLocalVariableSymbols();
@@ -67,7 +67,7 @@ public class ODSymbolTableCreatorTest {
 
   @Test
   public void testAvoidanceOfUnnamedObjects() {
-    final DiagramSymbol objectDiagramSymbol = createODDefinitionFromFile("STInnerLinkVariants");
+    final DiagramSymbol objectDiagramSymbol = createObjectDiagramFromAST("STInnerLinkVariants");
 
     List<VariableSymbol> odObjects = objectDiagramSymbol.getEnclosingScope()
         .getLocalVariableSymbols();
@@ -82,22 +82,10 @@ public class ODSymbolTableCreatorTest {
     assertTrue(fooBarObject.isPresent());
   }
 
-  private DiagramSymbol createODDefinitionFromFile(String odName) {
-    globalScope = OD4DataMill.oD4DataGlobalScopeBuilder()
-        .setModelPath(modelPath)
-        .setModelFileExtension("od")
-        .build();
-    return globalScope.resolveDiagram(odName).orElse(null);
-  }
-
   private DiagramSymbol createObjectDiagramFromAST(String odName) {
     ASTODArtifact astodArtifact = OD4DataTool.parse(
         Paths.get("src/test/resources/symboltable", odName + ".od").toString());
-    IOD4DataArtifactScope odBasisArtifactScope = OD4DataTool.createSymbolTable(astodArtifact,
-        OD4DataMill.oD4DataGlobalScopeBuilder()
-            .setModelPath(modelPath)
-            .setModelFileExtension("od")
-            .build());
+    IOD4DataArtifactScope odBasisArtifactScope = OD4DataTool.createSymbolTable(astodArtifact);
     return odBasisArtifactScope.getDiagramSymbols().get(odName).get(0);
   }
 

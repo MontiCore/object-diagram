@@ -2,7 +2,6 @@
 
 package de.monticore.od4data;
 
-import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
@@ -106,11 +105,7 @@ public class ExamplesTest {
     assertFalse(parser.hasErrors());
     assertTrue(astodArtifact.isPresent());
 
-    IOD4DataArtifactScope odBasicsArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get(),
-        OD4DataMill.oD4DataGlobalScopeBuilder()
-            .setModelPath(new ModelPath())
-            .setModelFileExtension("od")
-            .build());
+    IOD4DataArtifactScope odBasicsArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get());
     assertNotNull(odBasicsArtifactScope);
 
     // pretty print the AST

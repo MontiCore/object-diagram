@@ -12,6 +12,12 @@ public class OD4ReportSymbolTableCreatorDelegator extends OD4ReportSymbolTableCr
 
   private ODTypesCalculator typechecker;
 
+  public OD4ReportSymbolTableCreatorDelegator() {
+    super();
+    setRealThis(this);
+    setTypechecker(new DeriveSymTypeOfODAttribute());
+  }
+
   public OD4ReportSymbolTableCreatorDelegator(IOD4ReportGlobalScope globalScope) {
     super(globalScope);
     setRealThis(this);
@@ -27,8 +33,8 @@ public class OD4ReportSymbolTableCreatorDelegator extends OD4ReportSymbolTableCr
     this.typechecker = typechecker;
 
     ((ODBasisSymbolTableCreator) this.getODBasisVisitor().get()).setTypechecker(typechecker);
-    ((ODAttributeSymbolTableCreator) this.getODAttributeVisitor().get())
-        .setTypechecker(typechecker);
+    ((ODAttributeSymbolTableCreator) this.getODAttributeVisitor().get()).setTypechecker(
+        typechecker);
     ((ODLinkSymbolTableCreator) this.getODLinkVisitor().get()).setTypechecker(typechecker);
   }
 

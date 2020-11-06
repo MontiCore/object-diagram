@@ -11,6 +11,8 @@ public class ODAttributeSymbolTableCreator extends ODAttributeSymbolTableCreator
 
   private ODTypesCalculator typechecker = new DeriveSymTypeOfODAttribute();
 
+  public ODAttributeSymbolTableCreator() { super(); }
+
   public ODAttributeSymbolTableCreator(IODAttributeScope enclosingScope) {
     super(enclosingScope);
   }

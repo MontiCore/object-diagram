@@ -12,6 +12,8 @@ public class OD4ReportSymbolTableCreator extends OD4ReportSymbolTableCreatorTOP 
   private ODBasisSymbolTableCreator odBasisSymbolTableCreator = new ODBasisSymbolTableCreator(
       scopeStack);
 
+  public OD4ReportSymbolTableCreator() { super(); }
+
   public OD4ReportSymbolTableCreator(IOD4ReportScope enclosingScope) {
     super(enclosingScope);
   }

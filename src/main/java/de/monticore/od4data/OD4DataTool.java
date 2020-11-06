@@ -5,7 +5,6 @@ package de.monticore.od4data;
 import de.monticore.od4data._cocos.OD4DataCoCos;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data._symboltable.IOD4DataGlobalScope;
 import de.monticore.od4data._symboltable.OD4DataSymbolTableCreatorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
@@ -44,13 +43,10 @@ public class OD4DataTool {
    * @param ast ODArtifact ast
    * @return Symboltable created form AST
    */
-  public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast,
-      IOD4DataGlobalScope globalScope) {
-    OD4DataSymbolTableCreatorDelegator symbolTable =
-        OD4DataMill.oD4DataSymbolTableCreatorDelegatorBuilder()
-        .setGlobalScope(globalScope)
-        .build();
-    return symbolTable.createFromAST(ast);
+  public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast) {
+    OD4DataSymbolTableCreatorDelegator symbolTableCreatorDelegator =
+        OD4DataMill.oD4DataSymbolTableCreatorDelegator();
+    return symbolTableCreatorDelegator.createFromAST(ast);
   }
 
   public static void runDefaultCoCos(ASTODArtifact ast) {

@@ -15,6 +15,8 @@ public class ODBasisSymbolTableCreator extends ODBasisSymbolTableCreatorTOP {
 
   private ODTypesCalculator typechecker = new DeriveSymTypeOfODBasis();
 
+  public ODBasisSymbolTableCreator() { super(); }
+
   public ODBasisSymbolTableCreator(IODBasisScope enclosingScope) {
     super(enclosingScope);
   }

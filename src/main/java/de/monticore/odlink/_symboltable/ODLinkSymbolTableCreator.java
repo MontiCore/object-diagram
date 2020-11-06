@@ -10,6 +10,8 @@ public class ODLinkSymbolTableCreator extends ODLinkSymbolTableCreatorTOP {
 
   private ODTypesCalculator typechecker;
 
+  public ODLinkSymbolTableCreator() { super(); }
+
   public ODLinkSymbolTableCreator(IODLinkScope enclosingScope) {
     super(enclosingScope);
   }

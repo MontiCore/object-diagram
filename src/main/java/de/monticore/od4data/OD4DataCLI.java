@@ -85,11 +85,7 @@ public class OD4DataCLI {
       ASTODArtifact astodArtifact = parseFile(cmd.getOptionValue("i"));
 
       // create symbol table
-      IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact,
-          OD4DataMill.oD4DataGlobalScopeBuilder()
-              .setModelPath(modelPath)
-              .setModelFileExtension(EXTENSION)
-              .build());
+      IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact);
 
       // -option pretty print
       if (cmd.hasOption("pp")) {
