@@ -25,8 +25,6 @@ import java.util.Optional;
  */
 public class OD4ReportCLI {
 
-  private final static String EXTENSION = "od";
-
   /*=================================================================*/
   /* Part 1: Handling the arguments and options
   /*=================================================================*/
@@ -85,10 +83,7 @@ public class OD4ReportCLI {
 
       // create symbol table
       IOD4ReportArtifactScope oD4ReportArtifactScope = OD4ReportTool.createSymbolTable(
-          astodArtifact, OD4ReportMill.oD4ReportGlobalScopeBuilder()
-              .setModelPath(modelPath)
-              .setModelFileExtension(EXTENSION)
-              .build());
+          astodArtifact);
 
       // -option pretty print
       if (cmd.hasOption("pp")) {
@@ -139,6 +134,7 @@ public class OD4ReportCLI {
     catch (IOException | NullPointerException e) {
       Log.error("0xA7102 Input file " + path + " not found.");
     }
+
     return astodArtifact.get();
   }
 

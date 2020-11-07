@@ -5,7 +5,6 @@ package de.monticore.od4report;
 import de.monticore.od4report._cocos.OD4ReportCoCos;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
-import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
 import de.monticore.od4report._symboltable.OD4ReportSymbolTableCreatorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
@@ -44,8 +43,7 @@ public class OD4ReportTool {
    * @param ast ODArtifact AST
    * @return SymbolTable created from AST
    */
-  public static IOD4ReportArtifactScope createSymbolTable(ASTODArtifact ast,
-      IOD4ReportGlobalScope globalScope) {
+  public static IOD4ReportArtifactScope createSymbolTable(ASTODArtifact ast) {
     OD4ReportSymbolTableCreatorDelegator symbolTableCreatorDelegator =
         OD4ReportMill.oD4ReportSymbolTableCreatorDelegator();
     return symbolTableCreatorDelegator.createFromAST(ast);
