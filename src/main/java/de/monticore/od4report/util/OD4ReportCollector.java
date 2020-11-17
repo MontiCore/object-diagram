@@ -4,6 +4,7 @@ package de.monticore.od4report.util;
 
 import de.monticore.od4report._visitor.OD4ReportDelegatorVisitor;
 import de.monticore.odattribute.utils.ODAttributeObjectCollector;
+import de.monticore.odbasis._ast.ASTODAnonymousObject;
 import de.monticore.odbasis._ast.ASTODNamedObject;
 import de.monticore.odbasis._ast.ASTODObject;
 import de.monticore.odbasis.utils.ODBasisObjectCollector;
@@ -39,6 +40,10 @@ public class OD4ReportCollector extends OD4ReportDelegatorVisitor {
         .stream()), od4ReportObjectCollector.getNamedObjects()
         .stream())
         .collect(Collectors.toList());
+  }
+
+  public List<ASTODAnonymousObject> getAnonymousObjects() {
+    return odBasisObjectCollector.getAnonymousObjects();
   }
 
   public List<ASTODObject> getODObjects() {
