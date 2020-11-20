@@ -9,4 +9,9 @@ public class ASTODReportObject extends ASTODReportObjectTOP {
     return getODSpecialName();
   }
 
+  @Override
+  public void setName(String name) {
+    this.setODSpecialName(name);
+  }
+
 }
