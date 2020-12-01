@@ -125,7 +125,7 @@ component grammar ODBasis extends de.monticore.UMLModifier,
     Modifier?
     MCType?
     Name
-    ( (complete: "="| "->") ODValue )? ";";
+    ( (complete: "=" | "->") ODValue )? ";";
 
     // this is needed to parse e.g. attr -> 2 correctly:
     splittoken "->";

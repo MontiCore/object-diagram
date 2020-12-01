@@ -5,28 +5,21 @@
 package de.monticore.dateliterals.prettyprinter;
 
 import de.monticore.dateliterals._ast.*;
-import de.monticore.dateliterals._visitor.DateLiteralsVisitor;
+import de.monticore.dateliterals._visitor.DateLiteralsHandler;
+import de.monticore.dateliterals._visitor.DateLiteralsTraverser;
+import de.monticore.dateliterals._visitor.DateLiteralsVisitor2;
 import de.monticore.prettyprint.IndentPrinter;
 
-public class DateLiteralsPrettyPrinter implements DateLiteralsVisitor {
+public class DateLiteralsPrettyPrinter implements DateLiteralsVisitor2, DateLiteralsHandler {
 
-  // printer to use
   protected IndentPrinter printer;
+  
+  protected DateLiteralsTraverser traverser;
 
-  /**
-   * Constructor.
-   *
-   * @param printer the printer to write to.
-   */
   public DateLiteralsPrettyPrinter(IndentPrinter printer) {
     this.printer = printer;
   }
 
-  /**
-   * Return current {@link IndentPrinter}.
-   *
-   * @return current printer
-   */
   public IndentPrinter getPrinter() {
     return printer;
   }
@@ -37,9 +30,9 @@ public class DateLiteralsPrettyPrinter implements DateLiteralsVisitor {
   }
 
   private void printODDate(ASTDate a) {
-    a.getDatePart().accept(getRealThis());
+    a.getDatePart().accept(getTraverser());
     getPrinter().print(" ");
-    a.getTimePart().accept(getRealThis());
+    a.getTimePart().accept(getTraverser());
   }
 
   @Override
@@ -77,23 +70,15 @@ public class DateLiteralsPrettyPrinter implements DateLiteralsVisitor {
     getPrinter().print(":");
     getPrinter().print(timePartColon.getSecond().getValue());
   }
-
-  private DateLiteralsVisitor realThis = this;
-
-  /**
-   * @see de.monticore.dateliterals._visitor.DateLiteralsVisitor#setRealThis(de.monticore.dateliterals._visitor.DateLiteralsVisitor)
-   */
-  @Override
-  public void setRealThis(DateLiteralsVisitor realThis) {
-    this.realThis = realThis;
+  
+  @Override 
+  public DateLiteralsTraverser getTraverser() {
+    return traverser;
   }
-
-  /**
-   * @see de.monticore.dateliterals._visitor.DateLiteralsVisitor#getRealThis()
-   */
+  
   @Override
-  public DateLiteralsVisitor getRealThis() {
-    return realThis;
+  public void setTraverser(DateLiteralsTraverser traverser) {
+    this.traverser = traverser;
   }
 
 }

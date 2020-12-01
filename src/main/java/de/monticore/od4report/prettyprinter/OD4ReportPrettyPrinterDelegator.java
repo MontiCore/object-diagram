@@ -4,12 +4,12 @@
 
 package de.monticore.od4report.prettyprinter;
 
-import de.monticore.MCCommonLiteralsPrettyPrinter;
 import de.monticore.dateliterals._ast.ASTDateLiteralsNode;
 import de.monticore.dateliterals.prettyprinter.DateLiteralsPrettyPrinter;
 import de.monticore.expressions.prettyprint.CommonExpressionsPrettyPrinter;
 import de.monticore.expressions.prettyprint.ExpressionsBasisPrettyPrinter;
 import de.monticore.literals.mccommonliterals._ast.ASTMCCommonLiteralsNode;
+import de.monticore.literals.prettyprint.MCCommonLiteralsPrettyPrinter;
 import de.monticore.od4report._ast.ASTOD4ReportNode;
 import de.monticore.od4report._ast.ASTODDate;
 import de.monticore.od4report._ast.ASTODName;

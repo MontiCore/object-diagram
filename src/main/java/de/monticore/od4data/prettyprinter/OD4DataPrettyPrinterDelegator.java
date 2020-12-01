@@ -2,9 +2,9 @@
 
 package de.monticore.od4data.prettyprinter;
 
-import de.monticore.MCCommonLiteralsPrettyPrinter;
 import de.monticore.expressions.prettyprint.CommonExpressionsPrettyPrinter;
 import de.monticore.expressions.prettyprint.ExpressionsBasisPrettyPrinter;
+import de.monticore.literals.prettyprint.MCCommonLiteralsPrettyPrinter;
 import de.monticore.od4data._ast.ASTOD4DataNode;
 import de.monticore.od4data._visitor.OD4DataDelegatorVisitor;
 import de.monticore.odattribute._ast.ASTODAttributeNode;

@@ -7,21 +7,23 @@ package de.monticore.od4report.prettyprinter;
 import de.monticore.od4report._ast.ASTODDate;
 import de.monticore.od4report._ast.ASTODName;
 import de.monticore.od4report._ast.ASTODReportObject;
-import de.monticore.od4report._visitor.OD4ReportInheritanceVisitor;
-import de.monticore.od4report._visitor.OD4ReportVisitor;
+import de.monticore.od4report._visitor.OD4ReportHandler;
+import de.monticore.od4report._visitor.OD4ReportTraverser;
+import de.monticore.od4report._visitor.OD4ReportVisitor2;
 import de.monticore.prettyprint.IndentPrinter;
-import de.monticore.prettyprint.MCBasicsPrettyPrinter;
 
-public class OD4ReportPrettyPrinter extends MCBasicsPrettyPrinter implements
-    OD4ReportInheritanceVisitor {
+public class OD4ReportPrettyPrinter implements OD4ReportVisitor2, OD4ReportHandler {
 
-  /**
-   * Constructor.
-   *
-   * @param printer the printer to write to.
-   */
+  protected IndentPrinter printer;
+
+  protected OD4ReportTraverser traverser;
+
   public OD4ReportPrettyPrinter(IndentPrinter printer) {
-    super(printer);
+    this.printer = printer;
+  }
+
+  public IndentPrinter getPrinter() {
+    return printer;
   }
 
   @Override
@@ -31,29 +33,21 @@ public class OD4ReportPrettyPrinter extends MCBasicsPrettyPrinter implements
 
   @Override
   public void handle(ASTODDate astodDate) {
-    astodDate.getDate().accept(getRealThis());
+    astodDate.getDate().accept(getTraverser());
   }
 
   @Override
   public void traverse(ASTODReportObject a) {
   }
 
-  private OD4ReportVisitor realThis = this;
-
-  /**
-   * @see de.monticore.od4report._visitor.OD4ReportVisitor#setRealThis(de.monticore.od4report._visitor.OD4ReportVisitor)
-   */
   @Override
-  public void setRealThis(OD4ReportVisitor realThis) {
-    this.realThis = realThis;
+  public OD4ReportTraverser getTraverser() {
+    return traverser;
   }
 
-  /**
-   * @see de.monticore.od4report._visitor.OD4ReportVisitor#getRealThis()
-   */
   @Override
-  public OD4ReportVisitor getRealThis() {
-    return realThis;
+  public void setTraverser(OD4ReportTraverser traverser) {
+    this.traverser = traverser;
   }
 
 }

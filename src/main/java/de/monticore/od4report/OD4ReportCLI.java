@@ -6,6 +6,7 @@ import de.monticore.io.paths.ModelPath;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportScopeDeSer;
+import de.monticore.od4report._symboltable.OD4ReportSymbols2Json;
 import de.monticore.od4report.prettyprinter.OD4ReportPrettyPrinterDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
@@ -166,7 +167,8 @@ public class OD4ReportCLI {
       System.out.println(odBasicsScopeDeSer.serialize(OD4ReportArtifactScope));
     }
     else {
-      odBasicsScopeDeSer.store(OD4ReportArtifactScope, Paths.get(file)
+      OD4ReportSymbols2Json reportSymbols2Json = new OD4ReportSymbols2Json();
+      reportSymbols2Json.store(OD4ReportArtifactScope, Paths.get(file)
           .toString());
     }
   }

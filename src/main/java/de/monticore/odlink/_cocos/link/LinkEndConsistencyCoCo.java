@@ -7,7 +7,7 @@ package de.monticore.odlink._cocos.link;
 
 import de.monticore.odlink._ast.ASTODLink;
 import de.monticore.odlink._cocos.ODLinkASTODLinkCoCo;
-import de.monticore.symbols.basicsymbols._symboltable.BasicSymbolsSymbolTablePrinter;
+import de.monticore.symbols.basicsymbols._symboltable.BasicSymbolsSymbols2Json;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.monticore.types.check.SymTypeExpression;
 import de.se_rwth.commons.logging.Log;
@@ -33,11 +33,11 @@ public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
     }).collect(Collectors.toList());
 
     /* TODO SH: Is there any nicer way to check equality? */
-    BasicSymbolsSymbolTablePrinter tablePrinter = new BasicSymbolsSymbolTablePrinter();
+    BasicSymbolsSymbols2Json tablePrinter = new BasicSymbolsSymbols2Json();
     tablePrinter.serializeVariableType(leftTypes.get(0));
     String firstTypeJSON = tablePrinter.getSerializedString();
     for (SymTypeExpression type : leftTypes) {
-      tablePrinter = new BasicSymbolsSymbolTablePrinter();
+      tablePrinter = new BasicSymbolsSymbols2Json();
       tablePrinter.serializeVariableType(type);
       String typeJSON = tablePrinter.getSerializedString();
 
@@ -55,11 +55,11 @@ public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
       return symbol.get().getType();
     }).collect(Collectors.toList());
 
-    tablePrinter = new BasicSymbolsSymbolTablePrinter();
+    tablePrinter = new BasicSymbolsSymbols2Json();
     tablePrinter.serializeVariableType(rightTypes.get(0));
     firstTypeJSON = tablePrinter.getSerializedString();
     for (SymTypeExpression type : rightTypes) {
-      tablePrinter = new BasicSymbolsSymbolTablePrinter();
+      tablePrinter = new BasicSymbolsSymbols2Json();
       tablePrinter.serializeVariableType(type);
       String typeJSON = tablePrinter.getSerializedString();
 
