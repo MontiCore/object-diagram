@@ -3,7 +3,7 @@
 package de.monticore.od4report;
 
 import de.monticore.od4report._parser.OD4ReportParser;
-import de.monticore.od4report.prettyprinter.OD4ReportPrettyPrinterDelegator;
+import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
@@ -55,7 +55,7 @@ public class OD4ReportExamplesTest {
     assertTrue(odDef.isPresent());
 
     // pretty print the AST
-    String ppResult = new OD4ReportPrettyPrinterDelegator(new IndentPrinter()).prettyprint(
+    String ppResult = new OD4ReportFullPrettyPrinter(new IndentPrinter()).prettyprint(
         odDef.get());
 
     // parse the printers content

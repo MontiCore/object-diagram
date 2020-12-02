@@ -4,7 +4,7 @@ package de.monticore.od4data;
 
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
+import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
@@ -109,7 +109,7 @@ public class ExamplesTest {
     assertNotNull(odBasicsArtifactScope);
 
     // pretty print the AST
-    String ppResult = new OD4DataPrettyPrinterDelegator(new IndentPrinter()).prettyprint(
+    String ppResult = new OD4DataFullPrettyPrinter(new IndentPrinter()).prettyprint(
         astodArtifact.get());
 
     // parse the printers content

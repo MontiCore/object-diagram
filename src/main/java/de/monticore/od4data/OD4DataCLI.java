@@ -7,7 +7,7 @@ import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.od4data._symboltable.OD4DataScopeDeSer;
 import de.monticore.od4data._symboltable.OD4DataSymbols2Json;
-import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
+import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
@@ -149,7 +149,7 @@ public class OD4DataCLI {
    */
   public void prettyPrint(ASTODArtifact astodArtifact, String file) {
     // pretty print AST
-    OD4DataPrettyPrinterDelegator pp = new OD4DataPrettyPrinterDelegator();
+    OD4DataFullPrettyPrinter pp = new OD4DataFullPrettyPrinter();
     String od = pp.prettyprint(astodArtifact);
     print(od, file);
   }

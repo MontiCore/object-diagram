@@ -7,7 +7,7 @@ import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportScopeDeSer;
 import de.monticore.od4report._symboltable.OD4ReportSymbols2Json;
-import de.monticore.od4report.prettyprinter.OD4ReportPrettyPrinterDelegator;
+import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
@@ -148,7 +148,7 @@ public class OD4ReportCLI {
    */
   public void prettyPrint(ASTODArtifact astodArtifact, String file) {
     // pretty print AST
-    OD4ReportPrettyPrinterDelegator pp = new OD4ReportPrettyPrinterDelegator();
+    OD4ReportFullPrettyPrinter pp = new OD4ReportFullPrettyPrinter();
     String od = pp.prettyprint(astodArtifact);
     print(od, file);
   }

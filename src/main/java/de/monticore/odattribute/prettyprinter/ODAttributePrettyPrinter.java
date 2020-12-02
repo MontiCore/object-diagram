@@ -9,13 +9,12 @@ import de.monticore.odattribute._ast.ASTODMap;
 import de.monticore.odattribute._ast.ASTODMapElement;
 import de.monticore.odattribute._visitor.ODAttributeHandler;
 import de.monticore.odattribute._visitor.ODAttributeTraverser;
-import de.monticore.odattribute._visitor.ODAttributeVisitor2;
 import de.monticore.odbasis._ast.ASTODValue;
 import de.monticore.prettyprint.IndentPrinter;
 
 import java.util.Iterator;
 
-public class ODAttributePrettyPrinter implements ODAttributeVisitor2, ODAttributeHandler {
+public class ODAttributePrettyPrinter implements ODAttributeHandler {
 
   protected IndentPrinter printer;
 

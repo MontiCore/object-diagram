@@ -9,10 +9,9 @@ import de.monticore.od4report._ast.ASTODName;
 import de.monticore.od4report._ast.ASTODReportObject;
 import de.monticore.od4report._visitor.OD4ReportHandler;
 import de.monticore.od4report._visitor.OD4ReportTraverser;
-import de.monticore.od4report._visitor.OD4ReportVisitor2;
 import de.monticore.prettyprint.IndentPrinter;
 
-public class OD4ReportPrettyPrinter implements OD4ReportVisitor2, OD4ReportHandler {
+public class OD4ReportPrettyPrinter implements OD4ReportHandler {
 
   protected IndentPrinter printer;
 
