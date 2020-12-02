@@ -8,6 +8,7 @@ import de.monticore.od4report.OD4ReportTool;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportScopeDeSer;
+import de.monticore.od4report._symboltable.OD4ReportSymbols2Json;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.Slf4jLog;
@@ -49,19 +50,20 @@ public class DeSerTest {
     IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get());
 
     // serialize
-    OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
+    OD4DataSymbols2Json odBasicsSymbols2Json = new OD4DataSymbols2Json();
     String fileName = Paths.get(TEASEROD.toString()).getFileName().toString() + "." + EXTENSION;
     String packagePath = astodArtifact.get().getMCPackageDeclaration().getMCQualifiedName().getQName();
     String storedPath = Paths.get(SYMBOL_TARGET.toString(), packagePath, fileName).toString();
-    odBasicsScopeDeSer.store(od4DataArtifactScope, storedPath);
+    odBasicsSymbols2Json.store(od4DataArtifactScope, storedPath);
 
     Path storedSymTable = Paths.get(storedPath);
     assertTrue(storedSymTable.toFile().exists());
 
     // deserialize
-    IOD4DataArtifactScope loadedBasicsArtifactScope = odBasicsScopeDeSer
+    IOD4DataArtifactScope loadedBasicsArtifactScope = odBasicsSymbols2Json
         .load(storedSymTable.toString());
 
+    OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
     assertEquals(odBasicsScopeDeSer.serialize(od4DataArtifactScope),
         odBasicsScopeDeSer.serialize(loadedBasicsArtifactScope));
   }
@@ -76,19 +78,20 @@ public class DeSerTest {
         .createSymbolTable(astodArtifact.get());
 
     // serialize
-    OD4ReportScopeDeSer od4ReportScopeDeSer = new OD4ReportScopeDeSer();
+    OD4ReportSymbols2Json od4ReportSymbols2Json = new OD4ReportSymbols2Json();
     String fileName = Paths.get(TEASEROD.toString()).getFileName().toString() + "." + EXTENSION;
     String packagePath = astodArtifact.get().getMCPackageDeclaration().getMCQualifiedName().getQName();
     String storedPath = Paths.get(SYMBOL_TARGET.toString(), packagePath, fileName).toString();
-    od4ReportScopeDeSer.store(od4ReportArtifactScope, storedPath);
+    od4ReportSymbols2Json.store(od4ReportArtifactScope, storedPath);
 
     Path storedSymTable = Paths.get(storedPath);
     assertTrue(storedSymTable.toFile().exists());
 
     // deserialize
-    IOD4ReportArtifactScope loadedBasicsArtifactScope = od4ReportScopeDeSer
+    IOD4ReportArtifactScope loadedBasicsArtifactScope = od4ReportSymbols2Json
         .load(storedSymTable.toString());
 
+    OD4ReportScopeDeSer od4ReportScopeDeSer = new OD4ReportScopeDeSer();
     assertEquals(od4ReportScopeDeSer.serialize(od4ReportArtifactScope),
         od4ReportScopeDeSer.serialize(loadedBasicsArtifactScope));
   }
