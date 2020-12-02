@@ -3,6 +3,7 @@
 package de.monticore.dateliterals;
 
 import de.monticore.dateliterals._ast.*;
+import de.monticore.dateliterals.prettyprinter.DateLiteralsFullPrettyPrinter;
 import de.monticore.dateliterals.prettyprinter.DateLiteralsPrettyPrinter;
 import de.monticore.od4report._ast.ASTODDate;
 import de.monticore.od4report._parser.OD4ReportParser;
@@ -55,7 +56,7 @@ public class DateLiteralsTest {
 
   @Test
   public void testPrettyPrint() throws IOException {
-    DateLiteralsPrettyPrinter dateLiteralsPrettyPrinter;
+    DateLiteralsFullPrettyPrinter dateLiteralsPrettyPrinter;
     Optional<ASTODDate> astodDate;
 
     OD4ReportParser od4ReportParser = new OD4ReportParser();
@@ -67,8 +68,9 @@ public class DateLiteralsTest {
     assertTrue(astodDate.get().getDate().getDatePart() instanceof ASTDatePartHyphen);
     assertTrue(astodDate.get().getDate().getTimePart() instanceof ASTTimePartColon);
 
-    dateLiteralsPrettyPrinter = new DateLiteralsPrettyPrinter(new IndentPrinter());
-    astodDate.get().getDate().accept(dateLiteralsPrettyPrinter);
+    dateLiteralsPrettyPrinter = new DateLiteralsFullPrettyPrinter(new IndentPrinter());
+//    astodDate.get().getDate().accept(dateLiteralsPrettyPrinter);
+    dateLiteralsPrettyPrinter.prettyprint(astodDate.get().getDate());
     assertEquals(dateHyphen, dateLiteralsPrettyPrinter.getPrinter().getContent());
 
     // slash
@@ -78,8 +80,9 @@ public class DateLiteralsTest {
     assertTrue(astodDate.get().getDate().getDatePart() instanceof ASTDatePartSlash);
     assertTrue(astodDate.get().getDate().getTimePart() instanceof ASTTimePartColon);
 
-    dateLiteralsPrettyPrinter = new DateLiteralsPrettyPrinter(new IndentPrinter());
-    astodDate.get().getDate().accept(dateLiteralsPrettyPrinter);
+    dateLiteralsPrettyPrinter = new DateLiteralsFullPrettyPrinter(new IndentPrinter());
+//    astodDate.get().getDate().accept(dateLiteralsPrettyPrinter);
+    dateLiteralsPrettyPrinter.prettyprint(astodDate.get().getDate());
     assertEquals(dateSlash, dateLiteralsPrettyPrinter.getPrinter().getContent());
 
     // dot
@@ -89,8 +92,9 @@ public class DateLiteralsTest {
     assertTrue(astodDate.get().getDate().getDatePart() instanceof ASTDatePartDot);
     assertTrue(astodDate.get().getDate().getTimePart() instanceof ASTTimePartColon);
 
-    dateLiteralsPrettyPrinter = new DateLiteralsPrettyPrinter(new IndentPrinter());
-    astodDate.get().getDate().accept(dateLiteralsPrettyPrinter);
+    dateLiteralsPrettyPrinter = new DateLiteralsFullPrettyPrinter(new IndentPrinter());
+//    astodDate.get().getDate().accept(dateLiteralsPrettyPrinter);
+    dateLiteralsPrettyPrinter.prettyprint(astodDate.get().getDate());
     assertEquals(dateDot, dateLiteralsPrettyPrinter.getPrinter().getContent());
   }
 
