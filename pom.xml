@@ -8,7 +8,7 @@
 
   <groupId>de.monticore.lang</groupId>
   <artifactId>od</artifactId>
-  <version>6.5.0</version>
+  <version>6.5.0.1</version>
 
   <!-- == PROJECT PROPERTIES ============================================== -->
 
@@ -29,7 +29,7 @@
     <commons-lang3.version>3.8.1</commons-lang3.version>
 
     <!-- .. Plugins ....................................................... -->
-    <monticore.plugin>${version}</monticore.plugin>
+    <monticore.plugin>6.5.0</monticore.plugin>
 
     <assembly.plugin>2.5.4</assembly.plugin>
     <compiler.plugin>3.3</compiler.plugin>
