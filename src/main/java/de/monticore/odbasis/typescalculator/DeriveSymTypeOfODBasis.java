@@ -2,7 +2,8 @@
 
 package de.monticore.odbasis.typescalculator;
 
-import de.monticore.odbasis._visitor.ODBasisDelegatorVisitor;
+import de.monticore.odbasis.ODBasisMill;
+import de.monticore.odbasis._visitor.ODBasisTraverser;
 import de.monticore.types.check.SymTypeExpression;
 import de.monticore.types.check.SynthesizeSymTypeFromMCBasicTypes;
 import de.monticore.types.check.TypeCheckResult;
@@ -10,18 +11,19 @@ import de.monticore.types.mcbasictypes._ast.ASTMCObjectType;
 
 import java.util.Optional;
 
-public class DeriveSymTypeOfODBasis extends ODBasisDelegatorVisitor implements ODTypesCalculator {
+public class DeriveSymTypeOfODBasis implements ODTypesCalculator {
 
   private TypeCheckResult typeCheckResult;
+  
+  protected ODBasisTraverser traverser = ODBasisMill.traverser();
 
   public DeriveSymTypeOfODBasis() {
-    setRealThis(this);
     init();
   }
 
   @Override
   public Optional<SymTypeExpression> calculateType(ASTMCObjectType type) {
-    type.accept(getRealThis());
+    type.accept(traverser);
     return getResult();
   }
 
@@ -45,7 +47,8 @@ public class DeriveSymTypeOfODBasis extends ODBasisDelegatorVisitor implements O
     final SynthesizeSymTypeFromMCBasicTypes synthesizeSymTypeFromMCBasicTypes =
         new SynthesizeSymTypeFromMCBasicTypes();
     synthesizeSymTypeFromMCBasicTypes.setTypeCheckResult(getTypeCheckResult());
-    setMCBasicTypesVisitor(synthesizeSymTypeFromMCBasicTypes);
+    traverser.addMCBasicTypesVisitor(synthesizeSymTypeFromMCBasicTypes);
+    traverser.setMCBasicTypesHandler(synthesizeSymTypeFromMCBasicTypes);
   }
 
 }

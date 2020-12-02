@@ -2,26 +2,27 @@
 
 package de.monticore.odattribute.typescalculator;
 
-import de.monticore.odattribute._visitor.ODAttributeDelegatorVisitor;
+import de.monticore.odattribute.ODAttributeMill;
+import de.monticore.odattribute._visitor.ODAttributeTraverser;
 import de.monticore.odbasis.typescalculator.ODTypesCalculator;
 import de.monticore.types.check.*;
 import de.monticore.types.mcbasictypes._ast.ASTMCObjectType;
 
 import java.util.Optional;
 
-public class DeriveSymTypeOfODAttribute extends ODAttributeDelegatorVisitor
-    implements ODTypesCalculator {
+public class DeriveSymTypeOfODAttribute implements ODTypesCalculator {
 
   private TypeCheckResult typeCheckResult;
+  
+  protected ODAttributeTraverser traverser = ODAttributeMill.traverser();
 
   public DeriveSymTypeOfODAttribute() {
-    setRealThis(this);
     init();
   }
 
   @Override
   public Optional<SymTypeExpression> calculateType(ASTMCObjectType type) {
-    type.accept(getRealThis());
+    type.accept(traverser);
     return getResult();
   }
 
@@ -45,22 +46,26 @@ public class DeriveSymTypeOfODAttribute extends ODAttributeDelegatorVisitor
     final SynthesizeSymTypeFromMCBasicTypes synthesizeSymTypeFromMCBasicTypes =
         new SynthesizeSymTypeFromMCBasicTypes();
     synthesizeSymTypeFromMCBasicTypes.setTypeCheckResult(getTypeCheckResult());
-    setMCBasicTypesVisitor(synthesizeSymTypeFromMCBasicTypes);
+    traverser.addMCBasicTypesVisitor(synthesizeSymTypeFromMCBasicTypes);
+    traverser.setMCBasicTypesHandler(synthesizeSymTypeFromMCBasicTypes);
 
     final SynthesizeSymTypeFromMCSimpleGenericTypes synthesizeSymTypeFromMCSimpleGenericTypes =
         new SynthesizeSymTypeFromMCSimpleGenericTypes();
     synthesizeSymTypeFromMCSimpleGenericTypes.setTypeCheckResult(getTypeCheckResult());
-    setMCSimpleGenericTypesVisitor(synthesizeSymTypeFromMCSimpleGenericTypes);
+    traverser.addMCSimpleGenericTypesVisitor(synthesizeSymTypeFromMCSimpleGenericTypes);
+    traverser.setMCSimpleGenericTypesHandler(synthesizeSymTypeFromMCSimpleGenericTypes);
 
     final SynthesizeSymTypeFromMCCollectionTypes synthesizeSymTypeFromMCCollectionTypes =
         new SynthesizeSymTypeFromMCCollectionTypes();
     synthesizeSymTypeFromMCCollectionTypes.setTypeCheckResult(getTypeCheckResult());
-    setMCCollectionTypesVisitor(synthesizeSymTypeFromMCCollectionTypes);
+    traverser.addMCCollectionTypesVisitor(synthesizeSymTypeFromMCCollectionTypes);
+    traverser.setMCCollectionTypesHandler(synthesizeSymTypeFromMCCollectionTypes);
 
     final SynthesizeSymTypeFromMCFullGenericTypes synthesizeSymTypeFromMCFullGenericTypes =
         new SynthesizeSymTypeFromMCFullGenericTypes();
     synthesizeSymTypeFromMCFullGenericTypes.setTypeCheckResult(getTypeCheckResult());
-    setMCFullGenericTypesVisitor(synthesizeSymTypeFromMCFullGenericTypes);
+    traverser.addMCFullGenericTypesVisitor(synthesizeSymTypeFromMCFullGenericTypes);
+    traverser.setMCFullGenericTypesHandler(synthesizeSymTypeFromMCFullGenericTypes);
   }
 
 }

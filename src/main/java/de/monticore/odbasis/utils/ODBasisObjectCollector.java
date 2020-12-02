@@ -5,14 +5,14 @@ package de.monticore.odbasis.utils;
 import de.monticore.odbasis._ast.ASTODAnonymousObject;
 import de.monticore.odbasis._ast.ASTODNamedObject;
 import de.monticore.odbasis._ast.ASTODObject;
-import de.monticore.odbasis._visitor.ODBasisVisitor2;
+import de.monticore.odbasis._visitor.ODBasisVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ODBasisObjectCollector implements ODBasisVisitor2 {
+public class ODBasisObjectCollector implements ODBasisVisitor {
 
   private List<ASTODNamedObject> namedObjects = new ArrayList<>();
 
