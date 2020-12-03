@@ -47,7 +47,7 @@ public class DeriveSymTypeOfODBasis implements ODTypesCalculator {
     final SynthesizeSymTypeFromMCBasicTypes synthesizeSymTypeFromMCBasicTypes =
         new SynthesizeSymTypeFromMCBasicTypes();
     synthesizeSymTypeFromMCBasicTypes.setTypeCheckResult(getTypeCheckResult());
-    traverser.addMCBasicTypesVisitor(synthesizeSymTypeFromMCBasicTypes);
+    traverser.add4MCBasicTypes(synthesizeSymTypeFromMCBasicTypes);
     traverser.setMCBasicTypesHandler(synthesizeSymTypeFromMCBasicTypes);
   }
 

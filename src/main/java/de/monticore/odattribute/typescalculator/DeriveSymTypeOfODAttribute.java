@@ -46,25 +46,25 @@ public class DeriveSymTypeOfODAttribute implements ODTypesCalculator {
     final SynthesizeSymTypeFromMCBasicTypes synthesizeSymTypeFromMCBasicTypes =
         new SynthesizeSymTypeFromMCBasicTypes();
     synthesizeSymTypeFromMCBasicTypes.setTypeCheckResult(getTypeCheckResult());
-    traverser.addMCBasicTypesVisitor(synthesizeSymTypeFromMCBasicTypes);
+    traverser.add4MCBasicTypes(synthesizeSymTypeFromMCBasicTypes);
     traverser.setMCBasicTypesHandler(synthesizeSymTypeFromMCBasicTypes);
 
     final SynthesizeSymTypeFromMCSimpleGenericTypes synthesizeSymTypeFromMCSimpleGenericTypes =
         new SynthesizeSymTypeFromMCSimpleGenericTypes();
     synthesizeSymTypeFromMCSimpleGenericTypes.setTypeCheckResult(getTypeCheckResult());
-    traverser.addMCSimpleGenericTypesVisitor(synthesizeSymTypeFromMCSimpleGenericTypes);
+    traverser.add4MCSimpleGenericTypes(synthesizeSymTypeFromMCSimpleGenericTypes);
     traverser.setMCSimpleGenericTypesHandler(synthesizeSymTypeFromMCSimpleGenericTypes);
 
     final SynthesizeSymTypeFromMCCollectionTypes synthesizeSymTypeFromMCCollectionTypes =
         new SynthesizeSymTypeFromMCCollectionTypes();
     synthesizeSymTypeFromMCCollectionTypes.setTypeCheckResult(getTypeCheckResult());
-    traverser.addMCCollectionTypesVisitor(synthesizeSymTypeFromMCCollectionTypes);
+    traverser.add4MCCollectionTypes(synthesizeSymTypeFromMCCollectionTypes);
     traverser.setMCCollectionTypesHandler(synthesizeSymTypeFromMCCollectionTypes);
 
     final SynthesizeSymTypeFromMCFullGenericTypes synthesizeSymTypeFromMCFullGenericTypes =
         new SynthesizeSymTypeFromMCFullGenericTypes();
     synthesizeSymTypeFromMCFullGenericTypes.setTypeCheckResult(getTypeCheckResult());
-    traverser.addMCFullGenericTypesVisitor(synthesizeSymTypeFromMCFullGenericTypes);
+    traverser.add4MCFullGenericTypes(synthesizeSymTypeFromMCFullGenericTypes);
     traverser.setMCFullGenericTypesHandler(synthesizeSymTypeFromMCFullGenericTypes);
   }
 

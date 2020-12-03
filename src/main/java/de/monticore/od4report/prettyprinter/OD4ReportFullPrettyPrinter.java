@@ -108,7 +108,7 @@ public class OD4ReportFullPrettyPrinter {
     
     // ods
     ODBasisPrettyPrinter odBasisPP = new ODBasisPrettyPrinter(printer);
-    traverser.addODBasisVisitor(odBasisPP);
+    traverser.add4ODBasis(odBasisPP);
     traverser.setODBasisHandler(odBasisPP);
     
     traverser.setOD4ReportHandler(new OD4ReportPrettyPrinter(printer));
@@ -119,42 +119,42 @@ public class OD4ReportFullPrettyPrinter {
     traverser.setDateLiteralsHandler(new DateLiteralsPrettyPrinter(printer));
     
     MCCommonLiteralsPrettyPrinter commonLiterals = new MCCommonLiteralsPrettyPrinter(printer);
-    traverser.addMCCommonLiteralsVisitor(commonLiterals);
+    traverser.add4MCCommonLiterals(commonLiterals);
     traverser.setMCCommonLiteralsHandler(commonLiterals);
     
     // uml modifier
     UMLModifierPrettyPrinter umlModifier = new UMLModifierPrettyPrinter(printer);
-    traverser.addUMLModifierVisitor(umlModifier);
+    traverser.add4UMLModifier(umlModifier);
     traverser.setUMLModifierHandler(umlModifier);
     
     UMLStereotypePrettyPrinter umlStereotype = new UMLStereotypePrettyPrinter(printer);
-    traverser.addUMLStereotypeVisitor(umlStereotype);
+    traverser.add4UMLStereotype(umlStereotype);
     traverser.setUMLStereotypeHandler(umlStereotype);
     
     // common expressions
     CommonExpressionsPrettyPrinter commonExpressions = new CommonExpressionsPrettyPrinter(printer);
     traverser.setCommonExpressionsHandler(commonExpressions);
-    traverser.addCommonExpressionsVisitor(commonExpressions);
+    traverser.add4CommonExpressions(commonExpressions);
     ExpressionsBasisPrettyPrinter basicExpression = new ExpressionsBasisPrettyPrinter(printer);
     traverser.setExpressionsBasisHandler(basicExpression);
-    traverser.addExpressionsBasisVisitor(basicExpression);
+    traverser.add4ExpressionsBasis(basicExpression);
     
     // full generic types
     MCFullGenericTypesPrettyPrinter fullGenericTypes = new MCFullGenericTypesPrettyPrinter(printer);
     traverser.setMCFullGenericTypesHandler(fullGenericTypes);
-    traverser.addMCFullGenericTypesVisitor(fullGenericTypes);
+    traverser.add4MCFullGenericTypes(fullGenericTypes);
     
     MCSimpleGenericTypesPrettyPrinter simpleGenericTypes = new MCSimpleGenericTypesPrettyPrinter(printer);
     traverser.setMCSimpleGenericTypesHandler(simpleGenericTypes);
-    traverser.addMCSimpleGenericTypesVisitor(simpleGenericTypes);
+    traverser.add4MCSimpleGenericTypes(simpleGenericTypes);
     
     MCCollectionTypesPrettyPrinter collectionTypes = new MCCollectionTypesPrettyPrinter(printer);
     traverser.setMCCollectionTypesHandler(collectionTypes);
-    traverser.addMCCollectionTypesVisitor(collectionTypes);
+    traverser.add4MCCollectionTypes(collectionTypes);
     
     MCBasicTypesPrettyPrinter basicTypes = new MCBasicTypesPrettyPrinter(printer);
     traverser.setMCBasicTypesHandler(basicTypes);
-    traverser.addMCBasicTypesVisitor(basicTypes);
+    traverser.add4MCBasicTypes(basicTypes);
   }
   
 }
