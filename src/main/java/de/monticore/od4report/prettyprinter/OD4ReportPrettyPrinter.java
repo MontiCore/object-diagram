@@ -9,6 +9,7 @@ import de.monticore.od4report._ast.ASTODName;
 import de.monticore.od4report._ast.ASTODReportObject;
 import de.monticore.od4report._visitor.OD4ReportHandler;
 import de.monticore.od4report._visitor.OD4ReportTraverser;
+import de.monticore.odbasis._ast.ASTODNamedObject;
 import de.monticore.prettyprint.IndentPrinter;
 
 public class OD4ReportPrettyPrinter implements OD4ReportHandler {
@@ -36,7 +37,8 @@ public class OD4ReportPrettyPrinter implements OD4ReportHandler {
   }
 
   @Override
-  public void traverse(ASTODReportObject a) {
+  public void handle(ASTODReportObject a) {
+    getTraverser().handle((ASTODNamedObject) a);
   }
 
   @Override

@@ -58,6 +58,7 @@ public class OD4ReportExamplesTest {
     String ppResult = new OD4ReportFullPrettyPrinter(new IndentPrinter()).prettyprint(
         odDef.get());
 
+    System.out.println(ppResult);
     // parse the printers content
     Optional<ASTODArtifact> ppOd = parser.parse_StringODArtifact(ppResult);
 

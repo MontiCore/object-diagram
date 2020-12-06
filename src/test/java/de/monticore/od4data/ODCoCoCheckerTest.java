@@ -14,10 +14,13 @@ import de.monticore.odlink._cocos.link.ValidLinkReferenceCoCo;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.ODLogReset;
 import de.se_rwth.commons.logging.Slf4jLog;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -30,24 +33,44 @@ public class ODCoCoCheckerTest {
 
   private static OD4DataCoCoChecker odCoCoChecker;
 
+  private PrintStream originalOut;
+
+  private PrintStream originalErr;
+
+  private ByteArrayOutputStream out;
+
+  private ByteArrayOutputStream err;
+
   @Before
   public void setup() {
-
     Slf4jLog.init();
-
     Slf4jLog.enableFailQuick(false);
-
     ODLogReset.resetFindings();
-
     odCoCoChecker = new OD4DataCoCoChecker();
-
     path = Paths.get("src/test/resources/cocos");
+    OD4DataMill.reset();
+  }
+
+  @Before
+  public void setStreams() {
+    // redirect System.out
+    originalOut = System.out;
+    out = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(out));
+
+    //redirect System.err
+    originalErr = System.err;
+    err = new ByteArrayOutputStream();
+    System.setErr(new PrintStream(err));
+  }
+
+  @After
+  public void restoreSysOut() {
+    System.setOut(originalOut);
+    System.setErr(originalErr);
   }
 
   private Optional<ASTODArtifact> createASTandSTFromFile(String odName) {
-
-    OD4DataMill.reset();
-
     Optional<ASTODArtifact> artifact = Optional.empty();
 
     try {
@@ -70,7 +93,6 @@ public class ODCoCoCheckerTest {
 
   @Test
   public void checkUniqueObjectNamesCoCo() {
-
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("NoUniqueNames");
 
     if (odASTODArtifact.isPresent()) {
@@ -85,7 +107,6 @@ public class ODCoCoCheckerTest {
 
   @Test
   public void checkAnonymusObjectsValid() {
-
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("AnonymusObject");
 
     if (odASTODArtifact.isPresent()) {
@@ -98,9 +119,8 @@ public class ODCoCoCheckerTest {
     }
   }
 
-  @Test
+  @Test(expected = IllegalStateException.class)
   public void checkValidReferenceCoCo() {
-
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("InvalidLinkReference");
 
     if (odASTODArtifact.isPresent()) {
@@ -114,24 +134,19 @@ public class ODCoCoCheckerTest {
     }
   }
 
-  @Test
+  @Test(expected = IllegalStateException.class)
   public void checkObjectReferenceCoCo() {
-
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("InvalidObjectReference");
 
     if (odASTODArtifact.isPresent()) {
-
       odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
-
       odCoCoChecker.checkAll(odASTODArtifact.get());
-
       assertEquals(1, Slf4jLog.getErrorCount());
     }
   }
 
   @Test
   public void checkPartialAndCompleteAttributesCoCo() {
-
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile(
         "PartialAndCompleteAttributes");
 
@@ -147,15 +162,11 @@ public class ODCoCoCheckerTest {
 
   @Test
   public void checkLinkEndConsistencyCoCo() {
-
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("InvalidLinkEndConsistency");
 
     if (odASTODArtifact.isPresent()) {
-
       odCoCoChecker.addCoCo(new LinkEndConsistencyCoCo());
-
       odCoCoChecker.checkAll(odASTODArtifact.get());
-
       assertEquals(1, Slf4jLog.getErrorCount());
     }
   }

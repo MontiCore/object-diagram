@@ -134,12 +134,14 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
     archiveClassifier = "sources"
 }
+jar.dependsOn(sourcesJar)
 
 // build javadoc jar in addition
 task javadocJar(type: Jar) {
     from javadoc
     archiveClassifier = "javadoc"
 }
+//jar.dependsOn(javadocJar)
 
 // generated java doc contains errors, disable for now
 javadoc.failOnError(false)
@@ -149,15 +151,7 @@ task grammarJar(type: Jar) {
     from("$projectDir/src/main/grammars/") { include "**/*.mc4" }
     archiveClassifier = "grammars"
 }
-
-//shadowJar { // all in one jar
-//    manifest {
-//        attributes "Main-Class": "de.monticore.featurediagram.FeatureDiagramTool"
-//    }
-//    minimize() // sort out unused files automatically (does not find everything we don't need)
-//
-//    archiveFileName  =  "FeatureDiagramTool.jar"
-//}
+jar.dependsOn(grammarJar)
 
 task buildOD4DataCLI(type: Jar, dependsOn: shadowJar) {
     archiveFileName = 'OD4DataCLI.jar'

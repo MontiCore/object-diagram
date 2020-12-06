@@ -5,7 +5,6 @@ package de.monticore.odbasis.prettyprinter;
 import de.monticore.odbasis._ast.*;
 import de.monticore.odbasis._visitor.ODBasisHandler;
 import de.monticore.odbasis._visitor.ODBasisTraverser;
-import de.monticore.odbasis._visitor.ODBasisVisitor2;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 
@@ -18,7 +17,7 @@ import java.util.Iterator;
  * whole subtree of a node has been traversed. The ownVisit-Methods stop the automatic traversal
  * order and allow to explicitly visit subtrees by calling getVisitor().startVisit(ASTNode)
  */
-public class ODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHandler {
+public class ODBasisPrettyPrinter implements ODBasisHandler {
 
   protected IndentPrinter printer;
 
@@ -76,7 +75,7 @@ public class ODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHandler {
   }
 
   @Override
-  public void visit(ASTODObject a) {
+  public void handle(ASTODObject a) {
 
     if (a.isPresentModifier()) {
       a.getModifier().accept(getTraverser());
@@ -102,11 +101,13 @@ public class ODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHandler {
   }
 
   @Override
-  public void traverse(ASTODNamedObject a) {
+  public void handle(ASTODNamedObject a) {
+    getTraverser().handle((ASTODObject) a);
   }
 
   @Override
-  public void traverse(ASTODAnonymousObject a) {
+  public void handle(ASTODAnonymousObject a) {
+    getTraverser().handle((ASTODObject) a);
   }
 
   @Override

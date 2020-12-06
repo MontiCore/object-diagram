@@ -105,12 +105,8 @@ public class OD4ReportFullPrettyPrinter {
   }
   
   private void init() {
-    
     // ods
-    ODBasisPrettyPrinter odBasisPP = new ODBasisPrettyPrinter(printer);
-    traverser.add4ODBasis(odBasisPP);
-    traverser.setODBasisHandler(odBasisPP);
-    
+    traverser.setODBasisHandler(new ODBasisPrettyPrinter(printer));
     traverser.setOD4ReportHandler(new OD4ReportPrettyPrinter(printer));
     traverser.setODLinkHandler(new ODLinkPrettyPrinter(printer));
     traverser.setODAttributeHandler(new ODAttributePrettyPrinter(printer));
