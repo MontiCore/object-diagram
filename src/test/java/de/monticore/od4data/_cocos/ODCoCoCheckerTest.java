@@ -1,8 +1,8 @@
 // (c) https://github.com/MontiCore/monticore
 
-package de.monticore.od4data;
+package de.monticore.od4data._cocos;
 
-import de.monticore.od4data._cocos.OD4DataCoCoChecker;
+import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.OD4DataSymbolTableCreatorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
