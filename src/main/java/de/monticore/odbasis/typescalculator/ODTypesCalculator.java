@@ -7,6 +7,7 @@ import de.monticore.types.mcbasictypes._ast.ASTMCObjectType;
 
 import java.util.Optional;
 
+/* TODO: This should calculate types for attributes. */
 public interface ODTypesCalculator {
 
   Optional<SymTypeExpression> calculateType(ASTMCObjectType type);

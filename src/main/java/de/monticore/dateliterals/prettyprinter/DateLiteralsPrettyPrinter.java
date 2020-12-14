@@ -36,38 +36,38 @@ public class DateLiteralsPrettyPrinter implements DateLiteralsHandler {
 
   @Override
   public void handle(ASTDatePartHyphen datePartHyphen) {
-    getPrinter().print(datePartHyphen.getYear().getValue());
+    getPrinter().print(datePartHyphen.getYear().getDigits());
     getPrinter().print("-");
-    getPrinter().print(datePartHyphen.getMonth().getValue());
+    getPrinter().print(datePartHyphen.getMonth().getDigits());
     getPrinter().print("-");
-    getPrinter().print(datePartHyphen.getDay().getValue());
+    getPrinter().print(datePartHyphen.getDay().getDigits());
   }
 
   @Override
   public void handle(ASTDatePartDot datePartDot) {
-    getPrinter().print(datePartDot.getYear().getValue());
+    getPrinter().print(datePartDot.getYear().getDigits());
     getPrinter().print(".");
-    getPrinter().print(datePartDot.getMonth().getValue());
+    getPrinter().print(datePartDot.getMonth().getDigits());
     getPrinter().print(".");
-    getPrinter().print(datePartDot.getDay().getValue());
+    getPrinter().print(datePartDot.getDay().getDigits());
   }
 
   @Override
   public void handle(ASTDatePartSlash datePartSlash) {
-    getPrinter().print(datePartSlash.getYear().getValue());
+    getPrinter().print(datePartSlash.getYear().getDigits());
     getPrinter().print("/");
-    getPrinter().print(datePartSlash.getMonth().getValue());
+    getPrinter().print(datePartSlash.getMonth().getDigits());
     getPrinter().print("/");
-    getPrinter().print(datePartSlash.getDay().getValue());
+    getPrinter().print(datePartSlash.getDay().getDigits());
   }
 
   @Override
   public void handle(ASTTimePartColon timePartColon) {
-    getPrinter().print(timePartColon.getHour().getValue());
+    getPrinter().print(timePartColon.getHour().getDigits());
     getPrinter().print(":");
-    getPrinter().print(timePartColon.getMinute().getValue());
+    getPrinter().print(timePartColon.getMinute().getDigits());
     getPrinter().print(":");
-    getPrinter().print(timePartColon.getSecond().getValue());
+    getPrinter().print(timePartColon.getSecond().getDigits());
   }
   
   @Override 

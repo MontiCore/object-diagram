@@ -29,7 +29,8 @@ package de.monticore;
 
 
 grammar OD4Report extends de.monticore.OD4Data,
-                          de.monticore.DateLiterals {
+                          de.monticore.DateLiterals,
+                          de.monticore.types.MCCollectionTypes {
 
   start ODArtifact;
 
@@ -51,7 +52,7 @@ grammar OD4Report extends de.monticore.OD4Data,
   ODName implements ODValue = Name | ODSpecialName;
 
   ODReportObject astextends ASTODNamedObject implements ODObject, ODValue =
-      Modifier?
+      Modifier
       ODSpecialName ":" MCObjectType
         "{" ODAttribute* "}";
 

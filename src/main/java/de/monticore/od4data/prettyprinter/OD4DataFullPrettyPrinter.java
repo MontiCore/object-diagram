@@ -18,75 +18,72 @@ import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.prettyprint.UMLModifierPrettyPrinter;
 import de.monticore.prettyprint.UMLStereotypePrettyPrinter;
 import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
-import de.monticore.types.prettyprint.MCCollectionTypesPrettyPrinter;
-import de.monticore.types.prettyprint.MCFullGenericTypesPrettyPrinter;
-import de.monticore.types.prettyprint.MCSimpleGenericTypesPrettyPrinter;
 
 public class OD4DataFullPrettyPrinter {
-  
+
   protected OD4DataTraverser traverser = OD4DataMill.traverser();
-  
+
   protected IndentPrinter printer;
-  
+
   public OD4DataFullPrettyPrinter() {
     this.printer = new IndentPrinter();
     init();
   }
-  
+
   public OD4DataFullPrettyPrinter(IndentPrinter indentPrinter) {
     this.printer = indentPrinter;
     init();
   }
-  
+
   public String prettyprint(ASTOD4DataNode astod4DataNode) {
     getPrinter().clearBuffer();
     astod4DataNode.accept(traverser);
     return getPrinter().getContent();
   }
-  
+
   public String prettyprint(ASTODBasisNode astodBasisNode) {
     getPrinter().clearBuffer();
     astodBasisNode.accept(traverser);
     return getPrinter().getContent();
   }
-  
+
   public String prettyprint(ASTODLinkNode astodLinkNode) {
     getPrinter().clearBuffer();
     astodLinkNode.accept(traverser);
     return getPrinter().getContent();
   }
-  
+
   public String prettyprint(ASTODAttributeNode ASTODAttributeNode) {
     getPrinter().clearBuffer();
     ASTODAttributeNode.accept(traverser);
     return getPrinter().getContent();
   }
-  
+
   protected IndentPrinter getPrinter() {
     return this.printer;
   }
-  
+
   private void init() {
-    
+
     // ods
     traverser.setODBasisHandler(new ODBasisPrettyPrinter(printer));
-    
+
     traverser.setODLinkHandler(new ODLinkPrettyPrinter(printer));
     traverser.setODAttributeHandler(new ODAttributePrettyPrinter(printer));
-    
+
     // uml modifier
     UMLModifierPrettyPrinter umlModifier = new UMLModifierPrettyPrinter(printer);
     traverser.add4UMLModifier(umlModifier);
     traverser.setUMLModifierHandler(umlModifier);
-    
+
     MCCommonLiteralsPrettyPrinter commonLiterals = new MCCommonLiteralsPrettyPrinter(printer);
     traverser.add4MCCommonLiterals(commonLiterals);
     traverser.setMCCommonLiteralsHandler(commonLiterals);
-    
+
     UMLStereotypePrettyPrinter umlStereotype = new UMLStereotypePrettyPrinter(printer);
     traverser.add4UMLStereotype(umlStereotype);
     traverser.setUMLStereotypeHandler(umlStereotype);
-    
+
     // common expressions
     CommonExpressionsPrettyPrinter commonExpressions = new CommonExpressionsPrettyPrinter(printer);
     traverser.setCommonExpressionsHandler(commonExpressions);
@@ -94,23 +91,11 @@ public class OD4DataFullPrettyPrinter {
     ExpressionsBasisPrettyPrinter basicExpression = new ExpressionsBasisPrettyPrinter(printer);
     traverser.setExpressionsBasisHandler(basicExpression);
     traverser.add4ExpressionsBasis(basicExpression);
-    
-    // full generic types
-    MCFullGenericTypesPrettyPrinter fullGenericTypes = new MCFullGenericTypesPrettyPrinter(printer);
-    traverser.setMCFullGenericTypesHandler(fullGenericTypes);
-    traverser.add4MCFullGenericTypes(fullGenericTypes);
-    
-    MCSimpleGenericTypesPrettyPrinter simpleGenericTypes = new MCSimpleGenericTypesPrettyPrinter(printer);
-    traverser.setMCSimpleGenericTypesHandler(simpleGenericTypes);
-    traverser.add4MCSimpleGenericTypes(simpleGenericTypes);
-    
-    MCCollectionTypesPrettyPrinter collectionTypes = new MCCollectionTypesPrettyPrinter(printer);
-    traverser.setMCCollectionTypesHandler(collectionTypes);
-    traverser.add4MCCollectionTypes(collectionTypes);
-    
+
+    // basic types
     MCBasicTypesPrettyPrinter basicTypes = new MCBasicTypesPrettyPrinter(printer);
     traverser.setMCBasicTypesHandler(basicTypes);
     traverser.add4MCBasicTypes(basicTypes);
   }
-  
+
 }

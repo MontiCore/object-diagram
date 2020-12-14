@@ -25,8 +25,6 @@ import de.monticore.prettyprint.UMLStereotypePrettyPrinter;
 import de.monticore.types.mcbasictypes._ast.ASTMCType;
 import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
 import de.monticore.types.prettyprint.MCCollectionTypesPrettyPrinter;
-import de.monticore.types.prettyprint.MCFullGenericTypesPrettyPrinter;
-import de.monticore.types.prettyprint.MCSimpleGenericTypesPrettyPrinter;
 import de.monticore.umlmodifier._ast.ASTUMLModifierNode;
 import de.monticore.umlstereotype._ast.ASTUMLStereotypeNode;
 
@@ -135,15 +133,7 @@ public class OD4ReportFullPrettyPrinter {
     traverser.setExpressionsBasisHandler(basicExpression);
     traverser.add4ExpressionsBasis(basicExpression);
     
-    // full generic types
-    MCFullGenericTypesPrettyPrinter fullGenericTypes = new MCFullGenericTypesPrettyPrinter(printer);
-    traverser.setMCFullGenericTypesHandler(fullGenericTypes);
-    traverser.add4MCFullGenericTypes(fullGenericTypes);
-    
-    MCSimpleGenericTypesPrettyPrinter simpleGenericTypes = new MCSimpleGenericTypesPrettyPrinter(printer);
-    traverser.setMCSimpleGenericTypesHandler(simpleGenericTypes);
-    traverser.add4MCSimpleGenericTypes(simpleGenericTypes);
-    
+    // collection types
     MCCollectionTypesPrettyPrinter collectionTypes = new MCCollectionTypesPrettyPrinter(printer);
     traverser.setMCCollectionTypesHandler(collectionTypes);
     traverser.add4MCCollectionTypes(collectionTypes);

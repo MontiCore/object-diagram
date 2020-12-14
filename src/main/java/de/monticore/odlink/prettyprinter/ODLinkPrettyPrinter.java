@@ -63,9 +63,7 @@ public class ODLinkPrettyPrinter implements ODLinkHandler {
       getPrinter().print(a.getName() + " ");
     }
     // print left modifier
-    if (a.getODLinkLeftSide().isPresentModifier()) {
-      a.getODLinkLeftSide().getModifier().accept(getTraverser());
-    }
+    a.getODLinkLeftSide().getModifier().accept(getTraverser());
 
     // print objects referenced on the left side of the link
     Iterator<ASTODName> refNames = a.getODLinkLeftSide().getReferenceNamesList().iterator();
@@ -111,9 +109,7 @@ public class ODLinkPrettyPrinter implements ODLinkHandler {
       }
     }
     // print right modifier
-    if (a.getODLinkRightSide().isPresentModifier()) {
-      a.getODLinkRightSide().getModifier().accept(getTraverser());
-    }
+    a.getODLinkRightSide().getModifier().accept(getTraverser());
   }
 
   @Override

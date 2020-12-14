@@ -6,22 +6,18 @@ package examples.od;
 objectdiagram Variants {
 
   <<object_specific_stereotypes>> o1:type1{};
-  local o2:type2<T>{};
   o3:type3 {
     public int attr1;
     private static type1 attr2;
     protected final attr3 = 5;
     derived attr4;
     readonly attr5;
-    Map<String, ? extends Person> m;
     + attr6;
     - attr7;
     # attr8;
     / attr9;
-    ? attr10;
   };
   local o4:MyObject{};
-  o5:type5<? extends Comparable<T>>{};
   :type6{};
 
   <<link_specific_stereotypes>> link o1 -> o2;

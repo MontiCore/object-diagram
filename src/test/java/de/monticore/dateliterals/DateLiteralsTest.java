@@ -4,7 +4,6 @@ package de.monticore.dateliterals;
 
 import de.monticore.dateliterals._ast.*;
 import de.monticore.dateliterals.prettyprinter.DateLiteralsFullPrettyPrinter;
-import de.monticore.dateliterals.prettyprinter.DateLiteralsPrettyPrinter;
 import de.monticore.od4report._ast.ASTODDate;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -24,8 +23,8 @@ import static org.junit.Assert.*;
 
 public class DateLiteralsTest {
 
-  private final Path SIMPLEDATE = Paths
-      .get("src", "test", "resources", "examples", "date", "SimpleDate.od");
+  private final Path SIMPLEDATE = Paths.get("src", "test", "resources", "examples", "date",
+      "SimpleDate.od");
 
   @Before
   public void setup() {
@@ -41,9 +40,14 @@ public class DateLiteralsTest {
     assertTrue(astodArtifact.isPresent());
 
     assertEquals(2, astodArtifact.get().getObjectDiagram().getODElementList().size());
-    Optional<ASTODObject> object = astodArtifact.get().getObjectDiagram().getODElementList()
-        .stream().filter(elem -> elem instanceof ASTODObject).map(elem -> (ASTODObject) elem)
-        .filter(o -> "myObject2".equals(o.getName())).findFirst();
+    Optional<ASTODObject> object = astodArtifact.get()
+        .getObjectDiagram()
+        .getODElementList()
+        .stream()
+        .filter(elem -> elem instanceof ASTODObject)
+        .map(elem -> (ASTODObject) elem)
+        .filter(o -> "myObject2".equals(o.getName()))
+        .findFirst();
     assertTrue(object.isPresent());
     assertEquals(3, object.get().getODAttributeList().size());
 
@@ -69,9 +73,8 @@ public class DateLiteralsTest {
     assertTrue(astodDate.get().getDate().getTimePart() instanceof ASTTimePartColon);
 
     dateLiteralsPrettyPrinter = new DateLiteralsFullPrettyPrinter(new IndentPrinter());
-//    astodDate.get().getDate().accept(dateLiteralsPrettyPrinter);
-    dateLiteralsPrettyPrinter.prettyprint(astodDate.get().getDate());
-    assertEquals(dateHyphen, dateLiteralsPrettyPrinter.getPrinter().getContent());
+    String prettyprint = dateLiteralsPrettyPrinter.prettyprint(astodDate.get().getDate());
+    assertEquals(dateHyphen, prettyprint);
 
     // slash
     String dateSlash = "2017/12/20 15:18:12";
@@ -81,9 +84,8 @@ public class DateLiteralsTest {
     assertTrue(astodDate.get().getDate().getTimePart() instanceof ASTTimePartColon);
 
     dateLiteralsPrettyPrinter = new DateLiteralsFullPrettyPrinter(new IndentPrinter());
-//    astodDate.get().getDate().accept(dateLiteralsPrettyPrinter);
-    dateLiteralsPrettyPrinter.prettyprint(astodDate.get().getDate());
-    assertEquals(dateSlash, dateLiteralsPrettyPrinter.getPrinter().getContent());
+    String prettyprint1 = dateLiteralsPrettyPrinter.prettyprint(astodDate.get().getDate());
+    assertEquals(dateSlash, prettyprint1);
 
     // dot
     String dateDot = "2017.12.20 15:18:12";
@@ -93,9 +95,8 @@ public class DateLiteralsTest {
     assertTrue(astodDate.get().getDate().getTimePart() instanceof ASTTimePartColon);
 
     dateLiteralsPrettyPrinter = new DateLiteralsFullPrettyPrinter(new IndentPrinter());
-//    astodDate.get().getDate().accept(dateLiteralsPrettyPrinter);
-    dateLiteralsPrettyPrinter.prettyprint(astodDate.get().getDate());
-    assertEquals(dateDot, dateLiteralsPrettyPrinter.getPrinter().getContent());
+    String prettyprint2 = dateLiteralsPrettyPrinter.prettyprint(astodDate.get().getDate());
+    assertEquals(dateDot, prettyprint2);
   }
 
   @Test
@@ -155,8 +156,29 @@ public class DateLiteralsTest {
     assertEquals(localDateTime.getMinute(), astDate.getTimePart().getMinute().getValue());
     assertEquals(localDateTime.getSecond(), astDate.getTimePart().getSecond().getValue());
 
-    assertTrue(astDate.getDatePart() instanceof ASTDatePartHyphen && astDate
-        .getTimePart() instanceof ASTTimePartColon);
+    assertTrue(astDate.getDatePart() instanceof ASTDatePartHyphen
+        && astDate.getTimePart() instanceof ASTTimePartColon);
+  }
+
+  @Test
+  public void testLeadingZeroes() throws IOException {
+    ASTDate date = DateLiteralsMill.dateBuilder()
+        .setDatePart(DateLiteralsMill.datePartSlashBuilder()
+            .setYear(DateLiteralsMill.natLiteralBuilder().setDigits("2020").build())
+            .setMonth(DateLiteralsMill.natLiteralBuilder().setDigits("12").build())
+            .setDay(DateLiteralsMill.natLiteralBuilder().setDigits("14").build())
+            .build())
+        .setTimePart(DateLiteralsMill.timePartColonBuilder()
+            .setHour(DateLiteralsMill.natLiteralBuilder().setDigits("15").build())
+            .setMinute(DateLiteralsMill.natLiteralBuilder().setDigits("00").build())
+            .setSecond(DateLiteralsMill.natLiteralBuilder().setDigits("00").build())
+            .build()).build();
+
+    String prettyPrint = new DateLiteralsFullPrettyPrinter(new IndentPrinter()).prettyprint(date);
+    Optional<ASTDate> ppDate = new OD4ReportParser().parse_StringDate(prettyPrint);
+    assertTrue(ppDate.isPresent());
+    assertEquals("00", ppDate.get().getTimePart().getMinute().getDigits());
+    assertEquals("00", ppDate.get().getTimePart().getSecond().getDigits());
   }
 
 }

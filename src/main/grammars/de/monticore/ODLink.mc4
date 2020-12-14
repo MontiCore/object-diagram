@@ -63,14 +63,14 @@ component grammar ODLink extends de.monticore.ODBasis {
     @attribute role Role of the objects on the respective link side
    */
   interface ODLinkSide =
-    Modifier?
+    Modifier
     referenceNames:ODName+
     ODLinkQualifier?
     role:Name?;
 
   /* Variant of ODLinkSide for the left side adding concrete syntax */
   ODLinkLeftSide implements ODLinkSide =
-    Modifier?
+    Modifier
     referenceNames:(ODName || ",")+
     ODLinkQualifier?
     ("(" role:Name ")")?;
@@ -80,7 +80,7 @@ component grammar ODLink extends de.monticore.ODBasis {
     ("(" role:Name ")")?
     ODLinkQualifier?
     referenceNames:(ODName || ",")+
-    Modifier?;
+    Modifier;
 
   /** ASTODLinkQualifier represents Qualifier for Links between Objects.
     It can be either a concrete attribute name or a concrete value.

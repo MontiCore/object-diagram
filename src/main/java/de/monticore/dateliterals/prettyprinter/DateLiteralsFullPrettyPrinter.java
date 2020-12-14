@@ -32,7 +32,6 @@ public class DateLiteralsFullPrettyPrinter {
   }
   
   private void init() {
-    
     // date literals
     traverser.setDateLiteralsHandler(new DateLiteralsPrettyPrinter(printer));
     

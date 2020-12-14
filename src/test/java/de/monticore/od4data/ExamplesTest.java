@@ -13,7 +13,9 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -58,11 +60,6 @@ public class ExamplesTest {
   }
 
   @Test
-  public void testVariantsGeneric() throws RecognitionException, IOException {
-    test("src/test/resources/examples/od/VariantsGenerics.od");
-  }
-
-  @Test
   public void testStereoWithKeyword() throws RecognitionException, IOException {
     test("src/test/resources/examples/od/StereoWithKeyword.od");
   }
@@ -85,11 +82,6 @@ public class ExamplesTest {
   @Test
   public void testSimpleOD() throws RecognitionException, IOException {
     test("src/test/resources/examples/od/SimpleOD2.od");
-  }
-
-  @Test
-  public void testTeaser() throws RecognitionException, IOException {
-    test("src/test/resources/examples/od/Teaser.od");
   }
 
   @Test
@@ -123,10 +115,23 @@ public class ExamplesTest {
   }
 
   private void negativTest(String modelName) throws RecognitionException, IOException {
+    // redirect System.out
+    PrintStream originalOut = System.out;
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(out));
+
+    //redirect System.err
+    PrintStream originalErr = System.err;
+    ByteArrayOutputStream err = new ByteArrayOutputStream();
+    System.setErr(new PrintStream(err));
+
     Path model = Paths.get(modelName);
     OD4DataParser parser = new OD4DataParser();
     parser.parseODArtifact(model.toString());
     assertTrue(parser.hasErrors());
+
+    System.setOut(originalOut);
+    System.setErr(originalErr);
   }
 
 }

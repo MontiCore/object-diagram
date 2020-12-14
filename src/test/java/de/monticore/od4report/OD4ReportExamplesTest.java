@@ -47,6 +47,11 @@ public class OD4ReportExamplesTest {
     test("src/test/resources/examples/od/ProjectListOD.od");
   }
 
+  @Test
+  public void testTeaser() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/Teaser.od");
+  }
+
   private void test(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
     OD4ReportParser parser = new OD4ReportParser();
@@ -58,7 +63,6 @@ public class OD4ReportExamplesTest {
     String ppResult = new OD4ReportFullPrettyPrinter(new IndentPrinter()).prettyprint(
         odDef.get());
 
-    System.out.println(ppResult);
     // parse the printers content
     Optional<ASTODArtifact> ppOd = parser.parse_StringODArtifact(ppResult);
 

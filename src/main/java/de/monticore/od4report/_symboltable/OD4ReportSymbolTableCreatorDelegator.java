@@ -2,11 +2,9 @@
 
 package de.monticore.od4report._symboltable;
 
-import de.monticore.odattribute._symboltable.ODAttributeSymbolTableCreator;
-import de.monticore.odattribute.typescalculator.DeriveSymTypeOfODAttribute;
+import de.monticore.od4report.typescalculator.DeriveSymTypeOfOD4Report;
 import de.monticore.odbasis._symboltable.ODBasisSymbolTableCreator;
 import de.monticore.odbasis.typescalculator.ODTypesCalculator;
-import de.monticore.odlink._symboltable.ODLinkSymbolTableCreator;
 
 public class OD4ReportSymbolTableCreatorDelegator extends OD4ReportSymbolTableCreatorDelegatorTOP {
 
@@ -15,14 +13,14 @@ public class OD4ReportSymbolTableCreatorDelegator extends OD4ReportSymbolTableCr
   public OD4ReportSymbolTableCreatorDelegator() {
     super();
     setRealThis(this);
-    setTypechecker(new DeriveSymTypeOfODAttribute());
+    setTypechecker(new DeriveSymTypeOfOD4Report());
   }
 
   public OD4ReportSymbolTableCreatorDelegator(IOD4ReportGlobalScope globalScope) {
     super(globalScope);
     setRealThis(this);
 
-    setTypechecker(new DeriveSymTypeOfODAttribute());
+    setTypechecker(new DeriveSymTypeOfOD4Report());
   }
 
   public ODTypesCalculator getTypechecker() {
@@ -33,9 +31,6 @@ public class OD4ReportSymbolTableCreatorDelegator extends OD4ReportSymbolTableCr
     this.typechecker = typechecker;
 
     ((ODBasisSymbolTableCreator) this.getODBasisVisitor().get()).setTypechecker(typechecker);
-    ((ODAttributeSymbolTableCreator) this.getODAttributeVisitor().get()).setTypechecker(
-        typechecker);
-    ((ODLinkSymbolTableCreator) this.getODLinkVisitor().get()).setTypechecker(typechecker);
   }
 
 }

@@ -33,9 +33,12 @@ public class ODBasisPrettyPrinter implements ODBasisHandler {
 
   @Override
   public void handle(ASTODArtifact unit) {
-    if (unit.isPresentMCPackageDeclaration() && !unit.getMCPackageDeclaration().getMCQualifiedName()
-        .getQName().isEmpty()) {
-      getPrinter().println("package " + unit.getMCPackageDeclaration().getMCQualifiedName().getQName() + ";\n");
+    if (unit.isPresentMCPackageDeclaration() && !unit.getMCPackageDeclaration()
+        .getMCQualifiedName()
+        .getQName()
+        .isEmpty()) {
+      getPrinter().println(
+          "package " + unit.getMCPackageDeclaration().getMCQualifiedName().getQName() + ";\n");
     }
 
     if (unit.getMCImportStatementList() != null && !unit.getMCImportStatementList().isEmpty()) {
@@ -77,9 +80,8 @@ public class ODBasisPrettyPrinter implements ODBasisHandler {
   @Override
   public void handle(ASTODObject a) {
 
-    if (a.isPresentModifier()) {
-      a.getModifier().accept(getTraverser());
-    }
+    a.getModifier().accept(getTraverser());
+
     // print object name and type
     getPrinter().print(a.getName());
     if (a.getMCObjectType() != null) {
@@ -113,8 +115,8 @@ public class ODBasisPrettyPrinter implements ODBasisHandler {
   @Override
   public void handle(ASTODAttribute a) {
     // print modifier
-    if (a.isPresentModifier())
-      a.getModifier().accept(getTraverser());
+    a.getModifier().accept(getTraverser());
+
     // print type
     if (a.isPresentMCType()) {
       a.getMCType().accept(getTraverser());
