@@ -29,8 +29,6 @@ public class ODBasisSymbolTableCreator extends ODBasisSymbolTableCreatorTOP {
   public void visit(ASTODNamedObject node) {
     super.visit(node);
     node.getSymbol().setName(node.getName());
-    node.getMCObjectType()
-        .setEnclosingScope(scopeStack.peekLast()); // TODO SH: remove when #2549 is fixed
   }
 
   @Override

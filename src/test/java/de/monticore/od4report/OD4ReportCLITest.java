@@ -2,8 +2,11 @@
 
 package de.monticore.od4report;
 
+import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -29,6 +32,12 @@ public class OD4ReportCLITest {
   private ByteArrayOutputStream out;
 
   private ByteArrayOutputStream err;
+
+  @BeforeClass
+  public static void disableFailQuick() {
+    Slf4jLog.init();
+    Log.enableFailQuick(false);
+  }
 
   @Before
   public void setStreams() {

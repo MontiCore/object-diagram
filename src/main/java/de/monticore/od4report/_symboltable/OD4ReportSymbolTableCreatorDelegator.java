@@ -19,7 +19,6 @@ public class OD4ReportSymbolTableCreatorDelegator extends OD4ReportSymbolTableCr
   public OD4ReportSymbolTableCreatorDelegator(IOD4ReportGlobalScope globalScope) {
     super(globalScope);
     setRealThis(this);
-
     setTypechecker(new DeriveSymTypeOfOD4Report());
   }
 
