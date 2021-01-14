@@ -1,5 +1,7 @@
 /* (c) https://github.com/MontiCore/monticore */
 
+package examples.od;
+
 objectdiagram StereoWithKeyword {
 
   src_test_resources_classes_A:JavaSourceFile{};

@@ -12,8 +12,7 @@ package de.monticore;
    including lists and maps.   
 */
 
-component grammar ODAttribute extends de.monticore.ODBasis,
-                                      de.monticore.types.MCFullGenericTypes {
+component grammar ODAttribute extends de.monticore.ODBasis {
 
   /*========================================================================*/
   /*============================ Attribute =================================*/

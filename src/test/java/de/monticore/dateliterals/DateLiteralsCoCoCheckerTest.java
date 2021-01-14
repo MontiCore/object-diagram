@@ -13,10 +13,13 @@ import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.ODLogReset;
 import de.se_rwth.commons.logging.Slf4jLog;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -31,20 +34,43 @@ public class DateLiteralsCoCoCheckerTest {
 
   private static OD4ReportCoCoChecker odCoCoChecker;
 
+  private PrintStream originalOut;
+
+  private PrintStream originalErr;
+
+  private ByteArrayOutputStream out;
+
+  private ByteArrayOutputStream err;
+
   @Before
   public void setup() {
-
     Slf4jLog.init();
-
     Slf4jLog.enableFailQuick(false);
 
     ODLogReset.resetFindings();
 
     odCoCoChecker = new OD4ReportCoCoChecker();
-
     path = Paths.get("src/test/resources/cocos");
-
     modelPath = new ModelPath(path);
+  }
+
+  @Before
+  public void setStreams() {
+    // redirect System.out
+    originalOut = System.out;
+    out = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(out));
+
+    //redirect System.err
+    originalErr = System.err;
+    err = new ByteArrayOutputStream();
+    System.setErr(new PrintStream(err));
+  }
+
+  @After
+  public void restoreSysOut() {
+    System.setOut(originalOut);
+    System.setErr(originalErr);
   }
 
   @Test

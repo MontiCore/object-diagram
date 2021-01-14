@@ -3,7 +3,7 @@
 package de.monticore.od4report;
 
 import de.monticore.od4report._parser.OD4ReportParser;
-import de.monticore.od4report.prettyprinter.OD4ReportPrettyPrinterDelegator;
+import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
@@ -47,6 +47,11 @@ public class OD4ReportExamplesTest {
     test("src/test/resources/examples/od/ProjectListOD.od");
   }
 
+  @Test
+  public void testTeaser() throws RecognitionException, IOException {
+    test("src/test/resources/examples/od/Teaser.od");
+  }
+
   private void test(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
     OD4ReportParser parser = new OD4ReportParser();
@@ -55,8 +60,7 @@ public class OD4ReportExamplesTest {
     assertTrue(odDef.isPresent());
 
     // pretty print the AST
-    String ppResult = new OD4ReportPrettyPrinterDelegator(new IndentPrinter()).prettyprint(
-        odDef.get());
+    String ppResult = new OD4ReportFullPrettyPrinter(new IndentPrinter()).prettyprint(odDef.get());
 
     // parse the printers content
     Optional<ASTODArtifact> ppOd = parser.parse_StringODArtifact(ppResult);

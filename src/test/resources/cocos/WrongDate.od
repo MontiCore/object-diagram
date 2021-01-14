@@ -1,5 +1,7 @@
 /* (c) https://github.com/MontiCore/monticore */
 
+package cocos;
+
 objectdiagram WrongDate{
 
     myObject1:ObjectType{};

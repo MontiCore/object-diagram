@@ -1,36 +1,43 @@
 // (c) https://github.com/MontiCore/monticore
 
-package de.monticore.odbasis.typescalculator;
+package de.monticore.od4report.typescalculator;
 
 import de.monticore.expressions.expressionsbasis._ast.ASTExpression;
 import de.monticore.expressions.expressionsbasis._visitor.ExpressionsBasisTraverser;
 import de.monticore.literals.mccommonliterals._ast.ASTSignedLiteral;
 import de.monticore.literals.mcliteralsbasis._ast.ASTLiteral;
-import de.monticore.odbasis.ODBasisMill;
-import de.monticore.odbasis._visitor.ODBasisTraverser;
+import de.monticore.od4report.OD4ReportMill;
+import de.monticore.od4report._visitor.OD4ReportTraverser;
+import de.monticore.odbasis.typescalculator.ODTypesCalculator;
 import de.monticore.types.check.*;
 import de.monticore.types.mcbasictypes._ast.ASTMCObjectType;
 
 import java.util.Optional;
 
-public class DeriveSymTypeOfODBasis implements ODTypesCalculator {
+public class DeriveSymTypeOfOD4Report implements ODTypesCalculator {
 
   private TypeCheckResult typeCheckResult;
 
-  protected ODBasisTraverser traverser = ODBasisMill.traverser();
+  protected OD4ReportTraverser traverser = OD4ReportMill.traverser();
 
-  public DeriveSymTypeOfODBasis() {
+  public DeriveSymTypeOfOD4Report() {
     init();
   }
 
   @Override
-  public Optional<SymTypeExpression> getResult() {
-    return Optional.ofNullable(typeCheckResult.getCurrentResult());
+  public Optional<SymTypeExpression> calculateType(ASTMCObjectType type) {
+    type.accept(traverser);
+    return getResult();
   }
 
   @Override
   public void reset() {
     getTypeCheckResult().setCurrentResultAbsent();
+  }
+
+  @Override
+  public Optional<SymTypeExpression> getResult() {
+    return Optional.ofNullable(typeCheckResult.getCurrentResult());
   }
 
   public TypeCheckResult getTypeCheckResult() {
@@ -56,12 +63,6 @@ public class DeriveSymTypeOfODBasis implements ODTypesCalculator {
   }
 
   @Override
-  public Optional<SymTypeExpression> calculateType(ASTMCObjectType type) {
-    type.accept(traverser);
-    return getResult();
-  }
-
-  @Override
   public void init() {
     typeCheckResult = new TypeCheckResult();
 
@@ -81,11 +82,17 @@ public class DeriveSymTypeOfODBasis implements ODTypesCalculator {
         new DeriveSymTypeOfMCCommonLiterals();
     deriveSymTypeOfMCCommonLiterals.setTypeCheckResult(typeCheckResult);
     traverser.add4MCCommonLiterals(deriveSymTypeOfMCCommonLiterals);
+
+    final SynthesizeSymTypeFromMCCollectionTypes synthesizeSymTypeFromMCCollectionTypes =
+        new SynthesizeSymTypeFromMCCollectionTypes();
+    synthesizeSymTypeFromMCCollectionTypes.setTypeCheckResult(getTypeCheckResult());
+    traverser.add4MCCollectionTypes(synthesizeSymTypeFromMCCollectionTypes);
+    traverser.setMCCollectionTypesHandler(synthesizeSymTypeFromMCCollectionTypes);
   }
 
   @Override
   public ExpressionsBasisTraverser getTraverser() {
-    return traverser;
+    return null;
   }
 
 }

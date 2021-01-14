@@ -9,7 +9,7 @@ import de.monticore.odlink._ast.ASTODLink;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinkVisitor implements ODLinkVisitor {
+public class LinkVisitor implements ODLinkVisitor2 {
 
   private List<ASTODLink> links = new ArrayList<>();
 

@@ -4,7 +4,7 @@ package de.monticore.od4data;
 
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
+import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
@@ -13,7 +13,9 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -24,7 +26,7 @@ import static org.junit.Assert.*;
  * This test compares the ASTs of the files in the examples folder with the pretty-printed versions
  * of these files.
  */
-public class ExamplesTest {
+public class OD4DataExamplesTest {
 
   @BeforeClass
   public static void disableFailQuick() {
@@ -58,11 +60,6 @@ public class ExamplesTest {
   }
 
   @Test
-  public void testVariantsGeneric() throws RecognitionException, IOException {
-    test("src/test/resources/examples/od/VariantsGenerics.od");
-  }
-
-  @Test
   public void testStereoWithKeyword() throws RecognitionException, IOException {
     test("src/test/resources/examples/od/StereoWithKeyword.od");
   }
@@ -88,11 +85,6 @@ public class ExamplesTest {
   }
 
   @Test
-  public void testTeaser() throws RecognitionException, IOException {
-    test("src/test/resources/examples/od/Teaser.od");
-  }
-
-  @Test
   public void testInnerObjectWithoutLink() throws RecognitionException, IOException {
     negativTest("src/test/resources/examples/od/InnerObjectWithoutLink.od");
   }
@@ -109,7 +101,7 @@ public class ExamplesTest {
     assertNotNull(odBasicsArtifactScope);
 
     // pretty print the AST
-    String ppResult = new OD4DataPrettyPrinterDelegator(new IndentPrinter()).prettyprint(
+    String ppResult = new OD4DataFullPrettyPrinter(new IndentPrinter()).prettyprint(
         astodArtifact.get());
 
     // parse the printers content
@@ -123,10 +115,23 @@ public class ExamplesTest {
   }
 
   private void negativTest(String modelName) throws RecognitionException, IOException {
+    // redirect System.out
+    PrintStream originalOut = System.out;
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(out));
+
+    //redirect System.err
+    PrintStream originalErr = System.err;
+    ByteArrayOutputStream err = new ByteArrayOutputStream();
+    System.setErr(new PrintStream(err));
+
     Path model = Paths.get(modelName);
     OD4DataParser parser = new OD4DataParser();
     parser.parseODArtifact(model.toString());
     assertTrue(parser.hasErrors());
+
+    System.setOut(originalOut);
+    System.setErr(originalErr);
   }
 
 }

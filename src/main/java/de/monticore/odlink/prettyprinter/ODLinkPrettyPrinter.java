@@ -6,28 +6,22 @@ package de.monticore.odlink.prettyprinter;
 
 import de.monticore.odbasis._ast.ASTODName;
 import de.monticore.odlink._ast.*;
-import de.monticore.odlink._visitor.ODLinkVisitor;
+import de.monticore.odlink._visitor.ODLinkHandler;
+import de.monticore.odlink._visitor.ODLinkTraverser;
 import de.monticore.prettyprint.IndentPrinter;
-import de.monticore.prettyprint.MCBasicsPrettyPrinter;
 
 import java.util.Iterator;
 
-public class ODLinkPrettyPrinter extends MCBasicsPrettyPrinter implements ODLinkVisitor {
+public class ODLinkPrettyPrinter implements ODLinkHandler {
 
-  /**
-   * Constructor.
-   *
-   * @param printer the printer to write to.
-   */
+  protected IndentPrinter printer;
+
+  protected ODLinkTraverser traverser;
+
   public ODLinkPrettyPrinter(IndentPrinter printer) {
-    super(printer);
+    this.printer = printer;
   }
 
-  /**
-   * Prints a qualifier of a link in an object diagram
-   *
-   * @param a qualifier of a link
-   */
   @Override
   public void handle(ASTODLinkQualifier a) {
     if (a.isPresentName()) {
@@ -37,23 +31,18 @@ public class ODLinkPrettyPrinter extends MCBasicsPrettyPrinter implements ODLink
     }
     else if (a.isPresentODValue()) {
       getPrinter().print("[");
-      a.getODValue().accept(getRealThis());
+      a.getODValue().accept(getTraverser());
       getPrinter().print("]");
     }
     getPrinter().print(" ");
   }
 
-  /**
-   * Prints an association, aggregation or composition in an object diagram
-   *
-   * @param a association, aggregation or composition
-   */
   @Override
   public void handle(ASTODLink a) {
     getPrinter().println();
     // print stereotype
     if (a.isPresentStereotype()) {
-      a.getStereotype().accept(getRealThis());
+      a.getStereotype().accept(getTraverser());
       getPrinter().print(" ");
     }
     // print type of the link
@@ -74,14 +63,12 @@ public class ODLinkPrettyPrinter extends MCBasicsPrettyPrinter implements ODLink
       getPrinter().print(a.getName() + " ");
     }
     // print left modifier
-    if (a.getODLinkLeftSide().isPresentModifier()) {
-      a.getODLinkLeftSide().getModifier().accept(getRealThis());
-    }
+    a.getODLinkLeftSide().getModifier().accept(getTraverser());
 
     // print objects referenced on the left side of the link
     Iterator<ASTODName> refNames = a.getODLinkLeftSide().getReferenceNamesList().iterator();
     while (refNames.hasNext()) {
-      refNames.next().accept(getRealThis());
+      refNames.next().accept(getTraverser());
       if (refNames.hasNext()) {
         getPrinter().print(", ");
       }
@@ -91,7 +78,7 @@ public class ODLinkPrettyPrinter extends MCBasicsPrettyPrinter implements ODLink
 
     // print left qualifier
     if (a.getODLinkLeftSide().isPresentODLinkQualifier()) {
-      a.getODLinkLeftSide().getODLinkQualifier().accept(getRealThis());
+      a.getODLinkLeftSide().getODLinkQualifier().accept(getTraverser());
     }
     // print left role
     if (a.getODLinkLeftSide().isPresentRole()) {
@@ -100,7 +87,7 @@ public class ODLinkPrettyPrinter extends MCBasicsPrettyPrinter implements ODLink
       getPrinter().print(") ");
     }
     // print arrow
-    a.getODLinkDirection().accept(getRealThis());
+    a.getODLinkDirection().accept(getTraverser());
 
     // print right role
     if (a.getODLinkRightSide().isPresentRole()) {
@@ -110,21 +97,19 @@ public class ODLinkPrettyPrinter extends MCBasicsPrettyPrinter implements ODLink
     }
     // print right qualifier
     if (a.getODLinkRightSide().isPresentODLinkQualifier()) {
-      a.getODLinkRightSide().getODLinkQualifier().accept(getRealThis());
+      a.getODLinkRightSide().getODLinkQualifier().accept(getTraverser());
     }
     // print objects referenced on the right side of the link
     getPrinter().print(" ");
     refNames = a.getODLinkRightSide().getReferenceNamesList().iterator();
     while (refNames.hasNext()) {
-      refNames.next().accept(getRealThis());
+      refNames.next().accept(getTraverser());
       if (refNames.hasNext()) {
         getPrinter().print(", ");
       }
     }
     // print right modifier
-    if (a.getODLinkRightSide().isPresentModifier()) {
-      a.getODLinkRightSide().getModifier().accept(getRealThis());
-    }
+    a.getODLinkRightSide().getModifier().accept(getTraverser());
   }
 
   @Override
@@ -147,22 +132,18 @@ public class ODLinkPrettyPrinter extends MCBasicsPrettyPrinter implements ODLink
     getPrinter().print("--");
   }
 
-  private ODLinkVisitor realThis = this;
-
-  /**
-   * @see de.monticore.odlink._visitor.ODLinkVisitor#setRealThis(de.monticore.odlink._visitor.ODLinkVisitor)
-   */
   @Override
-  public void setRealThis(ODLinkVisitor realThis) {
-    this.realThis = realThis;
+  public ODLinkTraverser getTraverser() {
+    return traverser;
   }
 
-  /**
-   * @see de.monticore.odlink._visitor.ODLinkVisitor#getRealThis()
-   */
   @Override
-  public ODLinkVisitor getRealThis() {
-    return realThis;
+  public void setTraverser(ODLinkTraverser traverser) {
+    this.traverser = traverser;
+  }
+
+  public IndentPrinter getPrinter() {
+    return printer;
   }
 
 }

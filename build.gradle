@@ -7,6 +7,7 @@ plugins {
     id 'maven-publish'
     id "monticore" version "$mc_version" // MontiCore Plugin
     id "com.github.johnrengelman.shadow" version "4.0.4"
+    id "de.set.ecj" version "1.4.1" // Eclipse compiler as it's much faster than javac
 }
 
 def commons_version = "1.7.9"
@@ -57,6 +58,8 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine:5.6.2"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.6.2"
     testImplementation "org.junit.vintage:junit-vintage-engine:5.6.2"
+
+    testImplementation "de.monticore.lang:cd4analysis:$cd_version"
 }
 
 repositories {
@@ -134,12 +137,14 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
     archiveClassifier = "sources"
 }
+jar.dependsOn(sourcesJar)
 
 // build javadoc jar in addition
 task javadocJar(type: Jar) {
     from javadoc
     archiveClassifier = "javadoc"
 }
+//jar.dependsOn(javadocJar)
 
 // generated java doc contains errors, disable for now
 javadoc.failOnError(false)
@@ -149,15 +154,7 @@ task grammarJar(type: Jar) {
     from("$projectDir/src/main/grammars/") { include "**/*.mc4" }
     archiveClassifier = "grammars"
 }
-
-//shadowJar { // all in one jar
-//    manifest {
-//        attributes "Main-Class": "de.monticore.featurediagram.FeatureDiagramTool"
-//    }
-//    minimize() // sort out unused files automatically (does not find everything we don't need)
-//
-//    archiveFileName  =  "FeatureDiagramTool.jar"
-//}
+jar.dependsOn(grammarJar)
 
 task buildOD4DataCLI(type: Jar, dependsOn: shadowJar) {
     archiveFileName = 'OD4DataCLI.jar'
@@ -205,3 +202,14 @@ publishing {
         url = version.endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
     }
 }
+
+tasks.withType(JavaCompile) {
+    options.fork = true
+    options.encoding = "UTF-8"
+    options.deprecation false
+    options.warnings = false
+    options.headerOutputDirectory.convention(null)
+}
+
+// Fixes issue with java plugin in projects without resources
+compileTestJava.doFirst { mkdir sourceSets.main.output.resourcesDir }

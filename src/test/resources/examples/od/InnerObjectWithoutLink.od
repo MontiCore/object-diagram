@@ -1,5 +1,8 @@
 /* (c) https://github.com/MontiCore/monticore */
 // This od contains an syntactical error in (14,8), missung ';'
+
+package examples.od;
+
 objectdiagram InnerObjectWithoutLink {
 
   myObject:ObjectType{

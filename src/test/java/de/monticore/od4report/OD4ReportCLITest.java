@@ -2,8 +2,15 @@
 
 package de.monticore.od4report;
 
+import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.Slf4jLog;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -17,6 +24,39 @@ public class OD4ReportCLITest {
   private final Path INPUTDIR = Paths.get("src", "resources", "examples", "od");
 
   private final Path TARGET = Paths.get("target", "cli", "od4Report");
+
+  private PrintStream originalOut;
+
+  private PrintStream originalErr;
+
+  private ByteArrayOutputStream out;
+
+  private ByteArrayOutputStream err;
+
+  @BeforeClass
+  public static void disableFailQuick() {
+    Slf4jLog.init();
+    Log.enableFailQuick(false);
+  }
+
+  @Before
+  public void setStreams() {
+    // redirect System.out
+    originalOut = System.out;
+    out = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(out));
+
+    //redirect System.err
+    originalErr = System.err;
+    err = new ByteArrayOutputStream();
+    System.setErr(new PrintStream(err));
+  }
+
+  @After
+  public void restoreSysOut() {
+    System.setOut(originalOut);
+    System.setErr(originalErr);
+  }
 
   @Test
   public void testOD4ReportCLIHelp() {
@@ -44,6 +84,7 @@ public class OD4ReportCLITest {
 
   @Test
   public void testOD4ReportStoreST() {
+    OD4ReportMill.init();
     String[] input = { "-i", INPUTOD.toString(), "-s",
         Paths.get(TARGET.toString(), "Examples.odsym").toString() };
     OD4ReportCLI.main(input);

@@ -1,0 +1,19 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package symboltable.cd;
+
+classdiagram AuctionParticipants {
+
+  class Auction {
+    long auctionIdent;
+    String title;
+    /int numberOfBids;
+  }
+
+  class Person {
+    int personIdent;
+    String name;
+    boolean isActive;
+  }
+
+}
