@@ -48,7 +48,9 @@ public class ODCoCoCheckerTest {
     ODLogReset.resetFindings();
     odCoCoChecker = new OD4DataCoCoChecker();
     path = Paths.get("src/test/resources/cocos");
+
     OD4DataMill.reset();
+    OD4DataMill.init();
   }
 
   @Before
@@ -74,9 +76,9 @@ public class ODCoCoCheckerTest {
     Optional<ASTODArtifact> artifact = Optional.empty();
 
     try {
-      OD4DataParser odBasicsParser = new OD4DataParser();
-      artifact = odBasicsParser.parseODArtifact(path.toString() + "/" + odName + ".od");
-      assertFalse(odBasicsParser.hasErrors());
+      OD4DataParser parser = new OD4DataParser();
+      artifact = parser.parseODArtifact(path.toString() + "/" + odName + ".od");
+      assertFalse(parser.hasErrors());
       assertTrue(artifact.isPresent());
     }
     catch (IOException e) {
@@ -96,11 +98,8 @@ public class ODCoCoCheckerTest {
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("NoUniqueNames");
 
     if (odASTODArtifact.isPresent()) {
-
       odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
-
       odCoCoChecker.checkAll(odASTODArtifact.get());
-
       assertEquals(2, Slf4jLog.getErrorCount());
     }
   }
@@ -110,31 +109,24 @@ public class ODCoCoCheckerTest {
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("AnonymusObject");
 
     if (odASTODArtifact.isPresent()) {
-
       odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
-
       odCoCoChecker.checkAll(odASTODArtifact.get());
-
       assertEquals(0, Slf4jLog.getErrorCount());
     }
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void checkValidReferenceCoCo() {
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("InvalidLinkReference");
 
     if (odASTODArtifact.isPresent()) {
-
-      odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
       odCoCoChecker.addCoCo(new ValidLinkReferenceCoCo());
-
       odCoCoChecker.checkAll(odASTODArtifact.get());
-
-      assertEquals(2, Slf4jLog.getErrorCount());
+      assertEquals(1, Slf4jLog.getErrorCount());
     }
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void checkObjectReferenceCoCo() {
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("InvalidObjectReference");
 
@@ -151,11 +143,8 @@ public class ODCoCoCheckerTest {
         "PartialAndCompleteAttributes");
 
     if (odASTODArtifact.isPresent()) {
-
       odCoCoChecker.addCoCo(new PartialAndCompleteAttributesCoCo());
-
       odCoCoChecker.checkAll(odASTODArtifact.get());
-
       assertEquals(3, Slf4jLog.getErrorCount());
     }
   }

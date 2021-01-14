@@ -58,6 +58,8 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine:5.6.2"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.6.2"
     testImplementation "org.junit.vintage:junit-vintage-engine:5.6.2"
+
+    testImplementation "de.monticore.lang:cd4analysis:$cd_version"
 }
 
 repositories {

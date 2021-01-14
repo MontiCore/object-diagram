@@ -3,6 +3,7 @@
 package de.monticore.odbasis._symboltable;
 
 import de.monticore.odbasis._ast.ASTODNamedObject;
+import de.monticore.odbasis._ast.ASTObjectDiagram;
 import de.monticore.odbasis.typescalculator.DeriveSymTypeOfODBasis;
 import de.monticore.odbasis.typescalculator.ODTypesCalculator;
 import de.monticore.types.check.SymTypeExpression;
@@ -15,7 +16,9 @@ public class ODBasisSymbolTableCreator extends ODBasisSymbolTableCreatorTOP {
 
   private ODTypesCalculator typechecker = new DeriveSymTypeOfODBasis();
 
-  public ODBasisSymbolTableCreator() { super(); }
+  public ODBasisSymbolTableCreator() {
+    super();
+  }
 
   public ODBasisSymbolTableCreator(IODBasisScope enclosingScope) {
     super(enclosingScope);
@@ -23,6 +26,11 @@ public class ODBasisSymbolTableCreator extends ODBasisSymbolTableCreatorTOP {
 
   public ODBasisSymbolTableCreator(Deque<? extends IODBasisScope> scopeStack) {
     super(scopeStack);
+  }
+
+  @Override
+  public void endVisit(ASTObjectDiagram node) {
+    node.getEnclosingScope().setName(node.getName());
   }
 
   @Override
