@@ -31,6 +31,9 @@ public class OD4DataExamplesTest {
   public void disableFailQuick() {
     Log.init();
     Log.enableFailQuick(false);
+
+    OD4DataMill.reset();
+    OD4DataMill.init();
   }
 
   @Test

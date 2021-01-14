@@ -9,6 +9,7 @@ import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.Slf4jLog;
 import org.antlr.v4.runtime.RecognitionException;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,6 +31,12 @@ public class OD4ReportExamplesTest {
   public static void disableFailQuick() {
     Slf4jLog.init();
     Log.enableFailQuick(false);
+  }
+
+  @Before
+  public void setUp() {
+    OD4ReportMill.reset();
+    OD4ReportMill.init();
   }
 
   @Test

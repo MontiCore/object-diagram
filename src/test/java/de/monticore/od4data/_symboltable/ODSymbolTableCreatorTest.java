@@ -25,6 +25,7 @@ public class ODSymbolTableCreatorTest {
     Slf4jLog.enableFailQuick(false);
 
     OD4DataMill.reset();
+    OD4DataMill.init();
   }
 
   @Test
