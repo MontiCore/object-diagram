@@ -8,9 +8,8 @@ import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.Slf4jLog;
 import org.antlr.v4.runtime.RecognitionException;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -28,10 +27,13 @@ import static org.junit.Assert.*;
  */
 public class OD4DataExamplesTest {
 
-  @BeforeClass
-  public static void disableFailQuick() {
-    Slf4jLog.init();
+  @Before
+  public void disableFailQuick() {
+    Log.init();
     Log.enableFailQuick(false);
+
+    OD4DataMill.reset();
+    OD4DataMill.init();
   }
 
   @Test

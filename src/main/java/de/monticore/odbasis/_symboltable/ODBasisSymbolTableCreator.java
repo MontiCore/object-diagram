@@ -30,6 +30,7 @@ public class ODBasisSymbolTableCreator extends ODBasisSymbolTableCreatorTOP {
 
   @Override
   public void endVisit(ASTObjectDiagram node) {
+    super.endVisit(node);
     node.getEnclosingScope().setName(node.getName());
   }
 

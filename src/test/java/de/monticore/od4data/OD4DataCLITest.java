@@ -31,6 +31,12 @@ public class OD4DataCLITest {
   private ByteArrayOutputStream err;
 
   @Before
+  public void setup() {
+    OD4DataMill.reset();
+    OD4DataMill.init();
+  }
+
+  @Before
   public void setStreams() {
     // redirect System.out
     originalOut = System.out;

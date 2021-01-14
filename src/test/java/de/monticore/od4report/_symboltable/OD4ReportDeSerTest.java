@@ -31,6 +31,9 @@ public class OD4ReportDeSerTest {
   public void disableFailQuick() {
     Slf4jLog.init();
     Log.enableFailQuick(false);
+
+    OD4ReportMill.reset();
+    OD4ReportMill.init();
   }
 
   @Test

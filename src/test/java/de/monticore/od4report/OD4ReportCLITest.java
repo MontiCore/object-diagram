@@ -40,6 +40,12 @@ public class OD4ReportCLITest {
   }
 
   @Before
+  public void setUp() {
+    OD4ReportMill.reset();
+    OD4ReportMill.init();
+  }
+
+  @Before
   public void setStreams() {
     // redirect System.out
     originalOut = System.out;

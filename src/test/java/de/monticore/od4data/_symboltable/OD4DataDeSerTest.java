@@ -28,9 +28,12 @@ public class OD4DataDeSerTest {
   private final Path SYMBOL_TARGET = Paths.get("target", "deser");
 
   @Before
-  public void disableFailQuick() {
+  public void setUp() {
     Slf4jLog.init();
     Log.enableFailQuick(false);
+
+    OD4DataMill.reset();
+    OD4DataMill.init();
   }
 
   @Test
