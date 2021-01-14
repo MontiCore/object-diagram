@@ -13,7 +13,7 @@ objectdiagram InnerObjectWithoutLink {
         objectName2:T2{
           obj1 = objectName3:T3{
             content = "on4";
-          }
+          } // expecting a ";" here
         }
       ];
     };
