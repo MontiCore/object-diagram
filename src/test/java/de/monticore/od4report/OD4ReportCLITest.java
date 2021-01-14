@@ -3,7 +3,6 @@
 package de.monticore.od4report;
 
 import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -35,7 +34,7 @@ public class OD4ReportCLITest {
 
   @BeforeClass
   public static void disableFailQuick() {
-    Slf4jLog.init();
+    Log.init();
     Log.enableFailQuick(false);
   }
 

@@ -13,7 +13,6 @@ import de.monticore.odlink._cocos.link.LinkEndConsistencyCoCo;
 import de.monticore.odlink._cocos.link.ValidLinkReferenceCoCo;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.ODLogReset;
-import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,8 +42,8 @@ public class ODCoCoCheckerTest {
 
   @Before
   public void setup() {
-    Slf4jLog.init();
-    Slf4jLog.enableFailQuick(false);
+    Log.init();
+    Log.enableFailQuick(false);
     ODLogReset.resetFindings();
     odCoCoChecker = new OD4DataCoCoChecker();
     path = Paths.get("src/test/resources/cocos");
@@ -100,7 +99,7 @@ public class ODCoCoCheckerTest {
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
       odCoCoChecker.checkAll(odASTODArtifact.get());
-      assertEquals(2, Slf4jLog.getErrorCount());
+      assertEquals(2, Log.getErrorCount());
     }
   }
 
@@ -111,7 +110,7 @@ public class ODCoCoCheckerTest {
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
       odCoCoChecker.checkAll(odASTODArtifact.get());
-      assertEquals(0, Slf4jLog.getErrorCount());
+      assertEquals(0, Log.getErrorCount());
     }
   }
 
@@ -122,7 +121,7 @@ public class ODCoCoCheckerTest {
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new ValidLinkReferenceCoCo());
       odCoCoChecker.checkAll(odASTODArtifact.get());
-      assertEquals(1, Slf4jLog.getErrorCount());
+      assertEquals(1, Log.getErrorCount());
     }
   }
 
@@ -133,7 +132,7 @@ public class ODCoCoCheckerTest {
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
       odCoCoChecker.checkAll(odASTODArtifact.get());
-      assertEquals(1, Slf4jLog.getErrorCount());
+      assertEquals(1, Log.getErrorCount());
     }
   }
 
@@ -145,7 +144,7 @@ public class ODCoCoCheckerTest {
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new PartialAndCompleteAttributesCoCo());
       odCoCoChecker.checkAll(odASTODArtifact.get());
-      assertEquals(3, Slf4jLog.getErrorCount());
+      assertEquals(3, Log.getErrorCount());
     }
   }
 
@@ -156,7 +155,7 @@ public class ODCoCoCheckerTest {
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new LinkEndConsistencyCoCo());
       odCoCoChecker.checkAll(odASTODArtifact.get());
-      assertEquals(2, Slf4jLog.getErrorCount());
+      assertEquals(2, Log.getErrorCount());
     }
   }
 

@@ -7,7 +7,6 @@ import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.Slf4jLog;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -29,7 +28,7 @@ public class OD4ReportExamplesTest {
 
   @BeforeClass
   public static void disableFailQuick() {
-    Slf4jLog.init();
+    Log.init();
     Log.enableFailQuick(false);
   }
 

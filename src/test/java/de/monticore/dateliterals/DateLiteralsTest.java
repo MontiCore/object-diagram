@@ -9,7 +9,7 @@ import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._ast.ASTODObject;
 import de.monticore.prettyprint.IndentPrinter;
-import de.se_rwth.commons.logging.Slf4jLog;
+import de.se_rwth.commons.logging.Log;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,8 +28,8 @@ public class DateLiteralsTest {
 
   @Before
   public void setup() {
-    Slf4jLog.init();
-    Slf4jLog.enableFailQuick(false);
+    Log.init();
+    Log.enableFailQuick(false);
   }
 
   @Test

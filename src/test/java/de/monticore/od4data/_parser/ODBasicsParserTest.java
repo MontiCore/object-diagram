@@ -6,7 +6,6 @@ package de.monticore.od4data._parser;
 
 import de.monticore.odlink._ast.*;
 import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -19,7 +18,7 @@ public class ODBasicsParserTest {
 
   @BeforeClass
   public static void disableFailQuick() {
-    Slf4jLog.init();
+    Log.init();
     Log.enableFailQuick(false);
   }
 

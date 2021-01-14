@@ -8,7 +8,6 @@ import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.utils.Names;
 import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +28,7 @@ public class OD4ReportDeSerTest {
 
   @Before
   public void disableFailQuick() {
-    Slf4jLog.init();
+    Log.init();
     Log.enableFailQuick(false);
 
     OD4ReportMill.reset();
