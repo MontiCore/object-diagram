@@ -5,7 +5,7 @@ package de.monticore.od4data;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data._symboltable.OD4DataScopeDeSer;
+import de.monticore.od4data._symboltable.OD4DataDeSer;
 import de.monticore.od4data._symboltable.OD4DataSymbols2Json;
 import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -162,7 +162,7 @@ public class OD4DataCLI {
    */
   public void prettyPrintST(IOD4DataArtifactScope od4DataArtifactScope, String file) {
     // serializes the symboltable
-    OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
+    OD4DataDeSer odBasicsScopeDeSer = new OD4DataDeSer();
 
     if (StringUtils.isEmpty(file)) {
       System.out.println(odBasicsScopeDeSer.serialize(od4DataArtifactScope));

@@ -62,7 +62,7 @@ public class OD4DataDeSerTest {
     IOD4DataArtifactScope loadedBasicsArtifactScope = od4DataSymbols2Json
         .load(storedSymTable.toString());
 
-    OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
+    OD4DataDeSer odBasicsScopeDeSer = new OD4DataDeSer();
     assertEquals(odBasicsScopeDeSer.serialize(od4DataArtifactScope),
         odBasicsScopeDeSer.serialize(loadedBasicsArtifactScope));
   }

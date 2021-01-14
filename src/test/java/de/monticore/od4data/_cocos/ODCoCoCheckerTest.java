@@ -156,7 +156,7 @@ public class ODCoCoCheckerTest {
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new LinkEndConsistencyCoCo());
       odCoCoChecker.checkAll(odASTODArtifact.get());
-      assertEquals(1, Slf4jLog.getErrorCount());
+      assertEquals(2, Slf4jLog.getErrorCount());
     }
   }
 

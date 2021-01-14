@@ -5,7 +5,7 @@ package de.monticore.od4report;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
-import de.monticore.od4report._symboltable.OD4ReportScopeDeSer;
+import de.monticore.od4report._symboltable.OD4ReportDeSer;
 import de.monticore.od4report._symboltable.OD4ReportSymbols2Json;
 import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -161,7 +161,7 @@ public class OD4ReportCLI {
    */
   public void prettyPrintST(IOD4ReportArtifactScope OD4ReportArtifactScope, String file) {
     // serializes the symboltable
-    OD4ReportScopeDeSer odBasicsScopeDeSer = new OD4ReportScopeDeSer();
+    OD4ReportDeSer odBasicsScopeDeSer = new OD4ReportDeSer();
 
     if (StringUtils.isEmpty(file)) {
       System.out.println(odBasicsScopeDeSer.serialize(OD4ReportArtifactScope));
