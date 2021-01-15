@@ -4,7 +4,7 @@ package de.monticore.od4data._cocos;
 
 import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data._parser.OD4DataParser;
-import de.monticore.od4data._symboltable.OD4DataSymbolTableCreatorDelegator;
+import de.monticore.od4data._symboltable.OD4DataScopesGenitorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._cocos.attributes.PartialAndCompleteAttributesCoCo;
 import de.monticore.odbasis._cocos.names.UniqueObjectNamesCoCo;
@@ -84,10 +84,10 @@ public class ODCoCoCheckerTest {
       Log.error("Cannot parse model: " + odName + " in " + path.toString());
     }
 
-    OD4DataSymbolTableCreatorDelegator symTabVisitor =
-        OD4DataMill.oD4DataSymbolTableCreatorDelegator();
+    OD4DataScopesGenitorDelegator od4DataScopesGenitorDelegator =
+        OD4DataMill.scopesGenitorDelegator();
 
-    artifact.ifPresent(symTabVisitor::createFromAST);
+    artifact.ifPresent(od4DataScopesGenitorDelegator::createFromAST);
 
     return artifact;
   }
