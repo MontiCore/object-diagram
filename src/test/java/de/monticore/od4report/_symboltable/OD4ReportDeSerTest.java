@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 public class OD4ReportDeSerTest {
 
   private final Path TEASEROD = Paths.get("src", "test", "resources", "examples", "od",
-      "Teaser.od");
+      "MyFamily.od");
 
   private final Path SYMBOL_TARGET = Paths.get("target", "deser");
 

@@ -2,7 +2,7 @@
 
 package symboltable;
 
-import symboltable.cd.AuctionParticipants;
+import symboltable.symbols.MyFamily;
 
 objectdiagram AuctionParticipants {
 

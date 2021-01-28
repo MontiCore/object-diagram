@@ -2,6 +2,8 @@
 
 package examples.od;
 
+import examples.cd.MyFamily;
+
 objectdiagram MyFamily {
   alice:Person {
     age = 29;

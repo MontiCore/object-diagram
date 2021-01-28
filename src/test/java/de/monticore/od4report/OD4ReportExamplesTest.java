@@ -55,7 +55,7 @@ public class OD4ReportExamplesTest {
 
   @Test
   public void testTeaser() throws RecognitionException, IOException {
-    test("src/test/resources/examples/od/Teaser.od");
+    test("src/test/resources/examples/od/MyFamily.od");
   }
 
   private void test(String modelName) throws RecognitionException, IOException {
