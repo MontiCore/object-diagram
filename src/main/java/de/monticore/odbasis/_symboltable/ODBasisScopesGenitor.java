@@ -1,7 +1,8 @@
-// (c) https://github.com/MontiCore/monticore
+/* (c) https://github.com/MontiCore/monticore */
 
 package de.monticore.odbasis._symboltable;
 
+import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._ast.ASTODNamedObject;
 import de.monticore.odbasis._ast.ASTObjectDiagram;
 import de.monticore.odbasis.typescalculator.DeriveSymTypeOfODBasis;
@@ -12,20 +13,27 @@ import de.se_rwth.commons.logging.Log;
 import java.util.Deque;
 import java.util.Optional;
 
-public class ODBasisSymbolTableCreator extends ODBasisSymbolTableCreatorTOP {
+public class ODBasisScopesGenitor extends ODBasisScopesGenitorTOP {
+
+  private ASTODArtifact rootNode;
 
   private ODTypesCalculator typechecker = new DeriveSymTypeOfODBasis();
 
-  public ODBasisSymbolTableCreator() {
+  public ODBasisScopesGenitor() {
     super();
   }
 
-  public ODBasisSymbolTableCreator(IODBasisScope enclosingScope) {
+  public ODBasisScopesGenitor(IODBasisScope enclosingScope) {
     super(enclosingScope);
   }
 
-  public ODBasisSymbolTableCreator(Deque<? extends IODBasisScope> scopeStack) {
+  public ODBasisScopesGenitor(Deque<? extends IODBasisScope> scopeStack) {
     super(scopeStack);
+  }
+
+  @Override
+  public void visit(ASTODArtifact astodArtifact) {
+    this.rootNode = astodArtifact;
   }
 
   @Override

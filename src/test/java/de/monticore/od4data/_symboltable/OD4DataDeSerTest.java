@@ -8,7 +8,6 @@ import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.utils.Names;
 import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +28,7 @@ public class OD4DataDeSerTest {
 
   @Before
   public void setUp() {
-    Slf4jLog.init();
+    Log.init();
     Log.enableFailQuick(false);
 
     OD4DataMill.reset();
@@ -62,7 +61,7 @@ public class OD4DataDeSerTest {
     IOD4DataArtifactScope loadedBasicsArtifactScope = od4DataSymbols2Json.load(
         storedSymTable.toString());
 
-    OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
+    OD4DataDeSer odBasicsScopeDeSer = new OD4DataDeSer();
     assertEquals(odBasicsScopeDeSer.serialize(od4DataArtifactScope),
         odBasicsScopeDeSer.serialize(loadedBasicsArtifactScope));
   }

@@ -5,7 +5,7 @@ package de.monticore.od4data;
 import de.monticore.od4data._cocos.OD4DataCoCos;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data._symboltable.OD4DataSymbolTableCreatorDelegator;
+import de.monticore.od4data._symboltable.OD4DataScopesGenitorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
@@ -44,9 +44,9 @@ public class OD4DataTool {
    * @return Symboltable created form AST
    */
   public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast) {
-    OD4DataSymbolTableCreatorDelegator symbolTableCreatorDelegator =
-        OD4DataMill.oD4DataSymbolTableCreatorDelegator();
-    return symbolTableCreatorDelegator.createFromAST(ast);
+    OD4DataScopesGenitorDelegator od4DataScopesGenitorDelegator =
+        OD4DataMill.scopesGenitorDelegator();
+    return od4DataScopesGenitorDelegator.createFromAST(ast);
   }
 
   public static void runDefaultCoCos(ASTODArtifact ast) {

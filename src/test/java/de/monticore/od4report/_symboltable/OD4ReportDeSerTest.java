@@ -8,7 +8,6 @@ import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.utils.Names;
 import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,13 +22,13 @@ import static org.junit.Assert.assertTrue;
 public class OD4ReportDeSerTest {
 
   private final Path TEASEROD = Paths.get("src", "test", "resources", "examples", "od",
-      "Teaser.od");
+      "MyFamily.od");
 
   private final Path SYMBOL_TARGET = Paths.get("target", "deser");
 
   @Before
   public void disableFailQuick() {
-    Slf4jLog.init();
+    Log.init();
     Log.enableFailQuick(false);
 
     OD4ReportMill.reset();
@@ -63,7 +62,7 @@ public class OD4ReportDeSerTest {
     IOD4ReportArtifactScope loadedBasicsArtifactScope = od4ReportSymbols2Json.load(
         storedSymTable.toString());
 
-    OD4ReportScopeDeSer od4ReportScopeDeSer = new OD4ReportScopeDeSer();
+    OD4ReportDeSer od4ReportScopeDeSer = new OD4ReportDeSer();
     assertEquals(od4ReportScopeDeSer.serialize(od4ReportArtifactScope),
         od4ReportScopeDeSer.serialize(loadedBasicsArtifactScope));
   }

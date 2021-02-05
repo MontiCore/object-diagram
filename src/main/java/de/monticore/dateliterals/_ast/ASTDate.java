@@ -29,22 +29,86 @@ public class ASTDate extends ASTDateTOP {
    * @param localDateTime Date providing the time information.
    */
   public void setDate(LocalDateTime localDateTime) {
-    ASTDatePartHyphen datePartHyphen = DateLiteralsMill.datePartHyphenBuilder().setYear(
-        MCCommonLiteralsMill.natLiteralBuilder().setDigits(String.valueOf(localDateTime.getYear()))
-            .build()).setMonth(MCCommonLiteralsMill.natLiteralBuilder()
-        .setDigits(String.valueOf(localDateTime.getMonthValue())).build()).setDay(
-        MCCommonLiteralsMill.natLiteralBuilder()
-            .setDigits(String.valueOf(localDateTime.getDayOfMonth())).build()).build();
+    ASTDatePartHyphen datePartHyphen = DateLiteralsMill.datePartHyphenBuilder()
+        .setYear(MCCommonLiteralsMill.natLiteralBuilder()
+            .setDigits(String.valueOf(localDateTime.getYear()))
+            .build())
+        .setMonth(MCCommonLiteralsMill.natLiteralBuilder()
+            .setDigits(String.valueOf(localDateTime.getMonthValue()))
+            .build())
+        .setDay(MCCommonLiteralsMill.natLiteralBuilder()
+            .setDigits(String.valueOf(localDateTime.getDayOfMonth()))
+            .build())
+        .build();
 
-    ASTTimePartColon timePartColon = DateLiteralsMill.timePartColonBuilder().setHour(
-        MCCommonLiteralsMill.natLiteralBuilder().setDigits(String.valueOf(localDateTime.getHour()))
-            .build()).setMinute(MCCommonLiteralsMill.natLiteralBuilder()
-        .setDigits(String.valueOf(localDateTime.getMinute())).build()).setSecond(
-        MCCommonLiteralsMill.natLiteralBuilder()
-            .setDigits(String.valueOf(localDateTime.getSecond())).build()).build();
+    ASTTimePartColon timePartColon = DateLiteralsMill.timePartColonBuilder()
+        .setHour(MCCommonLiteralsMill.natLiteralBuilder()
+            .setDigits(String.valueOf(localDateTime.getHour()))
+            .build())
+        .setMinute(MCCommonLiteralsMill.natLiteralBuilder()
+            .setDigits(String.valueOf(localDateTime.getMinute()))
+            .build())
+        .setSecond(MCCommonLiteralsMill.natLiteralBuilder()
+            .setDigits(String.valueOf(localDateTime.getSecond()))
+            .build())
+        .build();
 
     setDatePart(datePartHyphen);
     setTimePart(timePartColon);
+  }
+
+  /**
+   * Returns the year as an integer.
+   *
+   * @return year as int value
+   */
+  public int getYear() {
+    return Integer.valueOf(getDatePart().getYear().getDigits()).intValue();
+  }
+
+  /**
+   * Returns the month as an integer.
+   *
+   * @return month as int value
+   */
+  public int getMonth() {
+    return Integer.valueOf(getDatePart().getMonth().getDigits()).intValue();
+  }
+
+  /**
+   * Returns the day as an integer.
+   *
+   * @return day as int value
+   */
+  public int getDay() {
+    return Integer.valueOf(getDatePart().getDay().getDigits()).intValue();
+  }
+
+  /**
+   * Returns the hours as an integer.
+   *
+   * @return hours as int value
+   */
+  public int getHour() {
+    return Integer.valueOf(getTimePart().getHour().getDigits()).intValue();
+  }
+
+  /**
+   * Returns the minutes as an integer.
+   *
+   * @return minutes as int value
+   */
+  public int getMinute() {
+    return Integer.valueOf(getTimePart().getMinute().getDigits()).intValue();
+  }
+
+  /**
+   * Returns the seconds as an integer.
+   *
+   * @return seconds as int value
+   */
+  public int getSecond() {
+    return Integer.valueOf(getTimePart().getSecond().getDigits()).intValue();
   }
 
 }

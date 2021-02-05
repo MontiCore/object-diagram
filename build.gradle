@@ -46,8 +46,12 @@ dependencies {
     implementation "org.antlr:antlr4-runtime:4.7.1"
     implementation "de.monticore:monticore-runtime:$mc_version"
     implementation "de.monticore:monticore-grammar:$mc_version"
-    implementation "de.monticore:monticore-grammar:$mc_version:$grammar_classifier"
-    grammar "de.monticore:monticore-grammar:$mc_version:$grammar_classifier"
+    implementation ("de.monticore:monticore-grammar:$mc_version") {capabilities {
+      requireCapability("de.monticore:monticore-grammar-grammars") }
+    }
+  grammar ("de.monticore:monticore-grammar:$mc_version") {capabilities {
+    requireCapability("de.monticore:monticore-grammar-grammars") }
+  }
     implementation "ch.qos.logback:logback-classic:1.1.7"
     implementation "commons-cli:commons-cli:1.4"
     implementation "org.apache.commons:commons-lang3:3.8.1"
@@ -58,8 +62,6 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine:5.6.2"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.6.2"
     testImplementation "org.junit.vintage:junit-vintage-engine:5.6.2"
-
-    testImplementation "de.monticore.lang:cd4analysis:$cd_version"
 }
 
 repositories {

@@ -5,7 +5,7 @@ package de.monticore.od4report;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
-import de.monticore.od4report._symboltable.OD4ReportScopeDeSer;
+import de.monticore.od4report._symboltable.OD4ReportDeSer;
 import de.monticore.od4report._symboltable.OD4ReportSymbols2Json;
 import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by TGr on 29.04.2016.
@@ -74,8 +76,7 @@ public class OD4ReportCLI {
       ModelPath modelPath = new ModelPath();
       if (cmd.hasOption("path")) {
         String[] paths = cmd.getOptionValues("path");
-        Arrays.stream(paths)
-            .forEach(p -> modelPath.addEntry(Paths.get(p)));
+        Arrays.stream(paths).forEach(p -> modelPath.addEntry(Paths.get(p)));
       }
 
       // parse input file, which is now available
@@ -85,6 +86,12 @@ public class OD4ReportCLI {
       // create symbol table
       IOD4ReportArtifactScope oD4ReportArtifactScope = OD4ReportTool.createSymbolTable(
           astodArtifact);
+
+      // -option check cocos
+      Set<String> cocoOptionValue = new HashSet<>();
+      if (cmd.hasOption("c") && cmd.getOptionValues("c") != null) {
+        cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
+      }
 
       // -option pretty print
       if (cmd.hasOption("pp")) {
@@ -161,7 +168,7 @@ public class OD4ReportCLI {
    */
   public void prettyPrintST(IOD4ReportArtifactScope OD4ReportArtifactScope, String file) {
     // serializes the symboltable
-    OD4ReportScopeDeSer odBasicsScopeDeSer = new OD4ReportScopeDeSer();
+    OD4ReportDeSer odBasicsScopeDeSer = new OD4ReportDeSer();
 
     if (StringUtils.isEmpty(file)) {
       System.out.println(odBasicsScopeDeSer.serialize(OD4ReportArtifactScope));
@@ -207,9 +214,7 @@ public class OD4ReportCLI {
     else {
       File f = new File(path);
       // create directories (logs error otherwise)
-      f.getAbsoluteFile()
-          .getParentFile()
-          .mkdirs();
+      f.getAbsoluteFile().getParentFile().mkdirs();
 
       FileWriter writer;
       try {
@@ -236,10 +241,7 @@ public class OD4ReportCLI {
     Options options = new Options();
 
     // help dialog
-    options.addOption(Option.builder("h")
-        .longOpt("help")
-        .desc("Prints this help dialog")
-        .build());
+    options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").build());
 
     // parse input file
     options.addOption(Option.builder("i")
@@ -247,6 +249,17 @@ public class OD4ReportCLI {
         .argName("file")
         .hasArg()
         .desc("Reads the source file (mandatory) and parses the contents as an object diagram")
+        .build());
+
+    // check cocos
+    options.addOption(Option.builder("c")
+        .longOpt("coco")
+        .optionalArg(true)
+        .numberOfArgs(3)
+        .desc("Checks the CoCos for the input. Optional arguments are:\n"
+            + "-c intra to check only the" + " intra-model CoCos,\n"
+            + "-c inter checks also inter-model CoCos,\n" + "-c type "
+            + "(default) checks all CoCos.")
         .build());
 
     // model paths

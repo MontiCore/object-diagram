@@ -12,7 +12,6 @@ import de.monticore.od4report._symboltable.OD4ReportSymbolTableCreatorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.ODLogReset;
-import de.se_rwth.commons.logging.Slf4jLog;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,8 +43,8 @@ public class DateLiteralsCoCoCheckerTest {
 
   @Before
   public void setup() {
-    Slf4jLog.init();
-    Slf4jLog.enableFailQuick(false);
+    Log.init();
+    Log.enableFailQuick(false);
 
     ODLogReset.resetFindings();
 
@@ -83,7 +82,7 @@ public class DateLiteralsCoCoCheckerTest {
 
       odCoCoChecker.checkAll(odASTODArtifact.get());
 
-      assertEquals(3, Slf4jLog.getErrorCount());
+      assertEquals(3, Log.getErrorCount());
     }
   }
 

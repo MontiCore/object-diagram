@@ -7,7 +7,7 @@ import de.monticore.od4data.OD4DataTool;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
-import de.se_rwth.commons.logging.Slf4jLog;
+import de.se_rwth.commons.logging.Log;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,8 +21,8 @@ public class ODSymbolTableCreatorTest {
 
   @Before
   public void setup() {
-    Slf4jLog.init();
-    Slf4jLog.enableFailQuick(false);
+    Log.init();
+    Log.enableFailQuick(false);
 
     OD4DataMill.reset();
     OD4DataMill.init();
