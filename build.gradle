@@ -214,3 +214,4 @@ tasks.withType(JavaCompile) {
 
 // Fixes issue with java plugin in projects without resources
 compileTestJava.doFirst { mkdir sourceSets.main.output.resourcesDir }
+
