@@ -34,7 +34,7 @@ public class OD4ReportSymbolTableCreatorTest {
 
     IOD4ReportArtifactScope symbolTable = OD4ReportTool.createSymbolTable(artifact.get());
     Optional<VariableSymbol> person = symbolTable.resolveVariable(
-        "symboltable.symbols" + ".MyFamily.alice");
+        "symboltable.symbols.MyFamily.alice");
     assertTrue(person.isPresent());
   }
 

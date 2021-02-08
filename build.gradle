@@ -11,7 +11,6 @@ plugins {
 }
 
 def commons_version = "1.7.9"
-def grammar_classifier = "grammars"
 def grammarDir = "src/main/grammars"
 
 group = "de.monticore.lang"

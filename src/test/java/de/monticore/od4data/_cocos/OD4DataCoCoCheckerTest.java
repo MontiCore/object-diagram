@@ -2,6 +2,7 @@
 
 package de.monticore.od4data._cocos;
 
+import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.OD4DataScopesGenitorDelegator;
@@ -26,11 +27,13 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-public class ODCoCoCheckerTest {
+public class OD4DataCoCoCheckerTest {
 
-  private static Path path;
+  private ModelPath modelPath = new ModelPath(Paths.get("src", "test", "resources", "examples"));
 
-  private static OD4DataCoCoChecker odCoCoChecker;
+  private Path cocoExamples;
+
+  private OD4DataCoCoChecker odCoCoChecker;
 
   private PrintStream originalOut;
 
@@ -46,10 +49,11 @@ public class ODCoCoCheckerTest {
     Log.enableFailQuick(false);
     ODLogReset.resetFindings();
     odCoCoChecker = new OD4DataCoCoChecker();
-    path = Paths.get("src/test/resources/cocos");
+    cocoExamples = Paths.get("src/test/resources/cocos");
 
     OD4DataMill.reset();
     OD4DataMill.init();
+    OD4DataMill.globalScope().setModelPath(modelPath);
   }
 
   @Before
@@ -71,17 +75,17 @@ public class ODCoCoCheckerTest {
     System.setErr(originalErr);
   }
 
-  private Optional<ASTODArtifact> createASTandSTFromFile(String odName) {
+  private Optional<ASTODArtifact> createASTandSTFromFile(String path) {
     Optional<ASTODArtifact> artifact = Optional.empty();
 
     try {
       OD4DataParser parser = new OD4DataParser();
-      artifact = parser.parseODArtifact(path.toString() + "/" + odName + ".od");
+      artifact = parser.parseODArtifact(path);
       assertFalse(parser.hasErrors());
       assertTrue(artifact.isPresent());
     }
     catch (IOException e) {
-      Log.error("Cannot parse model: " + odName + " in " + path.toString());
+      Log.error("Cannot parse model: " + path);
     }
 
     OD4DataScopesGenitorDelegator od4DataScopesGenitorDelegator =
@@ -94,7 +98,8 @@ public class ODCoCoCheckerTest {
 
   @Test
   public void checkUniqueObjectNamesCoCo() {
-    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("NoUniqueNames");
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile(
+        Paths.get(cocoExamples.toString(), "NoUniqueNames.od").toString());
 
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
@@ -105,7 +110,8 @@ public class ODCoCoCheckerTest {
 
   @Test
   public void checkAnonymusObjectsValid() {
-    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("AnonymusObject");
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile(
+        Paths.get(cocoExamples.toString(), "AnonymusObject.od").toString());
 
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
@@ -116,7 +122,8 @@ public class ODCoCoCheckerTest {
 
   @Test
   public void checkValidReferenceCoCo() {
-    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("InvalidLinkReference");
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile(
+        Paths.get(cocoExamples.toString(), "InvalidLinkReference.od").toString());
 
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new ValidLinkReferenceCoCo());
@@ -127,7 +134,8 @@ public class ODCoCoCheckerTest {
 
   @Test
   public void checkObjectReferenceCoCo() {
-    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("InvalidObjectReference");
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile(
+        Paths.get(cocoExamples.toString(), "InvalidObjectReference.od").toString());
 
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
@@ -139,7 +147,7 @@ public class ODCoCoCheckerTest {
   @Test
   public void checkPartialAndCompleteAttributesCoCo() {
     Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile(
-        "PartialAndCompleteAttributes");
+        Paths.get(cocoExamples.toString(), "PartialAndCompleteAttributes.od").toString());
 
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new PartialAndCompleteAttributesCoCo());
@@ -150,7 +158,8 @@ public class ODCoCoCheckerTest {
 
   @Test
   public void checkLinkEndConsistencyCoCo() {
-    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile("InvalidLinkEndConsistency");
+    Optional<ASTODArtifact> odASTODArtifact = createASTandSTFromFile(
+        Paths.get(cocoExamples.toString(), "InvalidLinkEndConsistency.od").toString());
 
     if (odASTODArtifact.isPresent()) {
       odCoCoChecker.addCoCo(new LinkEndConsistencyCoCo());

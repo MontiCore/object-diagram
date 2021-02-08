@@ -18,7 +18,6 @@ import de.monticore.umlstereotype._od.UMLStereotype2OD;
 
 public class ODAST2OD extends ODBasis2OD {
 
-  
   protected ODBasisTraverser traverser;
 
 
@@ -30,7 +29,7 @@ public class ODAST2OD extends ODBasis2OD {
     UMLModifier2OD umlModifierVisitor = new UMLModifier2OD(printer, reporting);
     MCCommonLiterals2OD mcCommonLiteralsVisitor = new MCCommonLiterals2OD(printer, reporting);
     MCJavaLiterals2OD mcJavaLiteralsVisitor = new MCJavaLiterals2OD(printer, reporting);
-  
+
     traverser.add4MCBasicTypes(mcBasicTypesVisitor);
     traverser.add4UMLStereotype(umlStereotypeVisitor);
     traverser.add4UMLModifier(umlModifierVisitor);
