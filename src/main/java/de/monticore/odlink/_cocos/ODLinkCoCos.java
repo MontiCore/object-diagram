@@ -1,7 +1,5 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
 package de.monticore.odlink._cocos;
 
 import de.monticore.odlink._cocos.link.LinkEndConsistencyCoCo;

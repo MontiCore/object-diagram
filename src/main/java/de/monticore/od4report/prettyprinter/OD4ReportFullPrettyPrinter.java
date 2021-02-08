@@ -1,7 +1,5 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
 package de.monticore.od4report.prettyprinter;
 
 import de.monticore.dateliterals._ast.ASTDateLiteralsNode;

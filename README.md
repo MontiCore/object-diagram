@@ -2,7 +2,7 @@
 
 This documentation is intended for  **modelers** who use the object diagram (OD) languages. A
 detailed documentation for **language engineers** using or extending the OD language is
-located **[here](src/main/grammars/de/monticore/lang/OD4Report.md)**. We recommend that **language
+located **[here](src/main/grammars/de/monticore/OD4Report.md)**. We recommend that **language
 engineers** read this documentation before reading the detailed documentation.
 
 # An Example Model
