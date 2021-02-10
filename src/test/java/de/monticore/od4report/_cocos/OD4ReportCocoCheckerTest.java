@@ -98,8 +98,7 @@ public class OD4ReportCocoCheckerTest {
         Paths.get("src", "test", "resources", "examples", "od", "MyFamily.od").toString());
 
     if (astodArtifact.isPresent()) {
-      odCoCoChecker.addCoCo(new ValidObjectTypeCoco(astodArtifact.get().getMCImportStatementList(),
-          astodArtifact.get().getMCPackageDeclaration()));
+      odCoCoChecker.addCoCo(new ValidObjectTypeCoco());
       odCoCoChecker.checkAll(astodArtifact.get());
 
       assertEquals(0, Log.getErrorCount());

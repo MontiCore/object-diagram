@@ -6,10 +6,11 @@ import de.monticore.odbasis._cocos.attributes.NoAbstractAttributesCoCo;
 import de.monticore.odbasis._cocos.attributes.PartialAndCompleteAttributesCoCo;
 import de.monticore.odbasis._cocos.attributes.UniqueAttributeNamesCoCo;
 import de.monticore.odbasis._cocos.names.UniqueObjectNamesCoCo;
+import de.monticore.odbasis._cocos.object.ValidObjectTypeCoco;
 
 public class ODBasicsCoCos {
 
-  public ODBasisCoCoChecker getCheckerForAllCoCos() {
+  public ODBasisCoCoChecker getCheckerForAllIntraCoCos() {
     final ODBasisCoCoChecker checker = new ODBasisCoCoChecker();
 
     // add default cocos
@@ -20,6 +21,16 @@ public class ODBasicsCoCos {
 
     // names
     checker.addCoCo(new UniqueObjectNamesCoCo());
+
+    return checker;
+  }
+
+  public ODBasisCoCoChecker getCheckerForAllCoCos() {
+    final ODBasisCoCoChecker checker = new ODBasisCoCoChecker();
+    checker.addChecker(this.getCheckerForAllIntraCoCos());
+
+    // types
+    checker.addCoCo(new ValidObjectTypeCoco());
 
     return checker;
   }

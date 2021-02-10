@@ -49,8 +49,12 @@ public class OD4ReportTool {
     return od4ReportScopesGenitorDelegator.createFromAST(ast);
   }
 
-  public static void runDefaultCoCos(ASTODArtifact ast) {
+  public static void runAllCoCos(ASTODArtifact ast) {
     new OD4ReportCoCos().getCheckerForAllCoCos().checkAll(ast);
+  }
+
+  public static void runAllIntraCoCos(ASTODArtifact ast) {
+    new OD4ReportCoCos().getCheckerForAllIntraCoCos().checkAll(ast);
   }
 
 }

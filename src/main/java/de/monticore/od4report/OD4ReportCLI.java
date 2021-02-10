@@ -93,13 +93,22 @@ public class OD4ReportCLI {
         cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
       }
 
+      if (cmd.hasOption("c")) {
+        if (cocoOptionValue.contains("intra")) {
+          OD4ReportTool.runAllIntraCoCos(astodArtifact);
+        }
+        else {
+          OD4ReportTool.runAllCoCos(astodArtifact);
+        }
+      }
+
       // -option pretty print
       if (cmd.hasOption("pp")) {
         String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
         prettyPrint(astodArtifact, path);
       }
 
-      // -otion pretty print symboltable
+      // -option pretty print symboltable
       if (cmd.hasOption("s")) {
         String path = cmd.getOptionValue("s", StringUtils.EMPTY);
         prettyPrintST(oD4ReportArtifactScope, path);

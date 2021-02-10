@@ -78,13 +78,17 @@ public class OD4ReportCLITest {
   }
 
   @Test
+  public void testOD4ReportCLICocosIntra() {
+    String[] input = { "-i", INPUTOD.toString(), "-c", "intra" };
+    OD4ReportCLI.main(input);
+  }
+
+  @Test
   public void testOD4ReportCLIPrettyPrint() {
     String[] input = { "-i", INPUTOD.toString(), "-pp",
         Paths.get(TARGET.toString(), "pp.od").toString() };
     OD4ReportCLI.main(input);
-    assertTrue(Paths.get(TARGET.toString(), "pp.od")
-        .toFile()
-        .exists());
+    assertTrue(Paths.get(TARGET.toString(), "pp.od").toFile().exists());
   }
 
   @Test
@@ -93,9 +97,7 @@ public class OD4ReportCLITest {
     String[] input = { "-i", INPUTOD.toString(), "-s",
         Paths.get(TARGET.toString(), "Examples.odsym").toString() };
     OD4ReportCLI.main(input);
-    assertTrue(Paths.get(TARGET.toString(), "Examples.odsym")
-        .toFile()
-        .exists());
+    assertTrue(Paths.get(TARGET.toString(), "Examples.odsym").toFile().exists());
   }
 
 }

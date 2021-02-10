@@ -7,8 +7,7 @@ import de.monticore.io.paths.ModelPath;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._cocos.OD4ReportCoCoChecker;
 import de.monticore.od4report._parser.OD4ReportParser;
-import de.monticore.od4report._symboltable.OD4ReportGlobalScope;
-import de.monticore.od4report._symboltable.OD4ReportSymbolTableCreatorDelegator;
+import de.monticore.od4report._symboltable.OD4ReportScopesGenitorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.ODLogReset;
@@ -100,9 +99,7 @@ public class DateLiteralsCoCoCheckerTest {
       Log.error("Cannot parse model: " + odName + " in " + path.toString());
     }
 
-    OD4ReportGlobalScope globalScope = new OD4ReportGlobalScope(modelPath, "od");
-
-    OD4ReportSymbolTableCreatorDelegator symTabVisitor = OD4ReportMill.oD4ReportSymbolTableCreatorDelegator();
+    OD4ReportScopesGenitorDelegator symTabVisitor = OD4ReportMill.scopesGenitorDelegator();
 
     artifact.ifPresent(symTabVisitor::createFromAST);
 

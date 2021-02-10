@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Command line interface for the OD language and corresponding tooling. Defines, handles, and
@@ -77,8 +79,7 @@ public class OD4DataCLI {
       ModelPath modelPath = new ModelPath();
       if (cmd.hasOption("path")) {
         String[] paths = cmd.getOptionValues("path");
-        Arrays.stream(paths)
-            .forEach(p -> modelPath.addEntry(Paths.get(p)));
+        Arrays.stream(paths).forEach(p -> modelPath.addEntry(Paths.get(p)));
       }
 
       // parse input file, which is now available
@@ -87,6 +88,18 @@ public class OD4DataCLI {
 
       // create symbol table
       IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact);
+
+      // -option check cocos
+      Set<String> cocoOptionValue = new HashSet<>();
+      if (cmd.hasOption("c") && cmd.getOptionValues("c") != null) {
+        cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
+        if (cocoOptionValue.contains("intra")) {
+          OD4DataTool.runAllIntraCoCos(astodArtifact);
+        }
+        else {
+          OD4DataTool.runAllCoCos(astodArtifact);
+        }
+      }
 
       // -option pretty print
       if (cmd.hasOption("pp")) {
@@ -169,8 +182,7 @@ public class OD4DataCLI {
     }
     else {
       OD4DataSymbols2Json dataSymbols2Json = new OD4DataSymbols2Json();
-      dataSymbols2Json.store(od4DataArtifactScope, Paths.get(file)
-          .toString());
+      dataSymbols2Json.store(od4DataArtifactScope, Paths.get(file).toString());
     }
   }
 
@@ -209,9 +221,7 @@ public class OD4DataCLI {
     else {
       File f = new File(path);
       // create directories (logs error otherwise)
-      f.getAbsoluteFile()
-          .getParentFile()
-          .mkdirs();
+      f.getAbsoluteFile().getParentFile().mkdirs();
 
       FileWriter writer;
       try {
@@ -238,10 +248,7 @@ public class OD4DataCLI {
     Options options = new Options();
 
     // help dialog
-    options.addOption(Option.builder("h")
-        .longOpt("help")
-        .desc("Prints this help dialog")
-        .build());
+    options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").build());
 
     // parse input file
     options.addOption(Option.builder("i")
