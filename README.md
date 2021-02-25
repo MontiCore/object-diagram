@@ -67,16 +67,23 @@ This section explains how to set up the command line interface tools for the OD 
 is contained in a separate jar file, which is produced as result of building the project with
 gradle. The following explains this.
 
-##### Prerequisites
+### Tool Download
+
+* [**Download OD Language OD4Data**][od4data-link]
+* [**Download OD Language OD4Report**][od4report-link]
+
+Alternatively, the tools can be built from source code.
+
+### Prerequisites
 
 To build the project, it is required to install a Java 8 JDK and git.
 
-##### Step 1: Clone Project with git
+#### Step 1: Clone Project with git
 
     git clone <link to this Git repository>
     cd od
 
-##### Step 2: Build Project with gradle
+#### Step 2: Build Project with gradle
 
     gradlew build --refresh-dependencies
 
@@ -353,3 +360,7 @@ much done reading this README!
 * [Best Practices](https://github.com/MontiCore/monticore/blob/dev/docs/BestPractices.md)
 * [Publications about MBSE and MontiCore](https://www.se-rwth.de/publications/)
 * [Licence definition](https://github.com/MontiCore/monticore/blob/master/00.org/Licenses/LICENSE-MONTICORE-3-LEVEL.md)
+
+[od4report-link]: http://www.monticore.de/download/OD4ReportCLI.jar
+
+[od4data-link]: http://www.monticore.de/download/OD4DataCLI.jar

@@ -43,12 +43,16 @@ dependencies {
     implementation "org.antlr:antlr4-runtime:4.7.1"
     implementation "de.monticore:monticore-runtime:$mc_version"
     implementation "de.monticore:monticore-grammar:$mc_version"
-    implementation ("de.monticore:monticore-grammar:$mc_version") {capabilities {
-      requireCapability("de.monticore:monticore-grammar-grammars") }
+    implementation("de.monticore:monticore-grammar:$mc_version") {
+        capabilities {
+            requireCapability("de.monticore:monticore-grammar-grammars")
+        }
     }
-  grammar ("de.monticore:monticore-grammar:$mc_version") {capabilities {
-    requireCapability("de.monticore:monticore-grammar-grammars") }
-  }
+    grammar("de.monticore:monticore-grammar:$mc_version") {
+        capabilities {
+            requireCapability("de.monticore:monticore-grammar-grammars")
+        }
+    }
     implementation "ch.qos.logback:logback-classic:1.1.7"
     implementation "commons-cli:commons-cli:1.4"
     implementation "org.apache.commons:commons-lang3:3.8.1"
@@ -190,7 +194,7 @@ publishing {
             artifactId = "$project.name"
             from components.java
             artifact sourcesJar
-            artifact javadocJar
+            // artifact javadocJar
             artifact shadowJar
             artifact grammarJar
         }
