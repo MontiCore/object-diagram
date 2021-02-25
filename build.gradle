@@ -191,7 +191,7 @@ publishing {
             from components.java
             artifact sourcesJar
             artifact javadocJar
-            // artifact shadowJar
+            artifact shadowJar
             artifact grammarJar
         }
     }
