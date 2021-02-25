@@ -159,25 +159,25 @@ task grammarJar(type: Jar) {
 }
 jar.dependsOn(grammarJar)
 
+shadowJar {
+    archiveFileName = 'ODCLI.jar'
+    archiveClassifier = "cli"
+    manifest {
+        attributes('Main-Class': 'de.monticore.od4data.OD4DataCLI')
+    }
+}
+
 task buildOD4DataCLI(type: Jar, dependsOn: shadowJar) {
+    archiveFileName = 'OD4DataCLI.jar'
     archiveClassifier = "od4data-cli"
-    archiveFileName = "OD4DataCLI.jar"
     manifest {
         attributes('Main-Class': 'de.monticore.od4data.OD4DataCLI')
     }
     from zipTree(shadowJar.archiveFile)
 }
 
-shadowJar {
-    archiveFileName = 'OD4DataCLI.jar'
-    archiveClassifier = "od4data-cli"
-    manifest {
-        attributes('Main-Class': 'de.monticore.od4data.OD4DataCLI')
-    }
-}
-
 task buildOD4ReportCLI(type: Jar, dependsOn: shadowJar) {
-    archiveFileName = "OD4ReportCLI.jar"
+    archiveFileName = 'OD4ReportCLI.jar'
     archiveClassifier = "od4report-cli"
     manifest {
         attributes('Main-Class': 'de.monticore.od4report.OD4ReportCLI')
@@ -185,7 +185,7 @@ task buildOD4ReportCLI(type: Jar, dependsOn: shadowJar) {
     from zipTree(shadowJar.archiveFile)
 }
 
-jar.dependsOn(shadowJar)
+jar.dependsOn(buildOD4DataCLI)
 jar.dependsOn(buildOD4ReportCLI)
 
 task testReport(type: TestReport) {
@@ -204,6 +204,8 @@ publishing {
             artifact sourcesJar
 //            artifact javadocJar
             artifact shadowJar
+            artifact buildOD4DataCLI
+            artifact buildOD4ReportCLI
             artifact grammarJar
         }
     }
