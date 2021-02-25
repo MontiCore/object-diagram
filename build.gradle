@@ -159,25 +159,33 @@ task grammarJar(type: Jar) {
 }
 jar.dependsOn(grammarJar)
 
-//task buildOD4DataCLI(type: Jar, dependsOn: shadowJar) {
-//    archiveClassifier = "od4data-cli"
-//    archiveFileName = 'OD4DataCLI.jar'
-//    manifest {
-//        attributes('Main-Class': 'de.monticore.od4data.OD4DataCLI')
-//    }
-//    from zipTree(shadowJar.archiveFile)
-//}
+task buildOD4DataCLI(type: Jar, dependsOn: shadowJar) {
+    archiveClassifier = "od4data-cli"
+    archiveFileName = "OD4DataCLI.jar"
+    manifest {
+        attributes('Main-Class': 'de.monticore.od4data.OD4DataCLI')
+    }
+    from zipTree(shadowJar.archiveFile)
+}
+
+shadowJar {
+    archiveFileName = 'OD4DataCLI.jar'
+    archiveClassifier = "od4data-cli"
+    manifest {
+        attributes('Main-Class': 'de.monticore.od4report.OD4DataCLI')
+    }
+}
 
 task buildOD4ReportCLI(type: Jar, dependsOn: shadowJar) {
+    archiveFileName = "OD4ReportCLI.jar"
     archiveClassifier = "od4report-cli"
-    archiveFileName = 'OD4ReportCLI.jar'
     manifest {
         attributes('Main-Class': 'de.monticore.od4report.OD4ReportCLI')
     }
     from zipTree(shadowJar.archiveFile)
 }
 
-//jar.dependsOn(buildOD4DataCLI)
+jar.dependsOn(shadowJar)
 jar.dependsOn(buildOD4ReportCLI)
 
 task testReport(type: TestReport) {
@@ -194,7 +202,7 @@ publishing {
             artifactId = "$project.name"
             from components.java
             artifact sourcesJar
-            // artifact javadocJar
+//            artifact javadocJar
             artifact shadowJar
             artifact grammarJar
         }
@@ -218,4 +226,3 @@ tasks.withType(JavaCompile) {
 
 // Fixes issue with java plugin in projects without resources
 compileTestJava.doFirst { mkdir sourceSets.main.output.resourcesDir }
-
