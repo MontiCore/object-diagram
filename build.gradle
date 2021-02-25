@@ -159,14 +159,14 @@ task grammarJar(type: Jar) {
 }
 jar.dependsOn(grammarJar)
 
-task buildOD4DataCLI(type: Jar, dependsOn: shadowJar) {
-    archiveClassifier = "od4data-cli"
-    archiveFileName = 'OD4DataCLI.jar'
-    manifest {
-        attributes('Main-Class': 'de.monticore.od4data.OD4DataCLI')
-    }
-    from zipTree(shadowJar.archiveFile)
-}
+//task buildOD4DataCLI(type: Jar, dependsOn: shadowJar) {
+//    archiveClassifier = "od4data-cli"
+//    archiveFileName = 'OD4DataCLI.jar'
+//    manifest {
+//        attributes('Main-Class': 'de.monticore.od4data.OD4DataCLI')
+//    }
+//    from zipTree(shadowJar.archiveFile)
+//}
 
 task buildOD4ReportCLI(type: Jar, dependsOn: shadowJar) {
     archiveClassifier = "od4report-cli"
