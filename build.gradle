@@ -172,7 +172,7 @@ shadowJar {
     archiveFileName = 'OD4DataCLI.jar'
     archiveClassifier = "od4data-cli"
     manifest {
-        attributes('Main-Class': 'de.monticore.od4report.OD4DataCLI')
+        attributes('Main-Class': 'de.monticore.od4data.OD4DataCLI')
     }
 }
 
