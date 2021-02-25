@@ -177,7 +177,7 @@ task buildOD4ReportCLI(type: Jar, dependsOn: shadowJar) {
     from zipTree(shadowJar.archiveFile)
 }
 
-jar.dependsOn(buildOD4DataCLI)
+//jar.dependsOn(buildOD4DataCLI)
 jar.dependsOn(buildOD4ReportCLI)
 
 task testReport(type: TestReport) {
