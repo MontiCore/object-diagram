@@ -2,11 +2,9 @@
 
 package de.monticore.od4report.prettyprinter;
 
-import de.monticore.dateliterals._ast.ASTDateLiteralsNode;
 import de.monticore.dateliterals.prettyprinter.DateLiteralsPrettyPrinter;
 import de.monticore.expressions.prettyprint.CommonExpressionsPrettyPrinter;
 import de.monticore.expressions.prettyprint.ExpressionsBasisPrettyPrinter;
-import de.monticore.literals.mccommonliterals._ast.ASTMCCommonLiteralsNode;
 import de.monticore.literals.prettyprint.MCCommonLiteralsPrettyPrinter;
 import de.monticore.od.prettyprinter.ODFullPrettyPrinter;
 import de.monticore.od4report.OD4ReportMill;
@@ -23,12 +21,8 @@ import de.monticore.odlink.prettyprinter.ODLinkPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.prettyprint.UMLModifierPrettyPrinter;
 import de.monticore.prettyprint.UMLStereotypePrettyPrinter;
-import de.monticore.types.mcbasictypes._ast.ASTMCBasicTypesNode;
-import de.monticore.types.mccollectiontypes._ast.ASTMCCollectionTypesNode;
 import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
 import de.monticore.types.prettyprint.MCCollectionTypesPrettyPrinter;
-import de.monticore.umlmodifier._ast.ASTUMLModifierNode;
-import de.monticore.umlstereotype._ast.ASTUMLStereotypeNode;
 
 public class OD4ReportFullPrettyPrinter extends ODFullPrettyPrinter {
 
@@ -79,42 +73,6 @@ public class OD4ReportFullPrettyPrinter extends ODFullPrettyPrinter {
   public String prettyprint(ASTODAttributeNode ASTODAttributeNode) {
     getPrinter().clearBuffer();
     ASTODAttributeNode.accept(traverser);
-    return getPrinter().getContent();
-  }
-
-  public String prettyprint(ASTDateLiteralsNode astDateLiteralsNode) {
-    getPrinter().clearBuffer();
-    astDateLiteralsNode.accept(traverser);
-    return getPrinter().getContent();
-  }
-
-  public String prettyprint(ASTMCBasicTypesNode astmcType) {
-    getPrinter().clearBuffer();
-    astmcType.accept(traverser);
-    return getPrinter().getContent();
-  }
-
-  public String prettyprint(ASTMCCollectionTypesNode astmcCollectionTypesNode) {
-    getPrinter().clearBuffer();
-    astmcCollectionTypesNode.accept(traverser);
-    return getPrinter().getContent();
-  }
-
-  public String prettyprint(ASTUMLStereotypeNode astumlStereotypeNode) {
-    getPrinter().clearBuffer();
-    astumlStereotypeNode.accept(traverser);
-    return getPrinter().getContent();
-  }
-
-  public String prettyprint(ASTUMLModifierNode astumlModifierNode) {
-    getPrinter().clearBuffer();
-    astumlModifierNode.accept(traverser);
-    return getPrinter().getContent();
-  }
-  
-  public String prettyprint(ASTMCCommonLiteralsNode astmcCommonLiteralsNode) {
-    getPrinter().clearBuffer();
-    astmcCommonLiteralsNode.accept(traverser);
     return getPrinter().getContent();
   }
 
