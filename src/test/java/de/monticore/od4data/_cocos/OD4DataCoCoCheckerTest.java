@@ -5,6 +5,7 @@ package de.monticore.od4data._cocos;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data._parser.OD4DataParser;
+import de.monticore.od4data._symboltable.IOD4DataGlobalScope;
 import de.monticore.od4data._symboltable.OD4DataScopesGenitorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._cocos.attributes.PartialAndCompleteAttributesCoCo;
@@ -12,6 +13,7 @@ import de.monticore.odbasis._cocos.names.UniqueObjectNamesCoCo;
 import de.monticore.odbasis._cocos.object.ValidObjectReferenceCoCo;
 import de.monticore.odlink._cocos.link.LinkEndConsistencyCoCo;
 import de.monticore.odlink._cocos.link.ValidLinkReferenceCoCo;
+import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.ODLogReset;
 import org.junit.After;
@@ -53,7 +55,22 @@ public class OD4DataCoCoCheckerTest {
 
     OD4DataMill.reset();
     OD4DataMill.init();
+    OD4DataMill.globalScope().clear();
+    IOD4DataGlobalScope gs = OD4DataMill.globalScope();
     OD4DataMill.globalScope().setModelPath(modelPath);
+
+    TypeSymbol objectType = OD4DataMill.typeSymbolBuilder().setName("ObjectType").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType1 = OD4DataMill.typeSymbolBuilder().setName("ObjectType1").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType2 = OD4DataMill.typeSymbolBuilder().setName("ObjectType2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType3 = OD4DataMill.typeSymbolBuilder().setName("ObjectType3").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType4 = OD4DataMill.typeSymbolBuilder().setName("ObjectType4").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType5 = OD4DataMill.typeSymbolBuilder().setName("ObjectType5").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    gs.add(objectType);
+    gs.add(objectType1);
+    gs.add(objectType2);
+    gs.add(objectType3);
+    gs.add(objectType4);
+    gs.add(objectType5);
   }
 
   @Before

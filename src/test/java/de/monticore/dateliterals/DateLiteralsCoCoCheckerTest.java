@@ -7,8 +7,11 @@ import de.monticore.io.paths.ModelPath;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._cocos.OD4ReportCoCoChecker;
 import de.monticore.od4report._parser.OD4ReportParser;
+import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
 import de.monticore.od4report._symboltable.OD4ReportScopesGenitorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
+import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.ODLogReset;
 import org.junit.After;
@@ -44,6 +47,18 @@ public class DateLiteralsCoCoCheckerTest {
   public void setup() {
     Log.init();
     Log.enableFailQuick(false);
+    OD4ReportMill.reset();
+    OD4ReportMill.init();
+    OD4ReportMill.globalScope().clear();
+    IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
+
+    //WrongDate
+    TypeSymbol wrongDate = OD4ReportMill.typeSymbolBuilder().setName("WrongDate").setEnclosingScope(gs).setSpannedScope(OD4ReportMill.scope()).build();
+    gs.add(wrongDate);
+
+    //Wrong
+    TypeSymbol wrong = OD4ReportMill.typeSymbolBuilder().setName("Wrong").setEnclosingScope(gs).setSpannedScope(OD4ReportMill.scope()).build();
+    gs.add(wrong);
 
     ODLogReset.resetFindings();
 

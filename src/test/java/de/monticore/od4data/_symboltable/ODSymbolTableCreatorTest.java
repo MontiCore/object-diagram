@@ -6,6 +6,7 @@ import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data.OD4DataTool;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol;
+import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.se_rwth.commons.logging.Log;
 import org.junit.Before;
@@ -26,6 +27,29 @@ public class ODSymbolTableCreatorTest {
 
     OD4DataMill.reset();
     OD4DataMill.init();
+    OD4DataMill.globalScope().clear();
+    IOD4DataGlobalScope gs = OD4DataMill.globalScope();
+
+    TypeSymbol auction = OD4DataMill.typeSymbolBuilder().setName("Auction").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol person = OD4DataMill.typeSymbolBuilder().setName("Person").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol string = OD4DataMill.typeSymbolBuilder().setName("String").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol biddingPolicy = OD4DataMill.typeSymbolBuilder().setName("BiddingPolicy").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol timingPolicy = OD4DataMill.typeSymbolBuilder().setName("TimingPolicy").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType = OD4DataMill.typeSymbolBuilder().setName("ObjectType").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol t1 = OD4DataMill.typeSymbolBuilder().setName("T1").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol t2 = OD4DataMill.typeSymbolBuilder().setName("T2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol t3 = OD4DataMill.typeSymbolBuilder().setName("T3").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol typeOfObject = OD4DataMill.typeSymbolBuilder().setName("TypeOfObject").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    gs.add(auction);
+    gs.add(person);
+    gs.add(string);
+    gs.add(biddingPolicy);
+    gs.add(timingPolicy);
+    gs.add(objectType);
+    gs.add(t1);
+    gs.add(t2);
+    gs.add(t3);
+    gs.add(typeOfObject);
   }
 
   @Test

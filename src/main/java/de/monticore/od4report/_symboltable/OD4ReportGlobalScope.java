@@ -5,6 +5,7 @@
 package de.monticore.od4report._symboltable;
 
 import de.monticore.io.paths.ModelPath;
+import de.monticore.odbasis.utils.FullQualifiedNameCalculator;
 import de.monticore.utils.Names;
 
 import java.util.Set;
@@ -41,4 +42,8 @@ public class OD4ReportGlobalScope extends OD4ReportGlobalScopeTOP {
     return result;
   }
 
+  @Override
+  public Set<String> calculateModelNamesForType(String name) {
+    return calculateModelNamesForOOType(name);
+  }
 }
