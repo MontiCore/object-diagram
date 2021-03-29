@@ -2,10 +2,13 @@
 
 package de.monticore.od4report;
 
+import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4report._parser.OD4ReportParser;
+import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
 import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Before;
@@ -36,6 +39,29 @@ public class OD4ReportExamplesTest {
   public void setUp() {
     OD4ReportMill.reset();
     OD4ReportMill.init();
+    OD4ReportMill.globalScope().clear();
+    IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
+
+    TypeSymbol rule = OD4ReportMill.typeSymbolBuilder().setName("Rule").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol actionA = OD4ReportMill.typeSymbolBuilder().setName("ActionA").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol actionB = OD4ReportMill.typeSymbolBuilder().setName("ActionB").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType = OD4ReportMill.typeSymbolBuilder().setName("ObjectType").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType2 = OD4ReportMill.typeSymbolBuilder().setName("ObjectType2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol gitLab = OD4ReportMill.typeSymbolBuilder().setName("GitLab").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol test = OD4ReportMill.typeSymbolBuilder().setName("Test").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol person = OD4ReportMill.typeSymbolBuilder().setName("Person").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol bmw = OD4ReportMill.typeSymbolBuilder().setName("BMW").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol jaguar = OD4ReportMill.typeSymbolBuilder().setName("Jaguar").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    gs.add(rule);
+    gs.add(actionA);
+    gs.add(actionB);
+    gs.add(objectType);
+    gs.add(objectType2);
+    gs.add(gitLab);
+    gs.add(test);
+    gs.add(person);
+    gs.add(bmw);
+    gs.add(jaguar);
   }
 
   @Test
