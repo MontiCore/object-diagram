@@ -85,7 +85,7 @@ To build the project, it is required to install a Java 8 JDK and git.
 
 #### Step 2: Build Project with gradle
 
-    gradlew build --refresh-dependencies
+    gradle build --refresh-dependencies
 
 Afterwards, the jars of the CLIs are available in `od/target/libs`.
 
