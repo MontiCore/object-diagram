@@ -11,11 +11,6 @@ public class OD4ReportScopesGenitorDelegator extends OD4ReportScopesGenitorDeleg
     super();
   }
 
-  public OD4ReportScopesGenitorDelegator(
-      de.monticore.od4report._symboltable.IOD4ReportGlobalScope globalScope) {
-    super(globalScope);
-  }
-
   public IDerive getTypechecker() {
     return typechecker;
   }

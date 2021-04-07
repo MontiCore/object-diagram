@@ -13,24 +13,21 @@ import java.util.Deque;
 
 public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
 
-  private ODBasisScopesGenitor odBasisScopesGenitor = new ODBasisScopesGenitor(scopeStack);
+  private ODBasisScopesGenitor odBasisScopesGenitor = new ODBasisScopesGenitor();
 
   public OD4ReportScopesGenitor() {
     super();
-  }
-
-  public OD4ReportScopesGenitor(IOD4ReportScope enclosingScope) {
-    super(enclosingScope);
-  }
-
-  public OD4ReportScopesGenitor(Deque<? extends IOD4ReportScope> scopeStack) {
-    super(scopeStack);
+    this.odBasisScopesGenitor.setScopeStack(scopeStack);
   }
 
   @Override
   public void visit(ASTODReportObject astodReportObject) {
     VariableSymbol symbol = create_ODReportObject(astodReportObject).build();
-    addToScope(symbol);
+    if (getCurrentScope().isPresent()) {
+      getCurrentScope().get().add(symbol);
+    } else {
+      Log.warn("0xA50212 Symbol cannot be added to current scope, since no scope exists.");
+    }
     symbol.setAstNode(astodReportObject);
     astodReportObject.setSymbol(symbol);
     astodReportObject.setEnclosingScope(symbol.getEnclosingScope());

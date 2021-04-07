@@ -25,14 +25,6 @@ public class ODBasisScopesGenitor extends ODBasisScopesGenitorTOP {
     super();
   }
 
-  public ODBasisScopesGenitor(IODBasisScope enclosingScope) {
-    super(enclosingScope);
-  }
-
-  public ODBasisScopesGenitor(Deque<? extends IODBasisScope> scopeStack) {
-    super(scopeStack);
-  }
-
   @Override
   public void visit(ASTODArtifact astodArtifact) {
     this.rootNode = astodArtifact;

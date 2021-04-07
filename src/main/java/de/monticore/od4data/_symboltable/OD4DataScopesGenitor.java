@@ -13,10 +13,6 @@ public class OD4DataScopesGenitor extends OD4DataScopesGenitorTOP {
     super();
   }
 
-  public OD4DataScopesGenitor(Deque<? extends IOD4DataScope> scopeStack){
-    super(scopeStack);
-  }
-
   @Override
   public IOD4DataArtifactScope createFromAST(ASTODArtifact rootNode) {
     Log.errorIfNull(rootNode, "0xA7004x20649 Error by creating of the OD4DataScopesGenitor symbol table: top ast node is null");
