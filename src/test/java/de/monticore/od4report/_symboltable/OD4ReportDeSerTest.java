@@ -2,10 +2,12 @@
 
 package de.monticore.od4report._symboltable;
 
+import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report.OD4ReportTool;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.monticore.utils.Names;
 import de.se_rwth.commons.logging.Log;
 import org.junit.Before;
@@ -33,6 +35,16 @@ public class OD4ReportDeSerTest {
 
     OD4ReportMill.reset();
     OD4ReportMill.init();
+    OD4ReportMill.globalScope().clear();
+    IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
+
+    //TODO remove after ImportStatements fix
+    TypeSymbol person = OD4ReportMill.typeSymbolBuilder().setName("Person").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol bmw = OD4ReportMill.typeSymbolBuilder().setName("BMW").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol jaguar = OD4ReportMill.typeSymbolBuilder().setName("Jaguar").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    gs.add(person);
+    gs.add(bmw);
+    gs.add(jaguar);
   }
 
   @Test

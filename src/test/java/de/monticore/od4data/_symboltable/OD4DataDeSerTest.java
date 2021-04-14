@@ -6,6 +6,7 @@ import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data.OD4DataTool;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.monticore.utils.Names;
 import de.se_rwth.commons.logging.Log;
 import org.junit.Before;
@@ -33,11 +34,23 @@ public class OD4DataDeSerTest {
 
     OD4DataMill.reset();
     OD4DataMill.init();
+    OD4DataMill.globalScope().clear();
+    IOD4DataGlobalScope gs = OD4DataMill.globalScope();
+
+    TypeSymbol objectType = OD4DataMill.typeSymbolBuilder().setName("ObjectType").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType2 = OD4DataMill.typeSymbolBuilder().setName("ObjectType2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol t1 = OD4DataMill.typeSymbolBuilder().setName("T1").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol t2 = OD4DataMill.typeSymbolBuilder().setName("T2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol t3 = OD4DataMill.typeSymbolBuilder().setName("T3").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    gs.add(objectType);
+    gs.add(objectType2);
+    gs.add(t1);
+    gs.add(t2);
+    gs.add(t3);
   }
 
   @Test
   public void testOD4DataDeSer() throws IOException {
-    OD4DataMill.init();
     OD4DataParser od4DataParser = new OD4DataParser();
     Optional<ASTODArtifact> astodArtifact = od4DataParser.parse(SIMPLEOD2.toString());
     assertTrue(astodArtifact.isPresent());

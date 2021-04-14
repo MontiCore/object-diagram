@@ -3,6 +3,7 @@
 package de.monticore.od4report.util;
 
 import de.monticore.od4report.OD4ReportMill;
+import de.monticore.od4report._ast.ASTODReportObject;
 import de.monticore.od4report._visitor.OD4ReportTraverser;
 import de.monticore.odbasis._ast.ASTODAnonymousObject;
 import de.monticore.odbasis._ast.ASTODNamedObject;
@@ -31,6 +32,13 @@ public class OD4ReportCollector {
 
   public OD4ReportCollector() {
     init();
+  }
+
+  public List<ASTODReportObject> getReportObjects(ASTObjectDiagram objectDiagram) {
+    objectDiagram.accept(traverser);
+    List<ASTODReportObject> result = od4ReportObjectCollector.getNamedObjects();
+    reset();
+    return result;
   }
 
   public List<ASTODNamedObject> getNamedObjects(ASTObjectDiagram objectDiagram) {

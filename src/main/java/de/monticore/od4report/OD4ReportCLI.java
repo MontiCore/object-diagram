@@ -6,7 +6,9 @@ import de.monticore.io.paths.ModelPath;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportDeSer;
+import de.monticore.od4report._symboltable.OD4ReportSymbolTableCompleter;
 import de.monticore.od4report._symboltable.OD4ReportSymbols2Json;
+import de.monticore.od4report._visitor.OD4ReportTraverser;
 import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
@@ -93,13 +95,22 @@ public class OD4ReportCLI {
         cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
       }
 
+      if (cmd.hasOption("c")) {
+        if (cocoOptionValue.contains("intra")) {
+          OD4ReportTool.runAllIntraCoCos(astodArtifact);
+        }
+        else {
+          OD4ReportTool.runAllCoCos(astodArtifact);
+        }
+      }
+
       // -option pretty print
       if (cmd.hasOption("pp")) {
         String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
         prettyPrint(astodArtifact, path);
       }
 
-      // -otion pretty print symboltable
+      // -option pretty print symboltable
       if (cmd.hasOption("s")) {
         String path = cmd.getOptionValue("s", StringUtils.EMPTY);
         prettyPrintST(oD4ReportArtifactScope, path);

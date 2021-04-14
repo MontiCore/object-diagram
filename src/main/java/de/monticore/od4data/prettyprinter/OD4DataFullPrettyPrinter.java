@@ -5,6 +5,7 @@ package de.monticore.od4data.prettyprinter;
 import de.monticore.expressions.prettyprint.CommonExpressionsPrettyPrinter;
 import de.monticore.expressions.prettyprint.ExpressionsBasisPrettyPrinter;
 import de.monticore.literals.prettyprint.MCCommonLiteralsPrettyPrinter;
+import de.monticore.od.prettyprinter.ODFullPrettyPrinter;
 import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data._ast.ASTOD4DataNode;
 import de.monticore.od4data._visitor.OD4DataTraverser;
@@ -12,6 +13,7 @@ import de.monticore.odattribute._ast.ASTODAttributeNode;
 import de.monticore.odattribute.prettyprinter.ODAttributePrettyPrinter;
 import de.monticore.odbasis._ast.ASTODBasisNode;
 import de.monticore.odbasis.prettyprinter.ODBasisPrettyPrinter;
+import de.monticore.odlink._ast.ASTODLink;
 import de.monticore.odlink._ast.ASTODLinkNode;
 import de.monticore.odlink.prettyprinter.ODLinkPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
@@ -19,19 +21,17 @@ import de.monticore.prettyprint.UMLModifierPrettyPrinter;
 import de.monticore.prettyprint.UMLStereotypePrettyPrinter;
 import de.monticore.types.prettyprint.MCBasicTypesPrettyPrinter;
 
-public class OD4DataFullPrettyPrinter {
+public class OD4DataFullPrettyPrinter extends ODFullPrettyPrinter {
 
   protected OD4DataTraverser traverser = OD4DataMill.traverser();
 
-  protected IndentPrinter printer;
-
   public OD4DataFullPrettyPrinter() {
-    this.printer = new IndentPrinter();
+    super();
     init();
   }
 
-  public OD4DataFullPrettyPrinter(IndentPrinter indentPrinter) {
-    this.printer = indentPrinter;
+  public OD4DataFullPrettyPrinter(IndentPrinter printer) {
+    super(printer);
     init();
   }
 
@@ -53,6 +53,13 @@ public class OD4DataFullPrettyPrinter {
     return getPrinter().getContent();
   }
 
+  // has to be done due to ambiguity issues
+  public String prettyprint(ASTODLink astodLink) {
+    getPrinter().clearBuffer();
+    astodLink.accept(traverser);
+    return getPrinter().getContent();
+  }
+
   public String prettyprint(ASTODAttributeNode ASTODAttributeNode) {
     getPrinter().clearBuffer();
     ASTODAttributeNode.accept(traverser);
@@ -63,11 +70,9 @@ public class OD4DataFullPrettyPrinter {
     return this.printer;
   }
 
-  private void init() {
-
+  protected void init() {
     // ods
     traverser.setODBasisHandler(new ODBasisPrettyPrinter(printer));
-
     traverser.setODLinkHandler(new ODLinkPrettyPrinter(printer));
     traverser.setODAttributeHandler(new ODAttributePrettyPrinter(printer));
 

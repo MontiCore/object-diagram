@@ -8,9 +8,17 @@ import de.monticore.odlink._cocos.ODLinkCoCos;
 
 public class OD4DataCoCos {
 
-  public OD4ReportCoCoChecker getCheckerForAllCoCos() {
+  public OD4ReportCoCoChecker getCheckerForAllIntraCoCos() {
     final OD4ReportCoCoChecker checker = new OD4ReportCoCoChecker();
     checker.addChecker(new ODBasicsCoCos().getCheckerForAllCoCos());
+    checker.addChecker(new ODLinkCoCos().getCheckerForAllCoCos());
+
+    return checker;
+  }
+
+  public OD4ReportCoCoChecker getCheckerForAllCoCos() {
+    final OD4ReportCoCoChecker checker = new OD4ReportCoCoChecker();
+    checker.addChecker(new ODBasicsCoCos().getCheckerForAllIntraCoCos());
     checker.addChecker(new ODLinkCoCos().getCheckerForAllCoCos());
 
     return checker;

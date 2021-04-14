@@ -49,8 +49,12 @@ public class OD4DataTool {
     return od4DataScopesGenitorDelegator.createFromAST(ast);
   }
 
-  public static void runDefaultCoCos(ASTODArtifact ast) {
+  public static void runAllCoCos(ASTODArtifact ast) {
     new OD4DataCoCos().getCheckerForAllCoCos().checkAll(ast);
+  }
+
+  public static void runAllIntraCoCos(ASTODArtifact ast) {
+    new OD4DataCoCos().getCheckerForAllIntraCoCos().checkAll(ast);
   }
 
 }

@@ -2,7 +2,7 @@
 
 This documentation is intended for  **modelers** who use the object diagram (OD) languages. A
 detailed documentation for **language engineers** using or extending the OD language is
-located **[here](src/main/grammars/de/monticore/lang/OD4Report.md)**. We recommend that **language
+located **[here](src/main/grammars/de/monticore/OD4Report.md)**. We recommend that **language
 engineers** read this documentation before reading the detailed documentation.
 
 # An Example Model
@@ -61,57 +61,42 @@ The following subsection describes how to download the CLI tool. Then, this docu
 to build the CLI tool from the source files. Afterwards, this document contains a tutorial for using
 the CLI tool.
 
-## Downloading the Latest Version of the CLI Tool
+## CLI Set Up
 
-A ready to use version of the CLI tool can be downloaded in the form of an executable JAR file. You
-can use [**this download link**](http://monticore.de/download/OD4ReportCLI.jar) // TODO for
-downloading the CLI tool.
+This section explains how to set up the command line interface tools for the OD languages. Each tool
+is contained in a separate jar file, which is produced as result of building the project with
+gradle. The following explains this.
 
-Alternatively, you can download the CLI tool using `wget`. The following command downloads the
-latest version of the CLI tool and saves it under the name `OD4ReportCLI`
-in your working directory:
-// TODO
+### Tool Download
 
-```
-wget "http://monticore.de/download/OD4ReportCLI.jar" -O OD4ReportCLI.jar
-``` 
+* [**Download OD Language OD4Data**][od4data-link]
+* [**Download OD Language OD4Report**][od4report-link]
 
-## Building the CLI Tool from the Sources
+Alternatively, the tools can be built from source code.
 
-It is possible to build an executable JAR of the CLI tool from the source files located in GitHub.
-The following describes the process for building the CLI tool from the source files using Bash. For
-building an executable Jar of the CLI with Bash from the source files available in GitHub, execute
-the following commands.
+### Prerequisites
 
-First, clone the repository:
+To build the project, it is required to install a Java 8 JDK and git.
 
-```
-git clone https://github.com/MontiCore/object-diagram.git
-```
+#### Step 1: Clone Project with git
 
-Change the directory to the root directory of the cloned sources:
+    git clone <link to this Git repository>
+    cd od
 
-```
-cd object-diagram
-```
+#### Step 2: Build Project with gradle
 
-Afterwards, build the source files with gradle (if `./gradlew.bat` is not recognized as a command in
-your shell, then use `./gradlew`):
+    gradle build --refresh-dependencies
 
-```
-./gradlew.bat build
-```
-
-Congratulations! You can now find the executable JAR file `OD4ReportCLI.jar` in the
-directory `target/libs` (accessible via `cd target/libs`).
+Afterwards, the jars of the CLIs are available in `od/target/libs`.
 
 ## Tutorial: Getting Started Using the OD CLI Tool
 
 The previous sections describe how to obtain an executable JAR file
 (OD CLI tool). This section provides a tutorial for using the OD CLI tool. The following examples
-assume that you locally named the CLI tool `OD4ReportCLI`.
+assume that you locally named the CLI tool `OD4ReportCLI`. Note that after setting up the CLI in the
+previous step, you will also find a `OD4DataCLI`. The following instruction also hold for this CLI.
 
-### First Steps
+### Step 1: Laying the basis
 
 Executing the Jar file without any options prints usage information of the CLI tool to the console:
 
@@ -119,11 +104,9 @@ Executing the Jar file without any options prints usage information of the CLI t
 java -jar OD4ReportCLI.jar
 usage: OD4ReportCLI
  -c,--coco <arg>            Checks the CoCos for the input ODs. Possible
-                            arguments are 'intra',  'inter', and 'type'. When
+                            arguments are 'intra' and 'all'. When
                             given the argument 'intra', only the intra-model
-                            CoCos are checked. When given the argument 'inter',
-                            only the intra- and inter-model CoCos are checked.
-                            When given the argument 'type', all CoCos are
+                            CoCos are checked while when using 'all' all CoCos are
                             checked. When no argument is specified, all CoCos
                             are checked by default.
  -h,--help                  Prints this help dialog.
@@ -151,6 +134,15 @@ a text file containing the following simple OD:
 
 ```
 objectdiagram Example {
+    bob:Person {
+      age = 42;
+    };
+    
+    alice:Person {
+      age =40;
+    };
+    
+    link married bob <-> alice;
 }
 ```
 
@@ -182,6 +174,15 @@ The command prints the pretty-printed model contained in the input file to the c
 
 ```
 objectdiagram Example {
+    bob:Person {
+      age = 42;
+    };
+    
+    alice:Person {
+      age =40;
+    };
+    
+    link married bob <-> alice;
 }
 ```
 
@@ -197,7 +198,6 @@ java -jar OD4ReportCLI.jar -i Example.od -pp PPExample.od
 ```
 
 The command prints the pretty-printed model contained in the input file into the file `PPExample.od`
-.
 
 ### Step 3: Checking Context Conditions
 
@@ -206,56 +206,53 @@ any arguments checks whether the model satisfies all context conditions.
 
 If you are only interested in checking whether a model only satisfies a subset of the context
 conditions or want to explicate that all context conditions should be checked, you can do this by
-additionally providing one of the three arguments `intra`, `inter`, and `type`.
+additionally providing one of the three arguments `intra` and `all`.
 
 * Using the argument `intra` only executes context conditions concerning violations of intra-model
   context conditions. These context conditions, for example, check naming conventions.
-* Using the argument `inter` executes all intra-model context conditions and additionally checks
-  whether imported `Variables`, i.e., objects, are defined.
-* Using the argument `type` executes all context coniditions. These context conditions include
-  checking whether used types and methods exist. The behavior when using the argument `type` is the
-  equal to the default behavior when using no arguments.
+* Using the argument `all` executes all context coniditions. These context conditions include
+  checking whether used types exist. The behavior when using the argument `all` is also the default
+  behavior when using no arguments.
 
 Execute the following command for trying out a simple example:
 
 ```
-java -jar OD4ReportCLI.jar -i Example.od -c
+java -jar OD4ReportCLI.jar -i Example.od -c intra
 ```
 
 You may notice that the CLI prints nothing to the console when executing this command. This means
 that the model satisfies all context condtions.
 
-Let us now consider a more complex example. Recall the OD `MyFamily` from the `An Example Model`
-section above. For continuing, copy the textual representation of the OD `MyFamily` and save it in a
-file `MyFamily.od` in the directory where the file `OD4ReportCLI.jar` is located.
-
-You can check the different kinds of context conditions, using the `-c,--coco <arg>` option:
+Let us now consider a more complex scenario. You can check the different kinds of context
+conditions, using the `-c,--coco <arg>` option:
 
 ```
 java -jar OD4ReportCLI.jar -i MyFamily.od -c intra
 ```
 
 ```
-java -jar OD4ReportCLI.jar -i MyFamily.od -c inter
+java -jar OD4ReportCLI.jar -i MyFamily.od -c all
 ```
 
 ```
-java -jar OD4ReportCLI.jar -i MyFamily.od -c type
+java -jar OD4ReportCLI.jar -i MyFamily.od -c
 ```
 
-// TODO: Describe Error
+While the first call of the CLI does not produce any errors, the others do. The error states
+something about types, in this case `Person` not being defined while being used. So how do we solve
+this problem?
 
-The symbol file of this model has to be imported by the OD model for accessing the type. For the OD
-language, we have not fixed a language for defining types. Instead, the types can be defined in
-arbitrary models of arbitrary languages, as long as the information about the definitions of the
-types are stored in the symbol files of the models and the OD imports these symbol files. This may
-sound complicated at this point, but conceptually it is actually quite simple. This has even a huge
-advantage because it allows us to use the OD language with any other language that defines types.
-You could even use languages that are not defined with MontiCore, as long as suitable symbol files
-are generated from the models of these languages.
+The answer is that the symbol file of this model has to be imported by the OD model for accessing
+the type. For the OD language, we have not fixed a language for defining types. Instead, the types
+can be defined in arbitrary models of arbitrary languages, as long as the information about the
+definitions of the types are stored in the symbol files of the models and the OD imports these
+symbol files. This may sound complicated at this point, but conceptually it is actually quite
+simple. This has even a huge advantage because it allows us to use the OD language with any other
+language that defines types. You could even use languages that are not defined with MontiCore, as
+long as suitable symbol files are generated from the models of these languages.
 
-The following subsection describes how to fix the error in the example model `MyFamily.od`
-by importing a symbol file defining the (yet undefined) types.
+The following subsection describes how to fix the error in the example model `Example.od`
+by importing a symbol file defining the (yet undefined) types. .
 
 ### Step 4: Using the Model Path to Resolve Symbols
 
@@ -280,14 +277,14 @@ stored in directories contained in the model path. So, if we want the tool to fi
 we have to provide the model path to the tool via the `-path <arg>` option:
 
 ```
-java -jar OD4ReportCLI.jar -i MyFamily.od -c type -path <MODELPATH>
+java -jar OD4ReportCLI.jar -i Example.od -c -path <MODELPATH>
 ```
 
 where `<MODELPATH>` is the path where you stored the downloaded symbol file. In our example, in case
 you stored the model in the directory `cd`, execute the following command:
 
 ```
-java -jar OD4ReportCLI.jar -i MyFamily.od -c type -path cd
+java -jar OD4ReportCLI.jar -i Example.od -c -path cd
 ```
 
 Well, executing the above command still produces the same error message. This is because the symbol
@@ -295,9 +292,9 @@ file needs to be imported first, just like in Java. Therefore, we add the follow
 to the beginning of the contents contained in the file `MyFamily.od` containing the OD `MyFamily`:
 
 ```
-import Types.*;
+import cd.MyFamily.*;
 
-objectdiagram MyFamily {
+objectdiagram Example {
   ...
 }
 ```
@@ -315,9 +312,9 @@ the model successfully without any context condition violations. Great!
 ### Step 5: Storing Symbols
 
 The previous section describes how to load symbols from an existing symbol file. Now, we will use
-the CLI tool to store a symbol file for our `MyFamily.od` model. The stored symbol file will contain
+the CLI tool to store a symbol file for our `Example.od` model. The stored symbol file will contain
 information about the objects defined in the OD. It can be imported by other models for using the
-symbols introduced by these object definitions, similar to how we changed the file `MyFamily.od` for
+symbols introduced by these object definitions, similar to how we changed the file `Example.od` for
 importing the symbols contained in the symbol file `MyFamily.cdsym`.
 
 Using the `-s,-symboltable <arg>` option builds the symbol tables of the input models and stores
@@ -332,26 +329,26 @@ working directory, i.e., the directory in which you execute the command for stor
 files. Furthermore, please notice that in order to store the symbols properly, the model has to be
 well-formed in all regards, and therefore all context conditions are checked beforehand.
 
-For storing the symbol file of `MyObject.od`, execute the following command
+For storing the symbol file of `Example.od`, execute the following command
 (the implicit context condition checks require using the model path option):
 
 ```
-java -jar OD4ReportCLI.jar -i MyFamily.od -path cd -s
+java -jar OD4ReportCLI.jar -i Example.od -path cd -s
 ```
 
 The CLI tool produces the file `target/symbols/MyFamily.odsym`, which can now be imported by other
 models, e.g., by models that need to use some of the objects defined in the OD `MyFamily`.
 
-For storing the symbol file of `MyFamily.od` in the file `syms/MyFamily.odsym`, for example, execute
+For storing the symbol file of `Example.od` in the file `syms/Example.odsym`, for example, execute
 the following command
 (again, the implicit context condition checks require using the model path option):
 
 ```
-java -jar OD4ReportCLI.jar -i MyFamily.od -path cd -s syms/MyFamily.odsym
+java -jar OD4ReportCLI.jar -i Example.od -path cd -s syms/Example.odsym
 ```
 
 Congratulations, you have just finished the tutorial about saving OD symbol files and are pretty
-much down reading this README!
+much done reading this README!
 
 ## Further Information
 
@@ -363,3 +360,7 @@ much down reading this README!
 * [Best Practices](https://github.com/MontiCore/monticore/blob/dev/docs/BestPractices.md)
 * [Publications about MBSE and MontiCore](https://www.se-rwth.de/publications/)
 * [Licence definition](https://github.com/MontiCore/monticore/blob/master/00.org/Licenses/LICENSE-MONTICORE-3-LEVEL.md)
+
+[od4report-link]: http://www.monticore.de/download/OD4ReportCLI.jar
+
+[od4data-link]: http://www.monticore.de/download/OD4DataCLI.jar

@@ -1,855 +1,311 @@
 {
-	"name": "MyFamily",
-	"package": "examples.cd",
-	"kindHierarchy": [
-		[
-			"de.monticore.cd4code._symboltable.CDRoleSymbol",
-			"de.monticore.symbols.oosymbols._symboltable.FieldSymbol"
-		],
-		[
-			"de.monticore.cd4code._symboltable.CDTypeSymbol",
-			"de.monticore.symbols.oosymbols._symboltable.OOTypeSymbol"
-		],
-		[
-			"de.monticore.cd4code._symboltable.FieldSymbol",
-			"de.monticore.symbols.basicsymbols._symboltable.VariableSymbol"
-		],
-		[
-			"de.monticore.cd4code._symboltable.CDMethodSignatureSymbol",
-			"de.monticore.symbols.oosymbols._symboltable.MethodSymbol"
-		],
-		[
-			"de.monticore.cd4code._symboltable.OOTypeSymbol",
-			"de.monticore.symbols.basicsymbols._symboltable.TypeSymbol"
-		],
-		[
-			"de.monticore.cd4code._symboltable.MethodSymbol",
-			"de.monticore.symbols.basicsymbols._symboltable.FunctionSymbol"
-		],
-		[
-			"de.monticore.cd4code._symboltable.TypeVarSymbol",
-			"de.monticore.symbols.basicsymbols._symboltable.TypeSymbol"
-		]
-	],
-	"symbols": [
-		{
-			"kind": "de.monticore.cdbasis._symboltable.CDPackageSymbol",
-			"name": "examples.cd",
-			"spannedScope": {
-				"isShadowingScope": false,
-				"symbols": [
-					{
-						"kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
-						"name": "Person",
-						"isClass": true,
-						"isInterface": false,
-						"isEnum": false,
-						"isAbstract": false,
-						"isPrivate": false,
-						"isProtected": false,
-						"isPublic": false,
-						"isStatic": false,
-						"isFinal": false,
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "age",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "age",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
-									},
-									"isReadOnly": false
-								}
-							]
-						}
-					},
-					{
-						"kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
-						"name": "Car",
-						"isClass": true,
-						"isInterface": false,
-						"isEnum": false,
-						"isAbstract": false,
-						"isPrivate": false,
-						"isProtected": false,
-						"isPublic": false,
-						"isStatic": false,
-						"isFinal": false,
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "bought",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Date"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "color",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "bought",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Date"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "color",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": false
-								}
-							]
-						}
-					},
-					{
-						"kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
-						"name": "BMW",
-						"superTypes": [
-							{
-								"kind": "de.monticore.types.check.SymTypeOfObject",
-								"objName": "examples.cd.Car"
-							}
-						],
-						"isClass": true,
-						"isInterface": false,
-						"isEnum": false,
-						"isAbstract": false,
-						"isPrivate": false,
-						"isProtected": false,
-						"isPublic": false,
-						"isStatic": false,
-						"isFinal": false
-					},
-					{
-						"kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
-						"name": "Jaguar",
-						"superTypes": [
-							{
-								"kind": "de.monticore.types.check.SymTypeOfObject",
-								"objName": "examples.cd.Car"
-							}
-						],
-						"isClass": true,
-						"isInterface": false,
-						"isEnum": false,
-						"isAbstract": false,
-						"isPrivate": false,
-						"isProtected": false,
-						"isPublic": false,
-						"isStatic": false,
-						"isFinal": false,
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "length",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "length",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
-									},
-									"isReadOnly": false
-								}
-							]
-						}
-					},
-					{
-						"kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
-						"name": "Color",
-						"isClass": false,
-						"isInterface": false,
-						"isEnum": true,
-						"isAbstract": false,
-						"isPrivate": false,
-						"isProtected": false,
-						"isPublic": false,
-						"isStatic": false,
-						"isFinal": false,
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "BLUE",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "RED",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "WHITE",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "BLACK",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "BLUE",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "RED",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "WHITE",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "BLACK",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								}
-							]
-						}
-					},
-					{
-						"kind": "de.monticore.cdassociation._symboltable.CDAssociationSymbol",
-						"name": "married"
-					},
-					{
-						"kind": "de.monticore.cdassociation._symboltable.CDAssociationSymbol",
-						"name": "cars"
-					},
-					{
-						"kind": "de.monticore.symbols.oosymbols._symboltable.OOTypeSymbol",
-						"name": "Person",
-						"isClass": true,
-						"isInterface": false,
-						"isEnum": false,
-						"isAbstract": false,
-						"isPrivate": false,
-						"isProtected": false,
-						"isPublic": false,
-						"isStatic": false,
-						"isFinal": false,
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "age",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "age",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
-									},
-									"isReadOnly": false
-								}
-							]
-						}
-					},
-					{
-						"kind": "de.monticore.symbols.oosymbols._symboltable.OOTypeSymbol",
-						"name": "Car",
-						"isClass": true,
-						"isInterface": false,
-						"isEnum": false,
-						"isAbstract": false,
-						"isPrivate": false,
-						"isProtected": false,
-						"isPublic": false,
-						"isStatic": false,
-						"isFinal": false,
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "bought",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Date"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "color",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "bought",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Date"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "color",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": false
-								}
-							]
-						}
-					},
-					{
-						"kind": "de.monticore.symbols.oosymbols._symboltable.OOTypeSymbol",
-						"name": "BMW",
-						"isClass": true,
-						"isInterface": false,
-						"isEnum": false,
-						"isAbstract": false,
-						"isPrivate": false,
-						"isProtected": false,
-						"isPublic": false,
-						"isStatic": false,
-						"isFinal": false,
-						"superTypes": [
-							{
-								"kind": "de.monticore.types.check.SymTypeOfObject",
-								"objName": "examples.cd.Car"
-							}
-						]
-					},
-					{
-						"kind": "de.monticore.symbols.oosymbols._symboltable.OOTypeSymbol",
-						"name": "Jaguar",
-						"isClass": true,
-						"isInterface": false,
-						"isEnum": false,
-						"isAbstract": false,
-						"isPrivate": false,
-						"isProtected": false,
-						"isPublic": false,
-						"isStatic": false,
-						"isFinal": false,
-						"superTypes": [
-							{
-								"kind": "de.monticore.types.check.SymTypeOfObject",
-								"objName": "examples.cd.Car"
-							}
-						],
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "length",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "length",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
-									},
-									"isReadOnly": false
-								}
-							]
-						}
-					},
-					{
-						"kind": "de.monticore.symbols.oosymbols._symboltable.OOTypeSymbol",
-						"name": "Color",
-						"isClass": false,
-						"isInterface": false,
-						"isEnum": true,
-						"isAbstract": false,
-						"isPrivate": false,
-						"isProtected": false,
-						"isPublic": false,
-						"isStatic": false,
-						"isFinal": false,
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "BLUE",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "RED",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "WHITE",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "BLACK",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "BLUE",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "RED",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "WHITE",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "BLACK",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								}
-							]
-						}
-					},
-					{
-						"kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
-						"name": "Person",
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "age",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "age",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
-									},
-									"isReadOnly": false
-								}
-							]
-						}
-					},
-					{
-						"kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
-						"name": "Car",
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "bought",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Date"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "color",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "bought",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Date"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "color",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": false
-								}
-							]
-						}
-					},
-					{
-						"kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
-						"name": "BMW",
-						"superTypes": [
-							{
-								"kind": "de.monticore.types.check.SymTypeOfObject",
-								"objName": "examples.cd.Car"
-							}
-						]
-					},
-					{
-						"kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
-						"name": "Jaguar",
-						"superTypes": [
-							{
-								"kind": "de.monticore.types.check.SymTypeOfObject",
-								"objName": "examples.cd.Car"
-							}
-						],
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "length",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": false,
-									"isStatic": false,
-									"isFinal": false,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
-									},
-									"isReadOnly": false
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "length",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
-									},
-									"isReadOnly": false
-								}
-							]
-						}
-					},
-					{
-						"kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
-						"name": "Color",
-						"spannedScope": {
-							"isShadowingScope": false,
-							"symbols": [
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "BLUE",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "RED",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "WHITE",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
-									"name": "BLACK",
-									"isPrivate": false,
-									"isProtected": false,
-									"isPublic": true,
-									"isStatic": true,
-									"isFinal": true,
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "BLUE",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "RED",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "WHITE",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								},
-								{
-									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
-									"name": "BLACK",
-									"type": {
-										"kind": "de.monticore.types.check.SymTypeOfObject",
-										"objName": "examples.cd.Color"
-									},
-									"isReadOnly": true
-								}
-							]
-						}
-					}
-				]
-			}
-		},
-		{
-			"kind": "de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol",
-			"name": "MyFamily"
-		}
-	]
+  "generated-using": "www.MontiCore.de technology",
+  "name": "MyFamily",
+  "symbols": [
+    {
+      "kind": "de.monticore.cdassociation._symboltable.CDAssociationSymbol",
+      "name": "married",
+      "association": 2220897
+    },
+    {
+      "kind": "de.monticore.cdassociation._symboltable.CDAssociationSymbol",
+      "name": "cars",
+      "association": 10243761
+    },
+    {
+      "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+      "name": "Person",
+      "isClass": true,
+      "isInterface": false,
+      "isEnum": false,
+      "isAbstract": false,
+      "isPrivate": false,
+      "isProtected": false,
+      "isPublic": false,
+      "isStatic": false,
+      "isFinal": false,
+      "spannedScope": {
+        "isShadowingScope": false,
+        "symbols": [
+          {
+            "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+            "name": "married",
+            "isDefinitiveNavigable": true,
+            "cardinality": "[1]",
+            "association": 2220897,
+            "isOrdered": false,
+            "isLeft": true,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "Person"
+            },
+            "isReadOnly": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isStatic": false,
+            "isFinal": false
+          },
+          {
+            "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+            "name": "cars",
+            "isDefinitiveNavigable": true,
+            "cardinality": "[*]",
+            "association": 10243761,
+            "isOrdered": false,
+            "isLeft": false,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "Car"
+            },
+            "isReadOnly": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isStatic": false,
+            "isFinal": false
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "age",
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isStatic": false,
+            "isFinal": false,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeConstant",
+              "constName": "int"
+            },
+            "isReadOnly": false
+          }
+        ]
+      }
+    },
+    {
+      "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+      "name": "Car",
+      "isClass": true,
+      "isInterface": false,
+      "isEnum": false,
+      "isAbstract": false,
+      "isPrivate": false,
+      "isProtected": false,
+      "isPublic": false,
+      "isStatic": false,
+      "isFinal": false,
+      "spannedScope": {
+        "isShadowingScope": false,
+        "symbols": [
+          {
+            "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+            "name": "cars",
+            "isDefinitiveNavigable": true,
+            "cardinality": "[1]",
+            "association": 10243761,
+            "isOrdered": false,
+            "isLeft": true,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "Person"
+            },
+            "isReadOnly": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isStatic": false,
+            "isFinal": false
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "bought",
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isStatic": false,
+            "isFinal": false,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "Car.Date"
+            },
+            "isReadOnly": false
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "color",
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isStatic": false,
+            "isFinal": false,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "Car.Color"
+            },
+            "isReadOnly": false
+          }
+        ]
+      }
+    },
+    {
+      "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+      "name": "BMW",
+      "isClass": true,
+      "isInterface": false,
+      "isEnum": false,
+      "isAbstract": false,
+      "isPrivate": false,
+      "isProtected": false,
+      "isPublic": false,
+      "isStatic": false,
+      "isFinal": false,
+      "superTypes": [
+        {
+          "kind": "de.monticore.types.check.SymTypeOfObject",
+          "objName": "Car"
+        }
+      ]
+    },
+    {
+      "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+      "name": "Jaguar",
+      "isClass": true,
+      "isInterface": false,
+      "isEnum": false,
+      "isAbstract": false,
+      "isPrivate": false,
+      "isProtected": false,
+      "isPublic": false,
+      "isStatic": false,
+      "isFinal": false,
+      "superTypes": [
+        {
+          "kind": "de.monticore.types.check.SymTypeOfObject",
+          "objName": "Car"
+        }
+      ],
+      "spannedScope": {
+        "isShadowingScope": false,
+        "symbols": [
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "length",
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isStatic": false,
+            "isFinal": false,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeConstant",
+              "constName": "double"
+            },
+            "isReadOnly": false
+          }
+        ]
+      }
+    },
+    {
+      "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+      "name": "Color",
+      "isClass": false,
+      "isInterface": false,
+      "isEnum": true,
+      "isAbstract": false,
+      "isPrivate": false,
+      "isProtected": false,
+      "isPublic": false,
+      "isStatic": false,
+      "isFinal": false,
+      "spannedScope": {
+        "isShadowingScope": false,
+        "symbols": [
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "BLUE",
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isStatic": true,
+            "isFinal": true,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "Color.Color"
+            },
+            "isReadOnly": true
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "RED",
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isStatic": true,
+            "isFinal": true,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "Color.Color"
+            },
+            "isReadOnly": true
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "WHITE",
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isStatic": true,
+            "isFinal": true,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "Color.Color"
+            },
+            "isReadOnly": true
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "BLACK",
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isStatic": true,
+            "isFinal": true,
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "Color.Color"
+            },
+            "isReadOnly": true
+          }
+        ]
+      }
+    },
+    {
+      "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+      "name": "Date",
+      "isClass": true,
+      "isInterface": false,
+      "isEnum": false,
+      "isAbstract": false,
+      "isPrivate": false,
+      "isProtected": false,
+      "isPublic": false,
+      "isStatic": false,
+      "isFinal": false
+    },
+    {
+      "kind": "de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol",
+      "name": "MyFamily"
+    }
+  ],
+  "furtherObjects": {
+    "2220897": {
+      "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+      "isAssociation": true,
+      "isComposition": false
+    },
+    "10243761": {
+      "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+      "isAssociation": true,
+      "isComposition": false
+    }
+  }
 }
