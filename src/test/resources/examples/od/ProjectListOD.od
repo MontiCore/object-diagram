@@ -1,4 +1,7 @@
 /* (c) https://github.com/MontiCore/monticore */
+
+package examples.od;
+
 objectdiagram ProjectListOD {
 
   @testGitLab:GitLab{};

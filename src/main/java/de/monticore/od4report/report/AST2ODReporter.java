@@ -1,14 +1,12 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
 package de.monticore.od4report.report;
 
 import de.monticore.ast.ASTNode;
 import de.monticore.generating.templateengine.reporting.commons.AReporter;
 import de.monticore.generating.templateengine.reporting.commons.ReportingConstants;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
-import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
+import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODBasisNode;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.Names;
@@ -57,7 +55,7 @@ public class AST2ODReporter extends AReporter {
    * @param ast {@link ASTNode}
    */
   private void writeContent(ASTODBasisNode ast) {
-    writeLine(new OD4DataPrettyPrinterDelegator(new IndentPrinter()).prettyprint(ast));
+    writeLine(new OD4DataFullPrettyPrinter(new IndentPrinter()).prettyprint(ast));
   }
 
 }

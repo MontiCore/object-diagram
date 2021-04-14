@@ -1,10 +1,12 @@
 /* (c) https://github.com/MontiCore/monticore */
 
+package cocos;
+
 objectdiagram WrongDate{
 
-    myObject1:ObjectType{};
+    myObject1:Wrong{};
 
-	myObject2:ObjectType2{
+	myObject2:WrongDate{
 	    wrongDateV1 = 2017-13-20 15:18:12; // month
 	    wrongDateV2 = 2017.12.40 15:18:12; // day
 	    wrongDateV3 = 2017/12/20 15:18:69; // second

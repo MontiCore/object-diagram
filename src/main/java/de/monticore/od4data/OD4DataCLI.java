@@ -5,8 +5,9 @@ package de.monticore.od4data;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data._symboltable.OD4DataScopeDeSer;
-import de.monticore.od4data.prettyprinter.OD4DataPrettyPrinterDelegator;
+import de.monticore.od4data._symboltable.OD4DataDeSer;
+import de.monticore.od4data._symboltable.OD4DataSymbols2Json;
+import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
@@ -18,7 +19,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Command line interface for the OD language and corresponding tooling. Defines, handles, and
@@ -76,8 +79,7 @@ public class OD4DataCLI {
       ModelPath modelPath = new ModelPath();
       if (cmd.hasOption("path")) {
         String[] paths = cmd.getOptionValues("path");
-        Arrays.stream(paths)
-            .forEach(p -> modelPath.addEntry(Paths.get(p)));
+        Arrays.stream(paths).forEach(p -> modelPath.addEntry(Paths.get(p)));
       }
 
       // parse input file, which is now available
@@ -86,6 +88,18 @@ public class OD4DataCLI {
 
       // create symbol table
       IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact);
+
+      // -option check cocos
+      Set<String> cocoOptionValue = new HashSet<>();
+      if (cmd.hasOption("c") && cmd.getOptionValues("c") != null) {
+        cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
+        if (cocoOptionValue.contains("intra")) {
+          OD4DataTool.runAllIntraCoCos(astodArtifact);
+        }
+        else {
+          OD4DataTool.runAllCoCos(astodArtifact);
+        }
+      }
 
       // -option pretty print
       if (cmd.hasOption("pp")) {
@@ -148,7 +162,7 @@ public class OD4DataCLI {
    */
   public void prettyPrint(ASTODArtifact astodArtifact, String file) {
     // pretty print AST
-    OD4DataPrettyPrinterDelegator pp = new OD4DataPrettyPrinterDelegator();
+    OD4DataFullPrettyPrinter pp = new OD4DataFullPrettyPrinter();
     String od = pp.prettyprint(astodArtifact);
     print(od, file);
   }
@@ -161,14 +175,14 @@ public class OD4DataCLI {
    */
   public void prettyPrintST(IOD4DataArtifactScope od4DataArtifactScope, String file) {
     // serializes the symboltable
-    OD4DataScopeDeSer odBasicsScopeDeSer = new OD4DataScopeDeSer();
+    OD4DataDeSer odBasicsScopeDeSer = new OD4DataDeSer();
 
     if (StringUtils.isEmpty(file)) {
       System.out.println(odBasicsScopeDeSer.serialize(od4DataArtifactScope));
     }
     else {
-      odBasicsScopeDeSer.store(od4DataArtifactScope, Paths.get(file)
-          .toString());
+      OD4DataSymbols2Json dataSymbols2Json = new OD4DataSymbols2Json();
+      dataSymbols2Json.store(od4DataArtifactScope, Paths.get(file).toString());
     }
   }
 
@@ -207,9 +221,7 @@ public class OD4DataCLI {
     else {
       File f = new File(path);
       // create directories (logs error otherwise)
-      f.getAbsoluteFile()
-          .getParentFile()
-          .mkdirs();
+      f.getAbsoluteFile().getParentFile().mkdirs();
 
       FileWriter writer;
       try {
@@ -236,10 +248,7 @@ public class OD4DataCLI {
     Options options = new Options();
 
     // help dialog
-    options.addOption(Option.builder("h")
-        .longOpt("help")
-        .desc("Prints this help dialog")
-        .build());
+    options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").build());
 
     // parse input file
     options.addOption(Option.builder("i")

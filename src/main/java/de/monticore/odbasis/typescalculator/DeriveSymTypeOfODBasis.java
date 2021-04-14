@@ -2,27 +2,22 @@
 
 package de.monticore.odbasis.typescalculator;
 
-import de.monticore.odbasis._visitor.ODBasisDelegatorVisitor;
-import de.monticore.types.check.SymTypeExpression;
-import de.monticore.types.check.SynthesizeSymTypeFromMCBasicTypes;
-import de.monticore.types.check.TypeCheckResult;
-import de.monticore.types.mcbasictypes._ast.ASTMCObjectType;
+import de.monticore.expressions.expressionsbasis._visitor.ExpressionsBasisTraverser;
+import de.monticore.grammar.grammar_withconcepts.SynthesizeFromMCBT4Grammar;
+import de.monticore.odbasis.ODBasisMill;
+import de.monticore.odbasis._visitor.ODBasisTraverser;
+import de.monticore.types.check.*;
 
 import java.util.Optional;
 
-public class DeriveSymTypeOfODBasis extends ODBasisDelegatorVisitor implements ODTypesCalculator {
+public class DeriveSymTypeOfODBasis implements IDerive {
 
   private TypeCheckResult typeCheckResult;
+  
+  protected ODBasisTraverser traverser = ODBasisMill.traverser();
 
   public DeriveSymTypeOfODBasis() {
-    setRealThis(this);
     init();
-  }
-
-  @Override
-  public Optional<SymTypeExpression> calculateType(ASTMCObjectType type) {
-    type.accept(getRealThis());
-    return getResult();
   }
 
   @Override
@@ -30,22 +25,38 @@ public class DeriveSymTypeOfODBasis extends ODBasisDelegatorVisitor implements O
     return Optional.ofNullable(typeCheckResult.getCurrentResult());
   }
 
-  @Override
-  public void reset() {
-    getTypeCheckResult().setCurrentResultAbsent();
-  }
-
   public TypeCheckResult getTypeCheckResult() {
     return typeCheckResult;
   }
 
-  private void init() {
+  @Override
+  public void init() {
     typeCheckResult = new TypeCheckResult();
 
+    //falls TypeCheck keine Typdefinitionen brauchen soll
+    //final SynthesizeFromMCBT4Grammar synthesizeSymTypeFromMCBasicTypes =
+    //  new SynthesizeFromMCBT4Grammar();
     final SynthesizeSymTypeFromMCBasicTypes synthesizeSymTypeFromMCBasicTypes =
         new SynthesizeSymTypeFromMCBasicTypes();
     synthesizeSymTypeFromMCBasicTypes.setTypeCheckResult(getTypeCheckResult());
-    setMCBasicTypesVisitor(synthesizeSymTypeFromMCBasicTypes);
+    traverser.add4MCBasicTypes(synthesizeSymTypeFromMCBasicTypes);
+    traverser.setMCBasicTypesHandler(synthesizeSymTypeFromMCBasicTypes);
+
+    final DeriveSymTypeOfCommonExpressions deriveSymTypeOfCommonExpressions =
+        new DeriveSymTypeOfCommonExpressions();
+    deriveSymTypeOfCommonExpressions.setTypeCheckResult(typeCheckResult);
+    traverser.add4CommonExpressions(deriveSymTypeOfCommonExpressions);
+    traverser.setCommonExpressionsHandler(deriveSymTypeOfCommonExpressions);
+
+    final DeriveSymTypeOfMCCommonLiterals deriveSymTypeOfMCCommonLiterals =
+        new DeriveSymTypeOfMCCommonLiterals();
+    deriveSymTypeOfMCCommonLiterals.setTypeCheckResult(typeCheckResult);
+    traverser.add4MCCommonLiterals(deriveSymTypeOfMCCommonLiterals);
+  }
+
+  @Override
+  public ExpressionsBasisTraverser getTraverser() {
+    return traverser;
   }
 
 }

@@ -1,10 +1,5 @@
-// (c) https://github.com/MontiCore/monticore
-
-// (c) https://github.com/MontiCore/monticore
-
-// (c) https://github.com/MontiCore/monticore
-
 /* (c) https://github.com/MontiCore/monticore */
+
 package de.monticore.od4report.report;
 
 import de.monticore.ast.ASTNode;
@@ -63,7 +58,8 @@ public class ODNodeIdentHelper extends MCBasicTypesNodeIdentHelper {
       name = a.getName();
     }
     else if (!a.getODLinkLeftSide().getReferenceNamesList().isEmpty() && !a.getODLinkRightSide()
-        .getReferenceNamesList().isEmpty()) {
+        .getReferenceNamesList()
+        .isEmpty()) {
       // TODO MB
     }
     return format(name, Layouter.nodeName(a));

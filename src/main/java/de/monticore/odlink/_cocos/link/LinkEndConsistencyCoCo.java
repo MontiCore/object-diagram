@@ -1,15 +1,11 @@
-// (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
 
-/* (c) https://github.com/MontiCore/monticore */
 package de.monticore.odlink._cocos.link;
 
 import de.monticore.odlink._ast.ASTODLink;
 import de.monticore.odlink._cocos.ODLinkASTODLinkCoCo;
-import de.monticore.symbols.basicsymbols._symboltable.BasicSymbolsSymbolTablePrinter;
+import de.monticore.symbols.basicsymbols._symboltable.BasicSymbolsSymbols2Json;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
-import de.monticore.types.check.SymTypeExpression;
 import de.se_rwth.commons.logging.Log;
 
 import java.util.List;
@@ -24,21 +20,21 @@ public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
 
   @Override
   public void check(ASTODLink node) {
-    List<SymTypeExpression> leftTypes = node.getLeftReferenceNames().stream().map(refName -> {
+    List<VariableSymbol> leftSymbols = node.getLeftReferenceNames().stream().map(refName -> {
       Optional<VariableSymbol> symbol = node.getEnclosingScope().resolveVariable(refName);
       if (!symbol.isPresent()) {
         Log.error("Violation of CoCo 'LinkEndConsistencyCoCo'", node.get_SourcePositionStart());
       }
-      return symbol.get().getType();
+      return symbol.get();
     }).collect(Collectors.toList());
 
     /* TODO SH: Is there any nicer way to check equality? */
-    BasicSymbolsSymbolTablePrinter tablePrinter = new BasicSymbolsSymbolTablePrinter();
-    tablePrinter.serializeVariableType(leftTypes.get(0));
+    BasicSymbolsSymbols2Json tablePrinter = new BasicSymbolsSymbols2Json();
+    tablePrinter.visit(leftSymbols.get(0));
     String firstTypeJSON = tablePrinter.getSerializedString();
-    for (SymTypeExpression type : leftTypes) {
-      tablePrinter = new BasicSymbolsSymbolTablePrinter();
-      tablePrinter.serializeVariableType(type);
+    for (VariableSymbol sym : leftSymbols) {
+      tablePrinter = new BasicSymbolsSymbols2Json();
+      tablePrinter.visit(sym);
       String typeJSON = tablePrinter.getSerializedString();
 
       if (!firstTypeJSON.equals(typeJSON)) {
@@ -47,20 +43,20 @@ public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
     }
 
     /* TODO SH: Is there any nicer way to check equality? */
-    List<SymTypeExpression> rightTypes = node.getRightReferenceNames().stream().map(refName -> {
+    List<VariableSymbol> rightSymbols = node.getRightReferenceNames().stream().map(refName -> {
       Optional<VariableSymbol> symbol = node.getEnclosingScope().resolveVariable(refName);
       if (!symbol.isPresent()) {
         Log.error("Violation of CoCo 'LinkEndConsistencyCoCo'", node.get_SourcePositionStart());
       }
-      return symbol.get().getType();
+      return symbol.get();
     }).collect(Collectors.toList());
 
-    tablePrinter = new BasicSymbolsSymbolTablePrinter();
-    tablePrinter.serializeVariableType(rightTypes.get(0));
+    tablePrinter = new BasicSymbolsSymbols2Json();
+    tablePrinter.visit(rightSymbols.get(0));
     firstTypeJSON = tablePrinter.getSerializedString();
-    for (SymTypeExpression type : rightTypes) {
-      tablePrinter = new BasicSymbolsSymbolTablePrinter();
-      tablePrinter.serializeVariableType(type);
+    for (VariableSymbol sym : rightSymbols) {
+      tablePrinter = new BasicSymbolsSymbols2Json();
+      tablePrinter.visit(sym);
       String typeJSON = tablePrinter.getSerializedString();
 
       if (!firstTypeJSON.equals(typeJSON)) {

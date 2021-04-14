@@ -1,7 +1,5 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
 package de.monticore.dateliterals._cocos;
 
 import de.monticore.dateliterals._cocos.date.DateConcistencyCoCo;

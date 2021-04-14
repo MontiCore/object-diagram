@@ -8,22 +8,22 @@ objectdiagram InvalidObjectReference {
 
   bar:ObjectType2{
    foobar = foo;
-   foobar2 = bla:ObjectType2{};
+   foobar2 = blaa:ObjectType2{};
    foobar3 = 3;
    foobar4 = "Test";
   };
 
   bar2:ObjectType3{
    foobar = foo;
-   foobar2 = bla2;
+   foobar2 = blaa2;
   };
 
   bar3:ObjectType4{
-   foobar = [foo, bar, bla, bla3];
+   foobar = [foo, bar, blaa, blaa3];
   };
 
   bar4:ObjectType5{
-   foobar = [ 5 -> bar, 8 -> bla4, bar -> 5, bla5 -> 8];
+   foobar = [ 5 -> bar, 8 -> blaa4, bar -> 5, blaa5 -> 8];
   };
 
 }

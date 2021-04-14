@@ -3,10 +3,9 @@
 package de.monticore.odbasis.prettyprinter;
 
 import de.monticore.odbasis._ast.*;
-import de.monticore.odbasis._visitor.ODBasisInheritanceVisitor;
-import de.monticore.odbasis._visitor.ODBasisVisitor;
+import de.monticore.odbasis._visitor.ODBasisHandler;
+import de.monticore.odbasis._visitor.ODBasisTraverser;
 import de.monticore.prettyprint.IndentPrinter;
-import de.monticore.prettyprint.MCBasicsPrettyPrinter;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 
 import java.util.Iterator;
@@ -18,63 +17,45 @@ import java.util.Iterator;
  * whole subtree of a node has been traversed. The ownVisit-Methods stop the automatic traversal
  * order and allow to explicitly visit subtrees by calling getVisitor().startVisit(ASTNode)
  */
-public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
-    implements ODBasisInheritanceVisitor {
+public class ODBasisPrettyPrinter implements ODBasisHandler {
 
-  // printer to use
   protected IndentPrinter printer;
 
-  /**
-   * Constructor.
-   *
-   * @param printer the printer to write to.
-   */
+  protected ODBasisTraverser traverser;
+
   public ODBasisPrettyPrinter(IndentPrinter printer) {
-    super(printer);
     this.printer = printer;
   }
 
-  /**
-   * Return current {@link IndentPrinter}.
-   *
-   * @return current printer
-   */
   public IndentPrinter getPrinter() {
     return printer;
   }
 
-  /**
-   * Prints the compilation unit of an object diagram (start of the pretty print)
-   *
-   * @param unit a OD compilation unit
-   */
   @Override
   public void handle(ASTODArtifact unit) {
-    if (unit.isPresentMCPackageDeclaration() && !unit.getMCPackageDeclaration().getMCQualifiedName()
-        .getQName().isEmpty()) {
-      getPrinter().println("package " + unit.getMCPackageDeclaration().getMCQualifiedName().getQName() + ";\n");
+    if (unit.isPresentMCPackageDeclaration() && !unit.getMCPackageDeclaration()
+        .getMCQualifiedName()
+        .getQName()
+        .isEmpty()) {
+      getPrinter().println(
+          "package " + unit.getMCPackageDeclaration().getMCQualifiedName().getQName() + ";\n");
     }
 
     if (unit.getMCImportStatementList() != null && !unit.getMCImportStatementList().isEmpty()) {
       for (ASTMCImportStatement s : unit.getMCImportStatementList()) {
-        s.accept(getRealThis());
+        s.accept(getTraverser());
       }
       getPrinter().println();
     }
 
-    unit.getObjectDiagram().accept(getRealThis());
+    unit.getObjectDiagram().accept(getTraverser());
   }
 
-  /**
-   * Prints the object diagram definition
-   *
-   * @param a object diagram definition
-   */
   @Override
   public void handle(ASTObjectDiagram a) {
     // print stereotype
     if (a.isPresentStereotype()) {
-      a.getStereotype().accept(getRealThis());
+      a.getStereotype().accept(getTraverser());
       getPrinter().println();
     }
     // print object diagram name and parameters
@@ -85,7 +66,7 @@ public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
 
     // print elements
     for (Iterator<ASTODElement> it = a.getODElementList().iterator(); it.hasNext(); ) {
-      it.next().accept(getRealThis());
+      it.next().accept(getTraverser());
       getPrinter().println(";");
       if (it.hasNext()) {
         getPrinter().println();
@@ -96,22 +77,16 @@ public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
     getPrinter().println("}");
   }
 
-  /**
-   * Prints an object in an object diagram
-   *
-   * @param a object
-   */
   @Override
-  public void visit(ASTODObject a) {
+  public void handle(ASTODObject a) {
 
-    if (a.isPresentModifier()) {
-      a.getModifier().accept(getRealThis());
-    }
+    a.getModifier().accept(getTraverser());
+
     // print object name and type
     getPrinter().print(a.getName());
     if (a.getMCObjectType() != null) {
       getPrinter().print(":");
-      a.getMCObjectType().accept(getRealThis());
+      a.getMCObjectType().accept(getTraverser());
     }
     getPrinter().print("{");
 
@@ -120,7 +95,7 @@ public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
       getPrinter().println();
       getPrinter().indent();
       for (ASTODAttribute ast : a.getODAttributeList()) {
-        ast.accept(getRealThis());
+        ast.accept(getTraverser());
       }
       getPrinter().unindent();
     }
@@ -128,26 +103,23 @@ public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
   }
 
   @Override
-  public void traverse(ASTODNamedObject a) {
+  public void handle(ASTODNamedObject a) {
+    getTraverser().handle((ASTODObject) a);
   }
 
   @Override
-  public void traverse(ASTODAnonymousObject a) {
+  public void handle(ASTODAnonymousObject a) {
+    getTraverser().handle((ASTODObject) a);
   }
 
-  /**
-   * Prints an attribute of an object in an object diagram
-   *
-   * @param a attribute
-   */
   @Override
   public void handle(ASTODAttribute a) {
     // print modifier
-    if (a.isPresentModifier())
-      a.getModifier().accept(getRealThis());
+    a.getModifier().accept(getTraverser());
+
     // print type
     if (a.isPresentMCType()) {
-      a.getMCType().accept(getRealThis());
+      a.getMCType().accept(getTraverser());
       getPrinter().print(" ");
     }
     // print name
@@ -163,61 +135,41 @@ public class ODBasisPrettyPrinter extends MCBasicsPrettyPrinter
 
       // print value
       if (a.isPresentODValue()) {
-        a.getODValue().accept(getRealThis());
+        a.getODValue().accept(getTraverser());
       }
     }
 
     getPrinter().println(";");
   }
 
-  /**
-   * @see de.monticore.odbasis._visitor.ODBasisVisitor#handle(de.monticore.odbasis._ast.ASTODValue)
-   */
   @Override
   public void handle(ASTODValue a) {
-    a.accept(getRealThis());
+    a.accept(getTraverser());
   }
 
-  /**
-   * @see de.monticore.odbasis._visitor.ODBasisVisitor#handle(de.monticore.odbasis._ast.ASTODName)
-   */
   @Override
   public void handle(ASTODName a) {
     getPrinter().print(a.getName());
   }
 
-  /**
-   * @see de.monticore.odbasis._visitor.ODBasisVisitor#handle(de.monticore.odbasis._ast.ASTODSimpleAttributeValue)
-   */
   @Override
   public void handle(ASTODSimpleAttributeValue astodSimpleAttributeValue) {
-    astodSimpleAttributeValue.getExpression().accept(getRealThis());
+    astodSimpleAttributeValue.getExpression().accept(getTraverser());
   }
 
-  /**
-   * @see de.monticore.odbasis._visitor.ODBasisVisitor#handle(de.monticore.odbasis._ast.ASTODAbsent)
-   */
   @Override
   public void handle(ASTODAbsent a) {
     getPrinter().print("...");
   }
 
-  private ODBasisVisitor realThis = this;
-
-  /**
-   * @see de.monticore.odbasis._visitor.ODBasisVisitor#setRealThis(de.monticore.odbasis._visitor.ODBasisVisitor)
-   */
   @Override
-  public void setRealThis(ODBasisVisitor realThis) {
-    this.realThis = realThis;
+  public ODBasisTraverser getTraverser() {
+    return traverser;
   }
 
-  /**
-   * @see de.monticore.odbasis._visitor.ODBasisVisitor#getRealThis()
-   */
   @Override
-  public ODBasisVisitor getRealThis() {
-    return realThis;
+  public void setTraverser(ODBasisTraverser traverser) {
+    this.traverser = traverser;
   }
 
 }
