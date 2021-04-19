@@ -179,13 +179,12 @@ public class OD4ReportCLI {
    */
   public void prettyPrintST(IOD4ReportArtifactScope OD4ReportArtifactScope, String file) {
     // serializes the symboltable
-    OD4ReportDeSer odBasicsScopeDeSer = new OD4ReportDeSer();
+    OD4ReportSymbols2Json reportSymbols2Json = new OD4ReportSymbols2Json();
 
     if (StringUtils.isEmpty(file)) {
-      System.out.println(odBasicsScopeDeSer.serialize(OD4ReportArtifactScope));
+      System.out.println(reportSymbols2Json.serialize(OD4ReportArtifactScope));
     }
     else {
-      OD4ReportSymbols2Json reportSymbols2Json = new OD4ReportSymbols2Json();
       reportSymbols2Json.store(OD4ReportArtifactScope, Paths.get(file).toString());
     }
   }

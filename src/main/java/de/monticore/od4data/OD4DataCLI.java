@@ -175,13 +175,12 @@ public class OD4DataCLI {
    */
   public void prettyPrintST(IOD4DataArtifactScope od4DataArtifactScope, String file) {
     // serializes the symboltable
-    OD4DataDeSer odBasicsScopeDeSer = new OD4DataDeSer();
+    OD4DataSymbols2Json dataSymbols2Json = new OD4DataSymbols2Json();
 
     if (StringUtils.isEmpty(file)) {
-      System.out.println(odBasicsScopeDeSer.serialize(od4DataArtifactScope));
+      System.out.println(dataSymbols2Json.serialize(od4DataArtifactScope));
     }
     else {
-      OD4DataSymbols2Json dataSymbols2Json = new OD4DataSymbols2Json();
       dataSymbols2Json.store(od4DataArtifactScope, Paths.get(file).toString());
     }
   }
