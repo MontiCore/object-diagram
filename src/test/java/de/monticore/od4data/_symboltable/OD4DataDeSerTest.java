@@ -55,7 +55,8 @@ public class OD4DataDeSerTest {
     Optional<ASTODArtifact> astodArtifact = od4DataParser.parse(SIMPLEOD2.toString());
     assertTrue(astodArtifact.isPresent());
 
-    IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get());
+    IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get(),
+        true);
 
     // serialize
     OD4DataSymbols2Json od4DataSymbols2Json = new OD4DataSymbols2Json();

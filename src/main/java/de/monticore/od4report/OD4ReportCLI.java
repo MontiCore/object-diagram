@@ -5,10 +5,7 @@ package de.monticore.od4report;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
-import de.monticore.od4report._symboltable.OD4ReportDeSer;
-import de.monticore.od4report._symboltable.OD4ReportSymbolTableCompleter;
 import de.monticore.od4report._symboltable.OD4ReportSymbols2Json;
-import de.monticore.od4report._visitor.OD4ReportTraverser;
 import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
@@ -87,7 +84,7 @@ public class OD4ReportCLI {
 
       // create symbol table
       IOD4ReportArtifactScope oD4ReportArtifactScope = OD4ReportTool.createSymbolTable(
-          astodArtifact);
+          astodArtifact, true);
 
       // -option check cocos
       Set<String> cocoOptionValue = new HashSet<>();

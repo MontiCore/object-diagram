@@ -5,7 +5,6 @@ package de.monticore.od4data;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data._symboltable.OD4DataDeSer;
 import de.monticore.od4data._symboltable.OD4DataSymbols2Json;
 import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -87,7 +86,8 @@ public class OD4DataCLI {
       ASTODArtifact astodArtifact = parseFile(cmd.getOptionValue("i"));
 
       // create symbol table
-      IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact);
+      IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact,
+          true);
 
       // -option check cocos
       Set<String> cocoOptionValue = new HashSet<>();

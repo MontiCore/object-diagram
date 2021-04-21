@@ -55,7 +55,7 @@ public class OD4ReportDeSerTest {
     assertTrue(astodArtifact.isPresent());
 
     IOD4ReportArtifactScope od4ReportArtifactScope = OD4ReportTool.createSymbolTable(
-        astodArtifact.get());
+        astodArtifact.get(), true);
 
     // serialize
     OD4ReportSymbols2Json od4ReportSymbols2Json = new OD4ReportSymbols2Json();

@@ -9,7 +9,6 @@ import de.monticore.symbols.basicsymbols._symboltable.VariableSymbolBuilder;
 import de.se_rwth.commons.logging.Log;
 
 import java.util.ArrayList;
-import java.util.Deque;
 
 public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
 
@@ -17,7 +16,6 @@ public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
 
   public OD4ReportScopesGenitor() {
     super();
-    this.odBasisScopesGenitor.setScopeStack(scopeStack);
   }
 
   @Override
@@ -25,7 +23,8 @@ public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
     VariableSymbol symbol = create_ODReportObject(astodReportObject).build();
     if (getCurrentScope().isPresent()) {
       getCurrentScope().get().add(symbol);
-    } else {
+    }
+    else {
       Log.warn("0xA50212 Symbol cannot be added to current scope, since no scope exists.");
     }
     symbol.setAstNode(astodReportObject);
@@ -45,11 +44,15 @@ public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
 
   @Override
   public IOD4ReportArtifactScope createFromAST(ASTODArtifact rootNode) {
-    Log.errorIfNull(rootNode, "0xA7004x40398 Error by creating of the OD4ReportScopesGenitor symbol table: top ast node is null");
+    Log.errorIfNull(rootNode,
+        "0xA7004x40398 Error by creating of the OD4ReportScopesGenitor symbol table: top ast node"
+            + " is null");
     IOD4ReportArtifactScope artifactScope = de.monticore.od4report.OD4ReportMill.artifactScope();
-    if(rootNode.isPresentMCPackageDeclaration()) {
-      artifactScope.setPackageName(rootNode.getMCPackageDeclaration().getMCQualifiedName().getQName());
-    }else{
+    if (rootNode.isPresentMCPackageDeclaration()) {
+      artifactScope.setPackageName(
+          rootNode.getMCPackageDeclaration().getMCQualifiedName().getQName());
+    }
+    else {
       artifactScope.setPackageName("");
     }
     artifactScope.setImportsList(new ArrayList<>());
@@ -58,4 +61,5 @@ public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
     rootNode.accept(getTraverser());
     return artifactScope;
   }
+
 }
