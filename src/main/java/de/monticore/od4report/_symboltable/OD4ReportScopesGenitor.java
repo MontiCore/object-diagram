@@ -18,6 +18,10 @@ public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
     super();
   }
 
+  public void setCheckTypes(boolean checkTypes) {
+    odBasisScopesGenitor.setCheckTypes(checkTypes);
+  }
+
   @Override
   public void visit(ASTODReportObject astodReportObject) {
     VariableSymbol symbol = create_ODReportObject(astodReportObject).build();
