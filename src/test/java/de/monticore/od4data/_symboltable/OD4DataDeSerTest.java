@@ -22,8 +22,8 @@ import static org.junit.Assert.assertTrue;
 
 public class OD4DataDeSerTest {
 
-  private final Path SIMPLEOD2 = Paths
-      .get("src", "test", "resources", "examples", "od", "SimpleOD2" + ".od");
+  private final Path SIMPLEOD2 = Paths.get("src", "test", "resources", "examples", "od",
+      "SimpleOD2" + ".od");
 
   private final Path SYMBOL_TARGET = Paths.get("target", "deser");
 
@@ -37,11 +37,31 @@ public class OD4DataDeSerTest {
     OD4DataMill.globalScope().clear();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
 
-    TypeSymbol objectType = OD4DataMill.typeSymbolBuilder().setName("ObjectType").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol objectType2 = OD4DataMill.typeSymbolBuilder().setName("ObjectType2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol t1 = OD4DataMill.typeSymbolBuilder().setName("T1").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol t2 = OD4DataMill.typeSymbolBuilder().setName("T2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol t3 = OD4DataMill.typeSymbolBuilder().setName("T3").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType = OD4DataMill.typeSymbolBuilder()
+        .setName("ObjectType")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol objectType2 = OD4DataMill.typeSymbolBuilder()
+        .setName("ObjectType2")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol t1 = OD4DataMill.typeSymbolBuilder()
+        .setName("T1")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol t2 = OD4DataMill.typeSymbolBuilder()
+        .setName("T2")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol t3 = OD4DataMill.typeSymbolBuilder()
+        .setName("T3")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
     gs.add(objectType);
     gs.add(objectType2);
     gs.add(t1);
@@ -75,10 +95,8 @@ public class OD4DataDeSerTest {
     IOD4DataArtifactScope loadedBasicsArtifactScope = od4DataSymbols2Json.load(
         storedSymTable.toString());
 
-    //    assertEquals(od4DataSymbols2Json.serialize(od4DataArtifactScope),
-    //        od4DataSymbols2Json.serialize(loadedBasicsArtifactScope));
-    assertEquals(new OD4DataDeSer().serialize(od4DataArtifactScope),
-        new OD4DataDeSer().serialize(loadedBasicsArtifactScope));
+    assertEquals(od4DataSymbols2Json.serialize(od4DataArtifactScope),
+        od4DataSymbols2Json.serialize(loadedBasicsArtifactScope));
   }
 
 }

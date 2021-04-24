@@ -39,9 +39,21 @@ public class OD4ReportDeSerTest {
     IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
 
     //TODO remove after ImportStatements fix
-    TypeSymbol person = OD4ReportMill.typeSymbolBuilder().setName("Person").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol bmw = OD4ReportMill.typeSymbolBuilder().setName("BMW").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol jaguar = OD4ReportMill.typeSymbolBuilder().setName("Jaguar").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol person = OD4ReportMill.typeSymbolBuilder()
+        .setName("Person")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol bmw = OD4ReportMill.typeSymbolBuilder()
+        .setName("BMW")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol jaguar = OD4ReportMill.typeSymbolBuilder()
+        .setName("Jaguar")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
     gs.add(person);
     gs.add(bmw);
     gs.add(jaguar);
@@ -74,10 +86,8 @@ public class OD4ReportDeSerTest {
     IOD4ReportArtifactScope loadedBasicsArtifactScope = od4ReportSymbols2Json.load(
         storedSymTable.toString());
 
-    //    assertEquals(od4ReportSymbols2Json.serialize(od4ReportArtifactScope),
-    //        od4ReportSymbols2Json.serialize(loadedBasicsArtifactScope));
-    assertEquals(new OD4ReportDeSer().serialize(od4ReportArtifactScope),
-        new OD4ReportDeSer().serialize(loadedBasicsArtifactScope));
+    assertEquals(od4ReportSymbols2Json.serialize(od4ReportArtifactScope),
+        od4ReportSymbols2Json.serialize(loadedBasicsArtifactScope));
   }
 
 }
