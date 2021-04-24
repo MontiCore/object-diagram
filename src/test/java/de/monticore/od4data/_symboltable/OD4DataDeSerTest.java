@@ -72,11 +72,13 @@ public class OD4DataDeSerTest {
     assertTrue(storedSymTable.toFile().exists());
 
     // deserialize
-    IOD4DataArtifactScope loadedBasicsArtifactScope = od4DataSymbols2Json
-        .load(storedSymTable.toString());
+    IOD4DataArtifactScope loadedBasicsArtifactScope = od4DataSymbols2Json.load(
+        storedSymTable.toString());
 
-    assertEquals(od4DataSymbols2Json.serialize(od4DataArtifactScope),
-        od4DataSymbols2Json.serialize(loadedBasicsArtifactScope));
+    //    assertEquals(od4DataSymbols2Json.serialize(od4DataArtifactScope),
+    //        od4DataSymbols2Json.serialize(loadedBasicsArtifactScope));
+    assertEquals(new OD4DataDeSer().serialize(od4DataArtifactScope),
+        new OD4DataDeSer().serialize(loadedBasicsArtifactScope));
   }
 
 }

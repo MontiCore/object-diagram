@@ -5,6 +5,7 @@ package de.monticore.od4data;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
+import de.monticore.od4data._symboltable.OD4DataDeSer;
 import de.monticore.od4data._symboltable.OD4DataSymbols2Json;
 import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -178,7 +179,8 @@ public class OD4DataCLI {
     OD4DataSymbols2Json dataSymbols2Json = new OD4DataSymbols2Json();
 
     if (StringUtils.isEmpty(file)) {
-      System.out.println(dataSymbols2Json.serialize(od4DataArtifactScope));
+      //      System.out.println(dataSymbols2Json.serialize(od4DataArtifactScope));
+      System.out.println(new OD4DataDeSer().serialize(od4DataArtifactScope));
     }
     else {
       dataSymbols2Json.store(od4DataArtifactScope, Paths.get(file).toString());

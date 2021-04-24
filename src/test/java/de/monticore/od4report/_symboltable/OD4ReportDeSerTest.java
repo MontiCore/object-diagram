@@ -74,8 +74,10 @@ public class OD4ReportDeSerTest {
     IOD4ReportArtifactScope loadedBasicsArtifactScope = od4ReportSymbols2Json.load(
         storedSymTable.toString());
 
-    assertEquals(od4ReportSymbols2Json.serialize(od4ReportArtifactScope),
-        od4ReportSymbols2Json.serialize(loadedBasicsArtifactScope));
+    //    assertEquals(od4ReportSymbols2Json.serialize(od4ReportArtifactScope),
+    //        od4ReportSymbols2Json.serialize(loadedBasicsArtifactScope));
+    assertEquals(new OD4ReportDeSer().serialize(od4ReportArtifactScope),
+        new OD4ReportDeSer().serialize(loadedBasicsArtifactScope));
   }
 
 }
