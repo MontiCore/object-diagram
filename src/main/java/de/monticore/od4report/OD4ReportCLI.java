@@ -2,7 +2,7 @@
 
 package de.monticore.od4report;
 
-import de.monticore.io.paths.ModelPath;
+import de.monticore.io.paths.MCPath;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportSymbols2Json;
@@ -72,10 +72,10 @@ public class OD4ReportCLI {
       }
 
       // if -path is set: save the model paths
-      ModelPath modelPath = new ModelPath();
+      MCPath symbolPath = new MCPath();
       if (cmd.hasOption("path")) {
         String[] paths = cmd.getOptionValues("path");
-        Arrays.stream(paths).forEach(p -> modelPath.addEntry(Paths.get(p)));
+        Arrays.stream(paths).forEach(p -> symbolPath.addEntry(Paths.get(p)));
       }
 
       // parse input file, which is now available
