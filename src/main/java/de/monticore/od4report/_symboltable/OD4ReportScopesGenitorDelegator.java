@@ -1,3 +1,4 @@
+/* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4report._symboltable;
 
 import de.monticore.od4report.OD4ReportMill;
