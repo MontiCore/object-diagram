@@ -4,7 +4,7 @@
 
 package de.monticore.od4data._symboltable;
 
-import de.monticore.io.paths.ModelPath;
+import de.monticore.io.paths.MCPath;
 import de.monticore.utils.Names;
 
 import java.util.Set;
@@ -16,7 +16,7 @@ public class OD4DataGlobalScope extends OD4DataGlobalScopeTOP {
     realThis = this;
   }
 
-  public OD4DataGlobalScope(ModelPath modelPath, String extension) {
+  public OD4DataGlobalScope(MCPath modelPath, String extension) {
     super(modelPath, extension);
   }
 
