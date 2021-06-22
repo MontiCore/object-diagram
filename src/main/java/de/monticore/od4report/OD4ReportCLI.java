@@ -40,7 +40,7 @@ public class OD4ReportCLI {
     OD4ReportCLI cli = new OD4ReportCLI();
     // initialize logging with standard logging
     Log.init();
-    cli.handleArgs(args);
+    cli.run(args);
   }
 
   /**
@@ -48,7 +48,7 @@ public class OD4ReportCLI {
    *
    * @param args The input parameters for configuring the OD tool.
    */
-  public void handleArgs(String[] args) {
+  public void run(String[] args) {
 
     Options options = initOptions();
 
