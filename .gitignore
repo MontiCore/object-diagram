@@ -11,3 +11,4 @@ target/
 .attach_pid*
 gradle.properties
 **/.gradle
+gradle/
