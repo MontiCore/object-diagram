@@ -2,7 +2,7 @@
 
 package de.monticore.od4data._cocos;
 
-import de.monticore.io.paths.ModelPath;
+import de.monticore.io.paths.MCPath;
 import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataGlobalScope;
@@ -31,7 +31,7 @@ import static org.junit.Assert.*;
 
 public class OD4DataCoCoCheckerTest {
 
-  private ModelPath modelPath = new ModelPath(Paths.get("src", "test", "resources", "examples"));
+  private MCPath symbolPath = new MCPath(Paths.get("src", "test", "resources", "examples"));
 
   private Path cocoExamples;
 
@@ -57,7 +57,7 @@ public class OD4DataCoCoCheckerTest {
     OD4DataMill.init();
     OD4DataMill.globalScope().clear();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
-    OD4DataMill.globalScope().setModelPath(modelPath);
+    OD4DataMill.globalScope().setSymbolPath(symbolPath);
 
     TypeSymbol objectType = OD4DataMill.typeSymbolBuilder().setName("ObjectType").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
     TypeSymbol objectType1 = OD4DataMill.typeSymbolBuilder().setName("ObjectType1").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();

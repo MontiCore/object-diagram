@@ -19,6 +19,7 @@ sourceCompatibility = "1.8"
 sourceSets {
     main {
         java.srcDirs += ["$projectDir/target/generated-sources/monticore/sourcecode"]
+      resources.srcDirs = []
     }
     test {
         java.srcDirs += ["$projectDir/target/generated-test-sources/monticore/sourcecode"]
@@ -43,11 +44,6 @@ dependencies {
     implementation "org.antlr:antlr4-runtime:4.7.1"
     implementation "de.monticore:monticore-runtime:$mc_version"
     implementation "de.monticore:monticore-grammar:$mc_version"
-    implementation("de.monticore:monticore-grammar:$mc_version") {
-        capabilities {
-            requireCapability("de.monticore:monticore-grammar-grammars")
-        }
-    }
     grammar("de.monticore:monticore-grammar:$mc_version") {
         capabilities {
             requireCapability("de.monticore:monticore-grammar-grammars")
@@ -132,7 +128,10 @@ test {
 }
 
 tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
+  options.encoding = "UTF-8"
+  options.deprecation false
+  options.warnings = false
+  options.headerOutputDirectory.convention(null)
 }
 
 // build sources jar in addition
@@ -140,6 +139,9 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
     archiveClassifier = "sources"
 }
+
+sourcesJar.dependsOn project.collect { it.tasks.withType(MCTask)}
+
 jar.dependsOn(sourcesJar)
 
 // build javadoc jar in addition
@@ -225,6 +227,3 @@ tasks.withType(JavaCompile) {
     options.warnings = false
     options.headerOutputDirectory.convention(null)
 }
-
-// Fixes issue with java plugin in projects without resources
-compileTestJava.doFirst { mkdir sourceSets.main.output.resourcesDir }

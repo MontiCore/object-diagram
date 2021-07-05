@@ -2,13 +2,10 @@
 
 package de.monticore.od4report;
 
-import de.monticore.io.paths.ModelPath;
+import de.monticore.io.paths.MCPath;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
-import de.monticore.od4report._symboltable.OD4ReportDeSer;
-import de.monticore.od4report._symboltable.OD4ReportSymbolTableCompleter;
 import de.monticore.od4report._symboltable.OD4ReportSymbols2Json;
-import de.monticore.od4report._visitor.OD4ReportTraverser;
 import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
@@ -43,7 +40,7 @@ public class OD4ReportCLI {
     OD4ReportCLI cli = new OD4ReportCLI();
     // initialize logging with standard logging
     Log.init();
-    cli.handleArgs(args);
+    cli.run(args);
   }
 
   /**
@@ -51,7 +48,7 @@ public class OD4ReportCLI {
    *
    * @param args The input parameters for configuring the OD tool.
    */
-  public void handleArgs(String[] args) {
+  public void run(String[] args) {
 
     Options options = initOptions();
 
@@ -75,10 +72,10 @@ public class OD4ReportCLI {
       }
 
       // if -path is set: save the model paths
-      ModelPath modelPath = new ModelPath();
+      MCPath symbolPath = new MCPath();
       if (cmd.hasOption("path")) {
         String[] paths = cmd.getOptionValues("path");
-        Arrays.stream(paths).forEach(p -> modelPath.addEntry(Paths.get(p)));
+        Arrays.stream(paths).forEach(p -> symbolPath.addEntry(Paths.get(p)));
       }
 
       // parse input file, which is now available
@@ -87,7 +84,7 @@ public class OD4ReportCLI {
 
       // create symbol table
       IOD4ReportArtifactScope oD4ReportArtifactScope = OD4ReportTool.createSymbolTable(
-          astodArtifact);
+          astodArtifact, true);
 
       // -option check cocos
       Set<String> cocoOptionValue = new HashSet<>();
@@ -179,13 +176,12 @@ public class OD4ReportCLI {
    */
   public void prettyPrintST(IOD4ReportArtifactScope OD4ReportArtifactScope, String file) {
     // serializes the symboltable
-    OD4ReportDeSer odBasicsScopeDeSer = new OD4ReportDeSer();
+    OD4ReportSymbols2Json reportSymbols2Json = new OD4ReportSymbols2Json();
 
     if (StringUtils.isEmpty(file)) {
-      System.out.println(odBasicsScopeDeSer.serialize(OD4ReportArtifactScope));
+      System.out.println(reportSymbols2Json.serialize(OD4ReportArtifactScope));
     }
     else {
-      OD4ReportSymbols2Json reportSymbols2Json = new OD4ReportSymbols2Json();
       reportSymbols2Json.store(OD4ReportArtifactScope, Paths.get(file).toString());
     }
   }

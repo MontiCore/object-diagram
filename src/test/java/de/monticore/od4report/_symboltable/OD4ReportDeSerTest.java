@@ -39,9 +39,21 @@ public class OD4ReportDeSerTest {
     IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
 
     //TODO remove after ImportStatements fix
-    TypeSymbol person = OD4ReportMill.typeSymbolBuilder().setName("Person").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol bmw = OD4ReportMill.typeSymbolBuilder().setName("BMW").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol jaguar = OD4ReportMill.typeSymbolBuilder().setName("Jaguar").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol person = OD4ReportMill.typeSymbolBuilder()
+        .setName("Person")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol bmw = OD4ReportMill.typeSymbolBuilder()
+        .setName("BMW")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol jaguar = OD4ReportMill.typeSymbolBuilder()
+        .setName("Jaguar")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
     gs.add(person);
     gs.add(bmw);
     gs.add(jaguar);
@@ -55,7 +67,7 @@ public class OD4ReportDeSerTest {
     assertTrue(astodArtifact.isPresent());
 
     IOD4ReportArtifactScope od4ReportArtifactScope = OD4ReportTool.createSymbolTable(
-        astodArtifact.get());
+        astodArtifact.get(), true);
 
     // serialize
     OD4ReportSymbols2Json od4ReportSymbols2Json = new OD4ReportSymbols2Json();
@@ -74,9 +86,8 @@ public class OD4ReportDeSerTest {
     IOD4ReportArtifactScope loadedBasicsArtifactScope = od4ReportSymbols2Json.load(
         storedSymTable.toString());
 
-    OD4ReportDeSer od4ReportScopeDeSer = new OD4ReportDeSer();
-    assertEquals(od4ReportScopeDeSer.serialize(od4ReportArtifactScope),
-        od4ReportScopeDeSer.serialize(loadedBasicsArtifactScope));
+    assertEquals(od4ReportSymbols2Json.serialize(od4ReportArtifactScope),
+        od4ReportSymbols2Json.serialize(loadedBasicsArtifactScope));
   }
 
 }

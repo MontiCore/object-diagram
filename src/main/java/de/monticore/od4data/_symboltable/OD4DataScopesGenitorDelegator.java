@@ -1,16 +1,17 @@
-/* (c) https://github.com/MontiCore/monticore */
-package de.monticore.od4report._symboltable;
+/*
+ (c) https://github.com/MontiCore/monticore
+ */
 
-import de.monticore.od4report.OD4ReportMill;
+package de.monticore.od4data._symboltable;
+
 import de.monticore.odbasis.ODBasisMill;
 import de.monticore.odbasis._symboltable.ODBasisScopesGenitor;
 import de.monticore.types.check.IDerive;
 
-public class OD4ReportScopesGenitorDelegator extends OD4ReportScopesGenitorDelegatorTOP {
-
+public class OD4DataScopesGenitorDelegator extends OD4DataScopesGenitorDelegatorTOP {
   private IDerive typechecker;
 
-  public OD4ReportScopesGenitorDelegator() {
+  public OD4DataScopesGenitorDelegator() {
     super();
   }
 
@@ -21,13 +22,6 @@ public class OD4ReportScopesGenitorDelegator extends OD4ReportScopesGenitorDeleg
     odBasisScopesGenitor.setCheckTypes(typeCheck);
     traverser.add4ODBasis(odBasisScopesGenitor);
     traverser.setODBasisHandler(odBasisScopesGenitor);
-
-    traverser.getOD4ReportVisitorList().clear();
-    OD4ReportScopesGenitor od4ReportScopesGenitor = OD4ReportMill.scopesGenitor();
-    od4ReportScopesGenitor.setScopeStack(scopeStack);
-    od4ReportScopesGenitor.setCheckTypes(typeCheck);
-    traverser.add4OD4Report(od4ReportScopesGenitor);
-    traverser.setOD4ReportHandler(od4ReportScopesGenitor);
   }
 
   public IDerive getTypechecker() {
