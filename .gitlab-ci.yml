@@ -19,6 +19,7 @@ stages:
   - test
   - deploy
   - check
+  - mirror
 
 build:
   stage: build
@@ -59,7 +60,7 @@ checkMDLinks:
   only:
     - master
 
-  githubmirror:
+githubmirror:
   image: maven:3-jdk-8
   stage: mirror
   dependencies:
