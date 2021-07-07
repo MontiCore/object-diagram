@@ -37,11 +37,31 @@ public class OD4DataDeSerTest {
     OD4DataMill.globalScope().clear();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
 
-    TypeSymbol objectType = OD4DataMill.typeSymbolBuilder().setName("ObjectType").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol objectType2 = OD4DataMill.typeSymbolBuilder().setName("ObjectType2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol t1 = OD4DataMill.typeSymbolBuilder().setName("T1").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol t2 = OD4DataMill.typeSymbolBuilder().setName("T2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol t3 = OD4DataMill.typeSymbolBuilder().setName("T3").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType = OD4DataMill.typeSymbolBuilder()
+        .setName("ObjectType")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol objectType2 = OD4DataMill.typeSymbolBuilder()
+        .setName("ObjectType2")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol t1 = OD4DataMill.typeSymbolBuilder()
+        .setName("T1")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol t2 = OD4DataMill.typeSymbolBuilder()
+        .setName("T2")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol t3 = OD4DataMill.typeSymbolBuilder()
+        .setName("T3")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
     gs.add(objectType);
     gs.add(objectType2);
     gs.add(t1);
@@ -55,7 +75,8 @@ public class OD4DataDeSerTest {
     Optional<ASTODArtifact> astodArtifact = od4DataParser.parse(SIMPLEOD2.toString());
     assertTrue(astodArtifact.isPresent());
 
-    IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get());
+    IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get(),
+        true);
 
     // serialize
     OD4DataSymbols2Json od4DataSymbols2Json = new OD4DataSymbols2Json();
@@ -74,9 +95,8 @@ public class OD4DataDeSerTest {
     IOD4DataArtifactScope loadedBasicsArtifactScope = od4DataSymbols2Json.load(
         storedSymTable.toString());
 
-    OD4DataDeSer odBasicsScopeDeSer = new OD4DataDeSer();
-    assertEquals(odBasicsScopeDeSer.serialize(od4DataArtifactScope),
-        odBasicsScopeDeSer.serialize(loadedBasicsArtifactScope));
+    assertEquals(od4DataSymbols2Json.serialize(od4DataArtifactScope),
+        od4DataSymbols2Json.serialize(loadedBasicsArtifactScope));
   }
 
 }

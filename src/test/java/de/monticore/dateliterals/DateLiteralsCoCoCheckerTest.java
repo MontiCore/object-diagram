@@ -3,7 +3,7 @@
 package de.monticore.dateliterals;
 
 import de.monticore.dateliterals._cocos.DateLiteralsCoCos;
-import de.monticore.io.paths.ModelPath;
+import de.monticore.io.paths.MCPath;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._cocos.OD4ReportCoCoChecker;
 import de.monticore.od4report._parser.OD4ReportParser;
@@ -11,7 +11,6 @@ import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
 import de.monticore.od4report._symboltable.OD4ReportScopesGenitorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
-import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.ODLogReset;
 import org.junit.After;
@@ -29,7 +28,7 @@ import static org.junit.Assert.*;
 
 public class DateLiteralsCoCoCheckerTest {
 
-  private static ModelPath modelPath;
+  private static MCPath symbolPath;
 
   private static Path path;
 
@@ -64,7 +63,7 @@ public class DateLiteralsCoCoCheckerTest {
 
     odCoCoChecker = new OD4ReportCoCoChecker();
     path = Paths.get("src/test/resources/cocos");
-    modelPath = new ModelPath(path);
+    symbolPath = new MCPath(path);
   }
 
   @Before

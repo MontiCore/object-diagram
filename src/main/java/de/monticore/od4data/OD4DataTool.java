@@ -43,10 +43,15 @@ public class OD4DataTool {
    * @param ast ODArtifact ast
    * @return Symboltable created form AST
    */
-  public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast) {
+  public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast, boolean checkTypes) {
     OD4DataScopesGenitorDelegator od4DataScopesGenitorDelegator =
         OD4DataMill.scopesGenitorDelegator();
+    od4DataScopesGenitorDelegator.setCheckTypes(checkTypes);
     return od4DataScopesGenitorDelegator.createFromAST(ast);
+  }
+
+  public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast) {
+    return OD4DataTool.createSymbolTable(ast, false);
   }
 
   public static void runAllCoCos(ASTODArtifact ast) {

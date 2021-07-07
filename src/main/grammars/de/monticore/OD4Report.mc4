@@ -13,7 +13,7 @@ package de.monticore;
    1. It includes DateLiterals to describe timing
    2. It extends the Name concept by an unusual form of names
       that encode a lot of additional information about the
-      object content. This is e.g. helpful in MontoCore
+      object content. This is e.g. helpful in MontiCore
       tool execution reports.
 
    This grammar brings together the following OD components
@@ -26,7 +26,6 @@ package de.monticore;
   * OD4Data.mc4
        = ODAttribute.mc4 + ODLink.mc4
 */
-
 
 grammar OD4Report extends de.monticore.OD4Data,
                           de.monticore.DateLiterals,

@@ -2,10 +2,9 @@
 
 package de.monticore.od4data;
 
-import de.monticore.io.paths.ModelPath;
+import de.monticore.io.paths.MCPath;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data._symboltable.OD4DataDeSer;
 import de.monticore.od4data._symboltable.OD4DataSymbols2Json;
 import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -44,7 +43,7 @@ public class OD4DataCLI {
     OD4DataCLI cli = new OD4DataCLI();
     // initialize logging with standard logging
     Log.init();
-    cli.handleArgs(args);
+    cli.run(args);
   }
 
   /**
@@ -52,7 +51,7 @@ public class OD4DataCLI {
    *
    * @param args The input parameters for configuring the OD tool.
    */
-  public void handleArgs(String[] args) {
+  public void run(String[] args) {
 
     Options options = initOptions();
 
@@ -76,10 +75,10 @@ public class OD4DataCLI {
       }
 
       // if -path is set: save the model paths
-      ModelPath modelPath = new ModelPath();
+      MCPath symbolPath = new MCPath();
       if (cmd.hasOption("path")) {
         String[] paths = cmd.getOptionValues("path");
-        Arrays.stream(paths).forEach(p -> modelPath.addEntry(Paths.get(p)));
+        Arrays.stream(paths).forEach(p -> symbolPath.addEntry(Paths.get(p)));
       }
 
       // parse input file, which is now available
@@ -87,7 +86,8 @@ public class OD4DataCLI {
       ASTODArtifact astodArtifact = parseFile(cmd.getOptionValue("i"));
 
       // create symbol table
-      IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact);
+      IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact,
+          true);
 
       // -option check cocos
       Set<String> cocoOptionValue = new HashSet<>();
@@ -175,13 +175,12 @@ public class OD4DataCLI {
    */
   public void prettyPrintST(IOD4DataArtifactScope od4DataArtifactScope, String file) {
     // serializes the symboltable
-    OD4DataDeSer odBasicsScopeDeSer = new OD4DataDeSer();
+    OD4DataSymbols2Json dataSymbols2Json = new OD4DataSymbols2Json();
 
     if (StringUtils.isEmpty(file)) {
-      System.out.println(odBasicsScopeDeSer.serialize(od4DataArtifactScope));
+      System.out.println(dataSymbols2Json.serialize(od4DataArtifactScope));
     }
     else {
-      OD4DataSymbols2Json dataSymbols2Json = new OD4DataSymbols2Json();
       dataSymbols2Json.store(od4DataArtifactScope, Paths.get(file).toString());
     }
   }

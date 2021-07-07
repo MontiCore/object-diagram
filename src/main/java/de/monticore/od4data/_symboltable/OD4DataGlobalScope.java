@@ -2,31 +2,30 @@
  (c) https://github.com/MontiCore/monticore
  */
 
-package de.monticore.od4report._symboltable;
+package de.monticore.od4data._symboltable;
 
 import de.monticore.io.paths.MCPath;
 import de.monticore.utils.Names;
 
 import java.util.Set;
 
-public class OD4ReportGlobalScope extends OD4ReportGlobalScopeTOP {
+public class OD4DataGlobalScope extends OD4DataGlobalScopeTOP {
+  private OD4DataGlobalScope realThis;
 
-  private OD4ReportGlobalScope realThis;
-
-  public OD4ReportGlobalScope() {
+  public OD4DataGlobalScope() {
     realThis = this;
   }
 
-  public OD4ReportGlobalScope(MCPath modelPath, String extension) {
+  public OD4DataGlobalScope(MCPath modelPath, String extension) {
     super(modelPath, extension);
   }
 
   @Override
-  public OD4ReportGlobalScope getRealThis() {
+  public OD4DataGlobalScope getRealThis() {
     return realThis;
   }
 
-  public void setRealThis(OD4ReportGlobalScope realThis) {
+  public void setRealThis(OD4DataGlobalScope realThis) {
     this.realThis = realThis;
   }
 

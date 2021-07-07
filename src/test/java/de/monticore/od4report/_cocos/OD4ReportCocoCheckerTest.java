@@ -4,7 +4,7 @@
 
 package de.monticore.od4report._cocos;
 
-import de.monticore.io.paths.ModelPath;
+import de.monticore.io.paths.MCPath;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.OD4ReportScopesGenitorDelegator;
@@ -26,7 +26,7 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 
 public class OD4ReportCocoCheckerTest {
-  private ModelPath modelPath = new ModelPath(Paths.get("src", "test", "resources"));
+  private MCPath symbolPath = new MCPath(Paths.get("src", "test", "resources"));
 
   private OD4ReportCoCoChecker odCoCoChecker;
 
@@ -47,7 +47,7 @@ public class OD4ReportCocoCheckerTest {
 
     OD4ReportMill.reset();
     OD4ReportMill.init();
-    OD4ReportMill.globalScope().setModelPath(modelPath);
+    OD4ReportMill.globalScope().setSymbolPath(symbolPath);
   }
 
   @Before
