@@ -1,55 +1,33 @@
-// (c) https://github.com/MontiCore/monticore
-
+/* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4report;
 
 import de.monticore.io.paths.MCPath;
-import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
-import de.monticore.od4report._symboltable.OD4ReportSymbols2Json;
 import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
-/**
- * Created by TGr on 29.04.2016.
- */
-public class OD4ReportCLI {
+public class OD4ReportCLI extends OD4ReportCLITOP {
 
   /*=================================================================*/
   /* Part 1: Handling the arguments and options
   /*=================================================================*/
 
   /**
-   * Main method that is called from command line and runs the OD tool.
-   *
-   * @param args The input parameters for configuring the OD tool.
-   */
-  public static void main(String[] args) {
-    OD4ReportCLI cli = new OD4ReportCLI();
-    // initialize logging with standard logging
-    Log.init();
-    cli.run(args);
-  }
-
-  /**
    * Processes user input from command line and delegates to the corresponding tools.
    *
    * @param args The input parameters for configuring the OD tool.
    */
+  @Override
   public void run(String[] args) {
-
+    init();
     Options options = initOptions();
 
     try {
@@ -80,11 +58,11 @@ public class OD4ReportCLI {
 
       // parse input file, which is now available
       // (only returns if successful)
-      ASTODArtifact astodArtifact = parseFile(cmd.getOptionValue("i"));
+      ASTODArtifact astodArtifact = parse(cmd.getOptionValue("i"));
 
       // create symbol table
       IOD4ReportArtifactScope oD4ReportArtifactScope = OD4ReportTool.createSymbolTable(
-          astodArtifact, true);
+        astodArtifact, true);
 
       // -option check cocos
       Set<String> cocoOptionValue = new HashSet<>();
@@ -110,7 +88,7 @@ public class OD4ReportCLI {
       // -option pretty print symboltable
       if (cmd.hasOption("s")) {
         String path = cmd.getOptionValue("s", StringUtils.EMPTY);
-        prettyPrintST(oD4ReportArtifactScope, path);
+        storeSymbols(oD4ReportArtifactScope, path);
       }
     }
     catch (ParseException e) {
@@ -120,39 +98,9 @@ public class OD4ReportCLI {
 
   }
 
-  /**
-   * Processes user input from command line and delegates to the corresponding tools.
-   *
-   * @param options The input parameters and options.
-   */
-  public void printHelp(Options options) {
-    HelpFormatter formatter = new HelpFormatter();
-    formatter.setWidth(80);
-    formatter.printHelp("OD4ReportCLI", options);
-  }
-
   /*=================================================================*/
   /* Part 2: Executing arguments
   /*=================================================================*/
-
-  /**
-   * Parses the contents of a given file as an object diagram.
-   *
-   * @param path The path to the OD-file as String
-   */
-  public ASTODArtifact parseFile(String path) {
-    Optional<ASTODArtifact> astodArtifact = Optional.empty();
-    try {
-      Path model = Paths.get(path);
-      OD4ReportParser parser = new OD4ReportParser();
-      astodArtifact = parser.parse(model.toString());
-    }
-    catch (IOException | NullPointerException e) {
-      Log.error("0xA7102 Input file " + path + " not found.");
-    }
-
-    return astodArtifact.get();
-  }
 
   /**
    * Prints the contents of the OD-AST to stdout or a specified file.
@@ -161,6 +109,7 @@ public class OD4ReportCLI {
    * @param file          The target file name for printing the OD artifact. If empty, the content
    *                      is printed to stdout instead
    */
+  @Override
   public void prettyPrint(ASTODArtifact astodArtifact, String file) {
     // pretty print AST
     OD4ReportFullPrettyPrinter pp = new OD4ReportFullPrettyPrinter();
@@ -168,134 +117,68 @@ public class OD4ReportCLI {
     print(od, file);
   }
 
-  /**
-   * Stores the contents of the symboltable to stdout or a specific file.
-   *
-   * @param OD4ReportArtifactScope ArtiactScope of object diagram
-   * @param file                   Output file to store symboltable in.
-   */
-  public void prettyPrintST(IOD4ReportArtifactScope OD4ReportArtifactScope, String file) {
-    // serializes the symboltable
-    OD4ReportSymbols2Json reportSymbols2Json = new OD4ReportSymbols2Json();
-
-    if (StringUtils.isEmpty(file)) {
-      System.out.println(reportSymbols2Json.serialize(OD4ReportArtifactScope));
-    }
-    else {
-      reportSymbols2Json.store(OD4ReportArtifactScope, Paths.get(file).toString());
-    }
-  }
-
-  /**
-   * Extracts the model name from a given file name. The model name corresponds to the unqualified
-   * file name without file extension.
-   *
-   * @param file The path to the input file
-   * @return The extracted model name
-   */
-  public String getModelNameFromFile(String file) {
-    String modelName = new File(file).getName();
-    // cut file extension if present
-    if (modelName.length() > 0) {
-      int lastIndex = modelName.lastIndexOf(".");
-      if (lastIndex != -1) {
-        modelName = modelName.substring(0, lastIndex);
-      }
-    }
-    return modelName;
-  }
-
-  /**
-   * Prints the given content to a target file (if specified) or to stdout (if the file is
-   * Optional.empty()).
-   *
-   * @param content The String to be printed
-   * @param path    The target path to the file for printing the content. If empty, the content is
-   *                printed to stdout instead
-   */
-  public void print(String content, String path) {
-    // print to stdout or file
-    if (path.isEmpty()) {
-      System.out.println(content);
-    }
-    else {
-      File f = new File(path);
-      // create directories (logs error otherwise)
-      f.getAbsoluteFile().getParentFile().mkdirs();
-
-      FileWriter writer;
-      try {
-        writer = new FileWriter(f);
-        writer.write(content);
-        writer.close();
-      }
-      catch (IOException e) {
-        Log.error("0xA7105 Could not write to file " + f.getAbsolutePath());
-      }
-    }
-  }
-
   /*=================================================================*/
   /* Part 3: Defining the options incl. help-texts
   /*=================================================================*/
 
   /**
-   * Initializes the available CLI options for the OD tool.
+   * Initializes the standard CLI options for the OD tool.
    *
    * @return The CLI options with arguments.
    */
-  protected Options initOptions() {
-    Options options = new Options();
-
+  @Override
+  public Options addStandardOptions(Options options) {
     // help dialog
     options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").build());
 
     // parse input file
     options.addOption(Option.builder("i")
-        .longOpt("input")
-        .argName("file")
-        .hasArg()
-        .desc("Reads the source file (mandatory) and parses the contents as an object diagram")
-        .build());
-
-    // check cocos
-    options.addOption(Option.builder("c")
-        .longOpt("coco")
-        .optionalArg(true)
-        .numberOfArgs(3)
-        .desc("Checks the CoCos for the input. Optional arguments are:\n"
-            + "-c intra to check only the" + " intra-model CoCos,\n"
-            + "-c inter checks also inter-model CoCos,\n" + "-c type "
-            + "(default) checks all CoCos.")
-        .build());
+      .longOpt("input")
+      .argName("file")
+      .hasArg()
+      .desc("Reads the source file (mandatory) and parses the contents as an object diagram")
+      .build());
 
     // model paths
     options.addOption(Option.builder("path")
-        .argName("dirlist")
-        .hasArgs()
-        .desc("Sets the artifact path for imported symbols")
-        .build());
+      .argName("dirlist")
+      .hasArgs()
+      .desc("Sets the artifact path for imported symbols")
+      .build());
 
     // pretty print OD
     options.addOption(Option.builder("pp")
-        .longOpt("prettyprint")
-        .argName("file")
-        .optionalArg(true)
-        .numberOfArgs(1)
-        .desc("Prints the OD-AST to stdout or the specified file (optional)")
-        .build());
+      .longOpt("prettyprint")
+      .argName("file")
+      .optionalArg(true)
+      .numberOfArgs(1)
+      .desc("Prints the OD-AST to stdout or the specified file (optional)")
+      .build());
 
     // print OD symtab
     options.addOption(Option.builder("s")
-        .longOpt("symboltable")
-        .argName("file")
-        .optionalArg(true)
-        .numberOfArgs(1)
-        .desc("Prints the symboltable of the object diagram to stdout or the specified file "
-            + "(optional)")
-        .build());
-
+      .longOpt("symboltable")
+      .argName("file")
+      .optionalArg(true)
+      .numberOfArgs(1)
+      .desc("Prints the symboltable of the object diagram to stdout or the specified file "
+        + "(optional)")
+      .build());
     return options;
   }
 
+  @Override
+  public Options addAdditionalOptions(Options options) {
+    // check cocos
+    options.addOption(Option.builder("c")
+      .longOpt("coco")
+      .optionalArg(true)
+      .numberOfArgs(3)
+      .desc("Checks the CoCos for the input. Optional arguments are:\n"
+        + "-c intra to check only the" + " intra-model CoCos,\n"
+        + "-c inter checks also inter-model CoCos,\n" + "-c type "
+        + "(default) checks all CoCos.")
+      .build());
+    return options;
+  }
 }
