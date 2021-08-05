@@ -49,7 +49,6 @@ dependencies {
             requireCapability("de.monticore:monticore-grammar-grammars")
         }
     }
-    implementation "ch.qos.logback:logback-classic:1.1.7"
     implementation "commons-cli:commons-cli:1.4"
     implementation "org.apache.commons:commons-lang3:3.8.1"
 
