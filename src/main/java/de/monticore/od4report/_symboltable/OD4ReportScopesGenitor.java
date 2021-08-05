@@ -50,7 +50,7 @@ public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
   @Override
   public IOD4ReportArtifactScope createFromAST(ASTODArtifact rootNode) {
     Log.errorIfNull(rootNode,
-        "0xA7004x40398 Error by creating of the OD4ReportScopesGenitor symbol table: top ast node"
+        "0xAE881 Error by creating of the OD4ReportScopesGenitor symbol table: top ast node"
             + " is null");
     IOD4ReportArtifactScope artifactScope = de.monticore.od4report.OD4ReportMill.artifactScope();
     if (rootNode.isPresentMCPackageDeclaration()) {
