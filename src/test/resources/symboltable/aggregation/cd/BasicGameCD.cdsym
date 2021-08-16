@@ -1,0 +1,27 @@
+{
+  "generated-using": "www.MontiCore.de technology",
+  "name": "BasicGameCD",
+  "symbols": [
+    {
+      "name": "basic",
+      "kind": "de.monticore.cdbasis._symboltable.CDPackageSymbol",
+      "spannedScope": {
+        "symbols": [
+          {
+            "name": "game",
+            "kind": "de.monticore.cdbasis._symboltable.CDPackageSymbol",
+            "spannedScope": {
+              "symbols": [
+                {
+                  "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+                  "name": "Game",
+                  "isClass": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

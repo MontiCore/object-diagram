@@ -59,6 +59,7 @@ public class OD4DataCLI extends OD4DataCLITOP {
         String[] paths = cmd.getOptionValues("path");
         Arrays.stream(paths).forEach(p -> symbolPath.addEntry(Paths.get(p)));
       }
+      OD4DataMill.globalScope().setSymbolPath(symbolPath);
 
       // parse input file, which is now available
       // (only returns if successful)
