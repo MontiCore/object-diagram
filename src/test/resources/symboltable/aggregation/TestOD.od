@@ -1,0 +1,10 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package aggregation;
+
+objectdiagram TestOD {
+
+  tennis:BasicGameCD.basic.game.Game {
+  };
+
+}

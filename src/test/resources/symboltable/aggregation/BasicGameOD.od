@@ -1,0 +1,40 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package aggregation;
+
+objectdiagram BasicGameOD {
+
+  game:BasicGameCD.basic.game.Game{
+    players=[p1,p2];
+    map="EvilDungeon";
+  };
+
+  p1:BasicGameCD.basic.game.Player{
+    health=69;
+    strength=420;
+    armor=210;
+  };
+
+  p2:BasicGameCD.basic.game.Player{
+    health=94;
+    strength=500;
+    armor=400;
+  };
+
+  sword:BasicGameCD.basic.game.Item{
+    name="Longsword";
+    category="Weapon";
+    value=399;
+    classes=["Warrior","Assassin"];
+  };
+
+  axe:BasicGameCD.basic.game.Item{
+    name="Double Axe";
+    category="Weapon";
+    value=550;
+    classes=["Warrior","Barbarian"];
+  };
+
+  link holds p1->sword;
+  link holds p2->axe;
+}
