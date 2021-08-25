@@ -61,7 +61,6 @@ checkMDLinks:
     - master
 
 githubmirror:
-  image: maven:3-jdk-8
   stage: mirror
   dependencies:
     - checkMDLinks
@@ -84,7 +83,8 @@ githubmirror:
     - git clone git@github.com:MontiCore/object-diagram.git
     - cd ..
     - rm -r tmp/object-diagram/*
-    - mv od/* tmp/object-diagram/
+    - shopt -s extglob
+    - mv od/!(MDLinkChangerCLI.jar) tmp/object-diagram/
     - cd tmp/object-diagram
     - git add --all
     - "(git commit -m 'Updated branch with most recent version.') || true"
