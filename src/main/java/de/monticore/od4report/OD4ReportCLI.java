@@ -1,55 +1,50 @@
-// (c) https://github.com/MontiCore/monticore
-
+/* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4report;
 
+//import com.sun.tools.javac.code.Symbol;
+import de.monticore.grammar.grammar._symboltable.AdditionalAttributeSymbolDeSer;
+import de.monticore.grammar.grammar._symboltable.MCGrammarSymbolDeSer;
+import de.monticore.grammar.grammar._symboltable.ProdSymbolDeSer;
+import de.monticore.grammar.grammar._symboltable.RuleComponentSymbolDeSer;
 import de.monticore.io.paths.MCPath;
+import de.monticore.javalight._symboltable.JavaMethodSymbolDeSer;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
+import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
 import de.monticore.od4report._symboltable.OD4ReportSymbols2Json;
+import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.statements.mclowlevelstatements._symboltable.LabelSymbolDeSer;
+import de.monticore.symbols.basicsymbols._symboltable.*;
+import de.monticore.symbols.oosymbols._symboltable.FieldSymbolDeSer;
+import de.monticore.symbols.oosymbols._symboltable.MethodSymbolDeSer;
+import de.monticore.symbols.oosymbols._symboltable.OOTypeSymbolDeSer;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
-/**
- * Created by TGr on 29.04.2016.
- */
-public class OD4ReportCLI {
+public class OD4ReportCLI extends OD4ReportCLITOP {
 
   /*=================================================================*/
   /* Part 1: Handling the arguments and options
   /*=================================================================*/
 
   /**
-   * Main method that is called from command line and runs the OD tool.
-   *
-   * @param args The input parameters for configuring the OD tool.
-   */
-  public static void main(String[] args) {
-    OD4ReportCLI cli = new OD4ReportCLI();
-    // initialize logging with standard logging
-    Log.init();
-    cli.run(args);
-  }
-
-  /**
    * Processes user input from command line and delegates to the corresponding tools.
    *
    * @param args The input parameters for configuring the OD tool.
    */
+  @Override
   public void run(String[] args) {
-
+    init();
     Options options = initOptions();
 
     try {
@@ -71,20 +66,58 @@ public class OD4ReportCLI {
         return;
       }
 
+
+      // if -symbols is set: Add symbol types from file to global scope
+      if (cmd.hasOption("symtypes")) { //TODO: If length is odd throw warning
+        String[] cmdVals = cmd.getOptionValues("symboltypes")[0].split(" ");
+        if(cmdVals.length % 2 != 0){
+          Log.warn("Odd number of arguments for parameter -symboltypes! Ignoring last argument.");
+        }
+        OD4ReportMill.reset();
+        OD4ReportMill.init();
+        OD4ReportMill.globalScope().clear();
+        IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
+        for(int i=0; i<cmdVals.length; i+=2){
+          switch(cmdVals[i+1]){
+            case "TypeSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new TypeSymbolDeSer()); break;
+            case "DiagramSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new DiagramSymbolDeSer()); break;
+            case "FunctionSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new FunctionSymbolDeSer()); break;
+            case "TypeVarSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new TypeVarSymbolDeSer()); break;
+            case "VariableSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new VariableSymbolDeSer()); break;
+            case "FieldSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new FieldSymbolDeSer()); break;
+            case "MethodSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new MethodSymbolDeSer()); break;
+            case "OOTypeSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new OOTypeSymbolDeSer()); break;
+            case "MCGrammarSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new MCGrammarSymbolDeSer()); break;
+            case "AdditionalAttributeSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new AdditionalAttributeSymbolDeSer()); break;
+            case "ProdSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new ProdSymbolDeSer()); break;
+            case "RuleComponentSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new RuleComponentSymbolDeSer()); break;
+            case "JavaMethodSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new JavaMethodSymbolDeSer()); break;
+            case "LabelSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new LabelSymbolDeSer()); break;
+            default: Log.warn(cmdVals[i+1] + " is not a valid Symbol Deserializer and has been assumed as TypeSymbolDeSer");
+              gs.putSymbolDeSer(cmdVals[i], new TypeSymbolDeSer()); break;
+          }
+
+        }
+
+      }
+
+
+
       // if -path is set: save the model paths
       MCPath symbolPath = new MCPath();
       if (cmd.hasOption("path")) {
         String[] paths = cmd.getOptionValues("path");
         Arrays.stream(paths).forEach(p -> symbolPath.addEntry(Paths.get(p)));
       }
+      OD4ReportMill.globalScope().setSymbolPath(symbolPath);
 
       // parse input file, which is now available
       // (only returns if successful)
-      ASTODArtifact astodArtifact = parseFile(cmd.getOptionValue("i"));
+      ASTODArtifact astodArtifact = parse(cmd.getOptionValue("i"));
 
       // create symbol table
       IOD4ReportArtifactScope oD4ReportArtifactScope = OD4ReportTool.createSymbolTable(
-          astodArtifact, true);
+        astodArtifact, true);
 
       // -option check cocos
       Set<String> cocoOptionValue = new HashSet<>();
@@ -110,7 +143,7 @@ public class OD4ReportCLI {
       // -option pretty print symboltable
       if (cmd.hasOption("s")) {
         String path = cmd.getOptionValue("s", StringUtils.EMPTY);
-        prettyPrintST(oD4ReportArtifactScope, path);
+        storeSymbols(oD4ReportArtifactScope, path);
       }
     }
     catch (ParseException e) {
@@ -120,39 +153,9 @@ public class OD4ReportCLI {
 
   }
 
-  /**
-   * Processes user input from command line and delegates to the corresponding tools.
-   *
-   * @param options The input parameters and options.
-   */
-  public void printHelp(Options options) {
-    HelpFormatter formatter = new HelpFormatter();
-    formatter.setWidth(80);
-    formatter.printHelp("OD4ReportCLI", options);
-  }
-
   /*=================================================================*/
   /* Part 2: Executing arguments
   /*=================================================================*/
-
-  /**
-   * Parses the contents of a given file as an object diagram.
-   *
-   * @param path The path to the OD-file as String
-   */
-  public ASTODArtifact parseFile(String path) {
-    Optional<ASTODArtifact> astodArtifact = Optional.empty();
-    try {
-      Path model = Paths.get(path);
-      OD4ReportParser parser = new OD4ReportParser();
-      astodArtifact = parser.parse(model.toString());
-    }
-    catch (IOException | NullPointerException e) {
-      Log.error("0xA7102 Input file " + path + " not found.");
-    }
-
-    return astodArtifact.get();
-  }
 
   /**
    * Prints the contents of the OD-AST to stdout or a specified file.
@@ -161,6 +164,7 @@ public class OD4ReportCLI {
    * @param file          The target file name for printing the OD artifact. If empty, the content
    *                      is printed to stdout instead
    */
+  @Override
   public void prettyPrint(ASTODArtifact astodArtifact, String file) {
     // pretty print AST
     OD4ReportFullPrettyPrinter pp = new OD4ReportFullPrettyPrinter();
@@ -168,85 +172,17 @@ public class OD4ReportCLI {
     print(od, file);
   }
 
-  /**
-   * Stores the contents of the symboltable to stdout or a specific file.
-   *
-   * @param OD4ReportArtifactScope ArtiactScope of object diagram
-   * @param file                   Output file to store symboltable in.
-   */
-  public void prettyPrintST(IOD4ReportArtifactScope OD4ReportArtifactScope, String file) {
-    // serializes the symboltable
-    OD4ReportSymbols2Json reportSymbols2Json = new OD4ReportSymbols2Json();
-
-    if (StringUtils.isEmpty(file)) {
-      System.out.println(reportSymbols2Json.serialize(OD4ReportArtifactScope));
-    }
-    else {
-      reportSymbols2Json.store(OD4ReportArtifactScope, Paths.get(file).toString());
-    }
-  }
-
-  /**
-   * Extracts the model name from a given file name. The model name corresponds to the unqualified
-   * file name without file extension.
-   *
-   * @param file The path to the input file
-   * @return The extracted model name
-   */
-  public String getModelNameFromFile(String file) {
-    String modelName = new File(file).getName();
-    // cut file extension if present
-    if (modelName.length() > 0) {
-      int lastIndex = modelName.lastIndexOf(".");
-      if (lastIndex != -1) {
-        modelName = modelName.substring(0, lastIndex);
-      }
-    }
-    return modelName;
-  }
-
-  /**
-   * Prints the given content to a target file (if specified) or to stdout (if the file is
-   * Optional.empty()).
-   *
-   * @param content The String to be printed
-   * @param path    The target path to the file for printing the content. If empty, the content is
-   *                printed to stdout instead
-   */
-  public void print(String content, String path) {
-    // print to stdout or file
-    if (path.isEmpty()) {
-      System.out.println(content);
-    }
-    else {
-      File f = new File(path);
-      // create directories (logs error otherwise)
-      f.getAbsoluteFile().getParentFile().mkdirs();
-
-      FileWriter writer;
-      try {
-        writer = new FileWriter(f);
-        writer.write(content);
-        writer.close();
-      }
-      catch (IOException e) {
-        Log.error("0xA7105 Could not write to file " + f.getAbsolutePath());
-      }
-    }
-  }
-
   /*=================================================================*/
   /* Part 3: Defining the options incl. help-texts
   /*=================================================================*/
 
   /**
-   * Initializes the available CLI options for the OD tool.
+   * Initializes the standard CLI options for the OD tool.
    *
    * @return The CLI options with arguments.
    */
-  protected Options initOptions() {
-    Options options = new Options();
-
+  @Override
+  public Options addStandardOptions(Options options) {
     // help dialog
     options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").build());
 
@@ -258,43 +194,54 @@ public class OD4ReportCLI {
         .desc("Reads the source file (mandatory) and parses the contents as an object diagram")
         .build());
 
-    // check cocos
-    options.addOption(Option.builder("c")
-        .longOpt("coco")
-        .optionalArg(true)
-        .numberOfArgs(3)
-        .desc("Checks the CoCos for the input. Optional arguments are:\n"
-            + "-c intra to check only the" + " intra-model CoCos,\n"
-            + "-c inter checks also inter-model CoCos,\n" + "-c type "
-            + "(default) checks all CoCos.")
-        .build());
+    // Read file to add symboltypes to global scope
+    options.addOption(Option.builder("symtypes")
+            .longOpt("symboltypes")
+            .argName("string")
+            .hasArg()
+            .desc("Symbol type followed by deser (repeat for multiple) to be able to resolve smbols from foreign languages.")
+            .build());
 
     // model paths
     options.addOption(Option.builder("path")
-        .argName("dirlist")
-        .hasArgs()
-        .desc("Sets the artifact path for imported symbols")
-        .build());
+      .argName("dirlist")
+      .hasArgs()
+      .desc("Sets the artifact path for imported symbols")
+      .build());
 
     // pretty print OD
     options.addOption(Option.builder("pp")
-        .longOpt("prettyprint")
-        .argName("file")
-        .optionalArg(true)
-        .numberOfArgs(1)
-        .desc("Prints the OD-AST to stdout or the specified file (optional)")
-        .build());
+      .longOpt("prettyprint")
+      .argName("file")
+      .optionalArg(true)
+      .numberOfArgs(1)
+      .desc("Prints the OD-AST to stdout or the specified file (optional)")
+      .build());
 
     // print OD symtab
     options.addOption(Option.builder("s")
-        .longOpt("symboltable")
-        .argName("file")
-        .optionalArg(true)
-        .numberOfArgs(1)
-        .desc("Prints the symboltable of the object diagram to stdout or the specified file "
-            + "(optional)")
-        .build());
+      .longOpt("symboltable")
+      .argName("file")
+      .optionalArg(true)
+      .numberOfArgs(1)
+      .desc("Prints the symboltable of the object diagram to stdout or the specified file "
+        + "(optional)")
+      .build());
+    return options;
+  }
 
+  @Override
+  public Options addAdditionalOptions(Options options) {
+    // check cocos
+    options.addOption(Option.builder("c")
+      .longOpt("coco")
+      .optionalArg(true)
+      .numberOfArgs(3)
+      .desc("Checks the CoCos for the input. Optional arguments are:\n"
+        + "-c intra to check only the" + " intra-model CoCos,\n"
+        + "-c inter checks also inter-model CoCos,\n" + "-c type "
+        + "(default) checks all CoCos.")
+      .build());
     return options;
   }
 

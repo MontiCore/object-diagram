@@ -11,3 +11,4 @@ do
   content=$(java -jar MDLinkChangerCLI.jar -f $file)
   echo "$content" > $file
 done
+echo "[INFO] Replaced descriptions of not publicly available GitLab links"
