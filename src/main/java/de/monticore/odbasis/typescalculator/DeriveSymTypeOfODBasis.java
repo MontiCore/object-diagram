@@ -13,7 +13,7 @@ import java.util.Optional;
 public class DeriveSymTypeOfODBasis implements IDerive {
 
   private TypeCheckResult typeCheckResult;
-  
+
   protected ODBasisTraverser traverser = ODBasisMill.traverser();
 
   public DeriveSymTypeOfODBasis() {

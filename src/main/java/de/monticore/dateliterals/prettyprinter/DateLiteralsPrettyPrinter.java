@@ -10,7 +10,7 @@ import de.monticore.prettyprint.IndentPrinter;
 public class DateLiteralsPrettyPrinter implements DateLiteralsHandler {
 
   protected IndentPrinter printer;
-  
+
   protected DateLiteralsTraverser traverser;
 
   public DateLiteralsPrettyPrinter(IndentPrinter printer) {
@@ -67,12 +67,12 @@ public class DateLiteralsPrettyPrinter implements DateLiteralsHandler {
     getPrinter().print(":");
     getPrinter().print(timePartColon.getSecond().getDigits());
   }
-  
-  @Override 
+
+  @Override
   public DateLiteralsTraverser getTraverser() {
     return traverser;
   }
-  
+
   @Override
   public void setTraverser(DateLiteralsTraverser traverser) {
     this.traverser = traverser;

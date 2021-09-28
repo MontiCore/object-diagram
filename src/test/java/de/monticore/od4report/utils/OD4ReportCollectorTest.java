@@ -26,9 +26,8 @@ public class OD4ReportCollectorTest {
     assertNotNull(astodArtifact);
 
     OD4ReportCollector od4ReportCollector = new OD4ReportCollector();
-    assertEquals(4, od4ReportCollector.getODObjects(astodArtifact.getObjectDiagram())
-        .size() + od4ReportCollector.getODLinks(astodArtifact.getObjectDiagram())
-        .size());
+    assertEquals(4, od4ReportCollector.getODObjects(astodArtifact.getObjectDiagram()).size()
+        + od4ReportCollector.getODLinks(astodArtifact.getObjectDiagram()).size());
   }
 
   @Test
@@ -38,8 +37,7 @@ public class OD4ReportCollectorTest {
     assertNotNull(astodArtifact);
 
     OD4ReportCollector od4ReportCollector = new OD4ReportCollector();
-    assertEquals(5, od4ReportCollector.getODObjects(astodArtifact.getObjectDiagram())
-        .size());
+    assertEquals(5, od4ReportCollector.getODObjects(astodArtifact.getObjectDiagram()).size());
   }
 
 }

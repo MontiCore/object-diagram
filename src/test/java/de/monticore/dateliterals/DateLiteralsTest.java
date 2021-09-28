@@ -172,7 +172,8 @@ public class DateLiteralsTest {
             .setHour(DateLiteralsMill.natLiteralBuilder().setDigits("15").build())
             .setMinute(DateLiteralsMill.natLiteralBuilder().setDigits("00").build())
             .setSecond(DateLiteralsMill.natLiteralBuilder().setDigits("00").build())
-            .build()).build();
+            .build())
+        .build();
 
     String prettyPrint = new DateLiteralsFullPrettyPrinter(new IndentPrinter()).prettyprint(date);
     Optional<ASTDate> ppDate = new OD4ReportParser().parse_StringDate(prettyPrint);
