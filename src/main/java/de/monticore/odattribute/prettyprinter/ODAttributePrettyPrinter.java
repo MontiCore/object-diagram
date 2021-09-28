@@ -52,12 +52,12 @@ public class ODAttributePrettyPrinter implements ODAttributeHandler {
     getPrinter().print(" -> ");
     a.getVal().accept(getTraverser());
   }
-  
+
   @Override
   public ODAttributeTraverser getTraverser() {
     return traverser;
   }
-  
+
   @Override
   public void setTraverser(ODAttributeTraverser traverser) {
     this.traverser = traverser;

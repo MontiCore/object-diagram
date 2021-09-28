@@ -55,8 +55,8 @@ A graphical version is shown in Figure 1.
 The conceptual elements of ODs are similar to JSOM or XML, but deliver (hopefully) a better readable
 syntax:
 
-* *Objects* have a name, e.g. `alice`, which can be used for linking 
-  of arbitrary graph structures, like `tiger`.
+* *Objects* have a name, e.g. `alice`, which can be used for linking of arbitrary graph structures,
+  like `tiger`.
 * Objects also have a *type*, e.g. `:Person`.
 * UML allows both to be optional, if not needed or reconstructable from context.
 * *Attributes* are defined with their value, e.g. `color = RED`.
@@ -324,18 +324,17 @@ and [```OOTypeSymbols```][OOSymbolsRef].
 &nbsp;
 
 Figure 2 depicts the symbol table data structure of
-the [```OD4Report```](../../../grammars/de/monticore/OD4Report.mc4) language,
-when then built from the AST.
-The ```OD4ReportGlobalScope``` is associated to an
+the [```OD4Report```](../../../grammars/de/monticore/OD4Report.mc4) language, when then built from
+the AST. The ```OD4ReportGlobalScope``` is associated to an
 ```OD4ReportArtifactScope``` for each artifact defining an OD. In each of these artifacts, at
 exactly one OD can be defined and each OD introduces a [```DiagramSymbol```][BasicSymbolsRef].
 Therefore, each ```OD4DReportArtifactScope``` is associated to exactly one
 [```DiagramSymbol```][BasicSymbolsRef]. The ```OD4ReportArtifactScope```
-contains a [```VariableSymbol```][BasicSymbolsRef] for each named object
-that is defined inside the OD.
+contains a [```VariableSymbol```][BasicSymbolsRef] for each named object that is defined inside the
+OD.
 
-As usual the `OD4DReportArtifactScope` is not stored in the symboltable,
-but the top level symbols and potentially associated scopes are.
+As usual the `OD4DReportArtifactScope` is not stored in the symboltable, but the top level symbols
+and potentially associated scopes are.
 
 <img width="400" src="../../../../../doc/pics/STInstanceExample.png" alt="Symbol table instance of the OD depicted in Figure 1" style="float: left; margin-right: 10px;">
 <br><b>Figure 3:</b> Symbol table instance of the OD depicted in Figure 1.
@@ -467,12 +466,10 @@ table instance depicted in Figure 3:
 
 * [Project root: MontiCore @github](https://github.com/MontiCore/monticore)
 * [MontiCore documentation](http://www.monticore.de/)
-
 * [**List of languages**](https://github.com/MontiCore/monticore/blob/dev/docs/Languages.md)
 * [**MontiCore Core Grammar
   Library**](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/Grammars.md)
 * [Best Practices](https://github.com/MontiCore/monticore/blob/dev/docs/BestPractices.md)
 * [Publications about MBSE and MontiCore](https://www.se-rwth.de/publications/)
-
 * [Licence definition](https://github.com/MontiCore/monticore/blob/master/00.org/Licenses/LICENSE-MONTICORE-3-LEVEL.md)
 

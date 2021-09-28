@@ -47,6 +47,7 @@ deploy:
 
 checkMDLinks:
   stage: check
+  allow_failure: true
   dependencies:
     - test
   script:
