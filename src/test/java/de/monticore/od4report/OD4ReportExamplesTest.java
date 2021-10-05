@@ -92,8 +92,7 @@ public class OD4ReportExamplesTest {
     assertTrue(odDef.isPresent());
 
     // pretty print the AST
-    String ppResult = new OD4ReportFullPrettyPrinter(new IndentPrinter()).prettyprint(
-        odDef.get());
+    String ppResult = new OD4ReportFullPrettyPrinter(new IndentPrinter()).prettyprint(odDef.get());
 
     // parse the printers content
     Optional<ASTODArtifact> ppOd = parser.parse_StringODArtifact(ppResult);
