@@ -5,7 +5,7 @@ plugins {
     id 'maven-publish'
     id "monticore" version "$mc_version" // MontiCore Plugin
     id "com.github.johnrengelman.shadow" version "4.0.4"
-    id "de.set.ecj" version "1.4.1" // Eclipse compiler as it's much faster than javac
+    //id "de.set.ecj" version "1.4.1" // Eclipse compiler as it's much faster than javac
 }
 
 def commons_version = "1.7.9"
@@ -52,12 +52,19 @@ dependencies {
     implementation "commons-cli:commons-cli:1.4"
     implementation "org.apache.commons:commons-lang3:3.8.1"
 
-    compile 'org.apache.commons:commons-lang3:${commons-lang3.version}'
+    implementation 'org.apache.commons:commons-lang3:${commons-lang3.version}'
     testImplementation "junit:junit:4.11"
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.2"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:5.6.2"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.6.2"
     testImplementation "org.junit.vintage:junit-vintage-engine:5.6.2"
+}
+
+configurations {
+    ecj
+}
+dependencies {
+    ecj 'org.eclipse.jdt:ecj:3.26.0'
 }
 
 repositories {
@@ -127,10 +134,15 @@ test {
 }
 
 tasks.withType(JavaCompile) {
+  options.fork = true
   options.encoding = "UTF-8"
   options.deprecation false
   options.warnings = false
   options.headerOutputDirectory.convention(null)
+  options.forkOptions.with {
+      executable = 'java'
+      jvmArgs = ['-classpath', project.configurations.ecj.asPath, 'org.eclipse.jdt.internal.compiler.batch.Main', '-nowarn', "-Xmx2048m"]
+  }
 }
 
 // build sources jar in addition
