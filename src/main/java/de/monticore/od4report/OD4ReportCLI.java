@@ -148,7 +148,7 @@ public class OD4ReportCLI extends OD4ReportCLITOP {
     }
     catch (ParseException e) {
       // ann unexpected error from the apache CLI parser:
-      Log.error("0xA7101 Could not process CLI parameters: " + e.getMessage());
+      Log.error("0xA7110 Could not process CLI parameters: " + e.getMessage());
     }
 
   }

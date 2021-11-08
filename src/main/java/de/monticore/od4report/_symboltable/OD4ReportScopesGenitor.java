@@ -30,7 +30,7 @@ public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
       getCurrentScope().get().add(symbol);
     }
     else {
-      Log.warn("0xA50212 Symbol cannot be added to current scope, since no scope exists.");
+      Log.warn("0xA50213 Symbol cannot be added to current scope, since no scope exists.");
     }
     symbol.setAstNode(astodReportObject);
     astodReportObject.setSymbol(symbol);

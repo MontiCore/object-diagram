@@ -95,7 +95,7 @@ public class OD4DataCLI extends OD4DataCLITOP {
     }
     catch (ParseException e) {
       // ann unexpected error from the apache CLI parser:
-      Log.error("0xA7101 Could not process CLI parameters: " + e.getMessage());
+      Log.error("0xA7121 Could not process CLI parameters: " + e.getMessage());
     }
 
   }
