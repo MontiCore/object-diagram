@@ -25,6 +25,13 @@ sourceSets {
         java.srcDirs += ["$projectDir/target/generated-test-sources/monticore/sourcecode"]
     }
 }
+
+java {
+    registerFeature('grammars') {
+        usingSourceSet(sourceSets.grammars)
+    }
+}
+
 subprojects {
     apply plugin: 'idea'
     idea {
