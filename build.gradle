@@ -21,6 +21,14 @@ sourceSets {
         java.srcDirs += ["$projectDir/target/generated-sources/monticore/sourcecode"]
       resources.srcDirs = []
     }
+    
+    grammars {
+      resources {
+        srcDirs([grammarDir, grammarOutDir])
+        include "**/*.mc4"
+      }
+    }
+
     test {
         java.srcDirs += ["$projectDir/target/generated-test-sources/monticore/sourcecode"]
     }
