@@ -66,7 +66,7 @@ public class OD4DataCLI extends OD4DataCLITOP {
       ASTODArtifact astodArtifact = parse(cmd.getOptionValue("i"));
 
       // create symbol table
-      IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact,
+      IOD4DataArtifactScope od4DataArtifactScope = OD4DataToolAPI.createSymbolTable(astodArtifact,
         true);
 
       // -option check cocos
@@ -74,10 +74,10 @@ public class OD4DataCLI extends OD4DataCLITOP {
       if (cmd.hasOption("c") && cmd.getOptionValues("c") != null) {
         cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
         if (cocoOptionValue.contains("intra")) {
-          OD4DataTool.runAllIntraCoCos(astodArtifact);
+          OD4DataToolAPI.runAllIntraCoCos(astodArtifact);
         }
         else {
-          OD4DataTool.runAllCoCos(astodArtifact);
+          OD4DataToolAPI.runAllCoCos(astodArtifact);
         }
       }
 

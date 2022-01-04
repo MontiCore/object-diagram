@@ -13,7 +13,7 @@ import org.antlr.v4.runtime.RecognitionException;
 import java.io.IOException;
 import java.util.Optional;
 
-public class OD4DataTool {
+public class OD4DataToolAPI {
 
   /**
    * Parse the model contained in the specified file.
@@ -51,7 +51,7 @@ public class OD4DataTool {
   }
 
   public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast) {
-    return OD4DataTool.createSymbolTable(ast, false);
+    return OD4DataToolAPI.createSymbolTable(ast, false);
   }
 
   public static void runAllCoCos(ASTODArtifact ast) {
