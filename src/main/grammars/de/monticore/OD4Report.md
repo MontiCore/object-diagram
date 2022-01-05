@@ -73,7 +73,7 @@ Below follow more detailed explanations about the project:
 
 ## Tools: `OD4ReportTool` and  `ODDataTool`
 
-By default, the project creates two tools, stored in `OD4ReportTool.jar` and  `ODDataTool.jar`.
+By default, the project creates two tools, stored in `OD4ReportCLI.jar` and  `ODDataCLI.jar`.
 
 Both classes, [```OD4ReportTool```](../../../java/de/monticore/od4report/OD4ReportTool.java)
 and [```OD4DataTool```](../../../java/de/monticore/od4data/OD4DataTool.java) provide typical
@@ -94,15 +94,15 @@ provides a ``-h`` parameter providing further information on how to use it.
 Example calls:
 
 ```
-  java -jar target/libs/OD4DataTool.jar -h
-  java -jar target/libs/OD4ReportTool.jar -h
+  java -jar target/libs/OD4DataCLI.jar -h
+  java -jar target/libs/OD4ReportCLI.jar -h
   
   // pretty print an OD:
-  java -jar target/libs/OD4ReportTool.jar -i src/test/resources/examples/od/Teaser.od \
+  java -jar target/libs/OD4ReportCLI.jar -i src/test/resources/examples/od/Teaser.od \
            -pp
 
   // read an OD and store the symbols it defines and exports in a symboltable:
-  java -jar target/libs/OD4DataTool.jar -i src/test/resources/examples/od/Teaser.od \
+  java -jar target/libs/OD4DataCLI.jar -i src/test/resources/examples/od/Teaser.od \
            -s Teaser.symod
 ```
 

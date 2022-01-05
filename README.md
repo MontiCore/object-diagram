@@ -93,15 +93,15 @@ Afterwards, the jars of the tools are available in `od/target/libs`.
 
 The previous sections describe how to obtain an executable JAR file
 (OD command line tool). This section provides a tutorial for using the OD tool. The following examples
-assume that you locally named the tool `OD4ReportTool`. Note that after setting up the tool in the
-previous step, you will also find a `OD4DataTool`. The following instruction also hold for this tool.
+assume that you locally named the tool `OD4ReportCLI`. Note that after setting up the tool in the
+previous step, you will also find a `OD4DataCLI`. The following instruction also hold for this tool.
 
 ### Step 1: Laying the basis
 
 Executing the Jar file without any options prints usage information of the tool to the console:
 
 ```
-java -jar OD4ReportTool.jar
+java -jar OD4ReportCLI.jar
 usage: OD4ReportTool
  -c,--coco <arg>            Checks the CoCos for the input ODs. Possible
                             arguments are 'intra' and 'all'. When
@@ -129,7 +129,7 @@ To work properly, the tool needs the mandatory argument `-i,--input <arg>`, whic
 paths of at least one input file containing OD models. If no other arguments are specified, the 
 tool solely parses the model(s).
 
-For trying this out, copy the `OD4ReportTool.jar` into a directory of your choice. Afterwards, create
+For trying this out, copy the `OD4ReportCLI.jar` into a directory of your choice. Afterwards, create
 a text file containing the following simple OD:
 
 ```
@@ -146,12 +146,12 @@ objectdiagram Example {
 }
 ```
 
-Save the text file as `Example.od` in the directory where `OD4ReportTool.jar` is located.
+Save the text file as `Example.od` in the directory where `OD4ReportCLI.jar` is located.
 
 Now execute the following command:
 
 ```
-java -jar OD4ReportTool.jar -i Example.od
+java -jar OD4ReportCLI.jar -i Example.od
 ```
 
 You may notice that the tool prints no output to the console. This means that the tool has
@@ -167,7 +167,7 @@ input files to the console.
 Execute the following command for trying this out:
 
 ```
-java -jar OD4ReportTool.jar -i Example.od -pp
+java -jar OD4ReportCLI.jar -i Example.od -pp
 ```
 
 The command prints the pretty-printed model contained in the input file to the console:
@@ -194,7 +194,7 @@ the number of input files. The i-th input file is pretty-printed into the i-th o
 Execute the following command for trying this out:
 
 ```
-java -jar OD4ReportTool.jar -i Example.od -pp PPExample.od
+java -jar OD4ReportCLI.jar -i Example.od -pp PPExample.od
 ```
 
 The command prints the pretty-printed model contained in the input file into the file `PPExample.od`
@@ -217,7 +217,7 @@ additionally providing one of the three arguments `intra` and `all`.
 Execute the following command for trying out a simple example:
 
 ```
-java -jar OD4ReportTool.jar -i Example.od -c intra
+java -jar OD4ReportCLI.jar -i Example.od -c intra
 ```
 
 You may notice that the tool prints nothing to the console when executing this command. This means
@@ -227,15 +227,15 @@ Let us now consider a more complex scenario. You can check the different kinds o
 conditions, using the `-c,--coco <arg>` option:
 
 ```
-java -jar OD4ReportTool.jar -i MyFamily.od -c intra
+java -jar OD4ReportCLI.jar -i MyFamily.od -c intra
 ```
 
 ```
-java -jar OD4ReportTool.jar -i MyFamily.od -c all
+java -jar OD4ReportCLI.jar -i MyFamily.od -c all
 ```
 
 ```
-java -jar OD4ReportTool.jar -i MyFamily.od -c
+java -jar OD4ReportCLI.jar -i MyFamily.od -c
 ```
 
 While the first call of the tool does not produce any errors, the others do. The error states
@@ -259,7 +259,7 @@ by importing a symbol file defining the (yet undefined) types. .
 In this section we make use of the model path and provide the tool with a symbol file (stored
 symbol table) of another model, which contains the necessary type information.
 
-Create a new directory `cd` in the directory where the tool `OD4ReportTool.jar` is located. The
+Create a new directory `cd` in the directory where the tool `OD4ReportCLI.jar` is located. The
 symbol file `MyFamily.cdsym` of a model, which provides all necessary type information, can be
 found [here](doc/MyFamily.cdsym). Download the file, name it `MyFamily.cdsym`, and move it into the
 directory `cd`.
@@ -277,14 +277,14 @@ stored in directories contained in the model path. So, if we want the tool to fi
 we have to provide the model path to the tool via the `-path <arg>` option:
 
 ```
-java -jar OD4ReportTool.jar -i Example.od -c -path <MODELPATH>
+java -jar OD4ReportCLI.jar -i Example.od -c -path <MODELPATH>
 ```
 
 where `<MODELPATH>` is the path where you stored the downloaded symbol file. In our example, in case
 you stored the model in the directory `cd`, execute the following command:
 
 ```
-java -jar OD4ReportTool.jar -i Example.od -c -path cd
+java -jar OD4ReportCLI.jar -i Example.od -c -path cd
 ```
 
 Well, executing the above command still produces the same error message. This is because the symbol
@@ -333,7 +333,7 @@ For storing the symbol file of `Example.od`, execute the following command
 (the implicit context condition checks require using the model path option):
 
 ```
-java -jar OD4ReportTool.jar -i Example.od -path cd -s
+java -jar OD4ReportCLI.jar -i Example.od -path cd -s
 ```
 
 The tool produces the file `target/symbols/MyFamily.odsym`, which can now be imported by other
@@ -344,7 +344,7 @@ the following command
 (again, the implicit context condition checks require using the model path option):
 
 ```
-java -jar OD4ReportTool.jar -i Example.od -path cd -s syms/Example.odsym
+java -jar OD4ReportCLI.jar -i Example.od -path cd -s syms/Example.odsym
 ```
 
 Congratulations, you have just finished the tutorial about saving OD symbol files and are pretty
