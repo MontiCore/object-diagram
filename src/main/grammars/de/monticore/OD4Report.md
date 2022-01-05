@@ -71,38 +71,38 @@ syntax:
 
 Below follow more detailed explanations about the project:
 
-## Tools `OD4ReportCLI` and  `ODDataCLI`
+## Tools: `OD4ReportTool` and  `ODDataTool`
 
-By default, the project creates two tools, stored in `OD4ReportCLI.jar` and  `ODDataCLI.jar`.
+By default, the project creates two tools, stored in `OD4ReportTool.jar` and  `ODDataTool.jar`.
 
-Both CLIs, [```OD4ReportCLI```](../../../java/de/monticore/od4report/OD4ReportCLI.java)
-and [```OD4DataCLI```](../../../java/de/monticore/od4data/OD4DataCLI.java) provide typical
-functionality used when processing models from commandline (CLI). To this effect, the classes
+Both classes, [```OD4ReportTool```](../../../java/de/monticore/od4report/OD4ReportTool.java)
+and [```OD4DataTool```](../../../java/de/monticore/od4data/OD4DataTool.java) provide typical
+functionality used when processing models from commandlin. To this effect, the classes
 provide methods for parsing, pretty-printing, creating symbol tables, storing symbols, and loading
 symbols. Detailed information about the methods can be found in the Javadoc documentation of each
 class.
 
-[```OD4DataCLI```](../../../java/de/monticore/od4data/OD4DataCLI.java) provides typical
-functionality used when processing models from commandline (CLI). To this effect, the class provides
+[```OD4DataTool```](../../../java/de/monticore/od4data/OD4DataTool.java) provides typical
+functionality used when processing models from commandline. To this effect, the class provides
 methods for parsing, pretty-printing, creating symbol tables, storing symbols, and loading symbols.
 Detailed information about the methods can be found in the Javadoc documentation of the
-class [```OD4DataCLI```](../../../java/de/monticore/od4data/OD4DataCLI.java).
+class [```OD4DataTool```](../../../java/de/monticore/od4data/OD4DataTool.java).
 
-Each CLI can be found in the ```target``` folder once the project build was successful. Each CLI
-provides a ``-h`` parameter providing further information on how to use the CLI.
+Each tool can be found in the ```target``` folder once the project build was successful. Each tool
+provides a ``-h`` parameter providing further information on how to use it.
 
 Example calls:
 
 ```
-  java -jar target/libs/OD4DataCLI.jar -h
-  java -jar target/libs/OD4ReportCLI.jar -h
+  java -jar target/libs/OD4DataTool.jar -h
+  java -jar target/libs/OD4ReportTool.jar -h
   
   // pretty print an OD:
-  java -jar target/libs/OD4ReportCLI.jar -i src/test/resources/examples/od/Teaser.od \
+  java -jar target/libs/OD4ReportTool.jar -i src/test/resources/examples/od/Teaser.od \
            -pp
 
   // read an OD and store the symbols it defines and exports in a symboltable:
-  java -jar target/libs/OD4DataCLI.jar -i src/test/resources/examples/od/Teaser.od \
+  java -jar target/libs/OD4DataTool.jar -i src/test/resources/examples/od/Teaser.od \
            -s Teaser.symod
 ```
 

@@ -18,7 +18,7 @@ import java.util.Set;
  * Command line interface for the OD language and corresponding tooling. Defines, handles, and
  * executes the corresponding command line options and arguments, such as --help
  */
-public class OD4DataCLI extends OD4DataCLITOP {
+public class OD4DataTool extends OD4DataToolTOP {
 
   /*=================================================================*/
   /* Part 1: Handling the arguments and options
@@ -126,7 +126,7 @@ public class OD4DataCLI extends OD4DataCLITOP {
   /*=================================================================*/
 
   /**
-   * Initializes the standard CLI options for the OD tool.
+   * Initializes the standard options for the OD tool.
    *
    * @return The CLI options with arguments.
    */

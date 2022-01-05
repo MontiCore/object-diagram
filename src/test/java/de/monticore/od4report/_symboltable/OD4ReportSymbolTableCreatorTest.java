@@ -4,7 +4,7 @@ package de.monticore.od4report._symboltable;
 
 import de.monticore.io.paths.MCPath;
 import de.monticore.od4report.OD4ReportMill;
-import de.monticore.od4report.OD4ReportTool;
+import de.monticore.od4report.OD4ReportToolAPI;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
@@ -32,7 +32,7 @@ public class OD4ReportSymbolTableCreatorTest {
         Paths.get(INPUTFOLDER.toString(), "AuctionParticipants.od").toString());
     assertTrue(artifact.isPresent());
 
-    IOD4ReportArtifactScope symbolTable = OD4ReportTool.createSymbolTable(artifact.get(), true);
+    IOD4ReportArtifactScope symbolTable = OD4ReportToolAPI.createSymbolTable(artifact.get(), true);
     // TODO: uncomment when ImportStatements are fixed
     //    Optional<VariableSymbol> person = symbolTable.resolveVariable(
     //        "symboltable.symbols.MyFamily.alice");

@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 
 import static org.junit.Assert.assertTrue;
 
-public class OD4DataCLITest {
+public class OD4DataToolTest {
 
   private final Path INPUTOD = Paths.get("src", "test", "resources", "examples", "od",
       "SimpleOD2.od");
@@ -71,24 +71,24 @@ public class OD4DataCLITest {
   }
 
   @Test
-  public void testOD4DataCLIHelp() {
+  public void testOD4DataToolHelp() {
     String[] help = { "-h" };
-    OD4DataCLI.main(help);
+    OD4DataTool.main(help);
   }
 
   @Test
-  public void testOD4DataCLIPath() {
+  public void testOD4DataToolPath() {
     String[] input = { "-i", INPUTOD.toString(), "-path",
         Paths.get(INPUTDIR.toString(), "examples").toString(),
         Paths.get(INPUTDIR.toString(), "cocos").toString() };
-    OD4DataCLI.main(input);
+    OD4DataTool.main(input);
   }
 
   @Test
-  public void testOD4CLIPrettyPrint() {
+  public void testOD4ToolPrettyPrint() {
     String[] input = { "-i", INPUTOD.toString(), "-pp",
         Paths.get(TARGET.toString(), "pp.od").toString() };
-    OD4DataCLI.main(input);
+    OD4DataTool.main(input);
     assertTrue(Paths.get(TARGET.toString(), "pp.od").toFile().exists());
   }
 
@@ -97,7 +97,7 @@ public class OD4DataCLITest {
     OD4DataMill.init();
     String[] input = { "-i", INPUTOD.toString(), "-s",
         Paths.get(TARGET.toString(), "MyFamily.odsym").toString() };
-    OD4DataCLI.main(input);
+    OD4DataTool.main(input);
     assertTrue(Paths.get(TARGET.toString(), "MyFamily.odsym").toFile().exists());
   }
 

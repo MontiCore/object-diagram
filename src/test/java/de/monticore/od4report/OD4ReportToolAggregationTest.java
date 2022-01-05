@@ -2,17 +2,10 @@
 
 package de.monticore.od4report;
 
-import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
-import de.se_rwth.commons.logging.Log;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-public class OD4ReportCLIAggregationTest {
+public class OD4ReportToolAggregationTest {
 
   //Todo: Does not work due to unavailability of DeSer to deserialize symbols of kind de.monticore.cdbasis._symboltable.CDPackageSymbol
   @Test
@@ -24,13 +17,13 @@ public class OD4ReportCLIAggregationTest {
 
     //Use Case Game
     //String[] input_1 = { "-i", "src/test/resources/symboltable/aggregation/BasicGameOD.od", "-symboltypes", symtypes_args, "-path", "src/test/resources/symboltable/aggregation/basicgame_cd"};
-    //OD4ReportCLI.main(input_1);
+    //OD4ReportTool.main(input_1);
 
 
     // Minimized Test
     //Names of Diagram and file have to be equal, otherwise MontiCore is unable to load the symbol table
     String[] input_2 = {"-i", "src/test/resources/symboltable/aggregation/TestOD.od", "-symboltypes", symtypes_args, "-path", "src/test/resources/symboltable/aggregation/cd"};
-    OD4ReportCLI.main(input_2);
+    OD4ReportTool.main(input_2);
   }
 
 }

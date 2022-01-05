@@ -173,33 +173,33 @@ task grammarJar(type: Jar) {
 jar.dependsOn(grammarJar)
 
 shadowJar {
-    archiveFileName = 'ODCLI.jar'
-    archiveClassifier = "cli"
+    archiveFileName = 'ODTool.jar'
+    archiveClassifier = "tool"
     manifest {
-        attributes('Main-Class': 'de.monticore.od4data.OD4DataCLI')
+        attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
     }
 }
 
-task buildOD4DataCLI(type: Jar, dependsOn: shadowJar) {
-    archiveFileName = 'OD4DataCLI.jar'
-    archiveClassifier = "od4data-cli"
+task buildOD4DataTool(type: Jar, dependsOn: shadowJar) {
+    archiveFileName = 'OD4DataTool.jar'
+    archiveClassifier = "od4data-tool"
     manifest {
-        attributes('Main-Class': 'de.monticore.od4data.OD4DataCLI')
-    }
-    from zipTree(shadowJar.archiveFile)
-}
-
-task buildOD4ReportCLI(type: Jar, dependsOn: shadowJar) {
-    archiveFileName = 'OD4ReportCLI.jar'
-    archiveClassifier = "od4report-cli"
-    manifest {
-        attributes('Main-Class': 'de.monticore.od4report.OD4ReportCLI')
+        attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
     }
     from zipTree(shadowJar.archiveFile)
 }
 
-jar.dependsOn(buildOD4DataCLI)
-jar.dependsOn(buildOD4ReportCLI)
+task buildOD4ReportTool(type: Jar, dependsOn: shadowJar) {
+    archiveFileName = 'OD4ReportTool.jar'
+    archiveClassifier = "od4report-tool"
+    manifest {
+        attributes('Main-Class': 'de.monticore.od4report.OD4ReportTool')
+    }
+    from zipTree(shadowJar.archiveFile)
+}
+
+jar.dependsOn(buildOD4DataTool)
+jar.dependsOn(buildOD4ReportTool)
 
 task testReport(type: TestReport) {
     destinationDir = file("$buildDir/reports/allTests")
@@ -217,8 +217,8 @@ publishing {
             artifact sourcesJar
 //            artifact javadocJar
             artifact shadowJar
-            artifact buildOD4DataCLI
-            artifact buildOD4ReportCLI
+            artifact buildOD4DataTool
+            artifact buildOD4ReportTool
             artifact grammarJar
         }
     }
