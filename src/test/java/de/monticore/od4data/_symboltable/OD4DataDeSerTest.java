@@ -3,7 +3,7 @@
 package de.monticore.od4data._symboltable;
 
 import de.monticore.od4data.OD4DataMill;
-import de.monticore.od4data.OD4DataTool;
+import de.monticore.od4data.OD4DataToolAPI;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
@@ -75,7 +75,7 @@ public class OD4DataDeSerTest {
     Optional<ASTODArtifact> astodArtifact = od4DataParser.parse(SIMPLEOD2.toString());
     assertTrue(astodArtifact.isPresent());
 
-    IOD4DataArtifactScope od4DataArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get(),
+    IOD4DataArtifactScope od4DataArtifactScope = OD4DataToolAPI.createSymbolTable(astodArtifact.get(),
         true);
 
     // serialize

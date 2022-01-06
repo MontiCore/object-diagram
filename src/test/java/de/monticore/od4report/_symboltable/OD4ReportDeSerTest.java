@@ -4,7 +4,7 @@ package de.monticore.od4report._symboltable;
 
 import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4report.OD4ReportMill;
-import de.monticore.od4report.OD4ReportTool;
+import de.monticore.od4report.OD4ReportToolAPI;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
@@ -66,7 +66,7 @@ public class OD4ReportDeSerTest {
     Optional<ASTODArtifact> astodArtifact = od4ReportParser.parse(TEASEROD.toString());
     assertTrue(astodArtifact.isPresent());
 
-    IOD4ReportArtifactScope od4ReportArtifactScope = OD4ReportTool.createSymbolTable(
+    IOD4ReportArtifactScope od4ReportArtifactScope = OD4ReportToolAPI.createSymbolTable(
         astodArtifact.get(), true);
 
     // serialize

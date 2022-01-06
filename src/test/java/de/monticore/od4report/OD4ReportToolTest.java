@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 
 import static org.junit.Assert.assertTrue;
 
-public class OD4ReportCLITest {
+public class OD4ReportToolTest {
 
   private final Path INPUTOD = Paths.get("src", "test", "resources", "examples", "od",
       "Examples" + ".od");
@@ -76,30 +76,30 @@ public class OD4ReportCLITest {
   }
 
   @Test
-  public void testOD4ReportCLIHelp() {
+  public void testOD4ReportToolHelp() {
     String[] help = { "-h" };
-    OD4ReportCLI.main(help);
+    OD4ReportTool.main(help);
   }
 
   @Test
-  public void testOD4ReportCLIPath() {
+  public void testOD4ReportToolPath() {
     String[] input = { "-i", INPUTOD.toString(), "-path",
         Paths.get(INPUTDIR.toString(), "examples").toString(),
         Paths.get(INPUTDIR.toString(), "cocos").toString() };
-    OD4ReportCLI.main(input);
+    OD4ReportTool.main(input);
   }
 
   @Test
-  public void testOD4ReportCLICocosIntra() {
+  public void testOD4ReportToolCocosIntra() {
     String[] input = { "-i", INPUTOD.toString(), "-c", "intra" };
-    OD4ReportCLI.main(input);
+    OD4ReportTool.main(input);
   }
 
   @Test
-  public void testOD4ReportCLIPrettyPrint() {
+  public void testOD4ReportToolPrettyPrint() {
     String[] input = { "-i", INPUTOD.toString(), "-pp",
         Paths.get(TARGET.toString(), "pp.od").toString() };
-    OD4ReportCLI.main(input);
+    OD4ReportTool.main(input);
     assertTrue(Paths.get(TARGET.toString(), "pp.od").toFile().exists());
   }
 
@@ -108,7 +108,7 @@ public class OD4ReportCLITest {
     OD4ReportMill.init();
     String[] input = { "-i", INPUTOD.toString(), "-s",
         Paths.get(TARGET.toString(), "Examples.odsym").toString() };
-    OD4ReportCLI.main(input);
+    OD4ReportTool.main(input);
     assertTrue(Paths.get(TARGET.toString(), "Examples.odsym").toFile().exists());
   }
 

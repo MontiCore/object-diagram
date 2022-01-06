@@ -2,7 +2,7 @@
 
 package de.monticore.od4report.utils;
 
-import de.monticore.od4report.OD4ReportTool;
+import de.monticore.od4report.OD4ReportToolAPI;
 import de.monticore.od4report.util.OD4ReportCollector;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class OD4ReportCollectorTest {
 
   @Test
   public void testCollector() {
-    ASTODArtifact astodArtifact = OD4ReportTool.parse(EXAMPLEOD.toString());
+    ASTODArtifact astodArtifact = OD4ReportToolAPI.parse(EXAMPLEOD.toString());
 
     assertNotNull(astodArtifact);
 
@@ -32,7 +32,7 @@ public class OD4ReportCollectorTest {
 
   @Test
   public void testAnonymousCollect() {
-    ASTODArtifact astodArtifact = OD4ReportTool.parse(SIMPLEOD2.toString());
+    ASTODArtifact astodArtifact = OD4ReportToolAPI.parse(SIMPLEOD2.toString());
 
     assertNotNull(astodArtifact);
 

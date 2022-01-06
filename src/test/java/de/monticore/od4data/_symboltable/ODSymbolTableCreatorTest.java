@@ -3,7 +3,7 @@
 package de.monticore.od4data._symboltable;
 
 import de.monticore.od4data.OD4DataMill;
-import de.monticore.od4data.OD4DataTool;
+import de.monticore.od4data.OD4DataToolAPI;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
@@ -103,9 +103,9 @@ public class ODSymbolTableCreatorTest {
   }
 
   private DiagramSymbol createObjectDiagramFromAST(String odName) {
-    ASTODArtifact astodArtifact = OD4DataTool.parse(
+    ASTODArtifact astodArtifact = OD4DataToolAPI.parse(
         Paths.get("src/test/resources/symboltable", odName + ".od").toString());
-    IOD4DataArtifactScope odBasisArtifactScope = OD4DataTool.createSymbolTable(astodArtifact);
+    IOD4DataArtifactScope odBasisArtifactScope = OD4DataToolAPI.createSymbolTable(astodArtifact);
     return odBasisArtifactScope.getDiagramSymbols().get(odName).get(0);
   }
 

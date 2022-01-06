@@ -142,7 +142,7 @@ public class OD4DataExamplesTest {
     assertFalse(parser.hasErrors());
     assertTrue(astodArtifact.isPresent());
 
-    IOD4DataArtifactScope odBasicsArtifactScope = OD4DataTool.createSymbolTable(astodArtifact.get());
+    IOD4DataArtifactScope odBasicsArtifactScope = OD4DataToolAPI.createSymbolTable(astodArtifact.get());
     assertNotNull(odBasicsArtifactScope);
 
     // pretty print the AST

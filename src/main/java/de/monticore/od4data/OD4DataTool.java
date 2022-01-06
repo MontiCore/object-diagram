@@ -1,65 +1,175 @@
-// (c) https://github.com/MontiCore/monticore
-
+/* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4data;
 
-import de.monticore.od4data._cocos.OD4DataCoCos;
-import de.monticore.od4data._parser.OD4DataParser;
+import de.monticore.io.paths.MCPath;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data._symboltable.OD4DataScopesGenitorDelegator;
+import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
-import org.antlr.v4.runtime.RecognitionException;
+import org.apache.commons.cli.*;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
-import java.util.Optional;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-public class OD4DataTool {
+/**
+ * Command line interface for the OD language and corresponding tooling. Defines, handles, and
+ * executes the corresponding command line options and arguments, such as --help
+ */
+public class OD4DataTool extends OD4DataToolTOP {
+
+  /*=================================================================*/
+  /* Part 1: Handling the arguments and options
+  /*=================================================================*/
 
   /**
-   * Parse the model contained in the specified file.
+   * Processes user input from command line and delegates to the corresponding tools.
    *
-   * @param model - file to parse
-   * @return Artifact containing the OD
+   * @param args The input parameters for configuring the OD tool.
    */
-  public static ASTODArtifact parse(String model) {
+  @Override
+  public void run(String[] args) {
+    init();
+    Options options = initOptions();
+
     try {
-      OD4DataParser parser = new OD4DataParser();
-      Optional<ASTODArtifact> optODArtifact = parser.parse(model);
+      // create CLI parser and parse input options from command line
+      CommandLineParser cliparser = new DefaultParser();
+      CommandLine cmd = cliparser.parse(options, args);
 
-      if (!parser.hasErrors() && optODArtifact.isPresent()) {
-        return optODArtifact.get();
+      // help: when --help
+      if (cmd.hasOption("h")) {
+        printHelp(options);
+        // do not continue, when help is printed
+        return;
       }
-      Log.error("Model could not be parsed.");
+
+      // if -i input is missing: also print help and stop
+      if (!cmd.hasOption("i")) {
+        printHelp(options);
+        // do not continue, when help is printed
+        return;
+      }
+
+      // if -path is set: save the model paths
+      MCPath symbolPath = new MCPath();
+      if (cmd.hasOption("path")) {
+        String[] paths = cmd.getOptionValues("path");
+        Arrays.stream(paths).forEach(p -> symbolPath.addEntry(Paths.get(p)));
+      }
+      OD4DataMill.globalScope().setSymbolPath(symbolPath);
+
+      // parse input file, which is now available
+      // (only returns if successful)
+      ASTODArtifact astodArtifact = parse(cmd.getOptionValue("i"));
+
+      // create symbol table
+      IOD4DataArtifactScope od4DataArtifactScope = OD4DataToolAPI.createSymbolTable(astodArtifact,
+        true);
+
+      // -option check cocos
+      Set<String> cocoOptionValue = new HashSet<>();
+      if (cmd.hasOption("c") && cmd.getOptionValues("c") != null) {
+        cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
+        if (cocoOptionValue.contains("intra")) {
+          OD4DataToolAPI.runAllIntraCoCos(astodArtifact);
+        }
+        else {
+          OD4DataToolAPI.runAllCoCos(astodArtifact);
+        }
+      }
+
+      // -option pretty print
+      if (cmd.hasOption("pp")) {
+        String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
+        prettyPrint(astodArtifact, path);
+      }
+
+      // -otion pretty print symboltable
+      if (cmd.hasOption("s")) {
+        String path = cmd.getOptionValue("s", StringUtils.EMPTY);
+        storeSymbols(od4DataArtifactScope, path);
+      }
     }
-    catch (RecognitionException | IOException e) {
-      Log.error("Failed to parse " + model, e);
+    catch (ParseException e) {
+      // ann unexpected error from the apache CLI parser:
+      Log.error("0xA7121 Could not process CLI parameters: " + e.getMessage());
     }
-    return null;
+
   }
+
+  /*=================================================================*/
+  /* Part 2: Executing arguments
+  /*=================================================================*/
+
 
   /**
-   * Create the symbol table from the parsed AST.
+   * Prints the contents of the OD-AST to stdout or a specified file.
    *
-   * @param ast ODArtifact ast
-   * @return Symboltable created form AST
+   * @param astodArtifact The OD-AST to be pretty printed
+   * @param file          The target file name for printing the OD artifact. If empty, the content
+   *                      is printed to stdout instead
    */
-  public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast, boolean checkTypes) {
-    OD4DataScopesGenitorDelegator od4DataScopesGenitorDelegator =
-        OD4DataMill.scopesGenitorDelegator();
-    od4DataScopesGenitorDelegator.setCheckTypes(checkTypes);
-    return od4DataScopesGenitorDelegator.createFromAST(ast);
+  @Override
+  public void prettyPrint(ASTODArtifact astodArtifact, String file) {
+    // pretty print AST
+    OD4DataFullPrettyPrinter pp = new OD4DataFullPrettyPrinter();
+    String od = pp.prettyprint(astodArtifact);
+    print(od, file);
   }
 
-  public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast) {
-    return OD4DataTool.createSymbolTable(ast, false);
-  }
 
-  public static void runAllCoCos(ASTODArtifact ast) {
-    new OD4DataCoCos().getCheckerForAllCoCos().checkAll(ast);
-  }
+  /*=================================================================*/
+  /* Part 3: Defining the options incl. help-texts
+  /*=================================================================*/
 
-  public static void runAllIntraCoCos(ASTODArtifact ast) {
-    new OD4DataCoCos().getCheckerForAllIntraCoCos().checkAll(ast);
-  }
+  /**
+   * Initializes the standard options for the OD tool.
+   *
+   * @return The CLI options with arguments.
+   */
+  @Override
+  public Options addStandardOptions(Options options) {
+    // help dialog
+    options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").build());
 
+    // parse input file
+    options.addOption(Option.builder("i")
+      .longOpt("input")
+      .argName("file")
+      .hasArg()
+      .desc("Reads the source file (mandatory) and parses the contents as an " + "object diagram")
+      .build());
+
+    // model paths
+    options.addOption(Option.builder("path")
+      .argName("dirlist")
+      .numberOfArgs(Option.UNLIMITED_VALUES)
+      .hasArg()
+      .desc("Sets the artifact path for imported symbols")
+      .build());
+
+    // pretty print OD
+    options.addOption(Option.builder("pp")
+      .longOpt("prettyprint")
+      .argName("file")
+      .optionalArg(true)
+      .numberOfArgs(1)
+      .desc("Prints the OD-AST to stdout or the specified file (optional)")
+      .build());
+
+    // print OD symtab
+    options.addOption(Option.builder("s")
+      .longOpt("symboltable")
+      .argName("file")
+      .optionalArg(true)
+      .numberOfArgs(1)
+      .desc("Prints the symboltable of the object diagram to stdout or the specified file "
+        + "(optional)")
+      .build());
+
+    return options;
+  }
 }
