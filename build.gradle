@@ -232,7 +232,7 @@ publishing {
             artifact shadowJar
             artifact buildOD4DataTool
             artifact buildOD4ReportTool
-            artifact grammarJar
+//            artifact grammarJar
         }
     }
     repositories.maven {
