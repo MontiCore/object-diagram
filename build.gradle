@@ -186,16 +186,16 @@ task grammarJar(type: Jar) {
 jar.dependsOn(grammarJar)
 
 shadowJar {
-    archiveFileName = 'ODCLI.jar'
-    archiveClassifier = "cli"
+    archiveFileName = 'MCOD.jar'
+    archiveClassifier = "mc-tool"
     manifest {
         attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
     }
 }
 
 task buildOD4DataTool(type: Jar, dependsOn: shadowJar) {
-    archiveFileName = 'OD4DataCLI.jar'
-    archiveClassifier = "od4data-cli"
+    archiveFileName = 'MCOD4Data.jar'
+    archiveClassifier = "od4data-mc-tool"
     manifest {
         attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
     }
@@ -203,8 +203,8 @@ task buildOD4DataTool(type: Jar, dependsOn: shadowJar) {
 }
 
 task buildOD4ReportTool(type: Jar, dependsOn: shadowJar) {
-    archiveFileName = 'OD4ReportCLI.jar'
-    archiveClassifier = "od4report-cli"
+    archiveFileName = 'MCOD4Report.jar'
+    archiveClassifier = "od4report-mc-tool"
     manifest {
         attributes('Main-Class': 'de.monticore.od4report.OD4ReportTool')
     }
