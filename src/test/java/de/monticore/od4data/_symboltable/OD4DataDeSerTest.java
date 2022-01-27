@@ -7,7 +7,7 @@ import de.monticore.od4data.OD4DataToolAPI;
 import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
-import de.monticore.utils.Names;
+import de.se_rwth.commons.Names;
 import de.se_rwth.commons.logging.Log;
 import org.junit.Before;
 import org.junit.Test;
