@@ -5,7 +5,7 @@
 package de.monticore.od4report._symboltable;
 
 import de.monticore.io.paths.MCPath;
-import de.monticore.utils.Names;
+import de.se_rwth.commons.Names;
 
 import java.util.Set;
 

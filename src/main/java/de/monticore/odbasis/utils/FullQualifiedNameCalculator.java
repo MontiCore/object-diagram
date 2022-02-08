@@ -6,7 +6,7 @@ package de.monticore.odbasis.utils;
 
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 import de.monticore.types.mcbasictypes._ast.ASTMCQualifiedName;
-import de.monticore.utils.Names;
+import de.se_rwth.commons.Names;
 
 import java.util.ArrayList;
 import java.util.List;
