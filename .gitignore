@@ -12,3 +12,5 @@ target/
 gradle.properties
 **/.gradle
 gradle/
+gradlew
+gradlew.bat
