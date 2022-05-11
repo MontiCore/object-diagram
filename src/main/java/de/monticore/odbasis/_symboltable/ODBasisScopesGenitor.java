@@ -5,7 +5,7 @@ package de.monticore.odbasis._symboltable;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._ast.ASTODNamedObject;
 import de.monticore.odbasis._ast.ASTObjectDiagram;
-import de.monticore.odbasis.typescalculator.DeriveSymTypeOfODBasis;
+import de.monticore.odbasis.typescalculator.FullODBasisSynthesizer;
 import de.monticore.types.check.TypeCheckResult;
 import de.se_rwth.commons.logging.Log;
 
@@ -15,7 +15,7 @@ public class ODBasisScopesGenitor extends ODBasisScopesGenitorTOP {
 
   private ASTODArtifact rootNode;
 
-  private DeriveSymTypeOfODBasis typechecker = new DeriveSymTypeOfODBasis();
+  private FullODBasisSynthesizer synthesizer = new FullODBasisSynthesizer();
 
   public ODBasisScopesGenitor() {
     super();
@@ -42,19 +42,19 @@ public class ODBasisScopesGenitor extends ODBasisScopesGenitorTOP {
   public void endVisit(ASTODNamedObject node) {
     super.endVisit(node);
     if (checkTypes) {
-      TypeCheckResult typeResult = typechecker.synthesizeType(node.getMCObjectType());
-      if (!typeResult.isPresentCurrentResult()) {
+      TypeCheckResult typeResult = synthesizer.synthesizeType(node.getMCObjectType());
+      if (!typeResult.isPresentResult()) {
         Log.error(String.format("0xODXXX: The type of the return type (%s) could not be calculated",
             node.getMCObjectType().getClass().getSimpleName()),
           node.getMCObjectType().get_SourcePositionStart());
       } else {
-        node.getSymbol().setType(typeResult.getCurrentResult());
+        node.getSymbol().setType(typeResult.getResult());
       }
     }
   }
 
-  public void setTypechecker(DeriveSymTypeOfODBasis typechecker) {
-    this.typechecker = typechecker;
+  public void setSynthesizer(FullODBasisSynthesizer synthesizer) {
+    this.synthesizer = synthesizer;
   }
 
   public boolean isCheckTypes() {

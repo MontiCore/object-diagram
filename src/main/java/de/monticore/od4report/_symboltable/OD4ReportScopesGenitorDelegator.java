@@ -2,14 +2,13 @@
 package de.monticore.od4report._symboltable;
 
 import de.monticore.od4report.OD4ReportMill;
-import de.monticore.od4report.typescalculator.DeriveSymTypeOfOD4Report;
+import de.monticore.od4report.typescalculator.FullOD4ReportSynthesizer;
 import de.monticore.odbasis.ODBasisMill;
 import de.monticore.odbasis._symboltable.ODBasisScopesGenitor;
-import de.monticore.types.check.IDerive;
 
 public class OD4ReportScopesGenitorDelegator extends OD4ReportScopesGenitorDelegatorTOP {
 
-  private DeriveSymTypeOfOD4Report typechecker;
+  private FullOD4ReportSynthesizer synthesizer;
 
   public OD4ReportScopesGenitorDelegator() {
     super();
@@ -31,14 +30,14 @@ public class OD4ReportScopesGenitorDelegator extends OD4ReportScopesGenitorDeleg
     traverser.setOD4ReportHandler(od4ReportScopesGenitor);
   }
 
-  public IDerive getTypechecker() {
-    return typechecker;
+  public FullOD4ReportSynthesizer getSynthesizer() {
+    return synthesizer;
   }
 
-  public void setTypechecker(DeriveSymTypeOfOD4Report typechecker) {
-    this.typechecker = typechecker;
+  public void setSynthesizer(FullOD4ReportSynthesizer synthesizer) {
+    this.synthesizer = synthesizer;
 
-    ((ODBasisScopesGenitor) this.traverser.getODBasisHandler().get()).setTypechecker(typechecker);
+    ((ODBasisScopesGenitor) this.traverser.getODBasisHandler().get()).setSynthesizer(synthesizer);
   }
 
 }
