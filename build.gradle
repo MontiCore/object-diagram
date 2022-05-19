@@ -13,7 +13,7 @@ def grammarDir = "src/main/grammars"
 
 group = "de.monticore.lang"
 description = "Object Diagram DSL"
-sourceCompatibility = "1.8"
+sourceCompatibility = "11"
 
 // configure non-standard source sets
 sourceSets {
