@@ -1,0 +1,91 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package de.monticore.od4development;
+
+import de.monticore.dateliterals._ast.ASTConstantsDateLiterals;
+import de.monticore.od.prettyprinter.ODFullPrettyPrinter;
+import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
+import de.monticore.od4development._cocos.OD4DevelopmentCoCos;
+import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
+import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.odbasis.prettyprinter.ODBasisFullPrettyPrinter;
+import de.monticore.prettyprint.IndentPrinter;
+import de.se_rwth.commons.logging.Log;
+import org.apache.commons.cli.*;
+import org.apache.commons.lang3.StringUtils;
+
+public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
+
+  public void run(String[] args) {
+    Options options = initOptions();
+
+    try {
+
+      // create CLI parser and parse input options from command line
+      CommandLineParser cliParser = new DefaultParser();
+      CommandLine cmd = cliParser.parse(options, args);
+
+      // help: when --help
+      if (cmd.hasOption("h")) {
+        printHelp(options);
+        // do not continue, when help is printed
+        return;
+      }
+
+      // if -i input is missing: also print help and stop
+      if (!cmd.hasOption("i")) {
+        printHelp(options);
+        // do not continue, when help is printed
+        return;
+      }
+
+      // -option developer logging
+      if (cmd.hasOption("d")) {
+        Log.initDEBUG();
+      } else {
+        Log.init();
+      }
+
+      // parse input file, which is now available
+      // (only returns if successful)
+      ASTODArtifact ast = parse(cmd.getOptionValue("i"));
+
+      createSymbolTable(ast);
+
+      runDefaultCoCos(ast);
+
+      // -option pretty print
+      if (cmd.hasOption("pp")) {
+        String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
+        prettyPrint(ast, path);
+      }
+
+      String outputDir = cmd.hasOption("o")
+              ? cmd.getOptionValue("o")
+              : "target/gen-test/"+ast.getObjectDiagram().getName();
+      generateCD(ast, outputDir);
+
+    } catch (ParseException e) {
+      // an unexpected error from the apache CLI parser:
+      Log.error("0xA7105 Could not process paramerets: " + e.getMessage());
+    }
+  }
+
+  @Override
+  public void prettyPrint(ASTODArtifact ast, String file) {
+    ODBasisFullPrettyPrinter printer = new ODBasisFullPrettyPrinter(new IndentPrinter());
+    String result = printer.prettyprint(ast);
+    print(result, file);
+  }
+
+  @Override
+  public void runDefaultCoCos(ASTODArtifact ast) {
+    OD4DevelopmentCoCoChecker checker = new OD4DevelopmentCoCos().getCheckerForAllCoCos();
+    checker.checkAll(ast);
+  }
+
+  public void generateCD(ASTODArtifact ast, String outputDir) {
+    // foo
+  }
+
+}
