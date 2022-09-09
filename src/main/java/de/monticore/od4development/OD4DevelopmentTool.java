@@ -2,8 +2,15 @@
 
 package de.monticore.od4development;
 
+import de.monticore.cd.codegen.CDGenerator;
+import de.monticore.cd.codegen.CdUtilsPrinter;
 import de.monticore.dateliterals._ast.ASTConstantsDateLiterals;
+import de.monticore.generating.GeneratorSetup;
+import de.monticore.generating.templateengine.GlobalExtensionManagement;
+import de.monticore.generating.templateengine.TemplateController;
+import de.monticore.generating.templateengine.TemplateHookPoint;
 import de.monticore.od.prettyprinter.ODFullPrettyPrinter;
+import de.monticore.od2cd.OD2CDConverter;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCos;
 import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
@@ -13,6 +20,10 @@ import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
 
@@ -85,7 +96,26 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   }
 
   public void generateCD(ASTODArtifact ast, String outputDir) {
-    // foo
+    GeneratorSetup setup = new GeneratorSetup();
+    GlobalExtensionManagement glex = new GlobalExtensionManagement();
+    setup.setGlex(glex);
+    glex.setGlobalValue("cdPrinter", new CdUtilsPrinter());
+
+    if (!outputDir.isEmpty()){
+      File targetDir = new File(outputDir);
+      setup.setOutputDirectory(targetDir);
+    }
+
+    String configTemplate = "od2cd.OD2CD";
+    TemplateController tc = setup.getNewTemplateController(configTemplate);
+    CDGenerator generator = new CDGenerator(setup);
+    TemplateHookPoint hpp = new TemplateHookPoint(configTemplate);
+    List<Object> configTemplateArgs;
+    // select the conversion variant:
+    OD2CDConverter converter = new OD2CDConverter();
+    configTemplateArgs = Arrays.asList(glex, converter, setup.getHandcodedPath(), generator);
+
+    hpp.processValue(tc, ast, configTemplateArgs);
   }
 
 }
