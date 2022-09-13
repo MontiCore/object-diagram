@@ -1,9 +1,9 @@
 <#-- (c) https://github.com/MontiCore/monticore -->
 ${tc.signature("type", "attributes", "values")}
-${cd4c.method("public ${type} inst()")}
+${cd4c.method("public ${type} instantiate()")}
 
-return ${type}Builder()
+return FooMill.${type?uncapFirst}Builder()
 <#list attributes as attribute>
-  .set${attribute?capFirst}(${values[attributes?index]})
+  .set${attribute?capFirst}(${values[attribute?index]})
 </#list>
-;
+.build();

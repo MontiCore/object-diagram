@@ -17,10 +17,7 @@ sourceCompatibility = "11"
 
 // configure non-standard source sets
 sourceSets {
-    main {
-        java.srcDirs += ["$projectDir/target/generated-sources/monticore/sourcecode"]
-      resources.srcDirs = []
-    }
+    main.java.srcDirs += ["$projectDir/target/generated-sources/monticore/sourcecode"]
     grammars {
       resources {
         srcDirs([grammarDir])

@@ -73,7 +73,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
 
       String outputDir = cmd.hasOption("o")
               ? cmd.getOptionValue("o")
-              : "target/gen-test/"+ast.getObjectDiagram().getName();
+              : "target/gen-test/";
       generateCD(ast, outputDir);
 
     } catch (ParseException e) {

@@ -21,4 +21,8 @@ public class OD2CDData {
     this.instantiatorClass = instantiatorClass;
     this.objectClasses = objectClasses;
   }
+
+  public ASTCDCompilationUnit getCompilationUnit () {
+    return compilationUnit;
+  }
 }
