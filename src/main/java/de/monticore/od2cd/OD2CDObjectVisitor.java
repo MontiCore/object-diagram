@@ -8,15 +8,12 @@ import de.monticore.cdbasis._ast.ASTCDCompilationUnit;
 import de.monticore.cdbasis._ast.ASTCDDefinition;
 import de.monticore.cdbasis._ast.ASTCDPackage;
 import de.monticore.generating.templateengine.GlobalExtensionManagement;
-import de.monticore.od.prettyprinter.ODFullPrettyPrinter;
 import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.*;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;
 import de.monticore.odlink._ast.*;
 import de.monticore.prettyprint.IndentPrinter;
-import de.monticore.prettyprint.MCBasicsPrettyPrinter;
 import de.monticore.types.prettyprint.MCArrayTypesFullPrettyPrinter;
-import de.monticore.types.prettyprint.MCBasicTypesFullPrettyPrinter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +57,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
             .build();
 
     this.instantiatorClass = CDBasisMill.cDClassBuilder()
-            .setName(odArtifact.getObjectDiagram().getName()+"Instantiator")
+            .setName(odArtifact.getObjectDiagram().getName() + "Instantiator")
             .setModifier(CDBasisMill.modifierBuilder().PUBLIC().build())
             .build();
     this.cdPackage.addCDElement(instantiatorClass);
@@ -70,42 +67,42 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   public void endVisit(ASTODArtifact odArtifact) {
     this.cd4C.addMethod(this.instantiatorClass,
             "od2cd.InstList",
-            this.objectToClassMap.keySet(),
-            odArtifact.getObjectDiagram().getODElementList().stream().map(e -> {
-              if (e instanceof ASTODNamedObject) {
-                ASTODNamedObject object = (ASTODNamedObject) e;
-                return object
-                        .getMCObjectType()
-                        .printType(new MCArrayTypesFullPrettyPrinter(new IndentPrinter()));
-              } else {
-                return null;
-              }
-            }).collect(Collectors.toList()),
-            odArtifact.getObjectDiagram().getODElementList().stream().map(e -> {
-              if (e instanceof ASTODNamedObject) {
-                ASTODNamedObject object = (ASTODNamedObject) e;
-                return object.getName();
-              } else {
-                return null;
-              }
-            }).collect(Collectors.toList()),
+            this.objectToClassMap.keySet()
+                    .stream()
+                    .filter(s -> !s.contains("Checker"))
+                    .collect(Collectors.toList()),
+            odArtifact.getObjectDiagram().getODElementList()
+                    .stream().
+                    filter(e -> e instanceof ASTODNamedObject)
+                    .map(e ->((ASTODNamedObject) e)
+                            .getMCObjectType()
+                            .printType(new MCArrayTypesFullPrettyPrinter(new IndentPrinter())))
+                    .collect(Collectors.toList()),
+            odArtifact.getObjectDiagram().getODElementList()
+                    .stream()
+                    .filter(e -> e instanceof ASTODNamedObject)
+                    .map(e -> ((ASTODNamedObject)e).getName())
+                    .collect(Collectors.toList()),
             this.linkAttributeList);
 
-    for (String instantiator: this.objectToClassMap.keySet()) {
+    for(String instantiator: this.objectToClassMap.keySet()
+            .stream()
+            .filter(s -> !s.contains("Checker"))
+            .collect(Collectors.toList())) {
       this.cd4C.addAttribute(this.instantiatorClass,
               "protected "
-                      +instantiator
-                      +" "
-                      +instantiator.substring(0,1).toLowerCase()
-                      +instantiator.substring(1));
+                      + instantiator
+                      + " "
+                      + instantiator.substring(0, 1).toLowerCase()
+                      + instantiator.substring(1));
     }
   }
 
-  public void handleNamedObjects(ASTODNamedObject odElement) {
+  public void createInstantiator(ASTODNamedObject odElement) {
     ASTCDClass instClass = CDBasisMill.cDClassBuilder()
-            .setName(odElement.getName().substring(0,1).toUpperCase()
-                    +odElement.getName().substring(1)
-                    +"Instantiator")
+            .setName(odElement.getName().substring(0, 1).toUpperCase()
+                    + odElement.getName().substring(1)
+                    + "Instantiator")
             .setModifier(CDBasisMill.modifierBuilder().PUBLIC().build())
             .build();
 
@@ -125,6 +122,27 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
     this.objectToClassMap.put(instClass.getName(), instClass);
   }
 
+  public void createChecker(ASTODNamedObject odElement) {
+    ASTCDClass checkClass = CDBasisMill.cDClassBuilder()
+            .setName(capFirst(odElement.getName()) + "Checker")
+            .setModifier(CDBasisMill.modifierBuilder().PUBLIC().build())
+            .build();
+
+    this.cd4C.addMethod(checkClass, "od2cd.Check",
+            odElement.getName(),
+            odElement.getODAttributeList()
+                    .stream()
+                    .map(ASTODAttribute::getName)
+                    .collect(Collectors.toList()),
+            odElement.getODAttributeList()
+                    .stream()
+                    .map(a -> new OD4DataFullPrettyPrinter().prettyprint(a.getODValue()))
+                    .collect(Collectors.toList()));
+
+    this.cdPackage.addCDElement(checkClass);
+    this.objectToClassMap.put(checkClass.getName(), checkClass);
+  }
+
   public void handleLinks(ASTODLink odLink) {
     List<String> leftSides = odLink.getODLinkLeftSide().getReferenceNamesList().stream().map(ASTODName::getName).collect(Collectors.toList());
 
@@ -132,28 +150,28 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
 
     String roleName = odLink.getODLinkRightSide().isPresentRole() ? odLink.getODLinkRightSide().getRole() : "";
 
-    if (odLink.getODLinkDirection() instanceof ASTODLeftToRightDir) {
-      for (String left: leftSides) {
-        for (String right: rightSides) {
+    if(odLink.getODLinkDirection() instanceof ASTODLeftToRightDir) {
+      for(String left: leftSides) {
+        for(String right: rightSides) {
           this.linkAttributeList.add(left + ".add" + ((roleName.isEmpty()) ? capFirst(right) : capFirst(roleName)) + "(" + right + ")");
         }
       }
     }
-    if (odLink.getODLinkDirection() instanceof ASTODRightToLeftDir) {
-      for (String right: rightSides) {
-        for (String left: leftSides) {
+    if(odLink.getODLinkDirection() instanceof ASTODRightToLeftDir) {
+      for(String right: rightSides) {
+        for(String left: leftSides) {
           this.linkAttributeList.add(right + ".add" + ((roleName.isEmpty()) ? capFirst(left) : capFirst(roleName)) + "(" + left + ")");
         }
       }
     }
-    if (odLink.getODLinkDirection() instanceof ASTODBiDir || odLink.getODLinkDirection() instanceof ASTODUnspecifiedDir) {
-      for (String left: leftSides) {
-        for (String right: rightSides) {
+    if(odLink.getODLinkDirection() instanceof ASTODBiDir || odLink.getODLinkDirection() instanceof ASTODUnspecifiedDir) {
+      for(String left: leftSides) {
+        for(String right: rightSides) {
           this.linkAttributeList.add(left + ".add" + ((roleName.isEmpty()) ? capFirst(right) : capFirst(roleName)) + "(" + right + ")");
         }
       }
-      for (String right: rightSides) {
-        for (String left: leftSides) {
+      for(String right: rightSides) {
+        for(String left: leftSides) {
           this.linkAttributeList.add(right + ".add" + ((roleName.isEmpty()) ? capFirst(left) : capFirst(roleName)) + "(" + left + ")");
         }
       }
@@ -163,18 +181,19 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   @Override
   public void visit(ASTODElement odElement) {
     if(odElement instanceof ASTODNamedObject) {
-      handleNamedObjects((ASTODNamedObject) odElement);
+      createInstantiator((ASTODNamedObject) odElement);
+      createChecker((ASTODNamedObject) odElement);
     }
-    if (odElement instanceof ASTODLink) {
+    if(odElement instanceof ASTODLink) {
       handleLinks((ASTODLink) odElement);
     }
   }
 
   protected String capFirst(String s) {
-    return s.substring(0,1).toUpperCase() + s.substring(1);
+    return s.substring(0, 1).toUpperCase() + s.substring(1);
   }
 
-  public OD2CDObjectVisitor (GlobalExtensionManagement glex) {
+  public OD2CDObjectVisitor(GlobalExtensionManagement glex) {
     this.cd4C = CD4C.getInstance();
     this.glex = glex;
   }
