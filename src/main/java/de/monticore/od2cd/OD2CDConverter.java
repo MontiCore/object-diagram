@@ -20,6 +20,7 @@ public class OD2CDConverter {
     traverser.handle(ast);
 
     return new OD2CDData(visitor.getCDCompilationUnit(), visitor.getInstantiatorClass(),
+            visitor.getCheckerClass(),
             visitor.getObjectToClassMap().values());
   }
 

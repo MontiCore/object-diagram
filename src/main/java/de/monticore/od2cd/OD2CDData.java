@@ -12,13 +12,17 @@ public class OD2CDData {
 
   protected final ASTCDClass instantiatorClass;
 
+  protected final ASTCDClass checkerClass;
+
   protected final Collection<ASTCDClass> objectClasses;
 
   public OD2CDData (ASTCDCompilationUnit compilationUnit,
                     ASTCDClass instantiatorClass,
+                    ASTCDClass checkerClass,
                     Collection<ASTCDClass> objectClasses) {
     this.compilationUnit = compilationUnit;
     this.instantiatorClass = instantiatorClass;
+    this.checkerClass = checkerClass;
     this.objectClasses = objectClasses;
   }
 

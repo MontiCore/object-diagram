@@ -4,16 +4,13 @@ package de.monticore.od4development;
 
 import de.monticore.cd.codegen.CDGenerator;
 import de.monticore.cd.codegen.CdUtilsPrinter;
-import de.monticore.dateliterals._ast.ASTConstantsDateLiterals;
 import de.monticore.generating.GeneratorSetup;
 import de.monticore.generating.templateengine.GlobalExtensionManagement;
 import de.monticore.generating.templateengine.TemplateController;
 import de.monticore.generating.templateengine.TemplateHookPoint;
-import de.monticore.od.prettyprinter.ODFullPrettyPrinter;
 import de.monticore.od2cd.OD2CDConverter;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCos;
-import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis.prettyprinter.ODBasisFullPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
@@ -78,7 +75,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
 
     } catch (ParseException e) {
       // an unexpected error from the apache CLI parser:
-      Log.error("0xA7105 Could not process paramerets: " + e.getMessage());
+      Log.error("0xA7105 Could not process parameters: " + e.getMessage());
     }
   }
 

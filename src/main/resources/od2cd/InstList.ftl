@@ -1,15 +1,15 @@
 <#-- (c) https://github.com/MontiCore/monticore -->
-${tc.signature("instantiators", "types", "names", "links")}
+${tc.signature("types", "names", "links", "objects")}
 ${cd4c.method("public List<Object> instantiate()")}
 
-<#list instantiators as instantiator>
-  ${types[instantiator?index]} ${names[instantiator?index]} = ${instantiator?uncapFirst}.instantiate();
+<#list objects as object>
+  ${types[object?index]} ${names[object?index]} = instantiate${object?capFirst}();
 </#list>
 <#list links as link>
-  ${link}
+  ${link};
 </#list>
 List<Object> objects = new ArrayList<>();
-<#list instantiators as instantiator>
-  objects.add(${names[instantiator?index]});
+<#list objects as object>
+  objects.add(${object});
 </#list>
 return objects;
