@@ -14,6 +14,7 @@ import de.monticore.odbasis._visitor.ODBasisVisitor2;
 import de.monticore.odlink._ast.*;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.prettyprint.MCArrayTypesFullPrettyPrinter;
+import de.monticore.types.prettyprint.MCBasicTypesFullPrettyPrinter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,7 +122,8 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
             odElement.getODAttributeList()
                     .stream()
                     .map(a -> new OD4DataFullPrettyPrinter().prettyprint(a.getODValue()))
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toList()),
+            odElement.getMCObjectType().printType(new MCBasicTypesFullPrettyPrinter(new IndentPrinter())));
   }
 
   public void handleLinks(ASTODLink odLink) {
