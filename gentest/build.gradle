@@ -1,0 +1,43 @@
+/* (c) https://github.com/MontiCore/monticore */
+plugins {
+    id "java"
+}
+
+repositories {
+    if (("true").equals(getProperty('useLocalRepo'))) {
+        mavenLocal()
+    }
+    maven {
+        credentials.username mavenUser
+        credentials.password mavenPassword
+        url repo
+    }
+}
+
+def junit_version = '4.13.1'
+
+dependencies {
+    implementation "de.se_rwth.commons:se-commons-logging: $mc_version"
+    implementation "de.se_rwth.commons:se-commons-utilities: $mc_version"
+    implementation files('target/libs/MCOD4Development.jar')
+    testImplementation group: 'junit', name: 'junit', version: junit_version
+}
+
+sourceSets {
+    main.java.srcDirs += ["$projectDir/target/generated-sources"]
+}
+
+task genExample(type: JavaExec) {
+    classpath += files('../target/libs/MCOD4Development.jar')
+    mainClass = 'de.monticore.od4development.OD4DevelopmentTool'
+
+    args '-i','src/main/resources/Example.od', '-o', 'target/generated-sources/', '-s', 'src/main/resources/symboltable/'
+}
+
+/*compileJava {
+    dependsOn genExample
+}*/
+
+clean.doFirst {
+    delete "${projectDir}/target/"
+}

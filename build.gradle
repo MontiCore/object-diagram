@@ -209,8 +209,18 @@ task buildOD4ReportTool(type: Jar, dependsOn: shadowJar) {
     from zipTree(shadowJar.archiveFile)
 }
 
+task buildOD4DevelopmentTool(type: Jar, dependsOn: shadowJar) {
+    archiveFileName = 'MCOD4Development.jar'
+    archiveClassifier = "od4development-mc-tool"
+    manifest {
+        attributes('Main-Class': 'de.monticore.od4development.OD4DevelopmentTool')
+    }
+    from zipTree(shadowJar.archiveFile)
+}
+
 jar.dependsOn(buildOD4DataTool)
 jar.dependsOn(buildOD4ReportTool)
+jar.dependsOn(buildOD4DevelopmentTool)
 
 task testReport(type: TestReport) {
     destinationDir = file("$buildDir/reports/allTests")

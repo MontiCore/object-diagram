@@ -1,13 +1,9 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4development;
 
-import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4development._symboltable.IOD4DevelopmentGlobalScope;
-import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
-import de.monticore.symbols.basicsymbols._symboltable.TypeVarSymbol;
 import de.monticore.symbols.oosymbols._symboltable.OOTypeSymbol;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;

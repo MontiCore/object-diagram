@@ -8,6 +8,7 @@ import de.monticore.generating.GeneratorSetup;
 import de.monticore.generating.templateengine.GlobalExtensionManagement;
 import de.monticore.generating.templateengine.TemplateController;
 import de.monticore.generating.templateengine.TemplateHookPoint;
+import de.monticore.io.paths.MCPath;
 import de.monticore.od2cd.OD2CDConverter;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCos;
@@ -25,6 +26,8 @@ import java.util.List;
 public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
 
   public void run(String[] args) {
+    Log.init();
+    OD4DevelopmentMill.init();
     Options options = initOptions();
 
     try {
@@ -47,6 +50,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
         return;
       }
 
+
       // -option developer logging
       if (cmd.hasOption("d")) {
         Log.initDEBUG();
@@ -58,9 +62,16 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       // (only returns if successful)
       ASTODArtifact ast = parse(cmd.getOptionValue("i"));
 
-      createSymbolTable(ast);
+      if(cmd.hasOption("s")) {
+        MCPath mcPath = new MCPath(cmd.getOptionValue("s"));
+        OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
+      } else {
+        createSymbolTable(ast);
+      }
 
-      runDefaultCoCos(ast);
+      if (cmd.hasOption("c")) {
+        runDefaultCoCos(ast);
+      }
 
       // -option pretty print
       if (cmd.hasOption("pp")) {
@@ -115,4 +126,9 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
     hpp.processValue(tc, ast, configTemplateArgs);
   }
 
+  @Override
+  public Options addAdditionalOptions(Options options) {
+    options.addOption(new Option("o","output",true,"Sets the output path"));
+    return options;
+  }
 }
