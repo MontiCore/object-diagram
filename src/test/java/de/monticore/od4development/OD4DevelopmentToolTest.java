@@ -1,31 +1,27 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4development;
 
-import de.monticore.od4development._symboltable.IOD4DevelopmentGlobalScope;
-import de.monticore.symbols.oosymbols._symboltable.OOTypeSymbol;
-import org.junit.Before;
+import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.assertTrue;
 
 public class OD4DevelopmentToolTest {
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  public void before() {
+    LogStub.init();
+    Log.enableFailQuick(false);
     OD4DevelopmentMill.init();
-    IOD4DevelopmentGlobalScope scope = OD4DevelopmentMill.globalScope();
-
-    OOTypeSymbol objectType = OD4DevelopmentMill.oOTypeSymbolBuilder().setName("A").setEnclosingScope(scope).setSpannedScope(OD4DevelopmentMill.scope()).build();
-    OOTypeSymbol objectType2 = OD4DevelopmentMill.oOTypeSymbolBuilder().setName("B").setEnclosingScope(scope).setSpannedScope(OD4DevelopmentMill.scope()).build();
-
-    scope.add(objectType);
-    scope.add(objectType2);
   }
 
   @Test
-  public void testTool() {
-    OD4DevelopmentToolTOP.main(new String[] {"-i","src/test/resources/examples/od2cd/Example.od"});
-    assertTrue(!false);
+  public void testAddSymtabFile() {
+    assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().isEmpty());
+    OD4DevelopmentToolTOP.main(new String[] {"-i","src/test/resources/examples/od2cd/Example.od", "-s", "resources/symboltable/tooltest/"});
+    assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().toString().endsWith("resources/symboltable/tooltest]"));
   }
 
 }
