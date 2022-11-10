@@ -95,6 +95,9 @@ public class OD4DataDeSerTest {
     IOD4DataArtifactScope loadedBasicsArtifactScope = od4DataSymbols2Json.load(
         storedSymTable.toString());
 
+    // clear buffer of traverser, as elements should be traversed again
+    od4DataSymbols2Json.getTraverser().clearTraversedElements();
+
     assertEquals(od4DataSymbols2Json.serialize(od4DataArtifactScope),
         od4DataSymbols2Json.serialize(loadedBasicsArtifactScope));
   }

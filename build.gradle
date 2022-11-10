@@ -17,10 +17,7 @@ sourceCompatibility = "11"
 
 // configure non-standard source sets
 sourceSets {
-    main {
-        java.srcDirs += ["$projectDir/target/generated-sources/monticore/sourcecode"]
-      resources.srcDirs = []
-    }
+    main.java.srcDirs += ["$projectDir/target/generated-sources/monticore/sourcecode"]
     grammars {
       resources {
         srcDirs([grammarDir])
@@ -56,6 +53,7 @@ dependencies {
     implementation "com.google.guava:guava:23.0"
     implementation "org.antlr:antlr4-runtime:4.7.1"
     implementation "de.monticore:monticore-runtime:$mc_version"
+    implementation group: 'de.monticore.lang', name: 'cd4analysis', version: mc_version
     implementation "de.monticore:monticore-grammar:$mc_version"
     grammar("de.monticore:monticore-grammar:$mc_version") {
         capabilities {
