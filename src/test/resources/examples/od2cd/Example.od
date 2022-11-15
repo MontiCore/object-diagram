@@ -1,0 +1,18 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.od2cd;
+
+objectdiagram Examples {
+
+  foo: A {
+    int x = 5;
+    java.lang.String s = "hello";
+  };
+
+  bar: B {
+    boolean b = false;
+  };
+
+  link foo -> (x) bar;
+
+}
