@@ -82,7 +82,9 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       String outputDir = cmd.hasOption("o")
               ? cmd.getOptionValue("o")
               : "target/gen-test/";
-      generateCD(ast, outputDir);
+      if(cmd.hasOption("o")) {
+        generateCD(ast, outputDir);
+      }
 
     } catch (ParseException e) {
       // an unexpected error from the apache CLI parser:

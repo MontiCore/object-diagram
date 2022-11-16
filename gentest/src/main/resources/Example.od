@@ -13,6 +13,6 @@ objectdiagram Examples {
     boolean b = false;
   };
 
-  link foo -> (x) bar;
+  link foo -> (blub) bar;
 
 }
