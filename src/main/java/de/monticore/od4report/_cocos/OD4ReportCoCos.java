@@ -11,7 +11,7 @@ public class OD4ReportCoCos {
   public OD4ReportCoCoChecker getCheckerForAllIntraCoCos() {
     final OD4ReportCoCoChecker checker = new OD4ReportCoCoChecker();
     checker.addChecker(new ODBasicsCoCos().getCheckerForAllIntraCoCos());
-    checker.addChecker(new ODLinkCoCos().getCheckerForAllCoCos());
+    checker.addChecker(new ODLinkCoCos().getCheckerForAllIntraCoCos());
     checker.addChecker(new DateLiteralsCoCos().getCheckerForAllCoCos());
 
     return checker;

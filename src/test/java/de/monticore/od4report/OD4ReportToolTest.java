@@ -23,7 +23,7 @@ public class OD4ReportToolTest {
   private final Path INPUTOD = Paths.get("src", "test", "resources", "examples", "od",
       "Examples" + ".od");
 
-  private final Path INPUTDIR = Paths.get("src", "resources", "examples", "od");
+  private final Path INPUTDIR = Paths.get("src", "test", "resources", "examples", "od");
 
   private final Path TARGET = Paths.get("target", "cli", "od4Report");
 
@@ -48,9 +48,21 @@ public class OD4ReportToolTest {
     OD4ReportMill.globalScope().clear();
     IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
 
-    TypeSymbol rule = OD4ReportMill.typeSymbolBuilder().setName("Rule").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol actionA = OD4ReportMill.typeSymbolBuilder().setName("ActionA").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol actionB = OD4ReportMill.typeSymbolBuilder().setName("ActionB").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol rule = OD4ReportMill.typeSymbolBuilder()
+        .setName("Rule")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol actionA = OD4ReportMill.typeSymbolBuilder()
+        .setName("ActionA")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol actionB = OD4ReportMill.typeSymbolBuilder()
+        .setName("ActionB")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
     gs.add(rule);
     gs.add(actionA);
     gs.add(actionB);
@@ -91,7 +103,8 @@ public class OD4ReportToolTest {
 
   @Test
   public void testOD4ReportToolCocosIntra() {
-    String[] input = { "-i", INPUTOD.toString(), "-c", "intra" };
+    String[] input = { "-i", Paths.get(INPUTDIR.toString(), "SimpleOD.od").toString(), "-c",
+        "intra" };
     OD4ReportTool.main(input);
   }
 

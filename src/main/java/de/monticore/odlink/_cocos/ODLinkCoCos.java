@@ -8,6 +8,19 @@ import de.monticore.odlink._cocos.link.ValidLinkReferenceCoCo;
 
 public class ODLinkCoCos {
 
+  public ODLinkCoCoChecker getCheckerForAllIntraCoCos() {
+    final ODLinkCoCoChecker checker = new ODLinkCoCoChecker();
+
+    // links
+    checker.addCoCo(new NoAbstractLinkCoCo());
+    checker.addCoCo(new ValidLinkReferenceCoCo());
+
+    // objects
+    checker.addCoCo(new ValidLinkReferenceCoCo());
+
+    return checker;
+  }
+
   public ODLinkCoCoChecker getCheckerForAllCoCos() {
     final ODLinkCoCoChecker checker = new ODLinkCoCoChecker();
 

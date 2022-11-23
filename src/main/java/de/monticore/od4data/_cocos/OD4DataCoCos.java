@@ -10,15 +10,15 @@ public class OD4DataCoCos {
 
   public OD4ReportCoCoChecker getCheckerForAllIntraCoCos() {
     final OD4ReportCoCoChecker checker = new OD4ReportCoCoChecker();
-    checker.addChecker(new ODBasicsCoCos().getCheckerForAllCoCos());
-    checker.addChecker(new ODLinkCoCos().getCheckerForAllCoCos());
+    checker.addChecker(new ODBasicsCoCos().getCheckerForAllIntraCoCos());
+    checker.addChecker(new ODLinkCoCos().getCheckerForAllIntraCoCos());
 
     return checker;
   }
 
   public OD4ReportCoCoChecker getCheckerForAllCoCos() {
     final OD4ReportCoCoChecker checker = new OD4ReportCoCoChecker();
-    checker.addChecker(new ODBasicsCoCos().getCheckerForAllIntraCoCos());
+    checker.addChecker(new ODBasicsCoCos().getCheckerForAllCoCos());
     checker.addChecker(new ODLinkCoCos().getCheckerForAllCoCos());
 
     return checker;
