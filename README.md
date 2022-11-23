@@ -76,7 +76,7 @@ Alternatively, the tools can be built from source code.
 
 ### Prerequisites
 
-To build the project, it is required to install a Java 8 JDK and git.
+To build the project, it is required to install a Java 11 JDK and git.
 
 #### Step 1: Clone Project with git
 
