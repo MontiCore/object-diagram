@@ -1,0 +1,14 @@
+{
+  "generated-using": "www.MontiCore.de technology",
+  "name": "examples.A",
+  "symbols": [
+    {
+      "kind": "de.monticore.symbols._symboltable.Type",
+      "name": "examples.A"
+    },
+    {
+      "kind": "de.monticore.symbols._symboltable.Type",
+      "name": "examples.B"
+    }
+  ]
+}

@@ -20,7 +20,7 @@ public class OD4DataToolTest {
   private final Path INPUTOD = Paths.get("src", "test", "resources", "examples", "od",
       "SimpleOD2.od");
 
-  private final Path INPUTDIR = Paths.get("src", "resources", "examples", "od");
+  private final Path INPUTDIR = Paths.get("src", "test", "resources", "examples", "od");
 
   private final Path TARGET = Paths.get("target", "cli", "od4data");
 
@@ -81,6 +81,12 @@ public class OD4DataToolTest {
     String[] input = { "-i", INPUTOD.toString(), "-path",
         Paths.get(INPUTDIR.toString(), "examples").toString(),
         Paths.get(INPUTDIR.toString(), "cocos").toString() };
+    OD4DataTool.main(input);
+  }
+
+  @Test
+  public void testOD4DataToolIntraCoCos() {
+    String[] input = { "-i", INPUTOD.toString(), "-c", "intra" };
     OD4DataTool.main(input);
   }
 

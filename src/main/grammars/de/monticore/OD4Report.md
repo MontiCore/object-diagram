@@ -45,7 +45,7 @@ objectdiagram MyFamily {
 }
 ```
 
-A graphical version is shown in Figure 1.
+examples.A graphical version is shown in Figure 1.
 
 <img width="400" src="../../../../../doc/pics/OD_Example.png" alt="The graphical syntax of an example OD" style="float: left; margin-right: 10px;">
 <br><b>Figure 1:</b> The graphical syntax of example OD MyFamiliy. <br/>
