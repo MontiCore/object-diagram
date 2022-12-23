@@ -4,15 +4,15 @@ package examples.od2cd;
 
 objectdiagram Examples {
 
-  foo: examples.A {
+  foo: A {
     int x = 5;
     java.lang.String s = "hello";
   };
 
-  bar: examples.B {
+  bar: B {
     boolean b = false;
   };
 
-  link foo -> (x) bar;
+  link foo -> (blub) bar;
 
 }
