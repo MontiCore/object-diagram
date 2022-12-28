@@ -64,7 +64,7 @@ checkMLCs:
     name: mlcreports
     when: always
     paths:
-      - "*/target/reports/"
+      - "target/reports/"
     expire_in: 1 week
   except:
     - master
