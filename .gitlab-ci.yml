@@ -8,6 +8,7 @@ variables:
 cache:
   paths:
     - .gradle/wrapper
+    - .gradle/caches
   key: ${CI_COMMIT_REF_SLUG}
 
 before_script:
@@ -26,7 +27,7 @@ build:
     - "gradle assemble --refresh-dependencies $GRADLE_OPTS $ARGS1"
   artifacts:
     paths:
-      - "."
+      - "*/target"
     expire_in: 1 week
 
 # Checks if the links in this repository's Markdown files are valid.
@@ -53,17 +54,16 @@ test:
   script:
     - "gradle check $GRADLE_OPTS $ARGS2"
 
-checkArtifacts:
+checkMLCs:
   stage: check
-  dependencies:
-    - build
+  needs: ["build"]
   script:
     - "gradle checkArtifacts"
   artifacts:
     name: mlcreports
     when: always
     paths:
-      - "*/target/**/generated-sources/**/reports/"
+      - "*/target/reports/"
     expire_in: 1 week
   except:
     - master
