@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.monticore;
+
+mlc ODLink {
+
+  export "$projectDir/src/main/grammars" {
+    include "**/ODLink.mc4";
+  }
+
+  export "$projectDir/src/main/java" {
+    include "de/monticore/odlink/**.java";
+  }
+
+  export "$projectDir/target/generated-sources/monticore/sourcecode" {
+    include "de/monticore/odlink/**.java";
+  }
+
+  promote {  // allow using other languages
+    mlc "de.monticore.ODBasis";
+  }
+
+}

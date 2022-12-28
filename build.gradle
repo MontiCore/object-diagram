@@ -9,7 +9,6 @@ plugins {
   id 'jacoco'
 }
 
-def commons_version = "1.7.9"
 def grammarDir = "src/main/grammars"
 
 group = "de.monticore.lang"
@@ -49,27 +48,23 @@ buildDir = file("$projectDir/target")
 configurations { grammar }
 
 dependencies {
-  implementation "de.se_rwth.commons:se-commons-logging:$commons_version"
-  implementation "de.se_rwth.commons:se-commons-utilities:$commons_version"
-  implementation "com.google.guava:guava:23.0"
-  implementation "org.antlr:antlr4-runtime:4.7.1"
-  implementation "de.monticore:monticore-runtime:$mc_version"
-  implementation group: 'de.monticore.lang', name: 'cd4analysis', version: mc_version
-  implementation "de.monticore:monticore-grammar:$mc_version"
-  grammar("de.monticore:monticore-grammar:$mc_version") {
-    capabilities {
-      requireCapability("de.monticore:monticore-grammar-grammars")
-    }
-  }
-  implementation "commons-cli:commons-cli:1.4"
-  implementation "org.apache.commons:commons-lang3:3.8.1"
-
-  implementation 'org.apache.commons:commons-lang3:${commons-lang3.version}'
-  testImplementation "junit:junit:4.11"
-  testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.2"
-  testImplementation "org.junit.jupiter:junit-jupiter-engine:5.6.2"
-  testImplementation "org.junit.jupiter:junit-jupiter-params:5.6.2"
-  testImplementation "org.junit.vintage:junit-vintage-engine:5.6.2"
+	implementation "org.antlr:antlr4-runtime:4.7.1"
+	implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
+	implementation "de.monticore:monticore-runtime:$mc_version"
+	implementation group: 'de.monticore.lang', name: 'cd4analysis', version: mc_version
+	implementation "de.monticore:monticore-grammar:$mc_version"
+	grammar("de.monticore:monticore-grammar:$mc_version") {
+		capabilities {
+			requireCapability("de.monticore:monticore-grammar-grammars")
+		}
+	}
+	implementation "commons-cli:commons-cli:$commons_cli_version"
+	implementation "org.apache.commons:commons-lang3:$commons_lang3_version"
+	implementation "com.google.guava:guava:$guava_version"
+	testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+	testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+	testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
+	testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
 }
 
 configurations {
@@ -254,9 +249,63 @@ publishing {
 }
 
 tasks.withType(JavaCompile) {
-  options.fork = true
-  options.encoding = "UTF-8"
-  options.deprecation false
-  options.warnings = false
-  options.headerOutputDirectory.convention(null)
+	options.fork = true
+	options.encoding = "UTF-8"
+	options.deprecation false
+	options.warnings = false
+	options.headerOutputDirectory.convention(null)
 }
+
+/**
+ * Integration with MLC language and tool
+ */
+task showArtifacts {}
+task checkArtifacts {}
+configurations { MLC }
+dependencies {
+	MLC(group: 'de.monticore.lang', name: 'mlc-gradle', version: "$version")
+}
+StringJoiner joiner = new StringJoiner(" ")
+configurations.compileClasspath.resolve().each { joiner.add(it.toString()) }
+configurations.grammar.resolve().each { joiner.add(it.toString()) }
+joiner.add "$projectDir/target/symbols"
+String mp = joiner.toString()
+
+// two tasks per MLC file
+// each task needs to depend on all internally promoted MLCs
+fileTree("src").matching { include '**/*.mlc' }.each {
+	def f = it
+	def mlcName = it.getName().substring(0, it.getName().lastIndexOf('.'))
+
+	task "showArtifacts${mlcName}"(type: JavaExec) {
+		classpath = configurations.MLC
+		group = 'MLC'
+		mainClass = 'de.monticore.mlc.MLCTool'
+		args "-input", f, "-projectDir", projectDir, "-mp", mp, "-s", "-reports", "${buildDir}/reports", "-a", "-noFQ"
+		dependsOn("generateGrammar${mlcName}")
+		showArtifacts.dependsOn("showArtifacts${mlcName}")
+	}
+
+	task "checkArtifacts${mlcName}"(type: JavaExec) {
+		classpath = configurations.MLC
+		group = 'MLC'
+		mainClass = 'de.monticore.mlc.MLCTool'
+		args "-input", f, "-projectDir", projectDir, "-mp", mp, "-s", "-check", "-reports", "${buildDir}/reports"
+		dependsOn("generateGrammar${mlcName}")
+		checkArtifacts.dependsOn("checkArtifacts${mlcName}")
+	}
+}
+
+// MLC Check dependencies
+// always depend on the checks of the mlc models which are allowed by an mlc
+checkArtifactsODLink.dependsOn(checkArtifactsODBasis)
+
+checkArtifactsODAttribute.dependsOn(checkArtifactsODBasis)
+
+checkArtifactsOD4Data.dependsOn(checkArtifactsODLink)
+checkArtifactsOD4Data.dependsOn(checkArtifactsODAttribute)
+
+checkArtifactsOD4Development.dependsOn(checkArtifactsOD4Data)
+
+checkArtifactsOD4Report.dependsOn(checkArtifactsDateLiterals)
+checkArtifactsOD4Report.dependsOn(checkArtifactsOD4Data)
