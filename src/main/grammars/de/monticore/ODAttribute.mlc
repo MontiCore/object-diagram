@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.monticore;
+
+mlc ODAttribute {
+
+  export "$projectDir/src/main/grammars" {
+    include "**/ODAttribute.mc4";
+  }
+
+  export "$projectDir/src/main/java" {
+    include "de/monticore/odattribute/**.java";
+  }
+
+  export "$projectDir/target/generated-sources/monticore/sourcecode" {
+    include "de/monticore/odattribute/**.java";
+  }
+
+  promote {  // allow using other languages
+    mlc "de.monticore.ODBasis";
+  }
+
+}

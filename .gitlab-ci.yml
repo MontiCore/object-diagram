@@ -16,6 +16,7 @@ before_script:
 stages:
   - build
   - test
+  - check
   - deploy
   - mirror
 
@@ -51,6 +52,21 @@ test:
     - build
   script:
     - "gradle check $GRADLE_OPTS $ARGS2"
+
+checkArtifacts:
+  stage: check
+  dependencies:
+    - build
+  script:
+    - "gradle checkArtifacts"
+  artifacts:
+    name: mlcreports
+    when: always
+    paths:
+      - "*/target/**/generated-sources/**/reports/"
+    expire_in: 1 week
+  except:
+    - master
 
 deploy:
   stage: deploy
