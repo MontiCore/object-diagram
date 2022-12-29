@@ -123,6 +123,8 @@ githubmirror:
 
 trigger-artifacts-dev:
   stage: trigger_languages
+  except:
+    - pipelines
   trigger:
     project: monticore/artifacts/artifacts
     branch: dev
