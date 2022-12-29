@@ -21,6 +21,7 @@ sourceSets {
     resources {
       srcDirs([grammarDir])
       include "**/*.mc4"
+			include "**/*.mlc"
     }
   }
   test {
@@ -152,31 +153,12 @@ tasks.withType(JavaCompile) {
 }
 
 // build sources jar in addition
-task sourcesJar(type: Jar) {
-  from sourceSets.main.allJava
-  archiveClassifier = "sources"
+java {
+	withSourcesJar()
 }
-
-sourcesJar.dependsOn project.collect { it.tasks.withType(MCTask) }
-
-jar.dependsOn(sourcesJar)
-
-// build javadoc jar in addition
-task javadocJar(type: Jar) {
-  from javadoc
-  archiveClassifier = "javadoc"
-}
-//jar.dependsOn(javadocJar)
-
-// generated java doc contains errors, disable for now
-javadoc.failOnError(false)
 
 // build grammar jar as well
-task grammarJar(type: Jar) {
-  from("$projectDir/src/main/grammars/") { include "**/*.mc4" }
-  archiveClassifier = "grammars"
-}
-jar.dependsOn(grammarJar)
+// done by MC plugin
 
 shadowJar {
   archiveFileName = 'MCOD.jar'
@@ -227,17 +209,16 @@ task testReport(type: TestReport) {
 publishing {
   // configure what artifacts to publish
   publications {
-    mavenJava(MavenPublication) {
-      artifactId = "$project.name"
-      from components.java
-      artifact sourcesJar
-//            artifact javadocJar
-      artifact shadowJar
-      artifact buildOD4DataTool
-      artifact buildOD4ReportTool
-//            artifact grammarJar
-    }
-  }
+		maven(MavenPublication) {
+			from components.java
+		}
+		shadow(MavenPublication) {
+			artifact shadowJar
+			artifact buildOD4DataTool
+			artifact buildOD4ReportTool
+			artifact buildOD4DevelopmentTool
+		}
+	}
   repositories.maven {
     credentials.username mavenUser
     credentials.password mavenPassword
