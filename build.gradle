@@ -21,6 +21,7 @@ sourceSets {
     resources {
       srcDirs([grammarDir])
       include "**/*.mc4"
+			include "**/*.mlc"
     }
   }
   test {
@@ -147,70 +148,60 @@ tasks.withType(JavaCompile) {
   options.headerOutputDirectory.convention(null)
   options.forkOptions.with {
     executable = 'java'
-    jvmArgs = ['-classpath', project.configurations.ecj.asPath, 'org.eclipse.jdt.internal.compiler.batch.Main', '-nowarn', "-Xmx2048m"]
-  }
+		jvmArgs = ['-classpath', project.configurations.ecj.asPath, 'org.eclipse.jdt.internal.compiler.batch.Main', '-nowarn', "-Xmx2048m"]
+	}
 }
 
 // build sources jar in addition
 task sourcesJar(type: Jar) {
-  from sourceSets.main.allJava
-  archiveClassifier = "sources"
+	from sourceSets.main.allJava
+	archiveClassifier = "sources"
 }
 
 sourcesJar.dependsOn project.collect { it.tasks.withType(MCTask) }
 
 jar.dependsOn(sourcesJar)
 
-// build javadoc jar in addition
-task javadocJar(type: Jar) {
-  from javadoc
-  archiveClassifier = "javadoc"
-}
-//jar.dependsOn(javadocJar)
-
-// generated java doc contains errors, disable for now
-javadoc.failOnError(false)
-
 // build grammar jar as well
 task grammarJar(type: Jar) {
-  from("$projectDir/src/main/grammars/") { include "**/*.mc4" }
-  archiveClassifier = "grammars"
+	from("$projectDir/src/main/grammars/") { include "**/*.mc4" }
+	archiveClassifier = "grammars"
 }
 jar.dependsOn(grammarJar)
 
 shadowJar {
-  archiveFileName = 'MCOD.jar'
-  archiveClassifier = "mc-tool"
-  manifest {
-    attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
-  }
+	archiveFileName = 'MCOD.jar'
+	archiveClassifier = "mc-tool"
+	manifest {
+		attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
+	}
 }
 
 task buildOD4DataTool(type: Jar, dependsOn: shadowJar) {
-  archiveFileName = 'MCOD4Data.jar'
-  archiveClassifier = "od4data-mc-tool"
-  manifest {
-    attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
-  }
-  from zipTree(shadowJar.archiveFile)
+	archiveFileName = 'MCOD4Data.jar'
+	archiveClassifier = "od4data-mc-tool"
+	manifest {
+		attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
+	}
+	from zipTree(shadowJar.archiveFile)
 }
 
 task buildOD4ReportTool(type: Jar, dependsOn: shadowJar) {
-  archiveFileName = 'MCOD4Report.jar'
-  archiveClassifier = "od4report-mc-tool"
-  manifest {
-    attributes('Main-Class': 'de.monticore.od4report.OD4ReportTool')
-  }
-  from zipTree(shadowJar.archiveFile)
+	archiveFileName = 'MCOD4Report.jar'
+	archiveClassifier = "od4report-mc-tool"
+	manifest {
+		attributes('Main-Class': 'de.monticore.od4report.OD4ReportTool')
+	}
+	from zipTree(shadowJar.archiveFile)
 }
 
 task buildOD4DevelopmentTool(type: Jar, dependsOn: shadowJar) {
-  archiveFileName = 'MCOD4Development.jar'
-  archiveClassifier = "od4development-mc-tool"
-  manifest {
-    attributes('Main-Class': 'de.monticore.od4development.OD4DevelopmentTool')
-  }
-  from zipTree(shadowJar.archiveFile)
+	archiveFileName = 'MCOD4Development.jar'
+	archiveClassifier = "od4development-mc-tool"
+	manifest {
+		attributes('Main-Class': 'de.monticore.od4development.OD4DevelopmentTool')
+	}
+	from zipTree(shadowJar.archiveFile)
 }
 
 jar.dependsOn(buildOD4DataTool)
@@ -225,22 +216,20 @@ task testReport(type: TestReport) {
 
 // configure deployment
 publishing {
-  // configure what artifacts to publish
-  publications {
-    mavenJava(MavenPublication) {
-      artifactId = "$project.name"
-      from components.java
-      artifact sourcesJar
-//            artifact javadocJar
-      artifact shadowJar
-      artifact buildOD4DataTool
-      artifact buildOD4ReportTool
-//            artifact grammarJar
-    }
-  }
-  repositories.maven {
-    credentials.username mavenUser
-    credentials.password mavenPassword
+	// configure what artifacts to publish
+	publications {
+		mavenJava(MavenPublication) {
+			artifactId = "$project.name"
+			from components.java
+			artifact sourcesJar
+			artifact shadowJar
+			artifact buildOD4DataTool
+			artifact buildOD4ReportTool
+		}
+	}
+	repositories.maven {
+		credentials.username mavenUser
+		credentials.password mavenPassword
     def releasesRepoUrl = "https://nexus.se.rwth-aachen.de/content/repositories/monticore-releases/"
     def snapshotsRepoUrl = "https://nexus.se.rwth-aachen.de/content/repositories/monticore-snapshots/"
     url = version.endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
