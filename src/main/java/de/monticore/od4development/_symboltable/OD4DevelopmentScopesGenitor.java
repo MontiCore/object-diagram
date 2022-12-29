@@ -1,3 +1,4 @@
+/* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4development._symboltable;
 
 import de.monticore.odbasis._ast.ASTODArtifact;
