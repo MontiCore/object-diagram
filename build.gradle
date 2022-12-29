@@ -1,11 +1,10 @@
 /* (c) https://github.com/MontiCore/monticore */
 
 plugins {
-  id 'java'
+  id 'java-library'
   id 'maven-publish'
   id "monticore" version "$mc_version" // MontiCore Plugin
-  id "com.github.johnrengelman.shadow" version "4.0.4"
-  //id "de.set.ecj" version "1.4.1" // Eclipse compiler as it's much faster than javac
+	id "com.github.johnrengelman.shadow" version "$shadow_plugin_version"
   id 'jacoco'
 }
 
