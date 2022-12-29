@@ -1,7 +1,7 @@
 /* (c) https://github.com/MontiCore/monticore */
 
 plugins {
-  id 'java-library'
+  id 'java'
   id 'maven-publish'
   id "monticore" version "$mc_version" // MontiCore Plugin
 	id "com.github.johnrengelman.shadow" version "$shadow_plugin_version"
