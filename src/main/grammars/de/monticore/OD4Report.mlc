@@ -21,8 +21,8 @@ mlc OD4Report {
   uses {
     include "$mp/de/monticore/grammar/grammar/**.java";
     include "$mp/de/monticore/javalight/_symboltable/**.java";
-    include "$mp/de/monticore/literals/mcjavaliterals/_od/**.java";
-    include "$mp/de/monticore/statements/mclowlevelstatements/_symboltable/**.java";
+    // include "$mp/de/monticore/literals/mcjavaliterals/_od/**.java";
+    // include "$mp/de/monticore/statements/mclowlevelstatements/_symboltable/**.java";
   }
 
   promote {  // allow using other languages
