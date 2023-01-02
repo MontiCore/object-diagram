@@ -58,17 +58,18 @@ checkMLCs:
   stage: check
   dependencies:
     - build
-  needs: ["build"]
+  needs: [ "build" ]
   script:
     - "gradle checkArtifacts"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "master" || $CI_PIPELINE_SOURCE == "dev"
+      allow_failure: false
   artifacts:
     name: mlcreports
     when: always
     paths:
       - "target/reports/"
     expire_in: 1 week
-  except:
-    - master
 
 deploy:
   stage: deploy

@@ -297,3 +297,17 @@ checkArtifactsOD4Development.dependsOn(checkArtifactsOD4Data)
 
 checkArtifactsOD4Report.dependsOn(checkArtifactsDateLiterals)
 checkArtifactsOD4Report.dependsOn(checkArtifactsOD4Data)
+
+// MLC Show dependencies
+// always depend on the shows of the mlc models which are allowed by an mlc
+showArtifactsODLink.dependsOn(showArtifactsODBasis)
+
+showArtifactsODAttribute.dependsOn(showArtifactsODBasis)
+
+showArtifactsOD4Data.dependsOn(showArtifactsODLink)
+showArtifactsOD4Data.dependsOn(showArtifactsODAttribute)
+
+showArtifactsOD4Development.dependsOn(showArtifactsOD4Data)
+
+showArtifactsOD4Report.dependsOn(showArtifactsDateLiterals)
+showArtifactsOD4Report.dependsOn(showArtifactsOD4Data)
