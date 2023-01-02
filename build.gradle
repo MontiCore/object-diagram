@@ -4,7 +4,7 @@ plugins {
   id 'java'
   id 'maven-publish'
   id "monticore" version "$mc_version" // MontiCore Plugin
-	id "com.github.johnrengelman.shadow" version "$shadow_plugin_version"
+  id "com.github.johnrengelman.shadow" version "$shadow_plugin_version"
   id 'jacoco'
 }
 
@@ -51,7 +51,7 @@ dependencies {
 	implementation "org.antlr:antlr4-runtime:4.7.1"
 	implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
 	implementation "de.monticore:monticore-runtime:$mc_version"
-	implementation group: 'de.monticore.lang', name: 'cd4analysis', version: mc_version
+	implementation "de.monticore.lang:cd4analysis:$mc_version"
 	implementation "de.monticore:monticore-grammar:$mc_version"
 	grammar("de.monticore:monticore-grammar:$mc_version") {
 		capabilities {
