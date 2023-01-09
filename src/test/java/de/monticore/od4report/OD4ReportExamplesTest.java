@@ -5,7 +5,7 @@ package de.monticore.od4report;
 import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
-import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
+import de.monticore.od4report._prettyprint.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;

@@ -10,8 +10,9 @@ import de.monticore.io.paths.MCPath;
 import de.monticore.javalight._symboltable.JavaMethodSymbolDeSer;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
-import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
+import de.monticore.od4report._prettyprint.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.statements.mclowlevelstatements._symboltable.LabelSymbolDeSer;
 import de.monticore.symbols.basicsymbols._symboltable.*;
 import de.monticore.symbols.oosymbols._symboltable.FieldSymbolDeSer;
@@ -158,7 +159,7 @@ public class OD4ReportTool extends OD4ReportToolTOP {
   @Override
   public void prettyPrint(ASTODArtifact astodArtifact, String file) {
     // pretty print AST
-    OD4ReportFullPrettyPrinter pp = new OD4ReportFullPrettyPrinter();
+    OD4ReportFullPrettyPrinter pp = new OD4ReportFullPrettyPrinter(new IndentPrinter());
     String od = pp.prettyprint(astodArtifact);
     print(od, file);
   }
