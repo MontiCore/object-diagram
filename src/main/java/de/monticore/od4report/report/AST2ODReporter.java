@@ -6,7 +6,7 @@ import de.monticore.ast.ASTNode;
 import de.monticore.generating.templateengine.reporting.commons.AReporter;
 import de.monticore.generating.templateengine.reporting.commons.ReportingConstants;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
-import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
+import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODBasisNode;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.Names;

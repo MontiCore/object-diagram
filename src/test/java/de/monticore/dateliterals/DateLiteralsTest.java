@@ -3,7 +3,7 @@
 package de.monticore.dateliterals;
 
 import de.monticore.dateliterals._ast.*;
-import de.monticore.dateliterals.prettyprinter.DateLiteralsFullPrettyPrinter;
+import de.monticore.dateliterals._prettyprint.DateLiteralsFullPrettyPrinter;
 import de.monticore.od4report._ast.ASTODDate;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;

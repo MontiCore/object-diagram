@@ -8,7 +8,7 @@ import de.monticore.cdbasis._ast.ASTCDCompilationUnit;
 import de.monticore.cdbasis._ast.ASTCDDefinition;
 import de.monticore.cdbasis._ast.ASTCDPackage;
 import de.monticore.generating.templateengine.GlobalExtensionManagement;
-import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
+import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.*;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;
 import de.monticore.odlink._ast.*;
@@ -105,7 +105,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
                     .collect(Collectors.toList()),
             odElement.getODAttributeList()
                     .stream()
-                    .map(a -> new OD4DataFullPrettyPrinter().prettyprint(a.getODValue()))
+                    .map(a -> new OD4DataFullPrettyPrinter(new IndentPrinter()).prettyprint(a.getODValue()))
                     .collect(Collectors.toList()),
             odElement.getName());
 
@@ -121,7 +121,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
                     .collect(Collectors.toList()),
             odElement.getODAttributeList()
                     .stream()
-                    .map(a -> new OD4DataFullPrettyPrinter().prettyprint(a.getODValue()))
+                    .map(a -> new OD4DataFullPrettyPrinter(new IndentPrinter()).prettyprint(a.getODValue()))
                     .collect(Collectors.toList()),
             odElement.getMCObjectType().printType(new MCBasicTypesFullPrettyPrinter(new IndentPrinter())));
   }

@@ -3,8 +3,9 @@ package de.monticore.od4data;
 
 import de.monticore.io.paths.MCPath;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
+import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
@@ -117,7 +118,7 @@ public class OD4DataTool extends OD4DataToolTOP {
   @Override
   public void prettyPrint(ASTODArtifact astodArtifact, String file) {
     // pretty print AST
-    OD4DataFullPrettyPrinter pp = new OD4DataFullPrettyPrinter();
+    OD4DataFullPrettyPrinter pp = new OD4DataFullPrettyPrinter(new IndentPrinter());
     String od = pp.prettyprint(astodArtifact);
     print(od, file);
   }
