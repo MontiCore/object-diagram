@@ -9,7 +9,6 @@ mlc ODBasis {
 
   export "$projectDir/src/main/java" {
     include "de/monticore/odbasis/**.java";
-    include "de/monticore/od/**.java";
   }
 
   export "$projectDir/target/generated-sources/monticore/sourcecode" {

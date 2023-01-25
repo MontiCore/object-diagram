@@ -7,10 +7,6 @@ mlc ODAttribute {
     include "**/ODAttribute.mc4";
   }
 
-  export "$projectDir/src/main/java" {
-    include "de/monticore/odattribute/**.java";
-  }
-
   export "$projectDir/target/generated-sources/monticore/sourcecode" {
     include "de/monticore/odattribute/**.java";
   }
