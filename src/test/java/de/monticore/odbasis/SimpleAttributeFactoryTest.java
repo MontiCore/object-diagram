@@ -25,18 +25,18 @@ public class SimpleAttributeFactoryTest {
   @Test
   public void testCreateInteger() {
     ASTODAttribute integerAttribute = SimpleAttributeFactory.createSimpleIntegerAttribute(
-        ODBasisMill.modifierBuilder().PRIVATE().build(), "test", -10);
+        ODBasisMill.modifierBuilder().PROTECTED().build(), "test", -10);
     String result = ODBasisMill.prettyPrint(integerAttribute, false);
-    // replace first '-' due to generated prettyprinter
+    // replace '#' due to generated prettyprinter
     // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("private int test=-10;", result.replaceFirst(Pattern.quote("-"), " "));
+    Assert.assertEquals("protected int test=-10;", result.replaceFirst(Pattern.quote("#"), " "));
 
     integerAttribute = SimpleAttributeFactory.createSimpleIntegerAttribute(
-        ODBasisMill.modifierBuilder().PRIVATE().build(), "test", 10);
-    // replace first '-' due to generated prettyprinter
+        ODBasisMill.modifierBuilder().PROTECTED().build(), "test", 10);
+    // replace '#' due to generated prettyprinter
     // remove once it is possible to select between print and alt print for constants
     result = ODBasisMill.prettyPrint(integerAttribute, false);
-    Assert.assertEquals("private int test=10;", result.replaceFirst(Pattern.quote("-"), " "));
+    Assert.assertEquals("protected int test=10;", result.replaceFirst(Pattern.quote("#"), " "));
   }
 
   @Test
