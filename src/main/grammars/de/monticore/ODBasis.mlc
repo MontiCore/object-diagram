@@ -17,6 +17,7 @@ mlc ODBasis {
 
   promote {  // allow using the JDK except for reflection
     include "$mp/java/**";
+    include "$mp/org/apache/commons/lang3/**";
     exclude "$mp/java/lang/reflect/**";
   }
 
