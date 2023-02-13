@@ -13,7 +13,7 @@ import de.monticore.od2cd.OD2CDConverter;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCos;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import de.monticore.odbasis.prettyprinter.ODBasisFullPrettyPrinter;
+import de.monticore.odbasis._prettyprint.ODBasisFullPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;

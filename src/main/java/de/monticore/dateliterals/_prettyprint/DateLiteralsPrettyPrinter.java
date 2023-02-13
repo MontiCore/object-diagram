@@ -1,32 +1,21 @@
 // (c) https://github.com/MontiCore/monticore
 
-package de.monticore.dateliterals.prettyprinter;
+package de.monticore.dateliterals._prettyprint;
 
 import de.monticore.dateliterals._ast.*;
 import de.monticore.dateliterals._visitor.DateLiteralsHandler;
 import de.monticore.dateliterals._visitor.DateLiteralsTraverser;
+import de.monticore.dateliterals._visitor.DateLiteralsVisitor2;
 import de.monticore.prettyprint.IndentPrinter;
 
-public class DateLiteralsPrettyPrinter implements DateLiteralsHandler {
+public class DateLiteralsPrettyPrinter extends DateLiteralsPrettyPrinterTOP {
 
-  protected IndentPrinter printer;
-
-  protected DateLiteralsTraverser traverser;
-
-  public DateLiteralsPrettyPrinter(IndentPrinter printer) {
-    this.printer = printer;
-  }
-
-  public IndentPrinter getPrinter() {
-    return printer;
+  public DateLiteralsPrettyPrinter(IndentPrinter printer, boolean printComments){
+    super(printer, printComments);
   }
 
   @Override
   public void handle(ASTDate a) {
-    printODDate(a);
-  }
-
-  private void printODDate(ASTDate a) {
     a.getDatePart().accept(getTraverser());
     getPrinter().print(" ");
     a.getTimePart().accept(getTraverser());
@@ -66,16 +55,6 @@ public class DateLiteralsPrettyPrinter implements DateLiteralsHandler {
     getPrinter().print(timePartColon.getMinute().getDigits());
     getPrinter().print(":");
     getPrinter().print(timePartColon.getSecond().getDigits());
-  }
-
-  @Override
-  public DateLiteralsTraverser getTraverser() {
-    return traverser;
-  }
-
-  @Override
-  public void setTraverser(DateLiteralsTraverser traverser) {
-    this.traverser = traverser;
   }
 
 }

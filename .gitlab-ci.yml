@@ -97,6 +97,7 @@ githubmirror:
     # See https://docs.gitlab.com/ee/ci/runners/configure_runners.html#git-strategy
     GIT_STRATEGY: clone
   dependencies: []
+  needs: [ "deploy" ]
   before_script:
     - 'apk --no-cache add curl git openssh-client'
     - eval $(ssh-agent -s)

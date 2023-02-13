@@ -9,7 +9,6 @@ mlc ODBasis {
 
   export "$projectDir/src/main/java" {
     include "de/monticore/odbasis/**.java";
-    include "de/monticore/od/**.java";
   }
 
   export "$projectDir/target/generated-sources/monticore/sourcecode" {
@@ -18,6 +17,7 @@ mlc ODBasis {
 
   promote {  // allow using the JDK except for reflection
     include "$mp/java/**";
+    include "$mp/org/apache/commons/lang3/**";
     exclude "$mp/java/lang/reflect/**";
   }
 
