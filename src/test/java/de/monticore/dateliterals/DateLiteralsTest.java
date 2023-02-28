@@ -10,6 +10,7 @@ import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._ast.ASTODObject;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,7 +29,7 @@ public class DateLiteralsTest {
 
   @Before
   public void setup() {
-    Log.init();
+    LogStub.init();
     Log.enableFailQuick(false);
   }
 

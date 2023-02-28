@@ -4,6 +4,7 @@ package de.monticore.od4data._parser;
 
 import de.monticore.odlink._ast.*;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class ODBasicsParserTest {
 
   @BeforeClass
   public static void disableFailQuick() {
-    Log.init();
+    LogStub.init();
     Log.enableFailQuick(false);
   }
 

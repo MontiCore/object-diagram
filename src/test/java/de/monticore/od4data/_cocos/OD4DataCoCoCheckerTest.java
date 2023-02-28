@@ -15,6 +15,7 @@ import de.monticore.odlink._cocos.link.LinkEndConsistencyCoCo;
 import de.monticore.odlink._cocos.link.ValidLinkReferenceCoCo;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import de.se_rwth.commons.logging.ODLogReset;
 import org.junit.After;
 import org.junit.Before;
@@ -47,7 +48,7 @@ public class OD4DataCoCoCheckerTest {
 
   @Before
   public void setup() {
-    Log.init();
+    LogStub.init();
     Log.enableFailQuick(false);
     ODLogReset.resetFindings();
     odCoCoChecker = new OD4DataCoCoChecker();

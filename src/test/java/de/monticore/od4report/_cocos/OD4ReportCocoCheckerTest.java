@@ -11,6 +11,7 @@ import de.monticore.od4report._symboltable.OD4ReportScopesGenitorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._cocos.object.ValidObjectTypeCoco;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import de.se_rwth.commons.logging.ODLogReset;
 import org.junit.After;
 import org.junit.Before;
@@ -40,7 +41,7 @@ public class OD4ReportCocoCheckerTest {
 
   @Before
   public void setup() {
-    Log.init();
+    LogStub.init();
     Log.enableFailQuick(false);
     ODLogReset.resetFindings();
     odCoCoChecker = new OD4ReportCoCoChecker();

@@ -12,6 +12,7 @@ import de.monticore.od4report._symboltable.OD4ReportScopesGenitorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import de.se_rwth.commons.logging.ODLogReset;
 import org.junit.After;
 import org.junit.Before;
@@ -28,7 +29,7 @@ import static org.junit.Assert.*;
 
 public class DateLiteralsCoCoCheckerTest {
 
-  private static MCPath symbolPath;
+  private MCPath symbolPath;
 
   private static Path path;
 
@@ -44,7 +45,7 @@ public class DateLiteralsCoCoCheckerTest {
 
   @Before
   public void setup() {
-    Log.init();
+    LogStub.init();
     Log.enableFailQuick(false);
     OD4ReportMill.reset();
     OD4ReportMill.init();

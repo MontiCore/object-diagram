@@ -4,6 +4,7 @@ package de.monticore.od4data;
 
 import de.monticore.od4data._symboltable.IOD4DataGlobalScope;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,15 +35,33 @@ public class OD4DataToolTest {
 
   @Before
   public void setup() {
+    LogStub.init();
+
     OD4DataMill.reset();
     OD4DataMill.init();
     OD4DataMill.globalScope().clear();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
 
-    TypeSymbol objectType = OD4DataMill.typeSymbolBuilder().setName("ObjectType").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol objectType2 = OD4DataMill.typeSymbolBuilder().setName("ObjectType2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol t1 = OD4DataMill.typeSymbolBuilder().setName("T1").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol t2 = OD4DataMill.typeSymbolBuilder().setName("T2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType = OD4DataMill.typeSymbolBuilder()
+        .setName("ObjectType")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol objectType2 = OD4DataMill.typeSymbolBuilder()
+        .setName("ObjectType2")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol t1 = OD4DataMill.typeSymbolBuilder()
+        .setName("T1")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
+    TypeSymbol t2 = OD4DataMill.typeSymbolBuilder()
+        .setName("T2")
+        .setEnclosingScope(gs)
+        .setSpannedScope(OD4DataMill.scope())
+        .build();
     TypeSymbol t3 = OD4DataMill.typeSymbolBuilder().setName("T3").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
     gs.add(objectType);
     gs.add(objectType2);

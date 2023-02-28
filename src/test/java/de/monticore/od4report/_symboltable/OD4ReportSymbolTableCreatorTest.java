@@ -8,7 +8,7 @@ import de.monticore.od4report.OD4ReportToolAPI;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
-import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,7 +41,7 @@ public class OD4ReportSymbolTableCreatorTest {
 
   @Before
   public void setUp() {
-    Log.enableFailQuick(false);
+    LogStub.enableFailQuick(false);
 
     OD4ReportMill.reset();
     OD4ReportMill.init();

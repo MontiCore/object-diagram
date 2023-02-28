@@ -6,6 +6,7 @@ import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -37,7 +38,7 @@ public class OD4ReportToolTest {
 
   @BeforeClass
   public static void disableFailQuick() {
-    Log.init();
+    LogStub.init();
     Log.enableFailQuick(false);
   }
 
