@@ -35,7 +35,6 @@ public class OD4DataDeSerTest {
 
     OD4DataMill.reset();
     OD4DataMill.init();
-    OD4DataMill.globalScope().clear();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
 
     TypeSymbol objectType = OD4DataMill.typeSymbolBuilder()

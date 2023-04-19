@@ -4,6 +4,7 @@ package de.monticore.od4data;
 
 import de.monticore.od4data._symboltable.IOD4DataGlobalScope;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
+import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.LogStub;
 import org.junit.After;
 import org.junit.Before;
@@ -36,10 +37,10 @@ public class OD4DataToolTest {
   @Before
   public void setup() {
     LogStub.init();
+    Log.enableFailQuick(false);
 
     OD4DataMill.reset();
     OD4DataMill.init();
-    OD4DataMill.globalScope().clear();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
 
     TypeSymbol objectType = OD4DataMill.typeSymbolBuilder()

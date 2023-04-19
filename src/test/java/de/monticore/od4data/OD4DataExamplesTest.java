@@ -37,7 +37,6 @@ public class OD4DataExamplesTest {
 
     OD4DataMill.reset();
     OD4DataMill.init();
-    OD4DataMill.globalScope().clear();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
 
     TypeSymbol auction = OD4DataMill.typeSymbolBuilder().setName("Auction").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();

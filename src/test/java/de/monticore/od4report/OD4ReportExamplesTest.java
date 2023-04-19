@@ -39,10 +39,10 @@ public class OD4ReportExamplesTest {
   @Before
   public void setUp() {
     LogStub.init();
+    Log.enableFailQuick(false);
 
     OD4ReportMill.reset();
     OD4ReportMill.init();
-    OD4ReportMill.globalScope().clear();
     IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
 
     TypeSymbol rule = OD4ReportMill.typeSymbolBuilder()

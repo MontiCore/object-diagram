@@ -2,6 +2,7 @@
 
 package de.monticore.od4data._parser;
 
+import de.monticore.od4report.OD4ReportMill;
 import de.monticore.odlink._ast.*;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.LogStub;
@@ -19,6 +20,8 @@ public class ODBasicsParserTest {
   public static void disableFailQuick() {
     LogStub.init();
     Log.enableFailQuick(false);
+    OD4ReportMill.reset();
+    OD4ReportMill.init();
   }
 
   @Test
