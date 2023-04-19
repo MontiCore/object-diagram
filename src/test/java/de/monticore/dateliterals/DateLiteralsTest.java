@@ -4,6 +4,7 @@ package de.monticore.dateliterals;
 
 import de.monticore.dateliterals._ast.*;
 import de.monticore.dateliterals._prettyprint.DateLiteralsFullPrettyPrinter;
+import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._ast.ASTODDate;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -29,8 +30,10 @@ public class DateLiteralsTest {
 
   @Before
   public void setup() {
-    LogStub.init();
-    Log.enableFailQuick(false);
+      LogStub.init();
+      Log.enableFailQuick(false);
+      OD4ReportMill.reset();
+      OD4ReportMill.init();
   }
 
   @Test

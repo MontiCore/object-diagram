@@ -49,7 +49,6 @@ public class DateLiteralsCoCoCheckerTest {
     Log.enableFailQuick(false);
     OD4ReportMill.reset();
     OD4ReportMill.init();
-    OD4ReportMill.globalScope().clear();
     IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
 
     //WrongDate

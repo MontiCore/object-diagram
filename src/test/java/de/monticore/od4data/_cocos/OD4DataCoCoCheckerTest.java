@@ -56,7 +56,6 @@ public class OD4DataCoCoCheckerTest {
 
     OD4DataMill.reset();
     OD4DataMill.init();
-    OD4DataMill.globalScope().clear();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
     OD4DataMill.globalScope().setSymbolPath(symbolPath);
 
