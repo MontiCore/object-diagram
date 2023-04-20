@@ -2,12 +2,22 @@
 
 package de.monticore.od4report;
 
+import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class OD4ReportToolAggregationTest {
 
   //Todo: Does not work due to unavailability of DeSer to deserialize symbols of kind de.monticore.cdbasis._symboltable.CDPackageSymbol
+
+  @Before
+  public void setUp() {
+    LogStub.init();
+    Log.enableFailQuick(false);
+  }
+
   @Test
   @Ignore
   public void testOD4ReportSymboltypesTOGS() {

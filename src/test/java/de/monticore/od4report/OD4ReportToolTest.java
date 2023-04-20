@@ -6,9 +6,9 @@ import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -35,17 +35,13 @@ public class OD4ReportToolTest {
 
   private ByteArrayOutputStream err;
 
-  @BeforeClass
-  public static void disableFailQuick() {
-    Log.init();
-    Log.enableFailQuick(false);
-  }
-
   @Before
   public void setUp() {
+    LogStub.init();
+    Log.enableFailQuick(false);
+
     OD4ReportMill.reset();
     OD4ReportMill.init();
-    OD4ReportMill.globalScope().clear();
     IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
 
     TypeSymbol rule = OD4ReportMill.typeSymbolBuilder()

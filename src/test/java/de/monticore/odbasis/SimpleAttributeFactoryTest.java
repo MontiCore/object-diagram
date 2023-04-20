@@ -7,6 +7,7 @@ package de.monticore.odbasis;
 import de.monticore.odbasis._ast.ASTODAttribute;
 import de.monticore.odbasis.utils.SimpleAttributeFactory;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +17,10 @@ import java.util.regex.Pattern;
 public class SimpleAttributeFactoryTest {
 
   @Before
-  public void init() {
-    Log.init();
+  public void setup() {
+    LogStub.init();
+    Log.enableFailQuick(false);
+
     ODBasisMill.reset();
     ODBasisMill.init();
   }

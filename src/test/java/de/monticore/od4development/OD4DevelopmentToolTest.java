@@ -14,6 +14,7 @@ public class OD4DevelopmentToolTest {
   public void before() {
     LogStub.init();
     Log.enableFailQuick(false);
+    OD4DevelopmentMill.reset();
     OD4DevelopmentMill.init();
   }
 

@@ -9,6 +9,7 @@ import de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,12 +23,11 @@ public class ODSymbolTableCreatorTest {
 
   @Before
   public void setup() {
-    Log.init();
+    LogStub.init();
     Log.enableFailQuick(false);
 
     OD4DataMill.reset();
     OD4DataMill.init();
-    OD4DataMill.globalScope().clear();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
 
     TypeSymbol auction = OD4DataMill.typeSymbolBuilder().setName("Auction").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();

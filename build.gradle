@@ -138,6 +138,11 @@ test {
   onOutput { descriptor, event ->
     logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
   }
+  // prevents gradle from creating reports in target/reports/tests
+  reports {
+    junitXml.enabled = false
+    html.enabled = false
+  }
 }
 
 tasks.withType(JavaCompile) {
