@@ -140,8 +140,8 @@ test {
   }
   // prevents gradle from creating reports in target/reports/tests
   reports {
-    junitXml.enabled = false
-    html.enabled = false
+    junitXml.required = false
+    html.required = false
   }
 }
 
