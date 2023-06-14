@@ -24,34 +24,48 @@ public class PlantUMLODLinkPrettyPrinter implements ODLinkVisitor2, ODLinkHandle
     }
 
     @Override
-    public void visit(ASTODLink node) {
-        node.getODLinkLeftSide().accept(getTraverser());
+    public void handle(ASTODLink node) {
         String symbol = node.isAggregation() ? "o" : node.isComposition() ? "*" : "";
         String linkRepresentation = "--";
         ASTODLinkDirection linkDirection = node.getODLinkDirection();
 
         if(linkDirection instanceof ASTODLeftToRightDir){
-            linkRepresentation = linkRepresentation + symbol;
+            linkRepresentation = linkRepresentation + (symbol.isEmpty() ? ">" : symbol);
         }
         else if(linkDirection instanceof ASTODRightToLeftDir) {
-            linkRepresentation = symbol + linkRepresentation;
+            linkRepresentation = (symbol.isEmpty() ? "<" : symbol) + linkRepresentation;
         }
         else if(linkDirection instanceof ASTODBiDir) {
-            linkRepresentation = symbol + linkRepresentation + symbol;
+            linkRepresentation = (symbol.isEmpty() ? "<" : symbol) + linkRepresentation + (symbol.isEmpty() ? ">" : symbol);
         }
 
-        printer.print(linkRepresentation);
+        String finalLinkRepresentation = linkRepresentation;
 
-        node.getODLinkRightSide().accept(getTraverser());
+        node.getODLinkLeftSide().getReferenceNamesList().forEach(leftRef -> {
+            node.getODLinkRightSide().getReferenceNamesList().forEach(rightRef -> {
+                leftRef.accept(getTraverser());
+
+                node.getODLinkLeftSide().accept(getTraverser());
+                printer.print(finalLinkRepresentation);
+                node.getODLinkRightSide().accept(getTraverser());
+
+                rightRef.accept(getTraverser());
+                printer.println();
+            });
+        });
     }
 
     @Override
-    public void visit(ASTODLinkLeftSide node) {
-        printer.print(node.getReferenceNamesList());
+    public void handle(ASTODLinkLeftSide node) {
+        if(node.isPresentRole()) {
+            printer.print(" \"" + node.getRole() + "\" ");
+        }
     }
 
     @Override
-    public void visit(ASTODLinkRightSide node) {
-        printer.print(node.getReferenceNamesList());
+    public void handle(ASTODLinkRightSide node) {
+        if(node.isPresentRole()) {
+            printer.print(" \"" + node.getRole() + "\" ");
+        }
     }
 }

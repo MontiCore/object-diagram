@@ -1,12 +1,10 @@
 package de.monticore;
 
-import de.monticore.odbasis._ast.ASTODAnonymousObject;
-import de.monticore.odbasis._ast.ASTODAttribute;
-import de.monticore.odbasis._ast.ASTODNamedObject;
-import de.monticore.odbasis._ast.ASTObjectDiagram;
+import de.monticore.odbasis._ast.*;
 import de.monticore.odbasis._visitor.ODBasisHandler;
 import de.monticore.odbasis._visitor.ODBasisTraverser;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;
+import de.monticore.odlink._ast.ASTODLinkLeftSide;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.mcbasictypes._ast.ASTMCQualifiedType;
 
@@ -83,5 +81,10 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
     public void endVisit(ASTODAttribute node) {
         printer.println();
         printer.unindent();
+    }
+
+    @Override
+    public void visit(ASTODName node) {
+        printer.print(node.getName());
     }
 }
