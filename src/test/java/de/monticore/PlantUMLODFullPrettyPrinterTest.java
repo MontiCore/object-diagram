@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class PlantUMLODFullPrettyPrinterTest {
 
@@ -23,13 +26,19 @@ public class PlantUMLODFullPrettyPrinterTest {
         Log.enableFailQuick(false);
     }
 
-    @Ignore
+
     @Test
     public void test1() throws IOException {
-        check(basedir + "Example.od");
+        check(basedir + "Example.od", basedir + "ExpectedOutputExample.od");
     }
 
-    private void check(String s) throws IOException {
+    public String removeSpace(String str)
+    {
+        str = str.replaceAll("\\s","");
+        return str;
+    }
+
+    private void check(String s, String x) throws IOException {
 
         OD4DevelopmentParser p = new OD4DevelopmentParser();
         Optional<ASTODArtifact> pp = p.parse(s);
@@ -40,7 +49,13 @@ public class PlantUMLODFullPrettyPrinterTest {
         String printed = q.prettyprint(pp.get());
         Optional<ASTODArtifact> parsed = p.parse_String(printed);
 
-        assertTrue("Printed model " + s + " could not be parsed. Printed model: \n" + printed , parsed.isPresent());
-        assertTrue("Printed and parsed model " + s + " is not identical to parsed original model. Printed model: \n" + printed, pp.get().deepEquals(parsed.get()));
+        byte[] bytes = Files.readAllBytes(Path.of(x));
+        String expected = new String(bytes,StandardCharsets.UTF_8);
+
+
+        assertEquals("The Pretty Printed Output of the Object Diagram does not match with the expected PlantUML syntax."
+                + "\n" + "Actual Pretty Printed OD : " + "\n" + printed + "\n" + "Expected Pretty Printed OD" + "\n"
+                + expected,removeSpace(expected),removeSpace(printed));
+
     }
 }
