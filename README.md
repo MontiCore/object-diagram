@@ -195,7 +195,7 @@ the number of input files. The i-th input file is pretty-printed into the i-th o
 Execute the following command for trying this out:
 
 ```
-java -jar MCOD4Report.jar -i Example.od -pp PPExample.od
+java -jar MCOD4Report.jar -i Example.od -pp PPExample.od -c intra
 ```
 
 The command prints the pretty-printed model contained in the input file into the file `PPExample.od`
