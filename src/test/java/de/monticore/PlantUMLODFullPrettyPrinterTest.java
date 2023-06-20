@@ -32,6 +32,11 @@ public class PlantUMLODFullPrettyPrinterTest {
         check(basedir + "Example.od", basedir + "ExpectedOutputExample.od");
     }
 
+    @Test
+    public void test2() throws IOException {
+        check(basedir + "Example1.od", basedir + "ExpectedOutputExample1.od");
+    }
+
     public String removeSpace(String str)
     {
         str = str.replaceAll("\\s","");
@@ -52,10 +57,11 @@ public class PlantUMLODFullPrettyPrinterTest {
         byte[] bytes = Files.readAllBytes(Path.of(x));
         String expected = new String(bytes,StandardCharsets.UTF_8);
 
+        System.out.println(printed);
+        System.out.println(expected);
 
         assertEquals("The Pretty Printed Output of the Object Diagram does not match with the expected PlantUML syntax."
                 + "\n" + "Actual Pretty Printed OD : " + "\n" + printed + "\n" + "Expected Pretty Printed OD" + "\n"
                 + expected,removeSpace(expected),removeSpace(printed));
-
     }
 }
