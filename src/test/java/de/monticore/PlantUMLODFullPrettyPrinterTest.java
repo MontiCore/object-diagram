@@ -45,23 +45,20 @@ public class PlantUMLODFullPrettyPrinterTest {
 
     private void check(String s, String x) throws IOException {
 
-        OD4DevelopmentParser p = new OD4DevelopmentParser();
-        Optional<ASTODArtifact> pp = p.parse(s);
-        assertTrue(pp.isPresent());
+        OD4DevelopmentParser odParser = new OD4DevelopmentParser();
+        Optional<ASTODArtifact> parsedOD = odParser.parse(s);
+        assertTrue(parsedOD.isPresent());
 
-        PlantUMLODFullPrettyPrinter q = new PlantUMLODFullPrettyPrinter();
+        PlantUMLODFullPrettyPrinter odPrettyPrinter = new PlantUMLODFullPrettyPrinter();
 
-        String printed = q.prettyprint(pp.get());
-        Optional<ASTODArtifact> parsed = p.parse_String(printed);
+        String printedPlantUMLSyntax = odPrettyPrinter.prettyprint(parsedOD.get());
+        Optional<ASTODArtifact> parsed = odParser.parse_String(printedPlantUMLSyntax);
 
         byte[] bytes = Files.readAllBytes(Path.of(x));
-        String expected = new String(bytes,StandardCharsets.UTF_8);
-
-        System.out.println(printed);
-        System.out.println(expected);
+        String expectedPlantUMLSyntax = new String(bytes,StandardCharsets.UTF_8);
 
         assertEquals("The Pretty Printed Output of the Object Diagram does not match with the expected PlantUML syntax."
-                + "\n" + "Actual Pretty Printed OD : " + "\n" + printed + "\n" + "Expected Pretty Printed OD" + "\n"
-                + expected,removeSpace(expected),removeSpace(printed));
+                + "\n" + "Actual Pretty Printed OD : " + "\n" + printedPlantUMLSyntax + "\n" + "Expected Pretty Printed OD" + "\n"
+                + expectedPlantUMLSyntax,removeSpace(expectedPlantUMLSyntax),removeSpace(printedPlantUMLSyntax));
     }
 }
