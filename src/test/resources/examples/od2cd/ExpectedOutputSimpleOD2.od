@@ -1,0 +1,18 @@
+@startuml
+note "OD" as tag #white
+object "__myObject1:ObjectType__" as myObject1 {
+  innerLink =
+  linkList1 = object "__:T1__" as T1 {
+  }
+  object "__fooBar2:T2__" as fooBar2 {
+    foo = object "__fooBar3:T3__" as fooBar3 {
+      content = "on4"
+    }
+
+  }
+
+}
+object "__myObject2:ObjectType2__" as myObject2 {
+}
+myObject1-->myObject2
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+note "OD" as tag #white
+object "__src_test_resources_classes_A:JavaSourceFile__" as src_test_resources_classes_A {
+}
+object "__src_test_resources_classes:Directory__" as src_test_resources_classes {
+  dir = "src_test_resources_classes"
+}
+object "__de_se_artifacts_D:JavaClassType__" as de_se_artifacts_D {
+  Name = "D"
+}
+src_test_resources_classes_A-->de_se_artifacts_D
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+note "OD" as tag #white
+object "__o1:type1__" as o1 {
+}
+object "__o3:type3__" as o3 {
+  attr1
+  attr2
+  attr3 = 5
+  attr4
+  attr5
+  attr6
+  attr7
+  attr8
+  attr9
+}
+object "__o4:MyObject__" as o4 {
+}
+object "__:type6__" as type6 {
+}
+o1-->o2
+o2 "leftRole" -- "rightRole" o1
+o2 "leftRole" -- "rightRole" o1
+o2 "myO3" -- "myO2" o3
+o1-->o3
+o3*--*o4
+@enduml
