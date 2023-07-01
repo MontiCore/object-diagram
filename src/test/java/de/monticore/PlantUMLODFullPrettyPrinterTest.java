@@ -68,6 +68,10 @@ public class PlantUMLODFullPrettyPrinterTest {
     public void test9() throws IOException {
         check("gentest/src/main/resources/AuctionParticipants.od", basedir + "ExpectedOutputAuctionParticipants.od");
     }
+    @Test
+    public void test10() throws IOException {
+        check(basedir + "ProjectListOD.od", basedir + "ExpectedOutputProjectListOD.od");
+    }
 
     public String removeSpace(String str)
     {
