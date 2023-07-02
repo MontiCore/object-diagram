@@ -1,5 +1,6 @@
 package de.monticore;
 
+import de.monticore.od4report._ast.ASTODName;
 import de.monticore.odlink._ast.*;
 import de.monticore.odlink._visitor.ODLinkHandler;
 import de.monticore.odlink._visitor.ODLinkTraverser;

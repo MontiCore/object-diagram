@@ -49,7 +49,8 @@ configurations { grammar }
 
 dependencies {
 	implementation "org.antlr:antlr4-runtime:4.12.0"
-	implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
+    implementation group: 'net.sourceforge.plantuml', name: 'plantuml', version: '1.2021.1'
+    implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
 	implementation "de.monticore:monticore-runtime:$mc_version"
 	implementation "de.monticore.lang:cd4analysis:$mc_version"
 	implementation "de.monticore:monticore-grammar:$mc_version"
