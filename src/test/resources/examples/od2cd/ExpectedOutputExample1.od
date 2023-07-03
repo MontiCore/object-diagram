@@ -1,0 +1,11 @@
+@startuml
+note "OD" as tag #white
+object "__foo:A__" as foo {
+  x = 5
+  s = "hello"
+}
+object "__bar:B__" as bar {
+  b = false
+}
+foo--> "blub" bar
+@enduml

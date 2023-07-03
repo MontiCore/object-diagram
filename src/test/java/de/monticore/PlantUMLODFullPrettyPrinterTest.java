@@ -32,30 +32,68 @@ public class PlantUMLODFullPrettyPrinterTest {
         check(basedir + "Example.od", basedir + "ExpectedOutputExample.od");
     }
 
+    @Test
+    public void test2() throws IOException {
+        check(basedir + "Example1.od", basedir + "ExpectedOutputExample1.od");
+    }
+
+    @Test
+    public void test3() throws IOException {
+        check(basedir + "Variants.od", basedir + "ExpectedOutputVariants.od");
+    }
+
+    @Test
+    public void test4() throws IOException {
+        check(basedir + "StereoWithKeyword.od", basedir + "ExpectedOutputStereoWithKeyword.od");
+    }
+
+    @Test
+    public void test5() throws IOException {
+        check(basedir + "SpecialValues.od", basedir + "ExpectedOutputSpecialValues.od");
+    }
+
+    @Test
+    public void test6() throws IOException {
+        check(basedir + "SimpleOD2.od", basedir + "ExpectedOutputSimpleOD2.od");
+    }
+    @Test
+    public void test7() throws IOException {
+        check(basedir + "QualifiedLinks.od", basedir + "ExpectedOutputQualifiedLinks.od");
+    }
+    @Test
+    public void test8() throws IOException {
+        check(basedir + "QualifiedInnerLinks.od", basedir + "ExpectedOutputQualifiedInnerLinks.od");
+    }
+    @Test
+    public void test9() throws IOException {
+        check("gentest/src/main/resources/AuctionParticipants.od", basedir + "ExpectedOutputAuctionParticipants.od");
+    }
+    @Test
+    public void test10() throws IOException {
+        check(basedir + "ProjectListOD.od", basedir + "ExpectedOutputProjectListOD.od");
+    }
+
     public String removeSpace(String str)
     {
         str = str.replaceAll("\\s","");
         return str;
     }
 
-    private void check(String s, String x) throws IOException {
+    private void check(String odModel, String plantUMLModel) throws IOException {
 
-        OD4DevelopmentParser p = new OD4DevelopmentParser();
-        Optional<ASTODArtifact> pp = p.parse(s);
-        assertTrue(pp.isPresent());
+        OD4DevelopmentParser odParser = new OD4DevelopmentParser();
+        Optional<ASTODArtifact> parsedOD = odParser.parse(odModel);
+        assertTrue(parsedOD.isPresent());
 
-        PlantUMLODFullPrettyPrinter q = new PlantUMLODFullPrettyPrinter();
+        PlantUMLODFullPrettyPrinter odPrettyPrinter = new PlantUMLODFullPrettyPrinter();
 
-        String printed = q.prettyprint(pp.get());
-        Optional<ASTODArtifact> parsed = p.parse_String(printed);
+        String printedPlantUMLSyntax = odPrettyPrinter.prettyprint(parsedOD.get());
 
-        byte[] bytes = Files.readAllBytes(Path.of(x));
-        String expected = new String(bytes,StandardCharsets.UTF_8);
-
+        byte[] bytes = Files.readAllBytes(Path.of(plantUMLModel));
+        String expectedPlantUMLSyntax = new String(bytes,StandardCharsets.UTF_8);
 
         assertEquals("The Pretty Printed Output of the Object Diagram does not match with the expected PlantUML syntax."
-                + "\n" + "Actual Pretty Printed OD : " + "\n" + printed + "\n" + "Expected Pretty Printed OD" + "\n"
-                + expected,removeSpace(expected),removeSpace(printed));
-
+                + "\n" + "Actual Pretty Printed OD : " + "\n" + printedPlantUMLSyntax + "\n" + "Expected Pretty Printed OD" + "\n"
+                + expectedPlantUMLSyntax,removeSpace(expectedPlantUMLSyntax),removeSpace(printedPlantUMLSyntax));
     }
 }

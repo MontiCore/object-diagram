@@ -6,6 +6,7 @@ import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._visitor.OD4ReportTraverser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.types.mccollectiontypes._prettyprint.MCCollectionTypesPrettyPrinter;
 
 public class PlantUMLODFullPrettyPrinter {
     protected OD4ReportTraverser traverser;

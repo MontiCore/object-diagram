@@ -1,0 +1,13 @@
+@startuml
+note "OD" as tag #white
+object "__o1:type1__" as o1 {
+  myString = "abc\\def"
+  myList = "a""b"
+  myEmpty =
+  negativ = 111
+  longValue = 20l
+  bool = true
+  doubleValue = 2.4444
+  negDoubleValue = 2.444
+}
+@enduml

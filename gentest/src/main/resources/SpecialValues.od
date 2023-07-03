@@ -1,0 +1,18 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.od;
+
+objectdiagram SpecialValues {
+
+  o1:type1 {
+    myString -> "abc\\def";
+    myList = ["a", "b"];
+    myEmpty = ...;
+    negativ = -111;
+    longValue = 20L;
+    bool = true;
+    doubleValue = 2.4444;
+    negDoubleValue = -2.444;
+  };
+
+}
