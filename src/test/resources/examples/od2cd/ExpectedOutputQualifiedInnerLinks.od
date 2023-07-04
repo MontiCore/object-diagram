@@ -7,6 +7,5 @@ object "__objectName2:T1__" as objectName2 {
   cNumber = 2
 }
 object "__objectName3:T2__" as objectName3 {
-  qualLinkList1 = 1 2
 }
 @enduml
