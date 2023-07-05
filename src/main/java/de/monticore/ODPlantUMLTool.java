@@ -129,7 +129,7 @@ public class ODPlantUMLTool {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             SourceStringReader reader = new SourceStringReader(plantUMLSource);
-            reader.generateImage(outputStream);
+            reader.outputImage(outputStream);
 
             try (FileOutputStream fileOutputStream = new FileOutputStream(destinationPath)) {
                 outputStream.writeTo(fileOutputStream);
