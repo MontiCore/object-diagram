@@ -10,6 +10,8 @@ import de.monticore.PlantUMLODBasisPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -93,8 +95,25 @@ public class PlantUMLODFullPrettyPrinterTest {
         byte[] bytes = Files.readAllBytes(Path.of(plantUMLModel));
         String expectedPlantUMLSyntax = new String(bytes,StandardCharsets.UTF_8);
 
-        assertEquals("The Pretty Printed Output of the Object Diagram does not match with the expected PlantUML syntax."
-                + "\n" + "Actual Pretty Printed OD : " + "\n" + printedPlantUMLSyntax + "\n" + "Expected Pretty Printed OD" + "\n"
-                + expectedPlantUMLSyntax,removeSpace(expectedPlantUMLSyntax),removeSpace(printedPlantUMLSyntax));
+        List<String> printedLines = Arrays.asList(printedPlantUMLSyntax.split("\\r?\\n"));
+        List<String> expectedLines = Arrays.asList(expectedPlantUMLSyntax.split("\\r?\\n"));
+        int numLines = Math.min(printedLines.size(), expectedLines.size());
+        boolean areEqual = printedLines.size() == expectedLines.size();
+
+        StringBuilder mismatchBuilder = new StringBuilder();
+        for (int i = 0; i < numLines; i++) {
+            if (!printedLines.get(i).equals(expectedLines.get(i))) {
+                mismatchBuilder.append("Mismatch at line ").append(i + 1).append(":\n");
+                mismatchBuilder.append("Actual:   ").append(printedLines.get(i)).append("\n");
+                mismatchBuilder.append("Expected: ").append(expectedLines.get(i)).append("\n");
+                areEqual = false;
+            }
+        }
+
+        if (!areEqual) {
+            String diffMessage = mismatchBuilder.toString();
+            fail("The Pretty Printed Output of the Object Diagram does not match with the expected PlantUML syntax.\n"
+                    + "Differences:\n" + diffMessage);
+        }
     }
 }
