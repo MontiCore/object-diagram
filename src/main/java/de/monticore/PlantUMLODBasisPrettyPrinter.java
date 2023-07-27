@@ -83,7 +83,9 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
     @Override
     public void handle(ASTODAnonymousObject node) {
         List<String> classTypes = ((ASTMCQualifiedType) node.getMCObjectType()).getNameList();
-        assert !(classTypes == null || classTypes.isEmpty()); // Anonymous objects must have a class type in ODs
+        if(classTypes != null && !classTypes.isEmpty()){
+            throw new RuntimeException("Anonymous objects must have a class type in ODs");
+        }
         anonymousObjectsNameCache.putIfAbsent(node, UUID.randomUUID());
         printer.println(String.format("object \"__:%1$s__\" as %2$s {", classTypes.get(0), anonymousObjectsNameCache.get(node)));
         handleODValuePrettyPrintingByASTType(node.getODAttributeList(), node.getName());

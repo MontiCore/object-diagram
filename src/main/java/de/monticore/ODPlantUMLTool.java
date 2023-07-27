@@ -131,10 +131,9 @@ public class ODPlantUMLTool {
             try (FileOutputStream fileOutputStream = new FileOutputStream(destinationPath)) {
                 outputStream.writeTo(fileOutputStream);
             }
-
-            System.out.println("Diagram image generated and saved as: " + destinationPath);
+            Log.info("Diagram image generated and saved as: " + destinationPath,"SUCCESS");
         } catch (IOException e) {
-            System.err.println("Error generating diagram image: " + e.getMessage());
+            Log.error("Error generating diagram image: " + e.getMessage());
         }
     }
 
