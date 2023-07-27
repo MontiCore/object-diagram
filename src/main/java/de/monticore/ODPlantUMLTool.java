@@ -1,6 +1,5 @@
 package de.monticore;/* (c) https://github.com/MontiCore/monticore */
 
-
 import de.monticore.io.paths.MCPath;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._parser.OD4ReportParser;
@@ -11,12 +10,10 @@ import de.se_rwth.commons.logging.Log;
 import net.sourceforge.plantuml.SourceStringReader;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
-
 public class ODPlantUMLTool {
 
     public void run(String[] args) {

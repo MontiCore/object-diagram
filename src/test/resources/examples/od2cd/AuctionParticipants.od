@@ -1,33 +1,46 @@
-@startuml
-note "OD" as tag #white
-object "__kupfer912:Auction__" as kupfer912 {
-  auctionIdent = 912
-  title = "420t Kupfer"
-  numberOfBids = 0
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.od;
+
+import examples.cd.Associations;
+
+objectdiagram AuctionParticipants {
+
+  kupfer912:Auction {
+    long auctionIdent = 912;
+    String title = "420t Kupfer";
+    /int numberOfBids = 0;
+  };
+
+  theo:Person {
+    personIdent = 1783;
+    name = "Theobald Schmidt";
+    isActive = false;
+  };
+
+  otto:Person {
+    personIdent = 20544;
+    name = "Ottokar Huber";
+    isActive = true;
+  };
+
+  lisa:Person {
+    personIdent = 45392;
+    name = "Elisabeth Muller";
+    isActive = true;
+  };
+
+  <<interf>> private bp:BiddingPolicy{};
+
+  <<interf>> private tp:TimingPolicy{};
+
+  <<linkstereotype>>
+  link participants kupfer912 <-> theo, otto, lisa;
+
+  link /observers kupfer912 <-> lisa;
+
+  composition kupfer912 <-> bp;
+
+  composition kupfer912 -> tp;
+
 }
-object "__theo:Person__" as theo {
-  personIdent = 1783
-  name = "Theobald Schmidt"
-  isActive = false
-}
-object "__otto:Person__" as otto {
-  personIdent = 20544
-  name = "Ottokar Huber"
-  isActive = true
-}
-object "__lisa:Person__" as lisa {
-  personIdent = 45392
-  name = "Elisabeth Muller"
-  isActive = true
-}
-object "__bp:BiddingPolicy__" as bp {
-}
-object "__tp:TimingPolicy__" as tp {
-}
-kupfer912<-->theo
-kupfer912<-->otto
-kupfer912<-->lisa
-kupfer912<-->lisa
-kupfer912*--*bp
-kupfer912--*tp
-@enduml

@@ -9,6 +9,7 @@ import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.mccollectiontypes._prettyprint.MCCollectionTypesPrettyPrinter;
 
 public class PlantUMLODFullPrettyPrinter {
+
     protected OD4ReportTraverser traverser;
     protected IndentPrinter printer;
 

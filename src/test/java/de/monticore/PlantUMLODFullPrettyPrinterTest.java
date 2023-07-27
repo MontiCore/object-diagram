@@ -9,6 +9,9 @@ import de.monticore.od4development._parser.*;
 import de.monticore.od4report._parser.*;
 import de.monticore.PlantUMLODBasisPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -29,64 +32,73 @@ public class PlantUMLODFullPrettyPrinterTest {
         Log.enableFailQuick(false);
     }
 
-
-    @Test
-    public void test1() throws IOException {
-        check(basedir + "Example.od", basedir + "ExpectedOutputExample.od");
+    @ParameterizedTest
+    @CsvSource({"Example.od,ExpectedOutputExample.puml"})
+    public void test1(String input1, String input2) throws IOException {
+        check(basedir + input1, basedir + input2);
     }
 
-    @Test
-    public void test2() throws IOException {
-        check(basedir + "SimpleOD.od", basedir + "ExpectedOutputSimpleOD.od");
+    @ParameterizedTest
+    @CsvSource({"SimpleOD.od,ExpectedOutputSimpleOD.puml"})
+    public void test2(String input1, String input2) throws IOException {
+        check(basedir + input1, basedir + input2);
     }
 
-    @Test
-    public void test3() throws IOException {
-        check(basedir + "StereoWithKeyword.od", basedir + "ExpectedOutputStereoWithKeyword.od");
+    @ParameterizedTest
+    @CsvSource({"StereoWithKeyword.od,ExpectedOutputStereoWithKeyword.puml"})
+    public void test3(String input1, String input2) throws IOException {
+        check(basedir + input1, basedir + input2);
     }
 
-    @Test
-    public void test4() throws IOException {
-        check(basedir + "SpecialValues.od", basedir + "ExpectedOutputSpecialValues.od");
+    @ParameterizedTest
+    @CsvSource({"SpecialValues.od,ExpectedOutputSpecialValues.puml"})
+    public void test4(String input1, String input2) throws IOException {
+        check(basedir + input1, basedir + input2);
     }
 
-    @Test
-    public void test5() throws IOException {
-        check(basedir + "SimpleOD2.od", basedir + "ExpectedOutputSimpleOD2.od");
+    @ParameterizedTest
+    @CsvSource({"SimpleOD2.od,ExpectedOutputSimpleOD2.puml"})
+    public void test5(String input1, String input2) throws IOException {
+        check(basedir + input1, basedir + input2);
     }
-    @Test
-    public void test6() throws IOException {
-        check(basedir + "QualifiedLinks.od", basedir + "ExpectedOutputQualifiedLinks.od");
+
+    @ParameterizedTest
+    @CsvSource({"QualifiedLinks.od,ExpectedOutputQualifiedLinks.puml"})
+    public void test6(String input1, String input2) throws IOException {
+        check(basedir + input1, basedir + input2);
     }
-    @Test
-    public void test7() throws IOException {
-        check(basedir + "QualifiedInnerLinks.od", basedir + "ExpectedOutputQualifiedInnerLinks.od");
+    @ParameterizedTest
+    @CsvSource({"QualifiedInnerLinks.od,ExpectedOutputQualifiedInnerLinks.puml"})
+    public void test7(String input1, String input2) throws IOException {
+        check(basedir + input1, basedir + input2);
     }
-    @Test
-    public void test8() throws IOException {
-        check("gentest/src/main/resources/AuctionParticipants.od", basedir + "ExpectedOutputAuctionParticipants.od");
+    @ParameterizedTest
+    @CsvSource({"AuctionParticipants.od,ExpectedOutputAuctionParticipants.puml"})
+    public void test8(String input1, String input2) throws IOException {
+        check(basedir + input1, basedir + input2);
     }
-    @Test
-    public void test9() throws IOException {
-        check(basedir + "ProjectListOD.od", basedir + "ExpectedOutputProjectListOD.od");
+    @ParameterizedTest
+    @CsvSource({"ProjectListOD.od,ExpectedOutputProjectListOD.puml"})
+    public void test9(String input1, String input2) throws IOException {
+        check(basedir + input1, basedir + input2);
     }
     @Ignore
     @Test
     public void test10() throws IOException {
         // OD Model is Incorrect and cannot be parsed by OD4Report grammar
-        check(basedir + "InnerObjectWithoutLink.od", basedir + "ExpectedOutputInnerObjectWithoutLink.od");
+        check(basedir + "InnerObjectWithoutLink.od", basedir + "ExpectedOutputInnerObjectWithoutLink.puml");
     }
     @Ignore
     @Test
     public void test11() throws IOException {
         // OD Model doesn't have values for attributes and exception is thrown by OD4Report grammar
         // Test works with OD4 Development grammar
-        check(basedir + "Variants.od", basedir + "ExpectedOutputVariants.od");
+        check(basedir + "Variants.od", basedir + "ExpectedOutputVariants.puml");
     }
     @Ignore
     @Test
     public void test12() throws IOException {
-        check(basedir + "MyFamily.od", basedir + "ExpectedOutputVariants.od");
+        check(basedir + "MyFamily.od", basedir + "ExpectedOutputVariants.puml");
     }
 
     public String removeSpace(String str)
@@ -108,9 +120,7 @@ public class PlantUMLODFullPrettyPrinterTest {
         byte[] bytes = Files.readAllBytes(Path.of(plantUMLModel));
         String expectedPlantUMLSyntax = new String(bytes,StandardCharsets.UTF_8);
 
-        assertEquals("The Pretty Printed Output of the Object Diagram does not match with the expected PlantUML syntax."
-                + "\n" + "Actual Pretty Printed OD : " + "\n" + printedPlantUMLSyntax + "\n" + "Expected Pretty Printed OD" + "\n"
-                + expectedPlantUMLSyntax,removeSpace(expectedPlantUMLSyntax),removeSpace(printedPlantUMLSyntax));
+        assertEquals(String.format("The Pretty Printed Output %s does not match with the expected PlantUML Output %s",printedPlantUMLSyntax,expectedPlantUMLSyntax),removeSpace(expectedPlantUMLSyntax),removeSpace(printedPlantUMLSyntax));
 
     }
 }
