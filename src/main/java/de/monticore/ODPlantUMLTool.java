@@ -7,8 +7,11 @@ import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportScopesGenitorDelegator;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import org.apache.commons.cli.*;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
@@ -53,7 +56,9 @@ public class ODPlantUMLTool {
             // -option pretty print
             if (cmd.hasOption("pp")) {
                 String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
-                prettyPrint(ast, path);
+                FileFormat extension = FileFormat.valueOf(FilenameUtils.getExtension(path).toUpperCase());
+                String base = FilenameUtils.getBaseName(path);
+                prettyPrint(ast, base, extension);
             }
 
         } catch (ParseException e) {
@@ -116,19 +121,19 @@ public class ODPlantUMLTool {
         formatter.printHelp("ODPlantUMLTool", options);
     }
 
-    public void prettyPrint(ASTODArtifact ast, String file) {
+    public void prettyPrint(ASTODArtifact ast, String file, FileFormat fileFormat) {
         PlantUMLODFullPrettyPrinter printer = new PlantUMLODFullPrettyPrinter();
         String result = printer.prettyprint(ast);
-        generateImage(result, file);
+        generateImage(result, file, fileFormat);
     }
 
-    public void generateImage(String plantUMLSource, String destinationPath) {
+    public void generateImage(String plantUMLSource, String destinationPath, FileFormat fileFormat) {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             SourceStringReader reader = new SourceStringReader(plantUMLSource);
-            reader.outputImage(outputStream);
+            reader.outputImage(outputStream, new FileFormatOption(fileFormat));
 
-            try (FileOutputStream fileOutputStream = new FileOutputStream(destinationPath)) {
+            try (FileOutputStream fileOutputStream = new FileOutputStream(destinationPath + fileFormat.getFileSuffix())) {
                 outputStream.writeTo(fileOutputStream);
             }
             Log.info("Diagram image generated and saved as: " + destinationPath,"SUCCESS");
