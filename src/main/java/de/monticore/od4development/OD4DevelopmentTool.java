@@ -16,10 +16,14 @@ import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._prettyprint.ODBasisFullPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
+import net.sourceforge.plantuml.SourceStringReader;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -96,7 +100,22 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   public void prettyPrint(ASTODArtifact ast, String file) {
     ODBasisFullPrettyPrinter printer = new ODBasisFullPrettyPrinter(new IndentPrinter());
     String result = printer.prettyprint(ast);
-    print(result, file);
+    generateImage(result,file);
+  }
+
+  public void generateImage(String plantUMLSource, String destinationPath) {
+    try {
+      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+      SourceStringReader reader = new SourceStringReader(plantUMLSource);
+      reader.outputImage(outputStream);
+
+      try (FileOutputStream fileOutputStream = new FileOutputStream(destinationPath)) {
+        outputStream.writeTo(fileOutputStream);
+      }
+      Log.info("Diagram image generated and saved as: " + destinationPath,"SUCCESS");
+    } catch (IOException e) {
+      Log.error("Error generating diagram image: " + e.getMessage());
+    }
   }
 
   @Override
