@@ -8,20 +8,20 @@ import de.monticore.literals.mccommonliterals.MCCommonLiteralsMill;
 import java.time.LocalDateTime;
 
 public class ASTDate extends ASTDateTOP {
-
+  
   /**
    * Sets {@link ASTDatePart} and {@link ASTTimePart} of an {@link ASTDate} to the corresponding
    * values of a {@link LocalDateTime} object.
    *
-   * @return An {@link ASTDate} object with consisting of an {@link ASTDatePartHyphen} and {@link
-   * ASTTimePartColon} object.
+   * @return An {@link ASTDate} object with consisting of an {@link ASTDatePartHyphen} and
+   *     {@link ASTTimePartColon} object.
    */
   public LocalDateTime toLocalDateTime() {
     return LocalDateTime.of(getDatePart().getYear().getValue(), getDatePart().getMonth().getValue(),
         getDatePart().getDay().getValue(), getTimePart().getHour().getValue(),
         getTimePart().getMinute().getValue(), getTimePart().getSecond().getValue());
   }
-
+  
   /**
    * Sets the date provided by a {@link LocalDateTime} object using {@link ASTDatePartHyphen} and
    * {@link ASTTimePartColon}.
@@ -40,7 +40,7 @@ public class ASTDate extends ASTDateTOP {
             .setDigits(String.valueOf(localDateTime.getDayOfMonth()))
             .build())
         .build();
-
+    
     ASTTimePartColon timePartColon = DateLiteralsMill.timePartColonBuilder()
         .setHour(MCCommonLiteralsMill.natLiteralBuilder()
             .setDigits(String.valueOf(localDateTime.getHour()))
@@ -52,11 +52,11 @@ public class ASTDate extends ASTDateTOP {
             .setDigits(String.valueOf(localDateTime.getSecond()))
             .build())
         .build();
-
+    
     setDatePart(datePartHyphen);
     setTimePart(timePartColon);
   }
-
+  
   /**
    * Returns the year as an integer.
    *
@@ -65,7 +65,7 @@ public class ASTDate extends ASTDateTOP {
   public int getYear() {
     return Integer.valueOf(getDatePart().getYear().getDigits()).intValue();
   }
-
+  
   /**
    * Returns the month as an integer.
    *
@@ -74,7 +74,7 @@ public class ASTDate extends ASTDateTOP {
   public int getMonth() {
     return Integer.valueOf(getDatePart().getMonth().getDigits()).intValue();
   }
-
+  
   /**
    * Returns the day as an integer.
    *
@@ -83,7 +83,7 @@ public class ASTDate extends ASTDateTOP {
   public int getDay() {
     return Integer.valueOf(getDatePart().getDay().getDigits()).intValue();
   }
-
+  
   /**
    * Returns the hours as an integer.
    *
@@ -92,7 +92,7 @@ public class ASTDate extends ASTDateTOP {
   public int getHour() {
     return Integer.valueOf(getTimePart().getHour().getDigits()).intValue();
   }
-
+  
   /**
    * Returns the minutes as an integer.
    *
@@ -101,7 +101,7 @@ public class ASTDate extends ASTDateTOP {
   public int getMinute() {
     return Integer.valueOf(getTimePart().getMinute().getDigits()).intValue();
   }
-
+  
   /**
    * Returns the seconds as an integer.
    *
@@ -110,5 +110,5 @@ public class ASTDate extends ASTDateTOP {
   public int getSecond() {
     return Integer.valueOf(getTimePart().getSecond().getDigits()).intValue();
   }
-
+  
 }

@@ -3,7 +3,7 @@
 package de.monticore.odbasis._ast;
 
 public interface ASTODObject extends ASTODObjectTOP {
-
+  
   String getName();
-
+  
 }

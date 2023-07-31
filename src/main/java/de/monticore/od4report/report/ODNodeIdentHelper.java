@@ -17,27 +17,27 @@ import de.monticore.types.MCBasicTypesNodeIdentHelper;
  * Helper for ODs.
  */
 public class ODNodeIdentHelper extends MCBasicTypesNodeIdentHelper {
-
+  
   public String getIdent(ASTObjectDiagram a) {
     String type = Layouter.nodeName(a);
     String name = a.getName();
     return format(name, type);
   }
-
+  
   public String getIdent(ASTODArtifact a) {
     String type = Layouter.nodeName(a);
     String name = a.getObjectDiagram().getName();
     return format(name, type);
   }
-
+  
   public String getIdent(ASTODObject a) {
     String type = Layouter.nodeName(a);
     String name;
     name = a.getName();
-
+    
     return format(maskSpecialChars(name), type);
   }
-
+  
   public String maskSpecialChars(String name) {
     // Replace all special characters by _
     name = name.replaceAll("[^a-zA-Z0-9_$\\-+]", "_");
@@ -47,11 +47,11 @@ public class ODNodeIdentHelper extends MCBasicTypesNodeIdentHelper {
     }
     return name;
   }
-
+  
   public String getIdent(ASTODAttribute a) {
     return format(a.getName(), Layouter.nodeName(a));
   }
-
+  
   public String getIdent(ASTODLink a) {
     String name = "";
     if (a.isPresentName()) {
@@ -64,13 +64,13 @@ public class ODNodeIdentHelper extends MCBasicTypesNodeIdentHelper {
     }
     return format(name, Layouter.nodeName(a));
   }
-
+  
   @Override
   public String getIdent(ASTNode a) {
     String type = Layouter.className(a);
     return format(type);
   }
-
+  
   /**
    * @see de.monticore.generating.templateengine.reporting.commons.IASTNodeIdentHelper#getIdent(de.monticore.symboltable.ISymbol)
    */
@@ -78,7 +78,7 @@ public class ODNodeIdentHelper extends MCBasicTypesNodeIdentHelper {
   public String getIdent(ISymbol symbol) {
     return format(maskSpecialChars(symbol.getName()), symbol.getClass().getSimpleName());
   }
-
+  
   /**
    * @see de.monticore.generating.templateengine.reporting.commons.IASTNodeIdentHelper#getIdent(de.monticore.symboltable.IScope)
    */
@@ -86,5 +86,5 @@ public class ODNodeIdentHelper extends MCBasicTypesNodeIdentHelper {
   public String getIdent(IScope scope) {
     return format(scope.getName(), scope.getClass().getSimpleName());
   }
-
+  
 }

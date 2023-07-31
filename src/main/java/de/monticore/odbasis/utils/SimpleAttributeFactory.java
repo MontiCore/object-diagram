@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Collections;
 
 public class SimpleAttributeFactory {
-
+  
   /**
    * Builds s simple Attribute with an Integer value.
    *
@@ -29,21 +29,21 @@ public class SimpleAttributeFactory {
       int value) {
     // modifier and name
     ASTODAttributeBuilder attributeBuilder = init(modifier, name);
-
+    
     // primitive type
     attributeBuilder.setMCType(
         ODBasisMill.mCPrimitiveTypeBuilder().setPrimitive(ASTConstantsMCBasicTypes.INT).build());
-
+    
     // value
     ASTLiteralExpression expression = ODBasisMill.literalExpressionBuilder()
         .setLiteral(ODBasisMill.natLiteralBuilder().setDigits(Integer.toString(value)).build())
         .build();
     attributeBuilder.setODValue(
         ODBasisMill.oDSimpleAttributeValueBuilder().setExpression(expression).build());
-
+    
     return attributeBuilder.build();
   }
-
+  
   /**
    * Builds s simple Attribute with a Long value.
    *
@@ -56,24 +56,24 @@ public class SimpleAttributeFactory {
       long value) {
     // modifier and name
     ASTODAttributeBuilder attributeBuilder = init(modifier, name);
-
+    
     // name
     attributeBuilder.setName(name);
-
+    
     // primitive type
     attributeBuilder.setMCType(
         ODBasisMill.mCPrimitiveTypeBuilder().setPrimitive(ASTConstantsMCBasicTypes.LONG).build());
-
+    
     // value
     ASTLiteralExpression expression = ODBasisMill.literalExpressionBuilder()
         .setLiteral(ODBasisMill.basicLongLiteralBuilder().setDigits(Long.toString(value)).build())
         .build();
     attributeBuilder.setODValue(
         ODBasisMill.oDSimpleAttributeValueBuilder().setExpression(expression).build());
-
+    
     return attributeBuilder.build();
   }
-
+  
   /**
    * Builds s simple Attribute with a Float value.
    *
@@ -86,27 +86,27 @@ public class SimpleAttributeFactory {
       float value) {
     // modifier and name
     ASTODAttributeBuilder attributeBuilder = init(modifier, name);
-
+    
     // name
     attributeBuilder.setName(name);
-
+    
     // primitive type
     attributeBuilder.setMCType(
         ODBasisMill.mCPrimitiveTypeBuilder().setPrimitive(ASTConstantsMCBasicTypes.FLOAT).build());
-
+    
     // value
     String pre = StringUtils.substringBefore(Float.toString(value), ".");
     String post = StringUtils.substringAfter(Float.toString(value), ".");
-
+    
     ASTLiteralExpression expression = ODBasisMill.literalExpressionBuilder()
         .setLiteral(ODBasisMill.basicFloatLiteralBuilder().setPre(pre).setPost(post).build())
         .build();
     attributeBuilder.setODValue(
         ODBasisMill.oDSimpleAttributeValueBuilder().setExpression(expression).build());
-
+    
     return attributeBuilder.build();
   }
-
+  
   /**
    * Builds s simple Attribute with a Double value.
    *
@@ -119,27 +119,27 @@ public class SimpleAttributeFactory {
       double value) {
     // modifier and name
     ASTODAttributeBuilder attributeBuilder = init(modifier, name);
-
+    
     // name
     attributeBuilder.setName(name);
-
+    
     // primitive type
     attributeBuilder.setMCType(
         ODBasisMill.mCPrimitiveTypeBuilder().setPrimitive(ASTConstantsMCBasicTypes.DOUBLE).build());
-
+    
     // value
     String pre = StringUtils.substringBefore(Double.toString(value), ".");
     String post = StringUtils.substringAfter(Double.toString(value), ".");
-
+    
     ASTLiteralExpression expression = ODBasisMill.literalExpressionBuilder()
         .setLiteral(ODBasisMill.basicDoubleLiteralBuilder().setPre(pre).setPost(post).build())
         .build();
     attributeBuilder.setODValue(
         ODBasisMill.oDSimpleAttributeValueBuilder().setExpression(expression).build());
-
+    
     return attributeBuilder.build();
   }
-
+  
   /**
    * Builds s simple Attribute with a Boolean value.
    *
@@ -152,15 +152,15 @@ public class SimpleAttributeFactory {
       boolean value) {
     // modifier and name
     ASTODAttributeBuilder attributeBuilder = init(modifier, name);
-
+    
     // name
     attributeBuilder.setName(name);
-
+    
     // primitive type
     attributeBuilder.setMCType(ODBasisMill.mCPrimitiveTypeBuilder()
         .setPrimitive(ASTConstantsMCBasicTypes.BOOLEAN)
         .build());
-
+    
     // value
     int booleanValue = value ?
         ASTConstantsMCCommonLiterals.TRUE :
@@ -170,10 +170,10 @@ public class SimpleAttributeFactory {
         .build();
     attributeBuilder.setODValue(
         ODBasisMill.oDSimpleAttributeValueBuilder().setExpression(expression).build());
-
+    
     return attributeBuilder.build();
   }
-
+  
   /**
    * Builds s simple Attribute with a String value.
    *
@@ -186,29 +186,29 @@ public class SimpleAttributeFactory {
       String value) {
     // modifier and name
     ASTODAttributeBuilder attributeBuilder = init(modifier, name);
-
+    
     // name
     attributeBuilder.setName(name);
-
+    
     // String type
     attributeBuilder.setMCType(ODBasisMill.mCQualifiedTypeBuilder()
         .setMCQualifiedName(ODBasisMill.mCQualifiedNameBuilder()
             .setPartsList(Collections.singletonList("String"))
             .build())
         .build());
-
+    
     // value
     ASTLiteralExpression expression = ODBasisMill.literalExpressionBuilder()
         .setLiteral(ODBasisMill.stringLiteralBuilder().setSource(value).build())
         .build();
     attributeBuilder.setODValue(
         ODBasisMill.oDSimpleAttributeValueBuilder().setExpression(expression).build());
-
+    
     return attributeBuilder.build();
   }
-
+  
   private static ASTODAttributeBuilder init(ASTModifier modifier, String name) {
     return ODBasisMill.oDAttributeBuilder().setModifier(modifier).setName(name).setComplete("=");
   }
-
+  
 }

@@ -12,7 +12,7 @@ import de.se_rwth.commons.logging.Log;
  * and vice versa.
  */
 public class PartialAndCompleteAttributesCoCo implements ODBasisASTODObjectCoCo {
-
+  
   @Override
   public void check(ASTODObject node) {
     for (int i = 0; i < node.getODAttributeList().size(); i++) {
@@ -29,5 +29,5 @@ public class PartialAndCompleteAttributesCoCo implements ODBasisASTODObjectCoCo 
       }
     }
   }
-
+  
 }

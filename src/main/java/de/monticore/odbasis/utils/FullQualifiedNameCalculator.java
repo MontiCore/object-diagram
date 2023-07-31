@@ -34,11 +34,11 @@ public class FullQualifiedNameCalculator {
     if (!packageDeclaration.getQName().isEmpty()) {
       fqNameCandidates.add(packageDeclaration + "." + simpleName);
     }
-
+    
     // Symbol might be defined in the model itself
     fqNameCandidates.add(simpleName);
-
+    
     return fqNameCandidates;
   }
-
+  
 }

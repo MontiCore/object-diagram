@@ -16,33 +16,33 @@ import de.monticore.prettyprint.IndentPrinter;
 @Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public class OD4ReportFullPrettyPrinter {
-    public OD4ReportFullPrettyPrinter() {
-    }
-
-    public OD4ReportFullPrettyPrinter(IndentPrinter printer) {
-    }
-
-    public String prettyprint(ASTOD4ReportNode astod4ReportNode) {
-        return OD4ReportMill.prettyPrint(astod4ReportNode, false);
-    }
-
-    public String prettyprint(ASTODReportObject astodReportObject) {
-        return OD4ReportMill.prettyPrint(astodReportObject, false);
-    }
-
-    public String prettyprint(ASTODBasisNode astodBasisNode) {
-        return OD4ReportMill.prettyPrint(astodBasisNode, false);
-    }
-
-    public String prettyprint(ASTODLinkNode astodLinkNode) {
-        return OD4ReportMill.prettyPrint(astodLinkNode, false);
-    }
-
-    public String prettyprint(ASTODLink astodLink) {
-        return OD4ReportMill.prettyPrint(astodLink, false);
-    }
-
-    public String prettyprint(ASTODAttributeNode astodAttributeNode) {
-        return OD4ReportMill.prettyPrint(astodAttributeNode, false);
-    }
+  public OD4ReportFullPrettyPrinter() {
+  }
+  
+  public OD4ReportFullPrettyPrinter(IndentPrinter printer) {
+  }
+  
+  public String prettyprint(ASTOD4ReportNode astod4ReportNode) {
+    return OD4ReportMill.prettyPrint(astod4ReportNode, false);
+  }
+  
+  public String prettyprint(ASTODReportObject astodReportObject) {
+    return OD4ReportMill.prettyPrint(astodReportObject, false);
+  }
+  
+  public String prettyprint(ASTODBasisNode astodBasisNode) {
+    return OD4ReportMill.prettyPrint(astodBasisNode, false);
+  }
+  
+  public String prettyprint(ASTODLinkNode astodLinkNode) {
+    return OD4ReportMill.prettyPrint(astodLinkNode, false);
+  }
+  
+  public String prettyprint(ASTODLink astodLink) {
+    return OD4ReportMill.prettyPrint(astodLink, false);
+  }
+  
+  public String prettyprint(ASTODAttributeNode astodAttributeNode) {
+    return OD4ReportMill.prettyPrint(astodAttributeNode, false);
+  }
 }

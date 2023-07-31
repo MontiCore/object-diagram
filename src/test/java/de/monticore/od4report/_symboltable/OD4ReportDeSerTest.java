@@ -23,21 +23,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class OD4ReportDeSerTest {
-
+  
   private final Path TEASEROD = Paths.get("src", "test", "resources", "examples", "od",
       "MyFamily.od");
-
+  
   private final Path SYMBOL_TARGET = Paths.get("target", "deser");
-
+  
   @Before
   public void disableFailQuick() {
     LogStub.init();
     Log.enableFailQuick(false);
-
+    
     OD4ReportMill.reset();
     OD4ReportMill.init();
     IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
-
+    
     //TODO remove after ImportStatements fix
     TypeSymbol person = OD4ReportMill.typeSymbolBuilder()
         .setName("Person")
@@ -58,17 +58,17 @@ public class OD4ReportDeSerTest {
     gs.add(bmw);
     gs.add(jaguar);
   }
-
+  
   @Test
   public void testOD4ReportDeSer() throws IOException {
     OD4ReportMill.init();
     OD4ReportParser od4ReportParser = new OD4ReportParser();
     Optional<ASTODArtifact> astodArtifact = od4ReportParser.parse(TEASEROD.toString());
     assertTrue(astodArtifact.isPresent());
-
+    
     IOD4ReportArtifactScope od4ReportArtifactScope = OD4ReportToolAPI.createSymbolTable(
         astodArtifact.get(), true);
-
+    
     // serialize
     OD4ReportSymbols2Json od4ReportSymbols2Json = new OD4ReportSymbols2Json();
     String fileName = Paths.get(TEASEROD.toString()).getFileName().toString() + "sym";
@@ -78,19 +78,19 @@ public class OD4ReportDeSerTest {
     String storedPath = Paths.get(SYMBOL_TARGET.toString(), pathFromQualifiedName, fileName)
         .toString();
     od4ReportSymbols2Json.store(od4ReportArtifactScope, storedPath);
-
+    
     Path storedSymTable = Paths.get(storedPath);
     assertTrue(storedSymTable.toFile().exists());
-
+    
     // deserialize
     IOD4ReportArtifactScope loadedBasicsArtifactScope = od4ReportSymbols2Json.load(
         storedSymTable.toString());
-
+    
     // clear buffer of traverser, as elements should be traversed again
     od4ReportSymbols2Json.getTraverser().clearTraversedElements();
-
+    
     assertEquals(od4ReportSymbols2Json.serialize(od4ReportArtifactScope),
         od4ReportSymbols2Json.serialize(loadedBasicsArtifactScope));
   }
-
+  
 }
