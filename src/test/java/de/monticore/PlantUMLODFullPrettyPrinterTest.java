@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.IOException;
@@ -26,58 +27,10 @@ public class PlantUMLODFullPrettyPrinterTest {
   public static void disableFailQuick() {
     Log.enableFailQuick(false);
   }
-  
+
   @ParameterizedTest
-  @CsvSource({ "Example.od,ExpectedOutputExample.puml" })
-  public void test1(String input1, String input2) throws IOException {
-    check(basedir + input1, basedir + input2);
-  }
-  
-  @ParameterizedTest
-  @CsvSource({ "SimpleOD.od,ExpectedOutputSimpleOD.puml" })
-  public void test2(String input1, String input2) throws IOException {
-    check(basedir + input1, basedir + input2);
-  }
-  
-  @ParameterizedTest
-  @CsvSource({ "StereoWithKeyword.od,ExpectedOutputStereoWithKeyword.puml" })
-  public void test3(String input1, String input2) throws IOException {
-    check(basedir + input1, basedir + input2);
-  }
-  
-  @ParameterizedTest
-  @CsvSource({ "SpecialValues.od,ExpectedOutputSpecialValues.puml" })
-  public void test4(String input1, String input2) throws IOException {
-    check(basedir + input1, basedir + input2);
-  }
-  
-  @ParameterizedTest
-  @CsvSource({ "SimpleOD2.od,ExpectedOutputSimpleOD2.puml" })
-  public void test5(String input1, String input2) throws IOException {
-    check(basedir + input1, basedir + input2);
-  }
-  
-  @ParameterizedTest
-  @CsvSource({ "QualifiedLinks.od,ExpectedOutputQualifiedLinks.puml" })
-  public void test6(String input1, String input2) throws IOException {
-    check(basedir + input1, basedir + input2);
-  }
-  
-  @ParameterizedTest
-  @CsvSource({ "QualifiedInnerLinks.od,ExpectedOutputQualifiedInnerLinks.puml" })
-  public void test7(String input1, String input2) throws IOException {
-    check(basedir + input1, basedir + input2);
-  }
-  
-  @ParameterizedTest
-  @CsvSource({ "AuctionParticipants.od,ExpectedOutputAuctionParticipants.puml" })
-  public void test8(String input1, String input2) throws IOException {
-    check(basedir + input1, basedir + input2);
-  }
-  
-  @ParameterizedTest
-  @CsvSource({ "ProjectListOD.od,ExpectedOutputProjectListOD.puml" })
-  public void test9(String input1, String input2) throws IOException {
+  @CsvFileSource(resources = "/examples/od2cd/Tests")
+  public void test(String input1, String input2) throws IOException{
     check(basedir + input1, basedir + input2);
   }
   

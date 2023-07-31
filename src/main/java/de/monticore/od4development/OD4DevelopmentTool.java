@@ -2,6 +2,7 @@
 
 package de.monticore.od4development;
 
+import de.monticore.PlantUMLODFullPrettyPrinter;
 import de.monticore.cd.codegen.CDGenerator;
 import de.monticore.cd.codegen.CdUtilsPrinter;
 import de.monticore.generating.GeneratorSetup;
@@ -96,8 +97,9 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   
   @Override
   public void prettyPrint(ASTODArtifact ast, String file) {
-    ODBasisFullPrettyPrinter printer = new ODBasisFullPrettyPrinter(new IndentPrinter());
-    String result = printer.prettyprint(ast);
+    // ODBasisFullPrettyPrinter printer = new ODBasisFullPrettyPrinter(new IndentPrinter());
+    PlantUMLODFullPrettyPrinter pp = new PlantUMLODFullPrettyPrinter();
+    String result = pp.prettyprint(ast);
     print(result, file);
   }
   

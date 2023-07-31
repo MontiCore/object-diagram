@@ -1,0 +1,9 @@
+Example.od,ExpectedOutputExample.puml
+SimpleOD.od,ExpectedOutputSimpleOD.puml
+StereoWithKeyword.od,ExpectedOutputStereoWithKeyword.puml
+SpecialValues.od,ExpectedOutputSpecialValues.puml
+SimpleOD2.od,ExpectedOutputSimpleOD2.puml
+QualifiedLinks.od,ExpectedOutputQualifiedLinks.puml
+QualifiedInnerLinks.od,ExpectedOutputQualifiedInnerLinks.puml
+AuctionParticipants.od,ExpectedOutputAuctionParticipants.puml
+ProjectListOD.od,ExpectedOutputProjectListOD.puml
