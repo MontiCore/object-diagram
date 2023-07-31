@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class OD4ReportToolAPI {
-
+  
   /**
    * Parse the model contained in the specified file.
    *
@@ -25,7 +25,7 @@ public class OD4ReportToolAPI {
     try {
       OD4ReportParser parser = new OD4ReportParser();
       Optional<ASTODArtifact> optODArtifact = parser.parse(model);
-
+      
       if (!parser.hasErrors() && optODArtifact.isPresent()) {
         return optODArtifact.get();
       }
@@ -36,7 +36,7 @@ public class OD4ReportToolAPI {
     }
     return null;
   }
-
+  
   /**
    * Create the symbol table from the parsed AST.
    *
@@ -49,17 +49,17 @@ public class OD4ReportToolAPI {
     od4ReportScopesGenitorDelegator.setCheckTypes(checkTypes);
     return od4ReportScopesGenitorDelegator.createFromAST(ast);
   }
-
+  
   public static IOD4ReportArtifactScope createSymbolTable(ASTODArtifact ast) {
     return OD4ReportToolAPI.createSymbolTable(ast, false);
   }
-
+  
   public static void runAllCoCos(ASTODArtifact ast) {
     new OD4ReportCoCos().getCheckerForAllCoCos().checkAll(ast);
   }
-
+  
   public static void runAllIntraCoCos(ASTODArtifact ast) {
     new OD4ReportCoCos().getCheckerForAllIntraCoCos().checkAll(ast);
   }
-
+  
 }

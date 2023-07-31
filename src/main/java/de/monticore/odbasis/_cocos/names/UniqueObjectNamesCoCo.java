@@ -10,7 +10,7 @@ import de.se_rwth.commons.logging.Log;
 import java.util.List;
 
 public class UniqueObjectNamesCoCo implements ODBasisASTODNamedObjectCoCo {
-
+  
   @Override
   public void check(ASTODNamedObject node) {
     VariableSymbol symbol = node.getSymbol();
@@ -19,5 +19,5 @@ public class UniqueObjectNamesCoCo implements ODBasisASTODNamedObjectCoCo {
       Log.error("Violation of CoCo 'UniqueObjectNamesCoCo'", node.get_SourcePositionStart());
     }
   }
-
+  
 }

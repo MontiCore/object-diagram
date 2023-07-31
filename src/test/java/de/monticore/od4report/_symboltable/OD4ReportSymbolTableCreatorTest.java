@@ -21,35 +21,35 @@ import java.util.Optional;
 import static org.junit.Assert.assertTrue;
 
 public class OD4ReportSymbolTableCreatorTest {
-
+  
   private MCPath symbolPath = new MCPath(Paths.get("src", "test", "resources"));
-
+  
   private final Path INPUTFOLDER = Paths.get("src", "test", "resources", "symboltable");
-
+  
   @Test
   public void testOD4ReportSymbolTableCreator() throws IOException {
     OD4ReportParser parser = new OD4ReportParser();
     Optional<ASTODArtifact> artifact = parser.parse(
         Paths.get(INPUTFOLDER.toString(), "AuctionParticipants.od").toString());
     assertTrue(artifact.isPresent());
-
+    
     IOD4ReportArtifactScope symbolTable = OD4ReportToolAPI.createSymbolTable(artifact.get(), true);
     // TODO: uncomment when ImportStatements are fixed
     //    Optional<VariableSymbol> person = symbolTable.resolveVariable(
     //        "symboltable.symbols.MyFamily.alice");
     //    assertTrue(person.isPresent());
   }
-
+  
   @Before
   public void setUp() {
     LogStub.init();
     Log.enableFailQuick(false);
-
+    
     OD4ReportMill.reset();
     OD4ReportMill.init();
     OD4ReportMill.globalScope().setSymbolPath(symbolPath);
     IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
-
+    
     TypeSymbol auction = OD4ReportMill.typeSymbolBuilder()
         .setName("Auction")
         .setEnclosingScope(gs)
@@ -81,5 +81,5 @@ public class OD4ReportSymbolTableCreatorTest {
     gs.add(biddingPolicy);
     gs.add(timingPolicy);
   }
-
+  
 }

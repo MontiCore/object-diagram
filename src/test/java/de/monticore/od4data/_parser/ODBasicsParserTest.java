@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 
 public class ODBasicsParserTest {
-
+  
   @BeforeClass
   public static void disableFailQuick() {
     LogStub.init();
@@ -23,7 +23,7 @@ public class ODBasicsParserTest {
     OD4ReportMill.reset();
     OD4ReportMill.init();
   }
-
+  
   @Test
   public void testODLinkLeftSide() throws IOException {
     OD4DataParser odBasicsParser = new OD4DataParser();
@@ -34,7 +34,7 @@ public class ODBasicsParserTest {
     assertEquals("test", linkLeftSide.get().getODLinkQualifier().getName());
     assertFalse(linkLeftSide.get().getODLinkQualifier().isPresentODValue());
   }
-
+  
   @Test
   public void testODLinkRightSide() throws IOException {
     OD4DataParser odBasicsParser = new OD4DataParser();
@@ -45,14 +45,14 @@ public class ODBasicsParserTest {
     assertEquals("test", linkRightSide.get().getODLinkQualifier().getName());
     assertFalse(linkRightSide.get().getODLinkQualifier().isPresentODValue());
   }
-
+  
   @Test
   public void testODLink() throws IOException {
     OD4DataParser odBasicsParser = new OD4DataParser();
     Optional<ASTODLink> link = odBasicsParser.parse_StringODLink("link A -- B");
     assertTrue(link.isPresent());
   }
-
+  
   @Test
   public void testODLinkDirection() throws IOException {
     OD4DataParser odBasicsParser = new OD4DataParser();
@@ -61,5 +61,5 @@ public class ODBasicsParserTest {
     Optional<ASTODLinkDirection> linkDirection = odBasicsParser.parse_StringODLinkDirection("--");
     assertTrue(linkDirection.isPresent());
   }
-
+  
 }

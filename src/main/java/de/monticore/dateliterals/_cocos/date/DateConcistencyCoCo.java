@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  * Check if the ODDate is a consistent Date. Consistency is checked using {@link LocalDate}.
  */
 public class DateConcistencyCoCo implements DateLiteralsASTDateCoCo {
-
+  
   @Override
   public void check(ASTDate node) {
     try {
@@ -29,5 +29,5 @@ public class DateConcistencyCoCo implements DateLiteralsASTDateCoCo {
       Log.error("Violation of CoCo 'DateConcistencyCoCo'", node.get_SourcePositionStart());
     }
   }
-
+  
 }

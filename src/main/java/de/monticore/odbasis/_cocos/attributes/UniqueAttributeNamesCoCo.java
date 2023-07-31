@@ -13,7 +13,7 @@ import java.util.List;
  * Checks whether the attribute names within an object are unique
  */
 public class UniqueAttributeNamesCoCo implements ODBasisASTODObjectCoCo {
-
+  
   @Override
   public void check(ASTODObject node) {
     List<String> attributeNames = new ArrayList<>();
@@ -29,5 +29,5 @@ public class UniqueAttributeNamesCoCo implements ODBasisASTODObjectCoCo {
       }
     });
   }
-
+  
 }
