@@ -11,4 +11,4 @@ pluginManagement {
     }
 }
 rootProject.name = 'od'
-include(':gentest')
+include (':gentest')

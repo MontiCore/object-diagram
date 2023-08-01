@@ -12,17 +12,17 @@ import org.junit.Test;
 import java.util.List;
 
 public class GeneratedClassesTest {
-  
+
   @Before
   public void setup() {
     LogStub.init();
     Log.enableFailQuick(false);
   }
-  
+
   @Test
   public void test() {
     List<Object> list = new ExamplesInstantiator().instantiate();
-    new ExamplesChecker().checkFoo((A) list.get(0));
-    new ExamplesChecker().checkBar((B) list.get(1));
+    new ExamplesChecker().checkFoo((A)list.get(0));
+    new ExamplesChecker().checkBar((B)list.get(1));
   }
 }

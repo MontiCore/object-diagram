@@ -13,7 +13,7 @@ import de.se_rwth.commons.logging.Log;
 import java.util.Optional;
 
 public class ValidObjectReferenceCoCo implements ODBasisASTODObjectCoCo {
-  
+
   @Override
   public void check(ASTODObject node) {
     for (ASTODAttribute astodAttribute : node.getODAttributeList()) {
@@ -30,7 +30,7 @@ public class ValidObjectReferenceCoCo implements ODBasisASTODObjectCoCo {
       }
     }
   }
-  
+
   private boolean checkReference(ASTNameExpression astNameExpression, ASTODObject node) {
     Optional<VariableSymbol> symbol = Optional.empty();
     if (node.getEnclosingScope() != null) {
@@ -38,5 +38,5 @@ public class ValidObjectReferenceCoCo implements ODBasisASTODObjectCoCo {
     }
     return symbol.isPresent();
   }
-  
+
 }

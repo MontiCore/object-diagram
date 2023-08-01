@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.Assert.assertTrue;
 
 public class OD4DevelopmentToolTest {
-  
+
   @BeforeEach
   public void before() {
     LogStub.init();
@@ -17,15 +17,12 @@ public class OD4DevelopmentToolTest {
     OD4DevelopmentMill.reset();
     OD4DevelopmentMill.init();
   }
-  
+
   @Test
   public void testAddSymtabFile() {
     assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().isEmpty());
-    OD4DevelopmentToolTOP.main(
-        new String[] { "-i", "src/test/resources/examples/od2cd/Example.od", "-s",
-            "resources/symboltable/tooltest/" });
-    assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().toString()
-        .endsWith("resources/symboltable/tooltest]"));
+    OD4DevelopmentToolTOP.main(new String[] {"-i","src/test/resources/examples/od2cd/Example.od", "-s", "resources/symboltable/tooltest/"});
+    assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().toString().endsWith("resources/symboltable/tooltest]"));
   }
-  
+
 }

@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OD4ReportObjectCollector implements OD4ReportVisitor2 {
-  
+
   private List<ASTODReportObject> namedObjects = new ArrayList<>();
-  
+
   @Override
   public void visit(ASTODReportObject reportObject) {
     namedObjects.add(reportObject);
   }
-  
+
   public List<ASTODReportObject> getNamedObjects() {
     return namedObjects;
   }
-  
+
 }

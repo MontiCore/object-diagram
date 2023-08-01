@@ -10,7 +10,7 @@ import de.se_rwth.commons.logging.Log;
 import java.util.Optional;
 
 public class ValidLinkReferenceCoCo implements ODLinkASTODLinkCoCo {
-  
+
   @Override
   public void check(ASTODLink node) {
     node.getLeftReferenceNames().forEach(refName -> {
@@ -21,7 +21,7 @@ public class ValidLinkReferenceCoCo implements ODLinkASTODLinkCoCo {
             node.get_SourcePositionStart());
       }
     });
-    
+
     node.getRightReferenceNames().forEach(refName -> {
       if (!node.getEnclosingScope().resolveVariable(refName).isPresent()) {
         Log.error(
@@ -30,6 +30,6 @@ public class ValidLinkReferenceCoCo implements ODLinkASTODLinkCoCo {
       }
     });
   }
-  
+
 }
 

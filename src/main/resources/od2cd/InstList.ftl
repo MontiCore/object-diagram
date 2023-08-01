@@ -3,14 +3,13 @@ ${tc.signature("types", "names", "links", "objects")}
 ${cd4c.method("public List<Object> instantiate()")}
 
 <#list objects as object>
-    ${types[object?index]} ${names[object?index]} = instantiate${object?capFirst}();
+  ${types[object?index]} ${names[object?index]} = instantiate${object?capFirst}();
 </#list>
 <#list links as link>
-    ${link};
+  ${link};
 </#list>
-List
-<Object> objects = new ArrayList<>();
-    <#list objects as object>
-        objects.add(${object});
-    </#list>
-    return objects;
+List<Object> objects = new ArrayList<>();
+<#list objects as object>
+  objects.add(${object});
+</#list>
+return objects;

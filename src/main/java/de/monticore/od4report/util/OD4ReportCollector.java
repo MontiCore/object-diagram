@@ -19,28 +19,28 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class OD4ReportCollector {
-  
+
   protected OD4ReportTraverser traverser = OD4ReportMill.traverser();
-  
+
   protected IndentPrinter printer;
-  
+
   private OD4ReportObjectCollector od4ReportObjectCollector = new OD4ReportObjectCollector();
-  
+
   private ODBasisObjectCollector odBasisObjectCollector = new ODBasisObjectCollector();
-  
+
   private ODLinkCollector odLinkCollector = new ODLinkCollector();
-  
+
   public OD4ReportCollector() {
     init();
   }
-  
+
   public List<ASTODReportObject> getReportObjects(ASTObjectDiagram objectDiagram) {
     objectDiagram.accept(traverser);
     List<ASTODReportObject> result = od4ReportObjectCollector.getNamedObjects();
     reset();
     return result;
   }
-  
+
   public List<ASTODNamedObject> getNamedObjects(ASTObjectDiagram objectDiagram) {
     objectDiagram.accept(traverser);
     List<ASTODNamedObject> result = Stream.concat(odBasisObjectCollector.getNamedObjects().stream(),
@@ -48,14 +48,14 @@ public class OD4ReportCollector {
     reset();
     return result;
   }
-  
+
   public List<ASTODAnonymousObject> getAnonymousObjects(ASTObjectDiagram objectDiagram) {
     objectDiagram.accept(traverser);
     List<ASTODAnonymousObject> result = odBasisObjectCollector.getAnonymousObjects();
     reset();
     return result;
   }
-  
+
   public List<ASTODObject> getODObjects(ASTObjectDiagram objectDiagram) {
     objectDiagram.accept(traverser);
     List<ASTODObject> result = Stream.concat(odBasisObjectCollector.getODObjects().stream(),
@@ -63,24 +63,24 @@ public class OD4ReportCollector {
     reset();
     return result;
   }
-  
+
   public List<ASTODLink> getODLinks(ASTObjectDiagram objectDiagram) {
     objectDiagram.accept(traverser);
     List<ASTODLink> result = odLinkCollector.getLinks();
     reset();
     return result;
   }
-  
+
   private void init() {
     traverser.add4ODBasis(odBasisObjectCollector);
     traverser.add4ODLink(odLinkCollector);
     traverser.add4OD4Report(od4ReportObjectCollector);
   }
-  
+
   private void reset() {
     od4ReportObjectCollector = new OD4ReportObjectCollector();
     odBasisObjectCollector = new ODBasisObjectCollector();
     odLinkCollector = new ODLinkCollector();
   }
-  
+
 }

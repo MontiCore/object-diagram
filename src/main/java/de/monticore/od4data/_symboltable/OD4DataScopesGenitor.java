@@ -8,13 +8,13 @@ import de.se_rwth.commons.logging.Log;
 import java.util.ArrayList;
 
 public class OD4DataScopesGenitor extends OD4DataScopesGenitorTOP {
-  
+
   private ODBasisScopesGenitor odBasisScopesGenitor = new ODBasisScopesGenitor();
-  
+
   public OD4DataScopesGenitor() {
     super();
   }
-  
+
   @Override
   public IOD4DataArtifactScope createFromAST(ASTODArtifact rootNode) {
     Log.errorIfNull(rootNode,
@@ -34,5 +34,5 @@ public class OD4DataScopesGenitor extends OD4DataScopesGenitorTOP {
     rootNode.accept(getTraverser());
     return artifactScope;
   }
-  
+
 }
