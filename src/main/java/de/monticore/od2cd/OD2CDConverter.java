@@ -8,20 +8,20 @@ import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._visitor.ODBasisTraverser;
 
 public class OD2CDConverter {
-  
+
   public OD2CDData doConvert(ASTODArtifact ast, GlobalExtensionManagement glex) {
-    
+
     OD2CDObjectVisitor visitor = new OD2CDObjectVisitor(glex);
     ODBasisTraverser traverser = ODBasisMill.inheritanceTraverser();
     traverser.add4ODBasis(visitor);
-    
+
     CD4CodeMill.init();
-    
+
     traverser.handle(ast);
-    
+
     return new OD2CDData(visitor.getCDCompilationUnit(), visitor.getInstantiatorClass(),
-        visitor.getCheckerClass(),
-        visitor.getObjectToClassMap().values());
+            visitor.getCheckerClass(),
+            visitor.getObjectToClassMap().values());
   }
-  
+
 }

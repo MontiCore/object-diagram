@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class OD4DataToolAPI {
-  
+
   /**
    * Parse the model contained in the specified file.
    *
@@ -25,7 +25,7 @@ public class OD4DataToolAPI {
     try {
       OD4DataParser parser = new OD4DataParser();
       Optional<ASTODArtifact> optODArtifact = parser.parse(model);
-      
+
       if (!parser.hasErrors() && optODArtifact.isPresent()) {
         return optODArtifact.get();
       }
@@ -36,7 +36,7 @@ public class OD4DataToolAPI {
     }
     return null;
   }
-  
+
   /**
    * Create the symbol table from the parsed AST.
    *
@@ -49,17 +49,17 @@ public class OD4DataToolAPI {
     od4DataScopesGenitorDelegator.setCheckTypes(checkTypes);
     return od4DataScopesGenitorDelegator.createFromAST(ast);
   }
-  
+
   public static IOD4DataArtifactScope createSymbolTable(ASTODArtifact ast) {
     return OD4DataToolAPI.createSymbolTable(ast, false);
   }
-  
+
   public static void runAllCoCos(ASTODArtifact ast) {
     new OD4DataCoCos().getCheckerForAllCoCos().checkAll(ast);
   }
-  
+
   public static void runAllIntraCoCos(ASTODArtifact ast) {
     new OD4DataCoCos().getCheckerForAllIntraCoCos().checkAll(ast);
   }
-  
+
 }

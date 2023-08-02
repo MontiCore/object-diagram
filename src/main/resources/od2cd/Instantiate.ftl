@@ -4,6 +4,6 @@ ${cd4c.method("public ${type} instantiate${objectname?capFirst}()")}
 
 return examples.Mill.${type?uncapFirst}Builder()
 <#list attributes as attribute>
-    .set${attribute?capFirst}(${values[attribute?index]})
+  .set${attribute?capFirst}(${values[attribute?index]})
 </#list>
 .build();

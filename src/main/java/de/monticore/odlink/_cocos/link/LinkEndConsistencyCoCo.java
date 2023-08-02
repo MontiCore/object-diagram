@@ -1,5 +1,6 @@
 /* (c) https://github.com/MontiCore/monticore */
 
+
 package de.monticore.odlink._cocos.link;
 
 import de.monticore.odlink._ast.ASTODLink;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
  * of the definition
  */
 public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
-  
+
   @Override
   public void check(ASTODLink node) {
     List<VariableSymbol> leftSymbols = node.getLeftReferenceNames().stream().map(refName -> {
@@ -27,7 +28,7 @@ public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
       }
       return symbol.get();
     }).collect(Collectors.toList());
-    
+
     /* TODO SH: Is there any nicer way to check equality? */
     BasicSymbolsSymbols2Json tablePrinter = new BasicSymbolsSymbols2Json();
     tablePrinter.visit(leftSymbols.get(0));
@@ -36,12 +37,12 @@ public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
       tablePrinter = new BasicSymbolsSymbols2Json();
       tablePrinter.visit(sym);
       String typeJSON = tablePrinter.getSerializedString();
-      
+
       if (!firstTypeJSON.equals(typeJSON)) {
         Log.error("Violation of CoCo 'LinkEndConsistencyCoCo'", node.get_SourcePositionStart());
       }
     }
-    
+
     /* TODO SH: Is there any nicer way to check equality? */
     List<VariableSymbol> rightSymbols = node.getRightReferenceNames().stream().map(refName -> {
       Optional<VariableSymbol> symbol = node.getEnclosingScope().resolveVariable(refName);
@@ -50,7 +51,7 @@ public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
       }
       return symbol.get();
     }).collect(Collectors.toList());
-    
+
     tablePrinter = new BasicSymbolsSymbols2Json();
     tablePrinter.visit(rightSymbols.get(0));
     firstTypeJSON = tablePrinter.getSerializedString();
@@ -58,11 +59,11 @@ public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
       tablePrinter = new BasicSymbolsSymbols2Json();
       tablePrinter.visit(sym);
       String typeJSON = tablePrinter.getSerializedString();
-      
+
       if (!firstTypeJSON.equals(typeJSON)) {
         Log.error("Violation of CoCo 'LinkEndConsistencyCoCo'", node.get_SourcePositionStart());
       }
     }
   }
-  
+
 }

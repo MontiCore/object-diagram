@@ -2,8 +2,8 @@
 package de.monticore.od4data;
 
 import de.monticore.io.paths.MCPath;
-import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
+import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
@@ -20,11 +20,11 @@ import java.util.Set;
  * executes the corresponding command line options and arguments, such as --help
  */
 public class OD4DataTool extends OD4DataToolTOP {
-  
+
   /*=================================================================*/
   /* Part 1: Handling the arguments and options
   /*=================================================================*/
-  
+
   /**
    * Processes user input from command line and delegates to the corresponding tools.
    *
@@ -34,26 +34,26 @@ public class OD4DataTool extends OD4DataToolTOP {
   public void run(String[] args) {
     init();
     Options options = initOptions();
-    
+
     try {
       // create CLI parser and parse input options from command line
       CommandLineParser cliparser = new DefaultParser();
       CommandLine cmd = cliparser.parse(options, args);
-      
+
       // help: when --help
       if (cmd.hasOption("h")) {
         printHelp(options);
         // do not continue, when help is printed
         return;
       }
-      
+
       // if -i input is missing: also print help and stop
       if (!cmd.hasOption("i")) {
         printHelp(options);
         // do not continue, when help is printed
         return;
       }
-      
+
       // if -path is set: save the model paths
       MCPath symbolPath = new MCPath();
       if (cmd.hasOption("path")) {
@@ -61,21 +61,21 @@ public class OD4DataTool extends OD4DataToolTOP {
         Arrays.stream(paths).forEach(p -> symbolPath.addEntry(Paths.get(p)));
       }
       OD4DataMill.globalScope().setSymbolPath(symbolPath);
-      
+
       // parse input file, which is now available
       // (only returns if successful)
       ASTODArtifact astodArtifact = parse(cmd.getOptionValue("i"));
-      
+
       // -option check cocos
       Set<String> cocoOptionValue = new HashSet<>();
       if (cmd.hasOption("c") && cmd.getOptionValues("c") != null) {
         cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
       }
-      
+
       // create symbol table
       IOD4DataArtifactScope od4DataArtifactScope = OD4DataToolAPI.createSymbolTable(astodArtifact,
           !cocoOptionValue.contains("intra"));
-      
+
       // run cocos
       if (cmd.hasOption("c")) {
         if (cocoOptionValue.contains("intra")) {
@@ -85,13 +85,13 @@ public class OD4DataTool extends OD4DataToolTOP {
           OD4DataToolAPI.runAllCoCos(astodArtifact);
         }
       }
-      
+
       // -option pretty print
       if (cmd.hasOption("pp")) {
         String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
         prettyPrint(astodArtifact, path);
       }
-      
+
       // -option pretty print symboltable
       if (cmd.hasOption("s")) {
         String path = cmd.getOptionValue("s", StringUtils.EMPTY);
@@ -103,11 +103,11 @@ public class OD4DataTool extends OD4DataToolTOP {
       Log.error("0xA7121 Could not process CLI parameters: " + e.getMessage());
     }
   }
-  
+
   /*=================================================================*/
   /* Part 2: Executing arguments
   /*=================================================================*/
-  
+
   /**
    * Prints the contents of the OD-AST to stdout or a specified file.
    *
@@ -122,12 +122,12 @@ public class OD4DataTool extends OD4DataToolTOP {
     String od = pp.prettyprint(astodArtifact);
     print(od, file);
   }
-  
-  
+
+
   /*=================================================================*/
   /* Part 3: Defining the options incl. help-texts
   /*=================================================================*/
-  
+
   /**
    * Initializes the standard options for the OD tool.
    *
@@ -137,7 +137,7 @@ public class OD4DataTool extends OD4DataToolTOP {
   public Options addStandardOptions(Options options) {
     // help dialog
     options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").build());
-    
+
     // parse input file
     options.addOption(Option.builder("i")
         .longOpt("input")
@@ -145,7 +145,7 @@ public class OD4DataTool extends OD4DataToolTOP {
         .hasArg()
         .desc("Reads the source file (mandatory) and parses the contents as an " + "object diagram")
         .build());
-    
+
     // model paths
     options.addOption(Option.builder("path")
         .argName("dirlist")
@@ -153,7 +153,7 @@ public class OD4DataTool extends OD4DataToolTOP {
         .hasArg()
         .desc("Sets the artifact path for imported symbols")
         .build());
-    
+
     // pretty print OD
     options.addOption(Option.builder("pp")
         .longOpt("prettyprint")
@@ -162,7 +162,7 @@ public class OD4DataTool extends OD4DataToolTOP {
         .numberOfArgs(1)
         .desc("Prints the OD-AST to stdout or the specified file (optional)")
         .build());
-    
+
     // print OD symtab
     options.addOption(Option.builder("s")
         .longOpt("symboltable")
@@ -172,10 +172,10 @@ public class OD4DataTool extends OD4DataToolTOP {
         .desc("Prints the symboltable of the object diagram to stdout or the specified file "
             + "(optional)")
         .build());
-    
+
     return options;
   }
-  
+
   @Override
   public Options addAdditionalOptions(Options options) {
     // check cocos
@@ -190,5 +190,5 @@ public class OD4DataTool extends OD4DataToolTOP {
         .build());
     return options;
   }
-  
+
 }

@@ -3,21 +3,24 @@
 package de.monticore.dateliterals._prettyprint;
 
 import de.monticore.dateliterals._ast.*;
+import de.monticore.dateliterals._visitor.DateLiteralsHandler;
+import de.monticore.dateliterals._visitor.DateLiteralsTraverser;
+import de.monticore.dateliterals._visitor.DateLiteralsVisitor2;
 import de.monticore.prettyprint.IndentPrinter;
 
 public class DateLiteralsPrettyPrinter extends DateLiteralsPrettyPrinterTOP {
-  
-  public DateLiteralsPrettyPrinter(IndentPrinter printer, boolean printComments) {
+
+  public DateLiteralsPrettyPrinter(IndentPrinter printer, boolean printComments){
     super(printer, printComments);
   }
-  
+
   @Override
   public void handle(ASTDate a) {
     a.getDatePart().accept(getTraverser());
     getPrinter().print(" ");
     a.getTimePart().accept(getTraverser());
   }
-  
+
   @Override
   public void handle(ASTDatePartHyphen datePartHyphen) {
     getPrinter().print(datePartHyphen.getYear().getDigits());
@@ -26,7 +29,7 @@ public class DateLiteralsPrettyPrinter extends DateLiteralsPrettyPrinterTOP {
     getPrinter().print("-");
     getPrinter().print(datePartHyphen.getDay().getDigits());
   }
-  
+
   @Override
   public void handle(ASTDatePartDot datePartDot) {
     getPrinter().print(datePartDot.getYear().getDigits());
@@ -35,7 +38,7 @@ public class DateLiteralsPrettyPrinter extends DateLiteralsPrettyPrinterTOP {
     getPrinter().print(".");
     getPrinter().print(datePartDot.getDay().getDigits());
   }
-  
+
   @Override
   public void handle(ASTDatePartSlash datePartSlash) {
     getPrinter().print(datePartSlash.getYear().getDigits());
@@ -44,7 +47,7 @@ public class DateLiteralsPrettyPrinter extends DateLiteralsPrettyPrinterTOP {
     getPrinter().print("/");
     getPrinter().print(datePartSlash.getDay().getDigits());
   }
-  
+
   @Override
   public void handle(ASTTimePartColon timePartColon) {
     getPrinter().print(timePartColon.getHour().getDigits());
@@ -53,5 +56,5 @@ public class DateLiteralsPrettyPrinter extends DateLiteralsPrettyPrinterTOP {
     getPrinter().print(":");
     getPrinter().print(timePartColon.getSecond().getDigits());
   }
-  
+
 }

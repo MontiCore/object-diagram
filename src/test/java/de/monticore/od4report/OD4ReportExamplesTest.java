@@ -29,22 +29,22 @@ import static org.junit.Assert.assertTrue;
  * of these files.
  */
 public class OD4ReportExamplesTest {
-  
+
   @BeforeClass
   public static void disableFailQuick() {
     Log.init();
     Log.enableFailQuick(false);
   }
-  
+
   @Before
   public void setUp() {
     LogStub.init();
     Log.enableFailQuick(false);
-    
+
     OD4ReportMill.reset();
     OD4ReportMill.init();
     IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
-    
+
     TypeSymbol rule = OD4ReportMill.typeSymbolBuilder()
         .setName("Rule")
         .setEnclosingScope(gs)
@@ -65,19 +65,12 @@ public class OD4ReportExamplesTest {
         .setEnclosingScope(gs)
         .setSpannedScope(OD4DataMill.scope())
         .build();
-    TypeSymbol objectType2 =
-        OD4ReportMill.typeSymbolBuilder().setName("ObjectType2").setEnclosingScope(gs)
-            .setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol gitLab = OD4ReportMill.typeSymbolBuilder().setName("GitLab").setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol test = OD4ReportMill.typeSymbolBuilder().setName("Test").setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol person = OD4ReportMill.typeSymbolBuilder().setName("Person").setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol bmw = OD4ReportMill.typeSymbolBuilder().setName("BMW").setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope()).build();
-    TypeSymbol jaguar = OD4ReportMill.typeSymbolBuilder().setName("Jaguar").setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol objectType2 = OD4ReportMill.typeSymbolBuilder().setName("ObjectType2").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol gitLab = OD4ReportMill.typeSymbolBuilder().setName("GitLab").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol test = OD4ReportMill.typeSymbolBuilder().setName("Test").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol person = OD4ReportMill.typeSymbolBuilder().setName("Person").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol bmw = OD4ReportMill.typeSymbolBuilder().setName("BMW").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
+    TypeSymbol jaguar = OD4ReportMill.typeSymbolBuilder().setName("Jaguar").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();
     gs.add(rule);
     gs.add(actionA);
     gs.add(actionB);
@@ -89,52 +82,52 @@ public class OD4ReportExamplesTest {
     gs.add(bmw);
     gs.add(jaguar);
   }
-  
+
   @Test
   public void testExamples() throws RecognitionException, IOException {
     test("src/test/resources/examples/od/Examples.od");
   }
-  
+
   @Test
   public void testSimpleOD() throws RecognitionException, IOException {
     test("src/test/resources/examples/od/SimpleOD.od");
   }
-  
+
   @Test
   public void testProjectOD() throws RecognitionException, IOException {
     test("src/test/resources/examples/od/ProjectListOD.od");
   }
-  
+
   @Test
   public void testTeaser() throws RecognitionException, IOException {
     test("src/test/resources/examples/od/MyFamily.od");
   }
-  
+
   private void test(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
     OD4ReportParser parser = new OD4ReportParser();
     Optional<ASTODArtifact> odDef = parser.parse(model.toString());
     assertFalse(parser.hasErrors());
     assertTrue(odDef.isPresent());
-    
+
     // pretty print the AST
     String ppResult = new OD4ReportFullPrettyPrinter(new IndentPrinter()).prettyprint(odDef.get());
-    
+
     // parse the printers content
     Optional<ASTODArtifact> ppOd = parser.parse_StringODArtifact(ppResult);
-    
+
     assertFalse(parser.hasErrors());
     assertTrue(ppOd.isPresent());
-    
+
     // must be equal to original parsed AST.
     assertTrue("pretty printed OD: " + ppResult, odDef.get().deepEquals(ppOd.get()));
   }
-  
+
   private void negativTest(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
     OD4ReportParser parser = new OD4ReportParser();
     parser.parseODArtifact(model.toString());
     assertTrue(parser.hasErrors());
   }
-  
+
 }

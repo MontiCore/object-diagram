@@ -42,7 +42,7 @@ objectdiagram MyFamily {
 This was for us the most intuitive textual representation of ODs, which follows the syntax of class
 diagrams.
 
-# Command Line Tool
+# Command Line Tool 
 
 This section describes the command line tool of the OD language. The tool provides typical functionality
 used when processing models. To this effect, it provides funcionality for
@@ -357,8 +357,7 @@ much done reading this README!
 * [MontiCore documentation](http://www.monticore.de/)
 * [**List of languages**](https://github.com/MontiCore/monticore/blob/opendev/docs/Languages.md)
 * [**MontiCore Core Grammar
-  Library
-  **](https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/Grammars.md)
+  Library**](https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/Grammars.md)
 * [Best Practices](https://github.com/MontiCore/monticore/blob/opendev/docs/BestPractices.md)
 * [Publications about MBSE and MontiCore](https://www.se-rwth.de/publications/)
 * [Licence definition](https://github.com/MontiCore/monticore/blob/master/00.org/Licenses/LICENSE-MONTICORE-3-LEVEL.md)

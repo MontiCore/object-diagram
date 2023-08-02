@@ -22,21 +22,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class OD4DataDeSerTest {
-  
+
   private final Path SIMPLEOD2 = Paths.get("src", "test", "resources", "examples", "od",
       "SimpleOD2" + ".od");
-  
+
   private final Path SYMBOL_TARGET = Paths.get("target", "deser");
-  
+
   @Before
   public void setUp() {
     LogStub.init();
     Log.enableFailQuick(false);
-    
+
     OD4DataMill.reset();
     OD4DataMill.init();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
-    
+
     TypeSymbol objectType = OD4DataMill.typeSymbolBuilder()
         .setName("ObjectType")
         .setEnclosingScope(gs)
@@ -68,17 +68,16 @@ public class OD4DataDeSerTest {
     gs.add(t2);
     gs.add(t3);
   }
-  
+
   @Test
   public void testOD4DataDeSer() throws IOException {
     OD4DataParser od4DataParser = new OD4DataParser();
     Optional<ASTODArtifact> astodArtifact = od4DataParser.parse(SIMPLEOD2.toString());
     assertTrue(astodArtifact.isPresent());
-    
-    IOD4DataArtifactScope od4DataArtifactScope =
-        OD4DataToolAPI.createSymbolTable(astodArtifact.get(),
-            true);
-    
+
+    IOD4DataArtifactScope od4DataArtifactScope = OD4DataToolAPI.createSymbolTable(astodArtifact.get(),
+        true);
+
     // serialize
     OD4DataSymbols2Json od4DataSymbols2Json = new OD4DataSymbols2Json();
     String fileName = Paths.get(SIMPLEOD2.toString()).getFileName().toString() + "sym";
@@ -88,19 +87,19 @@ public class OD4DataDeSerTest {
     String storedPath = Paths.get(SYMBOL_TARGET.toString(), pathFromQualifiedName, fileName)
         .toString();
     od4DataSymbols2Json.store(od4DataArtifactScope, storedPath);
-    
+
     Path storedSymTable = Paths.get(storedPath);
     assertTrue(storedSymTable.toFile().exists());
-    
+
     // deserialize
     IOD4DataArtifactScope loadedBasicsArtifactScope = od4DataSymbols2Json.load(
         storedSymTable.toString());
-    
+
     // clear buffer of traverser, as elements should be traversed again
     od4DataSymbols2Json.getTraverser().clearTraversedElements();
-    
+
     assertEquals(od4DataSymbols2Json.serialize(od4DataArtifactScope),
         od4DataSymbols2Json.serialize(loadedBasicsArtifactScope));
   }
-  
+
 }
