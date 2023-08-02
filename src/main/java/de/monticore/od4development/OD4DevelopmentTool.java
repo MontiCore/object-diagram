@@ -2,6 +2,7 @@
 
 package de.monticore.od4development;
 
+import de.monticore.PlantUMLODFullPrettyPrinter;
 import de.monticore.cd.codegen.CDGenerator;
 import de.monticore.cd.codegen.CdUtilsPrinter;
 import de.monticore.generating.GeneratorSetup;
@@ -16,14 +17,10 @@ import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._prettyprint.ODBasisFullPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
-import net.sourceforge.plantuml.SourceStringReader;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -54,11 +51,11 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
         return;
       }
 
-
       // -option developer logging
       if (cmd.hasOption("d")) {
         Log.initDEBUG();
-      } else {
+      }
+      else {
         Log.init();
       }
 
@@ -66,10 +63,11 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       // (only returns if successful)
       ASTODArtifact ast = parse(cmd.getOptionValue("i"));
 
-      if(cmd.hasOption("s")) {
+      if (cmd.hasOption("s")) {
         MCPath mcPath = new MCPath(cmd.getOptionValue("s"));
         OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
-      } else {
+      }
+      else {
         createSymbolTable(ast);
       }
 
@@ -86,11 +84,12 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       String outputDir = cmd.hasOption("o")
               ? cmd.getOptionValue("o")
               : "target/gen-test/";
-      if(cmd.hasOption("o")) {
+      if (cmd.hasOption("o")) {
         generateCD(ast, outputDir);
       }
 
-    } catch (ParseException e) {
+    }
+    catch (ParseException e) {
       // an unexpected error from the apache CLI parser:
       Log.error("0xA7105 Could not process parameters: " + e.getMessage());
     }
@@ -98,24 +97,10 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
 
   @Override
   public void prettyPrint(ASTODArtifact ast, String file) {
-    ODBasisFullPrettyPrinter printer = new ODBasisFullPrettyPrinter(new IndentPrinter());
-    String result = printer.prettyprint(ast);
-    generateImage(result,file);
-  }
-
-  public void generateImage(String plantUMLSource, String destinationPath) {
-    try {
-      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-      SourceStringReader reader = new SourceStringReader(plantUMLSource);
-      reader.outputImage(outputStream);
-
-      try (FileOutputStream fileOutputStream = new FileOutputStream(destinationPath)) {
-        outputStream.writeTo(fileOutputStream);
-      }
-      Log.info("Diagram image generated and saved as: " + destinationPath,"SUCCESS");
-    } catch (IOException e) {
-      Log.error("Error generating diagram image: " + e.getMessage());
-    }
+    // ODBasisFullPrettyPrinter printer = new ODBasisFullPrettyPrinter(new IndentPrinter());
+    PlantUMLODFullPrettyPrinter pp = new PlantUMLODFullPrettyPrinter();
+    String result = pp.prettyprint(ast);
+    print(result, file);
   }
 
   @Override
@@ -130,7 +115,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
     setup.setGlex(glex);
     glex.setGlobalValue("cdPrinter", new CdUtilsPrinter());
 
-    if (!outputDir.isEmpty()){
+    if (!outputDir.isEmpty()) {
       File targetDir = new File(outputDir);
       setup.setOutputDirectory(targetDir);
     }
@@ -149,7 +134,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
 
   @Override
   public Options addAdditionalOptions(Options options) {
-    options.addOption(new Option("o","output",true,"Sets the output path"));
+    options.addOption(new Option("o", "output", true, "Sets the output path"));
     return options;
   }
 }
