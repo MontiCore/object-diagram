@@ -4,9 +4,9 @@ The [ODPlantUMLTool](src/main/java/de/monticore/ODPlantUMLTool.java) is a Pretty
 
 ## Features
 
-1. Parse the `Object Diagram` models
-   1. The tool takes the `Object Diagram` models as input and parses them into `Abstract Syntax Tree` (AST) representation based on suitable [grammars](src/main/grammars).
-   2. The [OD4Report](src/main/grammars) grammar is used to parse the `Object Diagram` models.
+**1. Parse the `Object Diagram` models**
+1. The tool takes the `Object Diagram` models as input and parses them into `Abstract Syntax Tree` (AST) representation based on suitable [grammars](src/main/grammars).
+2. The [OD4Report](src/main/grammars) grammar is used to parse the `Object Diagram` models.
 
 ### Example Model
 
@@ -38,9 +38,9 @@ This was for us the most intuitive textual representation of ODs, which follows 
 diagrams.
 
 
-2. Pretty Print the `Object Diagram` model as a `PlantUML` model.
-    1. The tool uses the [Monticore](https://monticore.github.io/monticore/) `Visitor` and `Handler` Infrastructure to iterate through the `Abstract Syntax Tree` nodes and pretty print the `PlantUML` model.
-    2. Detailed Implementation can be found here: [PlantUMLODFullPrettyPrinter](src/main/java/de/monticore/PlantUMLODFullPrettyPrinter.java)
+**2. Pretty Print the `Object Diagram` model as a `PlantUML` model.**
+1. The tool uses the [Monticore](https://monticore.github.io/monticore/) `Visitor` and `Handler` Infrastructure to iterate through the `Abstract Syntax Tree` nodes and pretty print the `PlantUML` model.
+2. Detailed Implementation can be found here: [PlantUMLODFullPrettyPrinter](src/main/java/de/monticore/PlantUMLODFullPrettyPrinter.java)
 
 ``` 
 @startuml
@@ -59,9 +59,9 @@ foo--> "blub" bar
 
 This is the pretty-printed `PlantUML` model by the ODPlantUMLTool    
 
-3. Generate an image representing the `Object Diagram` from the pretty printed `PlantUML` Model.
-    1. The tool use suitable PlantUML Java libraries to take the pretty printed `PlantUML` model as input and generate an image representing the `Object Diagram`.
-    2. Detailed Implementation can be found here: [generateImage](src/main/java/de/monticore/ODPlantUMLTool.java) 
+**3. Generate an image representing the `Object Diagram` from the pretty printed `PlantUML` Model.**
+1. The tool use suitable PlantUML Java libraries to take the pretty printed `PlantUML` model as input and generate an image representing the `Object Diagram`.
+2. Detailed Implementation can be found here: [generateImage](src/main/java/de/monticore/ODPlantUMLTool.java) 
 
 
 ![*Figure 2:* Generation of Object Diagram from PlantUML Model.](doc/pics/Generate.png)
