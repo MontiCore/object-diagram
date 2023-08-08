@@ -4,7 +4,7 @@ The [ODPlantUMLTool](src/main/java/de/monticore/ODPlantUMLTool.java) is a Pretty
 
 ## Features
 
-**1. Parse the `Object Diagram` models**
+1. Parse the `Object Diagram` models
    1. The tool takes the `Object Diagram` models as input and parses them into `Abstract Syntax Tree` (AST) representation based on suitable [grammars](src/main/grammars).
    2. The [OD4Report](src/main/grammars) grammar is used to parse the `Object Diagram` models.
 
@@ -42,20 +42,30 @@ diagrams.
     1. The tool uses the [Monticore](https://monticore.github.io/monticore/) `Visitor` and `Handler` Infrastructure to iterate through the `Abstract Syntax Tree` nodes and pretty print the `PlantUML` model.
     2. Detailed Implementation can be found here: [PlantUMLODFullPrettyPrinter](src/main/java/de/monticore/PlantUMLODFullPrettyPrinter.java)
 
-    
-    
-![*Figure 2:* The Conversion of an OD Model into a PlantUML Model by the ODPlantUMLTool  ](doc/pics/Transform.png)
-<br><b>Figure 2:</b> The Conversion of an OD Model into a PlantUML Model by the ODPlantUMLTool  
+``` 
+@startuml
+note "OD" as tag #white
+object "__foo:A__" as foo {
+  x = 5 
+  s = "hello"
+}
+object "__bar:B__" as bar {
+  b = false 
+}
+foo--> "blub" bar
+@enduml
+```
 
 
+This is the pretty-printed `PlantUML` model by the ODPlantUMLTool    
 
 3. Generate an image representing the `Object Diagram` from the pretty printed `PlantUML` Model.
     1. The tool use suitable PlantUML Java libraries to take the pretty printed `PlantUML` model as input and generate an image representing the `Object Diagram`.
     2. Detailed Implementation can be found here: [generateImage](src/main/java/de/monticore/ODPlantUMLTool.java) 
 
 
-![*Figure 3:* Generation of Object Diagram from PlantUML Model.](doc/pics/Generate.png)
-<br><b>Figure 3:</b> Generation of Object Diagram from PlantUML Model.
+![*Figure 2:* Generation of Object Diagram from PlantUML Model.](doc/pics/Generate.png)
+<br><b>Figure 2:</b> Generation of Object Diagram from PlantUML Model.
 
 ## Usage of ODPlantUMLTool
 
