@@ -19,21 +19,45 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * This class contains test cases for the PlantUMLODFullPrettyPrinter, which is responsible for generating
+ * PlantUML syntax from parsed Object Diagram artifacts. The tests ensure the correctness of the generated
+ * PlantUML syntax by comparing it with the expected results stored in test resource files.
+ */
 public class PlantUMLODFullPrettyPrinterTest {
 
+    /**
+     * The base directory where test resources are located.
+     */
     protected static String basedir = "src/test/resources/examples/od2cd/";
 
+    /**
+     * Disables the fail-quick behavior of the logging system before running the test cases.
+     */
     @BeforeClass
     public static void disableFailQuick() {
         Log.enableFailQuick(false);
     }
 
+    /**
+     * Parameterized test method that reads test data from CSV files and compares the generated PlantUML syntax
+     * with expected results.
+     *
+     * @param input1 The name of the input file containing Object Diagram artifact.
+     * @param input2 The name of the input file containing expected PlantUML syntax.
+     * @throws IOException If an I/O error occurs while reading the files.
+     */
     @ParameterizedTest
     @CsvFileSource(resources = "/examples/od2cd/Tests")
     public void test(String input1, String input2) throws IOException{
         check(basedir + input1, basedir + input2);
     }
 
+    /**
+     * Ignores a specific test case where the OD model cannot be parsed by the OD4Report grammar.
+     *
+     * @throws IOException If an I/O error occurs while reading the files.
+     */
     @Ignore
     @Test
     public void test10() throws IOException {
@@ -56,11 +80,24 @@ public class PlantUMLODFullPrettyPrinterTest {
         check(basedir + "MyFamily.od", basedir + "ExpectedOutputVariants.puml");
     }
 
+    /**
+     * Removes spaces from the given string.
+     *
+     * @param str The input string.
+     * @return The input string with spaces removed.
+     */
     public String removeSpace(String str) {
         str = str.replaceAll("\\s", "");
         return str;
     }
 
+    /**
+     * Parses the input Object Diagram artifact, generates PlantUML syntax, and compares it with the expected syntax.
+     *
+     * @param odModel       The path to the input Object Diagram artifact.
+     * @param plantUMLModel The path to the file containing expected PlantUML syntax.
+     * @throws IOException If an I/O error occurs while reading the files.
+     */
     private void check(String odModel, String plantUMLModel) throws IOException {
 
         OD4ReportParser odParser = new OD4ReportParser();
