@@ -8,11 +8,15 @@ import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.mccollectiontypes._prettyprint.MCCollectionTypesPrettyPrinter;
 
+/**
+ * Base class initializing the individual pretty printers.
+ * Must override the visitors, handlers for each individual pretty printer
+ */
 public class PlantUMLODFullPrettyPrinter {
 
     protected OD4ReportTraverser traverser;
     protected IndentPrinter printer;
-
+    
     public PlantUMLODFullPrettyPrinter() {
         printer = new IndentPrinter();
         traverser = OD4ReportMill.traverser();
@@ -32,7 +36,12 @@ public class PlantUMLODFullPrettyPrinter {
         traverser.add4OD4Report(plantUMLODReportPrettyPrinter);
         traverser.setOD4ReportHandler(plantUMLODReportPrettyPrinter);
     }
-
+    
+    /**
+     * Pretty print the parsed OD.
+     * @param a the parsed OD artifact
+     * @return indented pretty printed PlantUML syntax
+     */
     public String prettyprint(ASTODArtifact a) {
         a.accept(traverser);
         return printer.getContent();

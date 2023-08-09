@@ -17,8 +17,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
-public class ODPlantUMLTool {
 
+/**
+ * Base class that is used to define the PlantUML based pretty printer.
+ */
+public class ODPlantUMLTool {
+    
+    /**
+     * This is the driver method responsible for PlantUML tool creation.
+     * @param args Command line arguments enabling different features in the tool<br>
+     *             <i>-h</i> description and help dialog of the tool<br>
+     *             -<i>i</i> (mandatory) parse input OD file and return if successful<br>
+     *             -<i>s</i> specify the symbol table<br>
+     *             -<i>pp</i> pretty printing the OD in different formats(e.g. - PNG)
+     */
     public void run(String[] args) {
         Log.init();
         OD4ReportMill.init();
@@ -66,7 +78,12 @@ public class ODPlantUMLTool {
             Log.error("0xA7105 Could not process parameters: " + e.getMessage());
         }
     }
-
+    
+    /**
+     * This method parses the provided OD file.
+     * @param model filename for the OD model, not null
+     * @return the ast for the OD artifact
+     */
     private ASTODArtifact parse(String model) {
         try {
             OD4ReportParser parser = OD4ReportMill.parser() ;
@@ -82,6 +99,11 @@ public class ODPlantUMLTool {
         }
         return null;
     }
+    
+    /**
+     * This method initializes the command line arguments
+     * @return {@link Options} object
+     */
 
     private Options initOptions() {
         Options options = new Options();
@@ -113,20 +135,36 @@ public class ODPlantUMLTool {
                 .build());
         return options;
     }
-
+    
+    /**
+     * This method prints the help dialog.
+     * @param options printing the initialized {@link Options}
+     */
     public void printHelp(Options options)
     {
         HelpFormatter formatter = new HelpFormatter();
         formatter.setWidth(80);
         formatter.printHelp("ODPlantUMLTool", options);
     }
-
+    
+    /**
+     * This method acts as a registry for injecting actual pretty printers into the framework.
+     * @param ast parsed ast for the OD
+     * @param file the OD file
+     * @param fileFormat pretty printed format of the OD(e.g. - PNG)
+     */
     public void prettyPrint(ASTODArtifact ast, String file, FileFormat fileFormat) {
         PlantUMLODFullPrettyPrinter printer = new PlantUMLODFullPrettyPrinter();
         String result = printer.prettyprint(ast);
         generateImage(result, file, fileFormat);
     }
-
+    
+    /**
+     * Rendering the pretty printed OD into an image.
+     * @param plantUMLSource pretty printed source OD string
+     * @param destinationPath path to store the generated image
+     * @param fileFormat format in which image must be generated(e.g. -PNG)
+     */
     public void generateImage(String plantUMLSource, String destinationPath, FileFormat fileFormat) {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -141,13 +179,23 @@ public class ODPlantUMLTool {
             Log.error("Error generating diagram image: " + e.getMessage());
         }
     }
-
+    
+    /**
+     * Create symbol table from the ast.
+     * @param node parsed ast for the OD
+     * @return the symbol table
+     */
     public IOD4ReportArtifactScope createSymbolTable(ASTODArtifact node) {
         OD4ReportScopesGenitorDelegator genitor = OD4ReportMill.scopesGenitorDelegator();
         IOD4ReportArtifactScope symTab = genitor.createFromAST(node);
         return symTab;
     }
-
+    
+    /**
+     * The main method of the program.
+     *
+     * @param args The command-line arguments provided by the user.
+     */
     public static void main(String[] args) {
         ODPlantUMLTool tool = new ODPlantUMLTool();
         tool.run(args);
