@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Driver class for the basis pretty printer implementing the {@link ODBasisVisitor2}, {@link ODBasisHandler}.
+ */
 public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHandler {
     private final IndentPrinter printer;
     private ODBasisTraverser traverser;
@@ -33,19 +36,31 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
     public void setTraverser(ODBasisTraverser traverser) {
         this.traverser = traverser;
     }
-
+    
+    /**
+     * This method starts visiting the ast.
+     * @param node ast OD node
+     */
     @Override
     public void visit(ASTObjectDiagram node) {
         printer.println("@startuml");
         printer.println("note \"OD\" as tag #white");
 
     }
-
+    
+    /**
+     * This method ends visiting the ast.
+     * @param node ast OD node
+     */
     @Override
     public void endVisit(ASTObjectDiagram node) {
         printer.print("@enduml");
     }
-
+    
+    /**
+     * This method handles the named ast node by identifying the class types and printing them.
+     * @param node named ast node
+     */
     @Override
     public void handle(ASTODNamedObject node) {
         List<String> classTypes = ((ASTMCQualifiedType) node.getMCObjectType()).getNameList();
@@ -79,7 +94,11 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
                     }
                 });
     }
-
+    
+    /**
+     * This method handles the anonymous ast node by identifying the class types and printing them.
+     * @param node anonymous ast node
+     */
     @Override
     public void handle(ASTODAnonymousObject node) {
         List<String> classTypes = ((ASTMCQualifiedType) node.getMCObjectType()).getNameList();
@@ -90,12 +109,20 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
         printer.println(String.format("object \"__:%1$s__\" as %2$s {", classTypes.get(0), anonymousObjectsNameCache.get(node)));
         handleODValuePrettyPrintingByASTType(node.getODAttributeList(), node.getName());
     }
-
+    
+    /**
+     * This method ends visiting the anonymous ast node.
+     * @param node anonymous ast node
+     */
     @Override
     public void endVisit(ASTODAnonymousObject node) {
         printer.println("}");
     }
-
+    
+    /**
+     * This method starts visiting the attribute ast node.
+     * @param node attribute ast node
+     */
     @Override
     public void visit(ASTODAttribute node) {
         if(node.getODValue() instanceof ASTODSimpleAttributeValue || node.getODValue() instanceof ASTODDate) {
@@ -106,7 +133,11 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
             }
         }
     }
-
+    
+    /**
+     * This method ends visiting the attribute ast node.
+     * @param node attribute ast node
+     */
     @Override
     public void endVisit(ASTODAttribute node) {
         if(node.getODValue() instanceof ASTODSimpleAttributeValue || node.getODValue() instanceof ASTODDate) {
@@ -114,7 +145,11 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
             printer.unindent();
         }
     }
-
+    
+    /**
+     * This method starts visiting the named ast node.
+     * @param node named ast node
+     */
     @Override
     public void visit(ASTODName node) {
         printer.print(node.getName());
