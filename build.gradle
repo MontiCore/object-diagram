@@ -220,6 +220,22 @@ task testReport(type: TestReport) {
   reportOn tasks.withType(Test)
 }
 
+task generateJavadoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    classpath = configurations.compileClasspath
+
+    destinationDir = file("${buildDir}/javadoc")
+
+    options.encoding = 'UTF-8'
+    options.docTitle = 'OD Javadoc'
+    options.author = true
+    options.version = true
+
+    failOnError = false
+}
+
+build.dependsOn(generateJavadoc)
+
 // configure deployment
 /*publishing {
 	// configure what artifacts to publish
