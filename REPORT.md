@@ -102,6 +102,35 @@ This is the pretty-printed `PlantUML` model by the ODPlantUMLTool
     * Run the `PlantUML` Tool using suitable CLI arguments.
     * The pretty printed `PlantUML` model will be available in the logs.
 
+### Limitation of the Tool
+* Handling of Complex `Object Diagrams` with lists of objects:
+  * The tool is not capable of handling OD models which have nested lists of objects within a given object.
+  * An Example is shown below where we have a nested list of `cars` within an object `alice`:
+
+``` 
+objectdiagram MyFamily {
+  alice:Person {
+    age = 29;
+    cars = [
+      :BMW {
+        bought = 2020-01-05 15:30:00;
+        color = BLUE;
+      },
+      tiger:Jaguar {
+        bought = 2000/01/05 15:00:00;
+        color = RED;
+        length = 5.3;
+      }
+    ];
+  };
+  bob:Person {
+    nicknames = ["Bob", "Bobby", "Robert"];
+    cars -> tiger;
+  };
+  link married alice <-> bob;
+}
+```
+
 
 ## Further Information
 
