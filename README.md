@@ -54,11 +54,11 @@ used when processing models. To this effect, it provides funcionality for
 * storing symbols in symbol files,
 * ,and loading symbols from symbol files.
 
-The requirements for building and using the OD tool are that Java 8, Git, and Gradle are
+The requirements for building and using the OD tool are that Java 11, Git, and Gradle are
 installed and available for use in Bash.
 
 The following subsection describes how to download the tool. Then, this document describes how
-to build the tool from the source files. Afterwards, this document contains a tutorial for using
+to build the tool from the source files. Afterward, this document contains a tutorial for using
 the tool.
 
 ## Tool Set Up
@@ -87,7 +87,7 @@ To build the project, it is required to install a Java 11 JDK and git.
 
     gradle build --refresh-dependencies
 
-Afterwards, the jars of the tools are available in `od/target/libs`.
+Afterward, the jars of the tools are available in `od/target/libs`.
 
 ## Tutorial: Getting Started Using the OD Tool
 
@@ -126,10 +126,10 @@ usage: OD4ReportTool
 ```
 
 To work properly, the tool needs the mandatory argument `-i,--input <arg>`, which takes the file
-paths of at least one input file containing OD models. If no other arguments are specified, the 
+paths of at least one input file containing OD models. If no other arguments are specified, the
 tool solely parses the model(s).
 
-For trying this out, copy the `MCOD4Report.jar` into a directory of your choice. Afterwards, create
+For trying this out, copy the `MCOD4Report.jar` into a directory of your choice. Afterward, create
 a text file containing the following simple OD:
 
 ```
@@ -151,11 +151,12 @@ Save the text file as `Example.od` in the directory where `MCOD4Report.jar` is l
 Now execute the following command:
 
 ```
-java -jar MCOD4Report.jar -i Example.od
+java -jar MCOD4Report.jar -i Example.od -c intra
 ```
 
 You may notice that the tool prints no output to the console. This means that the tool has
-parsed the file `Example.od` successfully.
+parsed the file `Example.od` successfully. Don't mind die option `c` at this point as it
+will be discussed later in step 3.
 
 ### Step 2: Pretty-Printing
 
@@ -167,7 +168,7 @@ input files to the console.
 Execute the following command for trying this out:
 
 ```
-java -jar MCOD4Report.jar -i Example.od -pp
+java -jar MCOD4Report.jar -i Example.od -pp -c intra
 ```
 
 The command prints the pretty-printed model contained in the input file to the console:
@@ -194,7 +195,7 @@ the number of input files. The i-th input file is pretty-printed into the i-th o
 Execute the following command for trying this out:
 
 ```
-java -jar MCOD4Report.jar -i Example.od -pp PPExample.od
+java -jar MCOD4Report.jar -i Example.od -pp PPExample.od -c intra
 ```
 
 The command prints the pretty-printed model contained in the input file into the file `PPExample.od`
@@ -210,7 +211,7 @@ additionally providing one of the three arguments `intra` and `all`.
 
 * Using the argument `intra` only executes context conditions concerning violations of intra-model
   context conditions. These context conditions, for example, check naming conventions.
-* Using the argument `all` executes all context coniditions. These context conditions include
+* Using the argument `all` executes all context conditions. These context conditions include
   checking whether used types exist. The behavior when using the argument `all` is also the default
   behavior when using no arguments.
 
@@ -221,7 +222,7 @@ java -jar MCOD4Report.jar -i Example.od -c intra
 ```
 
 You may notice that the tool prints nothing to the console when executing this command. This means
-that the model satisfies all context condtions.
+that the model satisfies all context conditions.
 
 Let us now consider a more complex scenario. You can check the different kinds of context
 conditions, using the `-c,--coco <arg>` option:
