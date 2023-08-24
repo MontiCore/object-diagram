@@ -17,7 +17,7 @@ object "__otto:Person__" as otto {
 }
 object "__lisa:Person__" as lisa {
   personIdent = 45392
-  name = "Elisabeth Muller"
+  name = "Elisabeth Müller"
   isActive = true
 }
 object "__bp:BiddingPolicy__" as bp {

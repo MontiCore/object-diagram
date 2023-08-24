@@ -9,17 +9,21 @@ import de.monticore.odbasis._visitor.ODBasisTraverser;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.mcbasictypes._ast.ASTMCQualifiedType;
+import de.monticore.types.mcbasictypes._prettyprint.MCBasicTypesFullPrettyPrinter;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Driver class for the basis pretty printer implementing the {@link ODBasisVisitor2},
  * {@link ODBasisHandler}.
  */
 public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHandler {
+  
   private final IndentPrinter printer;
   private ODBasisTraverser traverser;
   private final Map<ASTODAnonymousObject, UUID> anonymousObjectsNameCache = new HashMap<>();
@@ -46,9 +50,21 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
   @Override
   public void visit(ASTObjectDiagram node) {
     printer.println("@startuml");
-    printer.println("note \"OD\" as tag #white");
     
+    // prints the model tag
+    printer.println("note \"OD\" as tag #white");
   }
+  
+  /*public void visit(ASTODNamedObject node) {
+    var typesPrinter = new MCBasicTypesFullPrettyPrinter(new IndentPrinter());
+    var printedType = typesPrinter.prettyprint(node.getMCObjectType());
+    printer.println(
+        String.format("object \"__%1$s:%2$s__\" as %1$s {", node.getName(), printedType));
+  }
+  
+  public void endVisit(ASTODNamedObject node) {
+    printer.println("}");
+  }*/
   
   /**
    * This method ends visiting the ast.
@@ -72,27 +88,33 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
       printer.println(String.format("object \"__%1$s__\" {", node.getName()));
     }
     else {
+      var typesPrinter = new MCBasicTypesFullPrettyPrinter(new IndentPrinter());
+      var printedType = typesPrinter.prettyprint(node.getMCObjectType());
       printer.println(
-          String.format("object \"__%1$s:%2$s__\" as %1$s {", node.getName(), classTypes.get(0)));
+          String.format("object \"__%1$s:%2$s__\" as %1$s {", node.getName(), printedType));
     }
-    handleODValuePrettyPrintingByASTType(node.getODAttributeList(), node.getName());
+    handleODValuePrettyPrintingByASTType(node.streamODAttributes(), node.getName());
   }
   
-  private void handleODValuePrettyPrintingByASTType(List<ASTODAttribute> odAttributeList,
+  private void handleODValuePrettyPrintingByASTType(Stream<ASTODAttribute> odAttributeList,
       String name) {
-    odAttributeList.stream().filter(attr -> attr.getODValue() instanceof ASTODDate ||
-            (attr.getODValue() instanceof ASTODSimpleAttributeValue
-                &&
-                ((ASTODSimpleAttributeValue) attr.getODValue()).getExpression() instanceof ASTLiteralExpression))
+    var attributesWithValues =
+        odAttributeList.filter(ASTODAttribute::isPresentODValue).collect(Collectors.toList());
+    attributesWithValues.stream().filter(attr -> {
+          return attr.getODValue() instanceof ASTODDate || (
+              attr.getODValue() instanceof ASTODSimpleAttributeValue &&
+                  ((ASTODSimpleAttributeValue) attr.getODValue()).getExpression() instanceof ASTLiteralExpression
+          );
+        })
         .forEach(attr -> attr.accept(getTraverser()));
     printer.println("}");
-    odAttributeList.stream().filter(attr -> attr.getODValue() instanceof ASTODSimpleAttributeValue
+    attributesWithValues.stream().filter(attr -> attr.getODValue() instanceof ASTODSimpleAttributeValue
             &&
             ((ASTODSimpleAttributeValue) attr.getODValue()).getExpression() instanceof ASTNameExpression)
         .forEach(attr -> printer.println(name + " \"" + attr.getName() + "\" " +
             ((ASTNameExpression) ((ASTODSimpleAttributeValue) attr.getODValue()).getExpression()).getName()));
     
-    odAttributeList.stream().filter(attr -> attr.getODValue() instanceof ASTODObject)
+    attributesWithValues.stream().filter(attr -> attr.getODValue() instanceof ASTODObject)
         .forEach(attr -> {
           attr.accept(getTraverser());
           if (attr.getODValue() instanceof ASTODAnonymousObject) {
@@ -113,14 +135,12 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
    */
   @Override
   public void handle(ASTODAnonymousObject node) {
-    List<String> classTypes = ((ASTMCQualifiedType) node.getMCObjectType()).getNameList();
-    if (classTypes != null && !classTypes.isEmpty()) {
-      throw new RuntimeException("Anonymous objects must have a class type in ODs");
-    }
+    var typesPrinter = new MCBasicTypesFullPrettyPrinter(new IndentPrinter());
+    var classType = typesPrinter.prettyprint(node.getMCObjectType());
     anonymousObjectsNameCache.putIfAbsent(node, UUID.randomUUID());
-    printer.println(String.format("object \"__:%1$s__\" as %2$s {", classTypes.get(0),
+    printer.println(String.format("object \"__:%1$s__\" as %2$s {", classType,
         anonymousObjectsNameCache.get(node)));
-    handleODValuePrettyPrintingByASTType(node.getODAttributeList(), node.getName());
+    handleODValuePrettyPrintingByASTType(node.streamODAttributes(), node.getName());
   }
   
   /**

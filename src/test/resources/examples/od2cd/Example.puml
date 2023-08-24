@@ -1,10 +1,10 @@
 @startuml
 note "OD" as tag #white
-object "__foo:examples__" as foo {
+object "__foo:examples.A__" as foo {
   x = 5
   s = "hello"
 }
-object "__bar:examples__" as bar {
+object "__bar:examples.B__" as bar {
   b = false
 }
 foo--> "x" bar
