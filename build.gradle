@@ -49,8 +49,8 @@ configurations { grammar }
 
 dependencies {
 	implementation "org.antlr:antlr4-runtime:4.12.0"
-    implementation group: 'net.sourceforge.plantuml', name: 'plantuml', version: '1.2021.1'
-    implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
+  implementation group: 'net.sourceforge.plantuml', name: 'plantuml', version: '1.2021.1'
+  implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
 	implementation "de.monticore:monticore-runtime:$mc_version"
 	implementation "de.monticore.lang:cd4analysis:$mc_version"
 	implementation "de.monticore:monticore-grammar:$mc_version"
@@ -237,7 +237,7 @@ task generateJavadoc(type: Javadoc) {
 build.dependsOn(generateJavadoc)
 
 // configure deployment
-/*publishing {
+publishing {
 	// configure what artifacts to publish
 	publications {
 		mavenJava(MavenPublication) {
@@ -256,7 +256,7 @@ build.dependsOn(generateJavadoc)
     def snapshotsRepoUrl = "https://nexus.se.rwth-aachen.de/content/repositories/monticore-snapshots/"
     url = version.endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
   }
-}*/
+}
 
 tasks.withType(JavaCompile) {
 	options.fork = true

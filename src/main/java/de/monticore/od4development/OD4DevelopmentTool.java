@@ -2,7 +2,6 @@
 
 package de.monticore.od4development;
 
-import de.monticore.PlantUMLODFullPrettyPrinter;
 import de.monticore.cd.codegen.CDGenerator;
 import de.monticore.cd.codegen.CdUtilsPrinter;
 import de.monticore.generating.GeneratorSetup;
@@ -51,11 +50,11 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
         return;
       }
 
+
       // -option developer logging
       if (cmd.hasOption("d")) {
         Log.initDEBUG();
-      }
-      else {
+      } else {
         Log.init();
       }
 
@@ -63,11 +62,10 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       // (only returns if successful)
       ASTODArtifact ast = parse(cmd.getOptionValue("i"));
 
-      if (cmd.hasOption("s")) {
+      if(cmd.hasOption("s")) {
         MCPath mcPath = new MCPath(cmd.getOptionValue("s"));
         OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
-      }
-      else {
+      } else {
         createSymbolTable(ast);
       }
 
@@ -84,12 +82,11 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       String outputDir = cmd.hasOption("o")
               ? cmd.getOptionValue("o")
               : "target/gen-test/";
-      if (cmd.hasOption("o")) {
+      if(cmd.hasOption("o")) {
         generateCD(ast, outputDir);
       }
 
-    }
-    catch (ParseException e) {
+    } catch (ParseException e) {
       // an unexpected error from the apache CLI parser:
       Log.error("0xA7105 Could not process parameters: " + e.getMessage());
     }
@@ -97,9 +94,8 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
 
   @Override
   public void prettyPrint(ASTODArtifact ast, String file) {
-    // ODBasisFullPrettyPrinter printer = new ODBasisFullPrettyPrinter(new IndentPrinter());
-    PlantUMLODFullPrettyPrinter pp = new PlantUMLODFullPrettyPrinter();
-    String result = pp.prettyprint(ast);
+    ODBasisFullPrettyPrinter printer = new ODBasisFullPrettyPrinter(new IndentPrinter());
+    String result = printer.prettyprint(ast);
     print(result, file);
   }
 
@@ -115,7 +111,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
     setup.setGlex(glex);
     glex.setGlobalValue("cdPrinter", new CdUtilsPrinter());
 
-    if (!outputDir.isEmpty()) {
+    if (!outputDir.isEmpty()){
       File targetDir = new File(outputDir);
       setup.setOutputDirectory(targetDir);
     }
@@ -134,7 +130,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
 
   @Override
   public Options addAdditionalOptions(Options options) {
-    options.addOption(new Option("o", "output", true, "Sets the output path"));
+    options.addOption(new Option("o","output",true,"Sets the output path"));
     return options;
   }
 }

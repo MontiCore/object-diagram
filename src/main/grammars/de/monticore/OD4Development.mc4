@@ -43,7 +43,7 @@ package de.monticore;
 
 */
 
-grammar OD4Development extends de.monticore.OD4Data{
+grammar OD4Development extends de.monticore.OD4Data {
 
   start ODArtifact;
 
