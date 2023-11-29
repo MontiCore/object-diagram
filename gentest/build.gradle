@@ -15,12 +15,11 @@ repositories {
   }
 }
 
-def commons_version = '1.7.9'
 def junit_version = '4.13.1'
 
 dependencies {
-  implementation "de.se_rwth.commons:se-commons-logging:$commons_version"
-  implementation "de.se_rwth.commons:se-commons-utilities:$commons_version"
+  implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
+  implementation "de.se_rwth.commons:se-commons-utilities:$mc_version"
   implementation group: 'junit', name: 'junit', version: junit_version
   testImplementation group: 'junit', name: 'junit', version: junit_version
 }
