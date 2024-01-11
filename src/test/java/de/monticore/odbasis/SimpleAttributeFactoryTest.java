@@ -12,8 +12,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.regex.Pattern;
-
 public class SimpleAttributeFactoryTest {
 
   @Before
@@ -30,16 +28,12 @@ public class SimpleAttributeFactoryTest {
     ASTODAttribute integerAttribute = SimpleAttributeFactory.createSimpleIntegerAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", -10);
     String result = ODBasisMill.prettyPrint(integerAttribute, false).trim();
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected int test=-10;", result.replaceFirst(Pattern.quote("#"), " "));
+    Assert.assertEquals("protected int test=-10;", result);
 
     integerAttribute = SimpleAttributeFactory.createSimpleIntegerAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", 10);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
     result = ODBasisMill.prettyPrint(integerAttribute, false).trim();
-    Assert.assertEquals("protected int test=10;", result.replaceFirst(Pattern.quote("#"), " "));
+    Assert.assertEquals("protected int test=10;", result);
   }
 
   @Test
@@ -48,16 +42,12 @@ public class SimpleAttributeFactoryTest {
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", -1l);
 
     String result = ODBasisMill.prettyPrint(longAttribute, false).trim();
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected long test=-1l;", result.replaceFirst(Pattern.quote("#"), " "));
+    Assert.assertEquals("protected long test=-1l;", result);
 
     longAttribute = SimpleAttributeFactory.createSimpleLongAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", 1l);
     result = ODBasisMill.prettyPrint(longAttribute, false).trim();
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected long test=1l;", result.replaceFirst(Pattern.quote("#"), " "));
+    Assert.assertEquals("protected long test=1l;", result);
   }
 
   @Test
@@ -66,17 +56,12 @@ public class SimpleAttributeFactoryTest {
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", -1.0f);
 
     String result = ODBasisMill.prettyPrint(floatAttribute, false).trim();
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected float test=-1.0f;",
-        result.replaceFirst(Pattern.quote("#"), " "));
+    Assert.assertEquals("protected float test=-1.0f;", result);
 
     floatAttribute = SimpleAttributeFactory.createSimpleFloatAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", 1.0f);
     result = ODBasisMill.prettyPrint(floatAttribute, false).trim();
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected float test=1.0f;", result.replaceFirst(Pattern.quote("#"), " "));
+    Assert.assertEquals("protected float test=1.0f;", result);
   }
 
   @Test
@@ -85,17 +70,12 @@ public class SimpleAttributeFactoryTest {
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", -1.0);
 
     String result = ODBasisMill.prettyPrint(doubleAttribute, false).trim();
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected double test=-1.0;",
-        result.replaceFirst(Pattern.quote("#"), " "));
+    Assert.assertEquals("protected double test=-1.0;", result);
 
     doubleAttribute = SimpleAttributeFactory.createSimpleDoubleAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", 1.0);
     result = ODBasisMill.prettyPrint(doubleAttribute, false).trim();
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected double test=1.0;", result.replaceFirst(Pattern.quote("#"), " "));
+    Assert.assertEquals("protected double test=1.0;", result);
   }
 
   @Test
@@ -104,18 +84,12 @@ public class SimpleAttributeFactoryTest {
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", true);
 
     String result = ODBasisMill.prettyPrint(booleanAttribute, false).trim();
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected boolean test=true;",
-        result.replaceFirst(Pattern.quote("#"), " "));
+    Assert.assertEquals("protected boolean test=true;", result);
 
     booleanAttribute = SimpleAttributeFactory.createSimpleBooleanAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", false);
     result = ODBasisMill.prettyPrint(booleanAttribute, false).trim();
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected boolean test=false;",
-        result.replaceFirst(Pattern.quote("#"), " "));
+    Assert.assertEquals("protected boolean test=false;", result);
   }
 
   @Test
@@ -124,10 +98,7 @@ public class SimpleAttributeFactoryTest {
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", "test");
 
     String result = ODBasisMill.prettyPrint(stringAttribute, false).trim();
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected String test=\"test\";",
-        result.replaceFirst(Pattern.quote("#"), " "));
+    Assert.assertEquals("protected String test=\"test\";", result);
   }
 
 }
