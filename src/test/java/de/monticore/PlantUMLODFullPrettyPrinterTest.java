@@ -45,7 +45,7 @@ public class PlantUMLODFullPrettyPrinterTest {
    */
   @ParameterizedTest
   @ValueSource(strings = {
-      /*"od2cd/Example",
+      "od2cd/Example",
       "od2cd/SimpleOD",
       "od2cd/StereoWithKeyword",
       "od2cd/SpecialValues",
@@ -54,9 +54,9 @@ public class PlantUMLODFullPrettyPrinterTest {
       "od2cd/QualifiedInnerLinks",
       "od/AuctionParticipants",
       "od2cd/ProjectListOD",
-      "od2cd/Variants",
-      "od2cd/InnerObjectWithoutLinkFixed",*/
-      "od2cd/MyFamily"
+      /*"od2cd/Variants",
+      "od2cd/InnerObject",
+      "od2cd/MyFamily"*/
   })
   public void test(String input) throws IOException {
     OD4ReportParser parser = new OD4ReportParser();
