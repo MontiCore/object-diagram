@@ -12,8 +12,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.regex.Pattern;
-
 public class SimpleAttributeFactoryTest {
 
   @Before
@@ -29,17 +27,13 @@ public class SimpleAttributeFactoryTest {
   public void testCreateInteger() {
     ASTODAttribute integerAttribute = SimpleAttributeFactory.createSimpleIntegerAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", -10);
-    String result = ODBasisMill.prettyPrint(integerAttribute, false);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected int test=-10;", result.replaceFirst(Pattern.quote("#"), " "));
+    String result = ODBasisMill.prettyPrint(integerAttribute, false).trim();
+    Assert.assertEquals("protected int test=-10;", result);
 
     integerAttribute = SimpleAttributeFactory.createSimpleIntegerAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", 10);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    result = ODBasisMill.prettyPrint(integerAttribute, false);
-    Assert.assertEquals("protected int test=10;", result.replaceFirst(Pattern.quote("#"), " "));
+    result = ODBasisMill.prettyPrint(integerAttribute, false).trim();
+    Assert.assertEquals("protected int test=10;", result);
   }
 
   @Test
@@ -47,17 +41,13 @@ public class SimpleAttributeFactoryTest {
     ASTODAttribute longAttribute = SimpleAttributeFactory.createSimpleLongAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", -1l);
 
-    String result = ODBasisMill.prettyPrint(longAttribute, false);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected long test=-1l;", result.replaceFirst(Pattern.quote("#"), " "));
+    String result = ODBasisMill.prettyPrint(longAttribute, false).trim();
+    Assert.assertEquals("protected long test=-1l;", result);
 
     longAttribute = SimpleAttributeFactory.createSimpleLongAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", 1l);
-    result = ODBasisMill.prettyPrint(longAttribute, false);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected long test=1l;", result.replaceFirst(Pattern.quote("#"), " "));
+    result = ODBasisMill.prettyPrint(longAttribute, false).trim();
+    Assert.assertEquals("protected long test=1l;", result);
   }
 
   @Test
@@ -65,18 +55,13 @@ public class SimpleAttributeFactoryTest {
     ASTODAttribute floatAttribute = SimpleAttributeFactory.createSimpleFloatAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", -1.0f);
 
-    String result = ODBasisMill.prettyPrint(floatAttribute, false);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected float test=-1.0f;",
-        result.replaceFirst(Pattern.quote("#"), " "));
+    String result = ODBasisMill.prettyPrint(floatAttribute, false).trim();
+    Assert.assertEquals("protected float test=-1.0f;", result);
 
     floatAttribute = SimpleAttributeFactory.createSimpleFloatAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", 1.0f);
-    result = ODBasisMill.prettyPrint(floatAttribute, false);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected float test=1.0f;", result.replaceFirst(Pattern.quote("#"), " "));
+    result = ODBasisMill.prettyPrint(floatAttribute, false).trim();
+    Assert.assertEquals("protected float test=1.0f;", result);
   }
 
   @Test
@@ -84,18 +69,13 @@ public class SimpleAttributeFactoryTest {
     ASTODAttribute doubleAttribute = SimpleAttributeFactory.createSimpleDoubleAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", -1.0);
 
-    String result = ODBasisMill.prettyPrint(doubleAttribute, false);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected double test=-1.0;",
-        result.replaceFirst(Pattern.quote("#"), " "));
+    String result = ODBasisMill.prettyPrint(doubleAttribute, false).trim();
+    Assert.assertEquals("protected double test=-1.0;", result);
 
     doubleAttribute = SimpleAttributeFactory.createSimpleDoubleAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", 1.0);
-    result = ODBasisMill.prettyPrint(doubleAttribute, false);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected double test=1.0;", result.replaceFirst(Pattern.quote("#"), " "));
+    result = ODBasisMill.prettyPrint(doubleAttribute, false).trim();
+    Assert.assertEquals("protected double test=1.0;", result);
   }
 
   @Test
@@ -103,19 +83,13 @@ public class SimpleAttributeFactoryTest {
     ASTODAttribute booleanAttribute = SimpleAttributeFactory.createSimpleBooleanAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", true);
 
-    String result = ODBasisMill.prettyPrint(booleanAttribute, false);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected boolean test=true;",
-        result.replaceFirst(Pattern.quote("#"), " "));
+    String result = ODBasisMill.prettyPrint(booleanAttribute, false).trim();
+    Assert.assertEquals("protected boolean test=true;", result);
 
     booleanAttribute = SimpleAttributeFactory.createSimpleBooleanAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", false);
-    result = ODBasisMill.prettyPrint(booleanAttribute, false);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected boolean test=false;",
-        result.replaceFirst(Pattern.quote("#"), " "));
+    result = ODBasisMill.prettyPrint(booleanAttribute, false).trim();
+    Assert.assertEquals("protected boolean test=false;", result);
   }
 
   @Test
@@ -123,11 +97,8 @@ public class SimpleAttributeFactoryTest {
     ASTODAttribute stringAttribute = SimpleAttributeFactory.createSimpleStringAttribute(
         ODBasisMill.modifierBuilder().PROTECTED().build(), "test", "test");
 
-    String result = ODBasisMill.prettyPrint(stringAttribute, false);
-    // replace '#' due to generated prettyprinter
-    // remove once it is possible to select between print and alt print for constants
-    Assert.assertEquals("protected String test=\"test\";",
-        result.replaceFirst(Pattern.quote("#"), " "));
+    String result = ODBasisMill.prettyPrint(stringAttribute, false).trim();
+    Assert.assertEquals("protected String test=\"test\";", result);
   }
 
 }
