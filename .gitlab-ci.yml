@@ -17,9 +17,9 @@ stages:
   - build
   - test
   - check
-  #- deploy
+  - deploy
   - trigger_languages
-  #- mirror
+  - mirror
 
 build:
   stage: build
