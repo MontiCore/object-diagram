@@ -1,0 +1,75 @@
+@startuml
+note "OD" as tag #white
+object "__testGitLab:GitLab__" as testGitLab {
+}
+object "__gitlabProject_TestUserProject_Test:Test__" as gitlabProject_TestUserProject_Test {
+  simpleName = "TestUser Project"
+  gitLabId = "7"
+  fullName = "http://127.0.0.1/testuser/testuser-project"
+  webUrl = "http://127.0.0.1/testuser/testuser-project"
+  id = "7"
+  created_at = "2019-03-01T09:23:57.353Z"
+  last_activity_at = "2019-03-01T09:23:57.353Z"
+}
+object "__gitlabProject_SpringTest2_Test:Test__" as gitlabProject_SpringTest2_Test {
+  simpleName = "SpringTest2"
+  gitLabId = "6"
+  fullName = "http://127.0.0.1/TestGroup/Subgroup/springtest2"
+  webUrl = "http://127.0.0.1/TestGroup/Subgroup/springtest2"
+  id = "6"
+  created_at = "2019-02-28T10:22:02.655Z"
+  last_activity_at = "2019-02-28T10:22:02.655Z"
+}
+object "__gitlabProject_TestNode_Test:Test__" as gitlabProject_TestNode_Test {
+  simpleName = "TestNode"
+  gitLabId = "5"
+  fullName = "http://127.0.0.1/SecondGroup2/testnode"
+  webUrl = "http://127.0.0.1/SecondGroup2/testnode"
+  id = "5"
+  created_at = "2019-02-28T10:19:41.576Z"
+  last_activity_at = "2019-02-28T10:19:41.576Z"
+}
+object "__gitlabProject_TestSpring_Test:Test__" as gitlabProject_TestSpring_Test {
+  simpleName = "Test Spring"
+  gitLabId = "4"
+  fullName = "http://127.0.0.1/TestGroup/test-spring"
+  webUrl = "http://127.0.0.1/TestGroup/test-spring"
+  id = "4"
+  created_at = "2019-02-28T10:17:23.925Z"
+  last_activity_at = "2019-02-28T10:17:23.925Z"
+}
+object "__gitlabProject_TestProjectGroupSpecific_Test:Test__" as gitlabProject_TestProjectGroupSpecific_Test {
+  simpleName = "Test Project Group Specific"
+  gitLabId = "3"
+  fullName = "http://127.0.0.1/TestGroup/test-project-group-specific"
+  webUrl = "http://127.0.0.1/TestGroup/test-project-group-specific"
+  id = "3"
+  created_at = "2019-02-28T10:16:38.202Z"
+  last_activity_at = "2019-02-28T10:16:38.202Z"
+}
+object "__gitlabProject_test2ndproject_Test:Test__" as gitlabProject_test2ndproject_Test {
+  simpleName = "test 2nd project"
+  gitLabId = "2"
+  fullName = "http://127.0.0.1/oliver/test-2nd-project"
+  webUrl = "http://127.0.0.1/oliver/test-2nd-project"
+  id = "2"
+  created_at = "2019-01-27T12:44:49.438Z"
+  last_activity_at = "2019-01-27T12:45:08.492Z"
+}
+object "__gitlabProject_exampleproject_Test:Test__" as gitlabProject_exampleproject_Test {
+  simpleName = "example-project"
+  gitLabId = "1"
+  fullName = "http://127.0.0.1/oliver/example-project"
+  webUrl = "http://127.0.0.1/oliver/example-project"
+  id = "1"
+  created_at = "2018-11-02T11:25:50.021Z"
+  last_activity_at = "2019-02-24T10:57:41.345Z"
+}
+testGitLab-->gitlabProject_TestUserProject_Test
+testGitLab-->gitlabProject_SpringTest2_Test
+testGitLab-->gitlabProject_TestNode_Test
+testGitLab-->gitlabProject_TestSpring_Test
+testGitLab-->gitlabProject_TestProjectGroupSpecific_Test
+testGitLab-->gitlabProject_test2ndproject_Test
+testGitLab-->gitlabProject_exampleproject_Test
+@enduml

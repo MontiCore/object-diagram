@@ -1,0 +1,19 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.od;
+
+objectdiagram StereoWithKeyword {
+
+  src_test_resources_classes_A:JavaSourceFile{};
+
+  src_test_resources_classes:Directory {
+    dir = "src_test_resources_classes";
+  };
+
+  de_se_artifacts_D:JavaClassType {
+    Name = "D";
+  };
+
+  <<static>> link defines src_test_resources_classes_A -> de_se_artifacts_D ;
+
+}

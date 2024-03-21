@@ -1,0 +1,22 @@
+@startuml
+note "OD" as tag #white
+object "__alice:Person__" as alice {
+  age = 29 
+}
+object "__:BMW__" as BMW {
+    bought = 2020-01-05 15:30:00
+    color = BLUE
+}
+object "__tiger:Jaguar__" as Jaguar {
+    bought = 2000/01/05 15:00:00
+    color = RED
+    length = 5.3
+}
+
+alice *-> BMW : cars
+alice *-> Jaguar : cars
+
+object "__bob:Person__" as bob {
+}
+alice<-->bob
+@enduml

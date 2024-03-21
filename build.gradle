@@ -51,6 +51,7 @@ configurations { grammar }
 
 dependencies {
   implementation "org.antlr:antlr4-runtime:4.12.0"
+  implementation 'net.sourceforge.plantuml:plantuml:1.2023.12'
   implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
   implementation "de.monticore:monticore-runtime:$mc_version"
   implementation "de.monticore.lang:cd4analysis:$mc_version"
@@ -137,8 +138,8 @@ test {
   }
   // prevents gradle from creating reports in target/reports/tests
   reports {
-    junitXml.enabled = false
-    html.enabled = false
+    junitXml.required = false
+    html.required = false
   }
 }
 

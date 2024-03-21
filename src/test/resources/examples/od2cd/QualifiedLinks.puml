@@ -1,0 +1,25 @@
+@startuml
+note "OD" as tag #white
+object "__o1:AllData__" as o1 {
+}
+object "__a1:Auction__" as a1 {
+  auctionIdent = 1213
+  title = "Schnellbohrer"
+  numberOfBids = 0
+}
+object "__a2:Auction__" as a2 {
+  auctionIdent = 1214
+  title = "Gewindestangen"
+  numberOfBids = 0
+}
+object "__p1:Person__" as p1 {
+  personIdent = 1783
+  login = "schmidt"
+  name = "Theobald Schmidt"
+  isActive = false
+}
+o1-->a1
+o1-->a1
+o1-->a2
+o1-->p1
+@enduml

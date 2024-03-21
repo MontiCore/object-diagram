@@ -1,0 +1,36 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.od;
+
+objectdiagram QualifiedLinks {
+
+  local o1:AllData{};
+
+  local a1:Auction {
+    long auctionIdent = 1213;
+    String title = "Schnellbohrer";
+    /int numberOfBids = 0;
+  };
+
+  local a2:Auction {
+    long auctionIdent = 1214;
+    String title = "Gewindestangen";
+    /int numberOfBids = 0;
+  };
+
+  p1:Person {
+    personIdent = 1783;
+    login = "schmidt";
+    name = "Theobald Schmidt";
+    isActive = false;
+  };
+
+  link o1 -> a1;
+
+  link o1 [[auctionIdent]] -> a1;
+
+  link o1 [[auctionIdent]] -> a2;
+
+  link o1 ["xyz"] -> p1;
+
+}
