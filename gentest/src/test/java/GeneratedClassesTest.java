@@ -2,8 +2,8 @@
 
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.LogStub;
-import examples.A;
-import examples.B;
+import example.A;
+import example.B;
 import examples.ExamplesChecker;
 import examples.ExamplesInstantiator;
 import org.junit.Before;

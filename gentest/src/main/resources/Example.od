@@ -2,6 +2,8 @@
 
 package examples.od2cd;
 
+import Example.*;
+
 objectdiagram Examples {
 
   foo: A {
@@ -14,5 +16,12 @@ objectdiagram Examples {
   };
 
   link foo -> (blub) bar;
+
+  /*u1: User {
+    String username = "Alice";
+    String password = "Alice123";
+    String email = "alice@se-rwth.de";
+    SehubRole role = SehubRole.OWNER;
+  };*/
 
 }

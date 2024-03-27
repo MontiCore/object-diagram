@@ -9,12 +9,14 @@ import de.monticore.generating.templateengine.GlobalExtensionManagement;
 import de.monticore.generating.templateengine.TemplateController;
 import de.monticore.generating.templateengine.TemplateHookPoint;
 import de.monticore.io.paths.MCPath;
+import de.monticore.od2cd.CompositionPrinter;
 import de.monticore.od2cd.OD2CDConverter;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCos;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._prettyprint.ODBasisFullPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
@@ -65,6 +67,10 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       if(cmd.hasOption("s")) {
         MCPath mcPath = new MCPath(cmd.getOptionValue("s"));
         OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
+        
+        for (ASTMCImportStatement i : ast.getMCImportStatementList()) {
+          OD4DevelopmentMill.globalScope().loadDiagram(i.getQName());
+        }
       } else {
         createSymbolTable(ast);
       }
@@ -110,6 +116,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
     GlobalExtensionManagement glex = new GlobalExtensionManagement();
     setup.setGlex(glex);
     glex.setGlobalValue("cdPrinter", new CdUtilsPrinter());
+    glex.setGlobalValue("cp", new CompositionPrinter());
 
     if (!outputDir.isEmpty()){
       File targetDir = new File(outputDir);
