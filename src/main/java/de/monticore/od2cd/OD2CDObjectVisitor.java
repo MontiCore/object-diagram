@@ -70,17 +70,6 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
           .setMCQualifiedName(CDBasisMill.mCQualifiedNameBuilder().addParts(i.getQName().toLowerCase()).build())
           .setStar(true).build();
     }
-//    for (ASTMCImportStatement i : odArtifact.getMCImportStatementList()) {
-//      cdCompilationUnit.addMCImportStatement(CDBasisMill.mCImportStatementBuilder()
-//          .setMCQualifiedName(CDBasisMill.mCQualifiedNameBuilder().addParts(i.getQName().toLowerCase()).build())
-//          .setStar(true).build());
-//    }
-//
-//    for (ASTMCImportStatement i : odArtifact.getMCImportStatementList()) {
-//      cdCompilationUnit.addCDTargetImportStatement(CDBasisMill.cDTargetImportStatementBuilder()
-//          .setMCQualifiedName(CDBasisMill.mCQualifiedNameBuilder().addParts(i.getQName().toLowerCase()).build())
-//          .setStar(true).build());
-//    }
 
     this.instantiatorClass = CDBasisMill.cDClassBuilder()
             .setName(odArtifact.getObjectDiagram().getName() + "Instantiator")
