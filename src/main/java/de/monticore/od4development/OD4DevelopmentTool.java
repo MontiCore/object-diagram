@@ -16,6 +16,7 @@ import de.monticore.od4development._cocos.OD4DevelopmentCoCos;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._prettyprint.ODBasisFullPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
@@ -67,6 +68,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       if(cmd.hasOption("s")) {
         MCPath mcPath = new MCPath(cmd.getOptionValue("s"));
         OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
+        BasicSymbolsMill.initializePrimitives();
         
         for (ASTMCImportStatement i : ast.getMCImportStatementList()) {
           OD4DevelopmentMill.globalScope().loadDiagram(i.getQName());
