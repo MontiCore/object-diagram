@@ -1,4 +1,5 @@
 /* (c) https://github.com/MontiCore/monticore */
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
   id 'java'
@@ -6,6 +7,7 @@ plugins {
   id "monticore" version "$mc_version" // MontiCore Plugin
   id "com.github.johnrengelman.shadow" version "$shadow_plugin_version"
   id 'jacoco'
+  id "io.github.themrmilchmann.ecj" version "0.2.0"
 }
 
 def grammarDir = "src/main/grammars"
@@ -21,7 +23,7 @@ sourceSets {
     resources {
       srcDirs([grammarDir])
       include "**/*.mc4"
-			include "**/*.mlc"
+      include "**/*.mlc"
     }
   }
   test {
@@ -48,39 +50,35 @@ buildDir = file("$projectDir/target")
 configurations { grammar }
 
 dependencies {
-	implementation "org.antlr:antlr4-runtime:4.12.0"
-	implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
-	implementation "de.monticore:monticore-runtime:$mc_version"
-	implementation "de.monticore.lang:cd4analysis:$mc_version"
-	implementation "de.monticore:monticore-grammar:$mc_version"
-	grammar("de.monticore:monticore-grammar:$mc_version") {
-		capabilities {
-			requireCapability("de.monticore:monticore-grammar-grammars")
-		}
-	}
-	implementation "commons-cli:commons-cli:$commons_cli_version"
-	implementation "org.apache.commons:commons-lang3:$commons_lang3_version"
-	implementation "com.google.guava:guava:$guava_version"
-	testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
-	testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_version"
-	testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
-	testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
-}
-
-configurations {
-  ecj
-}
-dependencies {
-  ecj 'org.eclipse.jdt:ecj:3.26.0'
+  implementation "org.antlr:antlr4-runtime:4.12.0"
+  implementation 'net.sourceforge.plantuml:plantuml:1.2023.12'
+  implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
+  implementation "de.monticore:monticore-runtime:$mc_version"
+  implementation "de.monticore.lang:cd4analysis:$mc_version"
+  implementation "de.monticore:monticore-grammar:$mc_version"
+  grammar("de.monticore:monticore-grammar:$mc_version") {
+    capabilities {
+      requireCapability("de.monticore:monticore-grammar-grammars")
+    }
+  }
+  implementation "commons-cli:commons-cli:$commons_cli_version"
+  implementation "org.apache.commons:commons-lang3:$commons_lang3_version"
+  implementation "com.google.guava:guava:$guava_version"
+  testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+  testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+  testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
+  testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
 }
 
 repositories {
+  if (("true").equals(getProperty('useLocalRepo'))) {
+    mavenLocal()
+  }
   maven {
     credentials.username mavenUser
     credentials.password mavenPassword
     url repo
   }
-  mavenLocal()
 }
 
 def grammarDependencies = ext {
@@ -140,8 +138,8 @@ test {
   }
   // prevents gradle from creating reports in target/reports/tests
   reports {
-    junitXml.enabled = false
-    html.enabled = false
+    junitXml.required = false
+    html.required = false
   }
 }
 
@@ -151,66 +149,65 @@ tasks.withType(JavaCompile) {
   options.deprecation false
   options.warnings = false
   options.headerOutputDirectory.convention(null)
-  options.forkOptions.with {
-    executable = 'java'
-		jvmArgs = ['-classpath', project.configurations.ecj.asPath, 'org.eclipse.jdt.internal.compiler.batch.Main', '-nowarn', "-Xmx2048m"]
-	}
+}
+
+shadowJar {
+  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 }
 
 // build sources jar in addition
 task sourcesJar(type: Jar) {
-	from sourceSets.main.allJava
-	archiveClassifier = "sources"
+  from sourceSets.main.allJava
+  archiveClassifier = "sources"
 }
 
 sourcesJar.dependsOn project.collect { it.tasks.withType(MCTask) }
 
-jar.dependsOn(sourcesJar)
+tasks.withType(ShadowJar) {
+  duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
 
 // build grammar jar as well
 task grammarJar(type: Jar) {
-	from("$projectDir/src/main/grammars/") { include "**/*.mc4" }
-	archiveClassifier = "grammars"
+  from("$projectDir/src/main/grammars/") { include "**/*.mc4" }
+  archiveClassifier = "grammars"
 }
 jar.dependsOn(grammarJar)
 
-shadowJar {
-	archiveFileName = 'MCOD.jar'
-	archiveClassifier = "mc-tool"
-	manifest {
-		attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
-	}
+task buildOD4DataTool(type: ShadowJar) {
+  minimize()
+  archiveFileName = 'MCOD4Data.jar'
+  archiveClassifier = "od4data-mc-tool"
+  manifest {
+    attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
+  }
+  from sourceSets.main.output
+  configurations = [project.configurations.runtimeClasspath]
 }
-
-task buildOD4DataTool(type: Jar, dependsOn: shadowJar) {
-	archiveFileName = 'MCOD4Data.jar'
-	archiveClassifier = "od4data-mc-tool"
-	manifest {
-		attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
-	}
-	from zipTree(shadowJar.archiveFile)
-}
-
-task buildOD4ReportTool(type: Jar, dependsOn: shadowJar) {
-	archiveFileName = 'MCOD4Report.jar'
-	archiveClassifier = "od4report-mc-tool"
-	manifest {
-		attributes('Main-Class': 'de.monticore.od4report.OD4ReportTool')
-	}
-	from zipTree(shadowJar.archiveFile)
-}
-
-task buildOD4DevelopmentTool(type: Jar, dependsOn: shadowJar) {
-	archiveFileName = 'MCOD4Development.jar'
-	archiveClassifier = "od4development-mc-tool"
-	manifest {
-		attributes('Main-Class': 'de.monticore.od4development.OD4DevelopmentTool')
-	}
-	from zipTree(shadowJar.archiveFile)
-}
-
 jar.dependsOn(buildOD4DataTool)
+
+task buildOD4ReportTool(type: ShadowJar) {
+  minimize()
+  archiveFileName = 'MCOD4Report.jar'
+  archiveClassifier = "od4report-mc-tool"
+  manifest {
+    attributes('Main-Class': 'de.monticore.od4report.OD4ReportTool')
+  }
+  from sourceSets.main.output
+  configurations = [project.configurations.runtimeClasspath]
+}
 jar.dependsOn(buildOD4ReportTool)
+
+task buildOD4DevelopmentTool(type: ShadowJar) {
+  minimize()
+  archiveFileName = 'MCOD4Development.jar'
+  archiveClassifier = "od4development-mc-tool"
+  manifest {
+    attributes('Main-Class': 'de.monticore.od4development.OD4DevelopmentTool')
+  }
+  from sourceSets.main.output
+  configurations = [project.configurations.runtimeClasspath]
+}
 jar.dependsOn(buildOD4DevelopmentTool)
 
 task testReport(type: TestReport) {
@@ -221,20 +218,20 @@ task testReport(type: TestReport) {
 
 // configure deployment
 publishing {
-	// configure what artifacts to publish
-	publications {
-		mavenJava(MavenPublication) {
-			artifactId = "$project.name"
-			from components.java
-			artifact sourcesJar
-			artifact shadowJar
-			artifact buildOD4DataTool
-			artifact buildOD4ReportTool
-		}
-	}
-	repositories.maven {
-		credentials.username mavenUser
-		credentials.password mavenPassword
+  // configure what artifacts to publish
+  publications {
+    mavenJava(MavenPublication) {
+      artifactId = "$project.name"
+      from components.java
+      artifact sourcesJar
+      artifact buildOD4DevelopmentTool
+      artifact buildOD4DataTool
+      artifact buildOD4ReportTool
+    }
+  }
+  repositories.maven {
+    credentials.username mavenUser
+    credentials.password mavenPassword
     def releasesRepoUrl = "https://nexus.se.rwth-aachen.de/content/repositories/monticore-releases/"
     def snapshotsRepoUrl = "https://nexus.se.rwth-aachen.de/content/repositories/monticore-snapshots/"
     url = version.endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
@@ -242,11 +239,11 @@ publishing {
 }
 
 tasks.withType(JavaCompile) {
-	options.fork = true
-	options.encoding = "UTF-8"
-	options.deprecation false
-	options.warnings = false
-	options.headerOutputDirectory.convention(null)
+  options.fork = true
+  options.encoding = "UTF-8"
+  options.deprecation false
+  options.warnings = false
+  options.headerOutputDirectory.convention(null)
 }
 
 /**
@@ -256,7 +253,7 @@ task showArtifacts {}
 task checkArtifacts {}
 configurations { MLC }
 dependencies {
-	MLC(group: 'de.monticore.lang', name: 'mlc-gradle', version: "$version")
+  MLC(group: 'de.monticore.lang', name: 'mlc-gradle', version: "$version")
 }
 StringJoiner joiner = new StringJoiner(" ")
 configurations.compileClasspath.resolve().each { joiner.add(it.toString()) }
@@ -267,26 +264,26 @@ String mp = joiner.toString()
 // two tasks per MLC file
 // each task needs to depend on all internally promoted MLCs
 fileTree("src").matching { include '**/*.mlc' }.each {
-	def f = it
-	def mlcName = it.getName().substring(0, it.getName().lastIndexOf('.'))
+  def f = it
+  def mlcName = it.getName().substring(0, it.getName().lastIndexOf('.'))
 
-	task "showArtifacts${mlcName}"(type: JavaExec) {
-		classpath = configurations.MLC
-		group = 'MLC'
-		mainClass = 'de.monticore.mlc.MLCTool'
-		args "-input", f, "-projectDir", projectDir, "-mp", mp, "-s", "-reports", "${buildDir}/reports", "-a", "-noFQ"
-		dependsOn("generateGrammar${mlcName}")
-		showArtifacts.dependsOn("showArtifacts${mlcName}")
-	}
+  task "showArtifacts${mlcName}"(type: JavaExec) {
+    classpath = configurations.MLC
+    group = 'MLC'
+    mainClass = 'de.monticore.mlc.MLCTool'
+    args "-input", f, "-projectDir", projectDir, "-mp", mp, "-s", "-reports", "${buildDir}/reports", "-a", "-noFQ"
+    dependsOn("generateGrammar${mlcName}")
+    showArtifacts.dependsOn("showArtifacts${mlcName}")
+  }
 
-	task "checkArtifacts${mlcName}"(type: JavaExec) {
-		classpath = configurations.MLC
-		group = 'MLC'
-		mainClass = 'de.monticore.mlc.MLCTool'
-		args "-input", f, "-projectDir", projectDir, "-mp", mp, "-s", "-check", "-reports", "${buildDir}/reports"
-		dependsOn("generateGrammar${mlcName}")
-		checkArtifacts.dependsOn("checkArtifacts${mlcName}")
-	}
+  task "checkArtifacts${mlcName}"(type: JavaExec) {
+    classpath = configurations.MLC
+    group = 'MLC'
+    mainClass = 'de.monticore.mlc.MLCTool'
+    args "-input", f, "-projectDir", projectDir, "-mp", mp, "-s", "-check", "-reports", "${buildDir}/reports"
+    dependsOn("generateGrammar${mlcName}")
+    checkArtifacts.dependsOn("checkArtifacts${mlcName}")
+  }
 }
 
 // MLC Check dependencies
