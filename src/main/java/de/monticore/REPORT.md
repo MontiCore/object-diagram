@@ -6,7 +6,7 @@ the object diagrams as a diagrammatic image.
 
 ## Internal Structure of the Functionality
 
-**1. Parse the Object Diagrams**
+**Step 1. Parse the Object Diagrams**
 
 1. The tool takes an Object Diagrams as input and parses it into 
 its abstract syntax tree (AST) based on the 
@@ -38,16 +38,17 @@ are generally typed (here e.g. `A`, `B`), links can be explicitly defined quite 
 MontiCore's class diagrams. Further extensions e.g. through language composition allow
 various forms and uses object diagrams. 
 
-Figure 1 depicts the OD ```Example``` in graphical syntax. 
-
 ![*Figure 1:* The graphical syntax of an example OD.](../../../../../doc/pics/Example.png)
-<br><b>Figure 1:</b> The graphical syntax of an example OD.
+<br><b>Figure 1:</b> The OD ```Example``` in graphical syntax.
 
 
-**2. Pretty Print the Object Diagram as a PlantUML model.**
+**Step 2. Pretty Print the Object Diagram as a PlantUML text.**
 
-1. The tool uses the [Monticore](https://monticore.github.io/monticore/) `Visitor` and `Handler` Infrastructure to iterate through the `Abstract Syntax Tree` nodes and pretty print the `PlantUML` model.
-2. Detailed Implementation can be found here: [PlantUMLODFullPrettyPrinter](PlantUMLODFullPrettyPrinter.java)
+1. The tool uses the [Monticore](https://monticore.github.io/monticore/) `Visitor` and 
+   `Handler` Infrastructure to iterate through the AST nodes and pretty prints the 
+   PlantUML model.
+2. Detailed Implementation can be found here: 
+   [PlantUMLODFullPrettyPrinter](PlantUMLODFullPrettyPrinter.java)
 
 ``` 
 @startuml
