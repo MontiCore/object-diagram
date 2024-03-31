@@ -1,21 +1,20 @@
 # Object Diagram PlantUML Tool (ODPlantUMLTool)
 
-The [ODPlantUMLTool](ODPlantUMLTool.java) is a Pretty Printer primarily used to pretty print the `Object Diagram` models as `PlantUML` models and further generate the object diagrams as an `image`.
+The [ODPlantUMLTool](ODPlantUMLTool.java) is a Pretty Printer primarily used to pretty print 
+*MontiCore's Object Diagram* models first into the `PlantUML` syntax and then generate 
+the object diagrams as a diagrammatic image.
 
-## Features
+## Internal Structure of the Functionality
 
-**1. Parse the `Object Diagram` models**
-1. The tool takes the `Object Diagram` models as input and parses them into `Abstract Syntax Tree` (AST) representation based on suitable [grammars](../../../grammars).
-2. The [OD4Report](../../../grammars) grammar is used to parse the `Object Diagram` models.
+**1. Parse the Object Diagrams**
 
-### Example Model
+1. The tool takes an Object Diagrams as input and parses it into 
+its abstract syntax tree (AST) based on the 
+[OD4Report](../../../grammar) grammar.
 
-![*Figure 1:* The graphical syntax of an example OD.](../../../../../doc/pics/Example.png)
-<br><b>Figure 1:</b> The graphical syntax of an example OD.
+### Example Object Diagram
 
-
-Figure 1 depicts the OD ```Example``` in graphical syntax. In textual syntax, the OD is defined as
-follows:
+Please find below an OD defined as follows in textual notation:
 
 ``` 
 objectdiagram Examples {
@@ -34,11 +33,19 @@ objectdiagram Examples {
 }
 ```
 
-This was for us the most intuitive textual representation of ODs, which follows the syntax of class
-diagrams.
+Objects in ODs can also be nested, expressions be used to define values. Objects and attributes 
+are generally typed (here e.g. `A`, `B`), links can be explicitly defined quite like in
+MontiCore's class diagrams. Further extensions e.g. through language composition allow
+various forms and uses object diagrams. 
+
+Figure 1 depicts the OD ```Example``` in graphical syntax. 
+
+![*Figure 1:* The graphical syntax of an example OD.](../../../../../doc/pics/Example.png)
+<br><b>Figure 1:</b> The graphical syntax of an example OD.
 
 
-**2. Pretty Print the `Object Diagram` model as a `PlantUML` model.**
+**2. Pretty Print the Object Diagram as a PlantUML model.**
+
 1. The tool uses the [Monticore](https://monticore.github.io/monticore/) `Visitor` and `Handler` Infrastructure to iterate through the `Abstract Syntax Tree` nodes and pretty print the `PlantUML` model.
 2. Detailed Implementation can be found here: [PlantUMLODFullPrettyPrinter](PlantUMLODFullPrettyPrinter.java)
 
