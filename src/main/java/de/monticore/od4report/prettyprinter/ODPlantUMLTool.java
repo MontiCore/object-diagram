@@ -1,4 +1,4 @@
-package de.monticore;/* (c) https://github.com/MontiCore/monticore */
+package de.monticore.od4report.prettyprinter;/* (c) https://github.com/MontiCore/monticore */
 
 import de.monticore.io.paths.MCPath;
 import de.monticore.od4report.OD4ReportMill;

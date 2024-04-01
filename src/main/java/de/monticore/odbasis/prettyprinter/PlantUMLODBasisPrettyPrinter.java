@@ -1,4 +1,4 @@
-package de.monticore;
+package de.monticore.odbasis.prettyprinter;
 
 import de.monticore.expressions.expressionsbasis._ast.ASTLiteralExpression;
 import de.monticore.expressions.expressionsbasis._ast.ASTNameExpression;

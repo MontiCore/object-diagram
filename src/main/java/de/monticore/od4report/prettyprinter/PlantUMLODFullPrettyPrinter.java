@@ -1,10 +1,13 @@
-package de.monticore;
+package de.monticore.od4report.prettyprinter;
 
 import de.monticore.dateliterals._prettyprint.DateLiteralsPrettyPrinter;
 import de.monticore.literals.mccommonliterals._prettyprint.MCCommonLiteralsPrettyPrinter;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._visitor.OD4ReportTraverser;
+import de.monticore.od4report.prettyprinter.PlantUMLODReportPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.odbasis.prettyprinter.PlantUMLODBasisPrettyPrinter;
+import de.monticore.odlink.prettyprinter.PlantUMLODLinkPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
 
 /**
