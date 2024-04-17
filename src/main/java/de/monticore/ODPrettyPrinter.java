@@ -1,7 +1,6 @@
-package de.monticore.od4report.prettyprinter;
+package de.monticore;
 
 import de.monticore.od4report._parser.OD4ReportParser;
-import de.monticore.od4report.prettyprinter.PlantUMLODFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 
 import java.io.IOException;

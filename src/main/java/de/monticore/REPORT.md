@@ -39,7 +39,7 @@ are generally typed (here e.g. `A`, `B`), links can be explicitly defined quite 
 MontiCore's class diagrams. Further extensions e.g. through language composition allow
 various forms and uses object diagrams. 
 
-![*Figure 1:* The graphical syntax of an example OD.](../../../../../../../doc/pics/ODExample4DiagramTrafo.png)
+![*Figure 1:* The graphical syntax of an example OD.](../../../../../doc/pics/ODExample4DiagramTrafo.png)
 <br><b>Figure 1:</b> The OD ```Example``` in graphical syntax.
 
 
@@ -75,7 +75,7 @@ foo--> "blub" bar
 2. Detailed Implementation can be found here: [generateImage](ODPlantUMLTool.java) 
 
 
-![*Figure 2:* Generation of graphical OD from PlantUML text.](../../../../../../../doc/pics/GeneratePlantUMLDiagram.png)
+![*Figure 2:* Generation of graphical OD from PlantUML text.](../../../../../doc/pics/GeneratePlantUMLDiagram.png)
 <br><b>Figure 2:</b> Generation of Object Diagram from PlantUML Model.
 
 
