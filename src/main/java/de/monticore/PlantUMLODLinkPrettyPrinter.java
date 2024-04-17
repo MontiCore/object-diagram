@@ -1,4 +1,4 @@
-package de.monticore.odlink.prettyprinter;
+package de.monticore;
 
 import de.monticore.odbasis._visitor.ODBasisHandler;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;

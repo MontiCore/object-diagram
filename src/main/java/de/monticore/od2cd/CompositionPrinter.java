@@ -30,11 +30,11 @@ public class CompositionPrinter {
       
     }
     
-    return res;  
+    return res;  // pkg . Manager . builder
   }
   
   public String read() {
-    return "// NA";
+    return "//fooooo";
   }
   
   public String write(ASTMCType type) {
@@ -67,4 +67,13 @@ public class CompositionPrinter {
     return ".set" + attribute.substring(0,1).toUpperCase() + attribute.substring(1) + "(" + value + ")";
   }
   
+//  public String genType(ASTMCType type) {
+//    OD4DevelopmentGlobalScope gs = OD4DevelopmentMill.globalScope();
+//
+//    if (gs.getSubScopes().size() == 1) {
+//
+//    }
+//    return examples.Mill.${printInfo?uncapFirst}Builder()
+//  }
+
 }

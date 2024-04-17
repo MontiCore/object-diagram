@@ -1,4 +1,4 @@
-package de.monticore.od4report.prettyprinter;
+package de.monticore;
 
 import de.monticore.od4report._ast.ASTODName;
 import de.monticore.od4report._visitor.OD4ReportHandler;
