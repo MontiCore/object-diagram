@@ -1,0 +1,9 @@
+@startuml
+note "OD" as tag #white
+object "__myObject1:ObjectType__" as myObject1 {
+}
+object "__myObject2:ObjectType2__" as myObject2 {
+  myDate = 2017-12-20 15:18:12
+}
+myObject1-->myObject2
+@enduml

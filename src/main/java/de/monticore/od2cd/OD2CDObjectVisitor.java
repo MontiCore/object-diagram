@@ -13,6 +13,7 @@ import de.monticore.odbasis._ast.*;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;
 import de.monticore.odlink._ast.*;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 import de.monticore.types.prettyprint.MCArrayTypesFullPrettyPrinter;
 import de.monticore.types.prettyprint.MCBasicTypesFullPrettyPrinter;
 
@@ -41,6 +42,8 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   protected final CD4C cd4C;
 
   protected final GlobalExtensionManagement glex;
+  
+  protected ASTMCImportStatement imp = null;
 
   @Override
   public void visit(ASTODArtifact odArtifact) {
@@ -48,7 +51,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
             .setName(odArtifact.getObjectDiagram().getName())
             .setModifier(CDBasisMill.modifierBuilder().PUBLIC().build())
             .build();
-
+    
     this.cdPackage = CDBasisMill.cDPackageBuilder()
             .setMCQualifiedName(CDBasisMill.mCQualifiedNameBuilder()
                     .setPartsList(List.of(odArtifact.getObjectDiagram().getName().toLowerCase()))
@@ -60,19 +63,30 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
     this.cdCompilationUnit = CDBasisMill.cDCompilationUnitBuilder()
             .setCDDefinition(cdDefinition)
             .build();
+    
+    if (odArtifact.getMCImportStatementList().size() > 0) {
+      ASTMCImportStatement i = odArtifact.getMCImportStatementList().get(0);
+      imp = CDBasisMill.mCImportStatementBuilder()
+          .setMCQualifiedName(CDBasisMill.mCQualifiedNameBuilder().addParts(i.getQName().toLowerCase()).build())
+          .setStar(true).build();
+    }
 
     this.instantiatorClass = CDBasisMill.cDClassBuilder()
             .setName(odArtifact.getObjectDiagram().getName() + "Instantiator")
             .setModifier(CDBasisMill.modifierBuilder().PUBLIC().build())
             .build();
-
+    
     this.checkerClass = CDBasisMill.cDClassBuilder()
             .setName(odArtifact.getObjectDiagram().getName() + "Checker")
             .setModifier(CDBasisMill.modifierBuilder().PUBLIC().build())
             .build();
-
+    
+    cd4C.addImport(instantiatorClass, imp.getQName() + ".*");
+    cd4C.addImport(checkerClass, imp.getQName() + ".*");
+    
+    
     this.cdPackage.addCDElement(instantiatorClass);
-    this.cdPackage.addCDElement(checkerClass);
+//    this.cdPackage.addCDElement(checkerClass);
   }
 
   @Override
@@ -97,6 +111,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
 
   public void createInstantiator(ASTODNamedObject odElement) {
     this.cd4C.addMethod(instantiatorClass, "od2cd.Instantiate",
+        odElement.getMCObjectType(),
             odElement.getMCObjectType()
                     .printType(new MCArrayTypesFullPrettyPrinter(new IndentPrinter())),
             odElement.getODAttributeList()

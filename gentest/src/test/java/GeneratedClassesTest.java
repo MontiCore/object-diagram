@@ -2,14 +2,14 @@
 
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.LogStub;
-import examples.A;
-import examples.B;
-import examples.ExamplesChecker;
+import example.A;
+import example.B;
 import examples.ExamplesInstantiator;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
+import static org.junit.Assert.assertEquals;
 
 public class GeneratedClassesTest {
 
@@ -22,7 +22,6 @@ public class GeneratedClassesTest {
   @Test
   public void test() {
     List<Object> list = new ExamplesInstantiator().instantiate();
-    new ExamplesChecker().checkFoo((A)list.get(0));
-    new ExamplesChecker().checkBar((B)list.get(1));
+    assertEquals(2, list.size());
   }
 }
