@@ -30,7 +30,7 @@ public class CompositionPrinter {
       
     }
     
-    return res;  
+    return res;
   }
   
   public String read() {
