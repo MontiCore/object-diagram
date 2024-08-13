@@ -1,6 +1,6 @@
 # (c) https://github.com/MontiCore/monticore
 
-image: registry.git.rwth-aachen.de/monticore/container-registry/gradle:7.5.1-jdk11
+image: registry.git.rwth-aachen.de/monticore/container-registry/gradle:7.6.4-jdk11
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dmaven.repo.local=$CI_PROJECT_DIR/.m2"
@@ -61,11 +61,6 @@ checkMLCs:
   needs: [ "build" ]
   script:
     - "gradle checkArtifacts"
-  rules:
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_TAG
-      allow_failure: false
-    - if: $CI_COMMIT_BRANCH
-      allow_failure: true
   artifacts:
     name: mlcreports
     when: always
