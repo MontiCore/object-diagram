@@ -25,7 +25,7 @@ public class CompositionPrinter {
           as.getUnknownSymbols().containsKey(type.printType())) {
         res = as.getFullName().toLowerCase() + ".";
         res += as.getFullName() + "Manager.";
-        res += type.printType().toLowerCase() + "Builder()";
+        res += type.printType().substring(0,1).toLowerCase() + type.printType().substring(1) + "Builder()";
       }
       
     }
@@ -34,7 +34,7 @@ public class CompositionPrinter {
   }
   
   public String read() {
-    return "//fooooo";
+    return "// NA";
   }
   
   public String write(ASTMCType type) {
@@ -66,14 +66,5 @@ public class CompositionPrinter {
     
     return ".set" + attribute.substring(0,1).toUpperCase() + attribute.substring(1) + "(" + value + ")";
   }
-  
-//  public String genType(ASTMCType type) {
-//    OD4DevelopmentGlobalScope gs = OD4DevelopmentMill.globalScope();
-//
-//    if (gs.getSubScopes().size() == 1) {
-//
-//    }
-//    return examples.Mill.${printInfo?uncapFirst}Builder()
-//  }
 
 }
