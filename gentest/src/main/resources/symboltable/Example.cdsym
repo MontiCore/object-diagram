@@ -1,18 +1,18 @@
 {
   "generated-using": "www.MontiCore.de technology",
-  "name": "Example",
-  "symbols": [
-    {
-      "kind": "de.monticore.symbols._symboltable.Type",
-      "name": "A"
-    },
-    {
-      "kind": "de.monticore.symbols._symboltable.Type",
-      "name": "B"
-    },
-    {
-          "kind": "de.monticore.symbols._symboltable.Type",
-          "name": "User"
-        }
+    "name": "Example",
+    "symbols": [
+      {
+        "kind": "de.monticore.symbols._symboltable.Type",
+        "name": "A"
+      },
+      {
+        "kind": "de.monticore.symbols._symboltable.Type",
+        "name": "B"
+      },
+      {
+        "kind": "de.monticore.symbols._symboltable.Type",
+        "name": "User"
+      }
   ]
 }

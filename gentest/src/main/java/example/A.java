@@ -9,11 +9,6 @@ public class A {
 
   protected B blub;
 
-  public A(int x, String s) {
-    this.x = x;
-    this.s = s;
-  }
-
   public void addBlub(B blub) {
     this.blub = blub;
   }

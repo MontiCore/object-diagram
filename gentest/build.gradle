@@ -31,7 +31,7 @@ sourceSets {
 task genExample(type: JavaExec) {
   classpath += parent.tasks.shadowJar.outputs.files
   mainClass = 'de.monticore.od4development.OD4DevelopmentTool'
-  args '-i','src/main/resources/Example.od', '-s' , 'src/main/resources/symboltable/Examlpe.cdsym', '-o', 'target/generated-sources/'
+  args '-i','src/main/resources/Example.od', '-s' , 'src/main/resources/symboltable/', '-o', 'target/generated-sources/'
   dependsOn parent.tasks.shadowJar
 }
 

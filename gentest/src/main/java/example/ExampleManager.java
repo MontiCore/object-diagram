@@ -1,7 +1,7 @@
 /* (c) https://github.com/MontiCore/monticore */
 package example;
 
-public class Mill {
+public class ExampleManager {
 
   public static ABuilder aBuilder() {
     return new ABuilder();

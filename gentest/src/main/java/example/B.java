@@ -5,10 +5,6 @@ public class B {
 
   protected boolean b;
 
-  public B(boolean b) {
-    this.b = b;
-  }
-
   public boolean getB() {
     return b;
   }

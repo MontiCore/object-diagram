@@ -82,6 +82,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
             .build();
     
     cd4C.addImport(instantiatorClass, imp.getQName() + ".*");
+    cd4C.addImport(instantiatorClass, "java.time.*");
     cd4C.addImport(checkerClass, imp.getQName() + ".*");
     
     

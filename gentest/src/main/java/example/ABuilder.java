@@ -5,30 +5,21 @@ import de.se_rwth.commons.logging.Log;
 
 import java.util.Optional;
 
-public class ABuilder {
+public class ABuilder extends A {
 
-  private Optional<Integer> x;
 
-  private Optional<String> s;
-
-  public ABuilder setX(int x) {
-    this.x = Optional.of(x);
+  public ABuilder x(int x) {
+    this.x = x;
     return this;
   }
 
-  public ABuilder setS(String s) {
-    this.s = Optional.of(s);
+  public ABuilder s(String s) {
+    this.s = s;
     return this;
   }
 
-  public A build() {
-    if(!isValid()) {
-      Log.error("0x80953 attributes of type A must not be null");
-    }
-    return new A(x.get(), s.get());
+  public Optional<A> build() {
+    return Optional.of(this);
   }
 
-  private boolean isValid() {
-    return x.isPresent() && s.isPresent();
-  }
 }
