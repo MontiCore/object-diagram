@@ -9,18 +9,21 @@ import de.monticore.cdbasis._ast.ASTCDDefinition;
 import de.monticore.cdbasis._ast.ASTCDPackage;
 import de.monticore.generating.templateengine.GlobalExtensionManagement;
 import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
+import de.monticore.od4development.OD4DevelopmentMill;
+import de.monticore.od4development._symboltable.CDRoleAdapter;
+import de.monticore.od4development._symboltable.CDRoleAdapter.LinkCardinality;
 import de.monticore.odbasis._ast.*;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;
 import de.monticore.odlink._ast.*;
+import de.monticore.odlink._symboltable.IODLinkScope;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
+import de.monticore.symbols.oosymbols._symboltable.FieldSymbol;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 import de.monticore.types.prettyprint.MCArrayTypesFullPrettyPrinter;
 import de.monticore.types.prettyprint.MCBasicTypesFullPrettyPrinter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class OD2CDObjectVisitor implements ODBasisVisitor2 {
@@ -44,9 +47,13 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   protected final GlobalExtensionManagement glex;
   
   protected ASTMCImportStatement imp = null;
+  
+  protected ASTObjectDiagram diagram;
 
   @Override
   public void visit(ASTODArtifact odArtifact) {
+    diagram = odArtifact.getObjectDiagram();
+    
     ASTCDDefinition cdDefinition = CDBasisMill.cDDefinitionBuilder()
             .setName(odArtifact.getObjectDiagram().getName())
             .setModifier(CDBasisMill.modifierBuilder().PUBLIC().build())
@@ -146,42 +153,72 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
     List<String> leftSides = odLink.getODLinkLeftSide().getReferenceNamesList().stream().map(ASTODName::getName).collect(Collectors.toList());
 
     List<String> rightSides = odLink.getODLinkRightSide().getReferenceNamesList().stream().map(ASTODName::getName).collect(Collectors.toList());
-
-    String roleName = odLink.getODLinkRightSide().isPresentRole() ? odLink.getODLinkRightSide().getRole() : "";
-
+    
+    String rightRoleName = odLink.getODLinkRightSide().isPresentRole() ? odLink.getODLinkRightSide().getRole() : "";
+    String leftRoleName = odLink.getODLinkLeftSide().isPresentRole() ? odLink.getODLinkLeftSide().getRole() : "";
+    
     if(odLink.getODLinkDirection() instanceof ASTODLeftToRightDir) {
       for(String left: leftSides) {
         for(String right: rightSides) {
-          this.linkAttributeList.add(left + ".add" + ((roleName.isEmpty())
-                  ? capFirst(right)
-                  : capFirst(roleName)) + "(" + right + ")");
+          Optional<CDRoleAdapter> cdRole = findRole(left, right, rightRoleName);
+          this.linkAttributeList.add(constructLink(left, right, rightRoleName, cdRole));
+//          this.linkAttributeList.add(left + ".add" + ((rightRoleName.isEmpty())
+//                  ? capFirst(right)
+//                  : capFirst(rightRoleName)) + "(" + right + ")");
         }
       }
     }
     if(odLink.getODLinkDirection() instanceof ASTODRightToLeftDir) {
       for(String right: rightSides) {
         for(String left: leftSides) {
-          this.linkAttributeList.add(right + ".add" + ((roleName.isEmpty())
-                  ? capFirst(left)
-                  : capFirst(roleName)) + "(" + left + ")");
+          Optional<CDRoleAdapter> cdRole = findRole(right, left, leftRoleName);
+          this.linkAttributeList.add(constructLink(right, left, leftRoleName, cdRole));
+//          this.linkAttributeList.add(right + ".add" + ((leftRoleName.isEmpty())
+//                  ? capFirst(left)
+//                  : capFirst(leftRoleName)) + "(" + left + ")");
         }
       }
     }
     if(odLink.getODLinkDirection() instanceof ASTODBiDir || odLink.getODLinkDirection() instanceof ASTODUnspecifiedDir) {
       for(String left: leftSides) {
         for(String right: rightSides) {
-          this.linkAttributeList.add(left + ".add" + ((roleName.isEmpty())
-                  ? capFirst(right)
-                  : capFirst(roleName)) + "(" + right + ")");
+          Optional<CDRoleAdapter> cdRoleOfLeft = findRole(left, right, rightRoleName);
+          Optional<CDRoleAdapter> cdRoleOfRight = findRole(right, left, leftRoleName);
+          
+          
+          if (cdRoleOfLeft.isPresent() && cdRoleOfRight.isPresent()) {
+            // only select one assoc side as the other is added automatically
+            // hereby make sure to select the [1] or [+] cardinality side
+            LinkCardinality card_l2r = cdRoleOfLeft.get().getCardinality();
+            LinkCardinality card_r2l = cdRoleOfRight.get().getCardinality();
+            if (card_l2r.equals(LinkCardinality.ONE) || card_l2r.equals(LinkCardinality.PLUS)) {
+              this.linkAttributeList.add(constructLink(left, right, rightRoleName, cdRoleOfLeft));
+            } else if (card_r2l.equals(LinkCardinality.ONE) || card_r2l.equals(LinkCardinality.PLUS)) {
+              this.linkAttributeList.add(constructLink(right, left, leftRoleName, cdRoleOfRight));
+            } else {
+              // otherwise, we can choose arbitrarily, but only one side
+              this.linkAttributeList.add(constructLink(left, right, rightRoleName, cdRoleOfLeft));
+            }
+          }
+          // in case of direction disruption, we choose how it is possible to navigate
+          else if (cdRoleOfLeft.isPresent() && !cdRoleOfRight.isPresent()) {
+            this.linkAttributeList.add(constructLink(left, right, rightRoleName, cdRoleOfLeft));
+          } else if (!cdRoleOfLeft.isPresent() && cdRoleOfRight.isPresent()) {
+            this.linkAttributeList.add(constructLink(right, left, leftRoleName, cdRoleOfRight));
+          }
+          
+//          this.linkAttributeList.add(left + ".add" + ((rightRoleName.isEmpty())
+//                  ? capFirst(right)
+//                  : capFirst(rightRoleName)) + "(" + right + ")");
         }
       }
-      for(String right: rightSides) {
-        for(String left: leftSides) {
-          this.linkAttributeList.add(right + ".add" + ((roleName.isEmpty())
-                  ? capFirst(left)
-                  : capFirst(roleName)) + "(" + left + ")");
-        }
-      }
+//      for(String right: rightSides) {
+//        for(String left: leftSides) {
+//          this.linkAttributeList.add(right + ".add" + ((leftRoleName.isEmpty())
+//                  ? capFirst(left)
+//                  : capFirst(leftRoleName)) + "(" + left + ")");
+//        }
+//      }
     }
   }
 
@@ -199,7 +236,58 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   protected String capFirst(String s) {
     return s.substring(0, 1).toUpperCase() + s.substring(1);
   }
-
+  
+  protected Optional<CDRoleAdapter> findRole(String src, String tgt, String roleName) {
+    Optional<CDRoleAdapter> res = Optional.empty();
+    
+    // find object in OD
+    Optional<ASTODNamedObject> objSym = diagram.getODElementList().stream()
+        .filter(ASTODNamedObject.class::isInstance)
+        .map(ASTODNamedObject.class::cast)
+        .filter(o -> o.getName().equals(src))
+        .findFirst();
+  
+    if (objSym.isPresent()) {
+      // find type of object
+      String typeName = objSym.get().getMCObjectType().printType();
+      TypeSymbol type = OD4DevelopmentMill.globalScope().resolveType(typeName).get();
+      
+      // find hidden cdRole in resolved type
+      String roleName2resolve = roleName.isEmpty() ? tgt : roleName;
+      List<FieldSymbol> types = ((IODLinkScope) type.getSpannedScope()).resolveFieldDownMany(roleName2resolve);
+      if (types.size() > 0 && types.get(0) instanceof CDRoleAdapter) {
+        res = Optional.of((CDRoleAdapter) types.get(0));
+      }
+    }
+  
+    return res;
+  }
+  
+  protected String constructLink(String src, String tgt, String roleName, Optional<CDRoleAdapter> cdRole) {
+    
+    String cardModifier = "set";
+    if (cdRole.isPresent()) {
+      switch (cdRole.get().getCardinality()) {
+        case ONE:
+          cardModifier = "set";
+          break;
+        case OPTIONAL:
+          cardModifier = "set";
+          break;
+        case STAR:
+          cardModifier = "add";
+          break;
+        case PLUS:
+          cardModifier = "add";
+          break;
+      }
+    }
+    
+    return src + "." + cardModifier + ((roleName.isEmpty())
+        ? capFirst(tgt)
+        : capFirst(roleName)) + "(" + tgt + ")";
+  }
+  
   public OD2CDObjectVisitor(GlobalExtensionManagement glex) {
     this.cd4C = CD4C.getInstance();
     this.glex = glex;
@@ -220,4 +308,5 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   public Map<String, ASTCDClass> getObjectToClassMap() {
     return this.objectToClassMap;
   }
+  
 }

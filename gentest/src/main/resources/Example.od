@@ -15,7 +15,7 @@ objectdiagram Examples {
     boolean b = false;
   };
 
-  link foo -> (blub) bar;
+  link foo <-> (blub) bar;
 
   /*u1: User {
     String username = "Alice";
