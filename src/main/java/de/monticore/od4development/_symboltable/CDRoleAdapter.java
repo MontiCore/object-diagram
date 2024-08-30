@@ -1,8 +1,6 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4development._symboltable;
 
-import de.monticore.cdassociation._symboltable.CDRoleSymbol;
-import de.monticore.odlink._ast.ASTODLink;
 import de.monticore.symbols.oosymbols._symboltable.FieldSymbol;
 
 import java.util.Arrays;

@@ -1,7 +1,6 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4development._symboltable;
 
-import de.monticore.cdassociation._symboltable.CDRoleSymbol;
 import de.monticore.symbols.oosymbols._symboltable.FieldSymbol;
 import de.monticore.symbols.oosymbols._symboltable.FieldSymbolDeSer;
 import de.monticore.symbols.oosymbols._symboltable.IOOSymbolsScope;
