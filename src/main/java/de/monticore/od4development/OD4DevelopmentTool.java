@@ -69,6 +69,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       if(cmd.hasOption("s")) {
         MCPath mcPath = new MCPath(cmd.getOptionValue("s"));
         OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
+        OD4DevelopmentMill.globalScope().putTypeSymbolDeSer("de.monticore.cdbasis._symboltable.CDTypeSymbol");
         OD4DevelopmentMill.globalScope().putSymbolDeSer("de.monticore.cdassociation._symboltable.CDRoleSymbol", new CDRoleSymbolDeSer());
         BasicSymbolsMill.initializePrimitives();
         
