@@ -12,7 +12,7 @@
             "name":"blub",
             "fullName":"A.blub",
             "isDefinitiveNavigable":true,
-            "cardinality":"[*]",
+            "cardinality":"[1]",
             "association":835477872,
             "type":{
               "kind":"de.monticore.types.check.SymTypeOfObject",

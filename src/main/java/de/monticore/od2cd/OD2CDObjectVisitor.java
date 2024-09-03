@@ -267,7 +267,39 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
     
     String cardModifier = "set";
     if (cdRole.isPresent()) {
-      switch (cdRole.get().getCardinality()) {
+      cardModifier = cardModifier(cdRole.get());
+    }
+    
+    if (OD4DevelopmentMill.globalScope().getSubScopes().size() == 1) {
+      return src + "." + ((roleName.isEmpty())
+          ? tgt + cardModifier
+          : roleName + cardModifier) + "(" + tgt + ")";
+    } else {
+      return src + "." + cardModifier + ((roleName.isEmpty())
+          ? capFirst(tgt)
+          : capFirst(roleName)) + "(" + tgt + ")";
+    }
+  }
+  
+  protected String cardModifier(CDRoleAdapter cdRole) {
+    String cardModifier = "";
+    if (OD4DevelopmentMill.globalScope().getSubScopes().size() == 1) {
+      switch (cdRole.getCardinality()) {
+        case ONE:
+          cardModifier = "";
+          break;
+        case OPTIONAL:
+          cardModifier = "";
+          break;
+        case STAR:
+          cardModifier = "Add";
+          break;
+        case PLUS:
+          cardModifier = "Add";
+          break;
+      }
+    } else {
+      switch (cdRole.getCardinality()) {
         case ONE:
           cardModifier = "set";
           break;
@@ -282,10 +314,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
           break;
       }
     }
-    
-    return src + "." + cardModifier + ((roleName.isEmpty())
-        ? capFirst(tgt)
-        : capFirst(roleName)) + "(" + tgt + ")";
+    return cardModifier;
   }
   
   public OD2CDObjectVisitor(GlobalExtensionManagement glex) {
