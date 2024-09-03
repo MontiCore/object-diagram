@@ -46,6 +46,8 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
 
   protected final GlobalExtensionManagement glex;
   
+  protected final CompositionPrinter cp;
+  
   protected ASTMCImportStatement imp = null;
   
   protected ASTObjectDiagram diagram;
@@ -104,9 +106,8 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
             odArtifact.getObjectDiagram().getODElementList()
                     .stream().
                     filter(e -> e instanceof ASTODNamedObject)
-                    .map(e -> ((ASTODNamedObject) e)
-                            .getMCObjectType()
-                            .printType(new MCArrayTypesFullPrettyPrinter(new IndentPrinter())))
+                    .map(e -> cp.genType(((ASTODNamedObject) e)
+                            .getMCObjectType()))
                     .collect(Collectors.toList()),
             odArtifact.getObjectDiagram().getODElementList()
                     .stream()
@@ -120,8 +121,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   public void createInstantiator(ASTODNamedObject odElement) {
     this.cd4C.addMethod(instantiatorClass, "od2cd.Instantiate",
         odElement.getMCObjectType(),
-            odElement.getMCObjectType()
-                    .printType(new MCArrayTypesFullPrettyPrinter(new IndentPrinter())),
+            cp.genType(odElement.getMCObjectType()),
             odElement.getODAttributeList()
                     .stream()
                     .map(ASTODAttribute::getName)
@@ -291,6 +291,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   public OD2CDObjectVisitor(GlobalExtensionManagement glex) {
     this.cd4C = CD4C.getInstance();
     this.glex = glex;
+    this.cp = (CompositionPrinter) glex.getGlobalVar("cp");
   }
 
   public ASTCDCompilationUnit getCDCompilationUnit() {
