@@ -224,7 +224,9 @@ java -jar MCOD4Report.jar -i Example.od -c intra
 You may notice that the tool prints nothing to the console when executing this command. This means
 that the model satisfies all context conditions.
 
-Let us now consider a more complex scenario. You can check the different kinds of context
+Let us now consider a more complex scenario. Note that these commands do not work with the
+`MCOD4Data` Tool, since the `MyFamily.od` dates as attribute values.
+You can check the different kinds of context
 conditions, using the `-c,--coco <arg>` option:
 
 ```

@@ -39,7 +39,6 @@ public class OD4ReportExamplesTest {
   @Before
   public void setUp() {
     LogStub.init();
-    Log.enableFailQuick(false);
 
     OD4ReportMill.reset();
     OD4ReportMill.init();
