@@ -6,4 +6,4 @@ return ${cp.create(type)}
 <#list attributes as attribute>
   ${cp.update(attribute, values[attribute?index])}
 </#list>
-${cp.write(type)};
+;

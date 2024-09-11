@@ -10,6 +10,6 @@ ${cd4c.method("public List<Object> instantiate()")}
 </#list>
 List<Object> objects = new ArrayList<>();
 <#list objects as object>
-  objects.add(${object});
+  objects.add(${object}${cp.write(types[object?index])});
 </#list>
 return objects;

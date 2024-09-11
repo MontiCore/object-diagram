@@ -13,6 +13,7 @@ import de.monticore.od2cd.CompositionPrinter;
 import de.monticore.od2cd.OD2CDConverter;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCos;
+import de.monticore.od4development._symboltable.CDRoleSymbolDeSer;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._prettyprint.ODBasisFullPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
@@ -68,6 +69,8 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       if(cmd.hasOption("s")) {
         MCPath mcPath = new MCPath(cmd.getOptionValue("s"));
         OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
+        OD4DevelopmentMill.globalScope().putTypeSymbolDeSer("de.monticore.cdbasis._symboltable.CDTypeSymbol");
+        OD4DevelopmentMill.globalScope().putSymbolDeSer("de.monticore.cdassociation._symboltable.CDRoleSymbol", new CDRoleSymbolDeSer());
         BasicSymbolsMill.initializePrimitives();
         
         for (ASTMCImportStatement i : ast.getMCImportStatementList()) {

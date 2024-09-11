@@ -17,6 +17,11 @@ public class ABuilder extends A {
     this.s = s;
     return this;
   }
+  
+  public ABuilder blub(B blub) {
+    this.blub = blub;
+    return this;
+  }
 
   public Optional<A> build() {
     return Optional.of(this);

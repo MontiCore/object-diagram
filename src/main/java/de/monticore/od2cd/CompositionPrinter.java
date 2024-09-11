@@ -5,7 +5,9 @@ import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
 import de.monticore.od4development._symboltable.IOD4DevelopmentGlobalScope;
 import de.monticore.od4development._symboltable.IOD4DevelopmentScope;
+import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.mcbasictypes._ast.ASTMCType;
+import de.monticore.types.prettyprint.MCArrayTypesFullPrettyPrinter;
 
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class CompositionPrinter {
     return "// NA";
   }
   
-  public String write(ASTMCType type) {
+  public String write(String type) {
     IOD4DevelopmentGlobalScope gs = OD4DevelopmentMill.globalScope();
     
     if (gs.getSubScopes().size() == 1) {
@@ -65,6 +67,17 @@ public class CompositionPrinter {
     }
     
     return ".set" + attribute.substring(0,1).toUpperCase() + attribute.substring(1) + "(" + value + ")";
+  }
+  
+  public String genType(ASTMCType type) {
+    IOD4DevelopmentGlobalScope gs = OD4DevelopmentMill.globalScope();
+    String genType = OD4DevelopmentMill.prettyPrint(type, false);
+    if (gs.getSubScopes().size() == 1) {
+      return genType + "Builder";
+    } else {
+      return genType;
+    }
+  
   }
 
 }
