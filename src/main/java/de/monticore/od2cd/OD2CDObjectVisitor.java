@@ -237,6 +237,10 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
     return s.substring(0, 1).toUpperCase() + s.substring(1);
   }
   
+  protected String uncapFirst(String s) {
+    return s.substring(0, 1).toLowerCase() + s.substring(1);
+  }
+  
   protected Optional<CDRoleAdapter> findRole(String src, String tgt, String roleName) {
     Optional<CDRoleAdapter> res = Optional.empty();
     
@@ -263,18 +267,33 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
     return res;
   }
   
+  protected String findObjectAccessorName4Role(String tgt) {
+    // find object in OD
+    Optional<ASTODNamedObject> obj = diagram.getODElementList().stream()
+        .filter(ASTODNamedObject.class::isInstance)
+        .map(ASTODNamedObject.class::cast)
+        .filter(o -> o.getName().equals(tgt))
+        .findFirst();
+    
+    if (obj.isPresent()) {
+      return uncapFirst(obj.get().getMCObjectType().printType());
+    }
+    return tgt;
+  }
+  
   protected String constructLink(String src, String tgt, String roleName, Optional<CDRoleAdapter> cdRole) {
     
-    String cardModifier = "set";
+    String cardModifier = "";
     if (cdRole.isPresent()) {
       cardModifier = cardModifier(cdRole.get());
     }
     
     if (OD4DevelopmentMill.globalScope().getSubScopes().size() == 1) {
       return src + "." + ((roleName.isEmpty())
-          ? tgt + cardModifier
+          ? findObjectAccessorName4Role(tgt) + cardModifier
           : roleName + cardModifier) + "(" + tgt + ")";
     } else {
+      cardModifier = "set";
       return src + "." + cardModifier + ((roleName.isEmpty())
           ? capFirst(tgt)
           : capFirst(roleName)) + "(" + tgt + ")";

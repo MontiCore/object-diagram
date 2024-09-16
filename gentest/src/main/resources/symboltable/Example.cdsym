@@ -69,6 +69,34 @@
           }
         ]
       }
+    },
+    {
+      "kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
+      "name": "C",
+      "spannedScope":{
+        "symbols":[
+          {
+            "kind":"de.monticore.cdassociation._symboltable.CDRoleSymbol",
+            "name":"d",
+            "fullName":"A.d",
+            "isDefinitiveNavigable":true,
+            "cardinality":"[1]",
+            "association":835477811,
+            "type":{
+              "kind":"de.monticore.types.check.SymTypeOfObject",
+              "objName":"D"
+            },
+            "isPublic":true
+          }
+        ]
+      }
+    },
+    {
+      "kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
+      "name": "D",
+      "spannedScope":{
+
+      }
     }
   ]
 }
