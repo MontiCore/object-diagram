@@ -22,6 +22,6 @@ public class GeneratedClassesTest {
   @Test
   public void test() {
     List<Object> list = new ExamplesInstantiator().instantiate();
-    assertEquals(2, list.size());
+    assertEquals(5, list.size());
   }
 }

@@ -17,11 +17,20 @@ objectdiagram Examples {
 
   link foo <-> (blub) bar;
 
-  /*u1: User {
-    String username = "Alice";
-    String password = "Alice123";
-    String email = "alice@se-rwth.de";
-    SehubRole role = SehubRole.OWNER;
-  };*/
+
+
+
+  t1: C {};
+
+  d: D {
+    i = 1;
+  };
+
+  e: D {
+    i = 2;
+  };
+
+  link t1 -> d;
+  link t1 -> e;
 
 }

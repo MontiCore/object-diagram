@@ -10,4 +10,12 @@ public class ExampleManager {
   public static BBuilder bBuilder() {
     return new BBuilder();
   }
+  
+  public static CBuilder cBuilder() {
+    return new CBuilder();
+  }
+  
+  public static DBuilder dBuilder() {
+    return new DBuilder();
+  }
 }

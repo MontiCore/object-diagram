@@ -4,10 +4,7 @@ package de.monticore.od2cd;
 import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
 import de.monticore.od4development._symboltable.IOD4DevelopmentGlobalScope;
-import de.monticore.od4development._symboltable.IOD4DevelopmentScope;
-import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.types.mcbasictypes._ast.ASTMCType;
-import de.monticore.types.prettyprint.MCArrayTypesFullPrettyPrinter;
 
 import java.util.List;
 

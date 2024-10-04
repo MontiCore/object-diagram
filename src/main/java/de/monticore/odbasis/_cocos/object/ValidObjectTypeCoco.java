@@ -8,11 +8,9 @@ import de.monticore.odbasis._cocos.ODBasisASTODArtifactCoCo;
 import de.monticore.odbasis._cocos.ODBasisASTODObjectCoCo;
 import de.monticore.odbasis._cocos.ODBasisCoCoChecker;
 import de.monticore.odbasis.utils.FullQualifiedNameCalculator;
-import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 import de.monticore.types.mcbasictypes._ast.ASTMCPackageDeclaration;
-import de.monticore.types.prettyprint.MCBasicTypesFullPrettyPrinter;
 import de.se_rwth.commons.logging.Log;
 
 import java.util.HashSet;
@@ -41,8 +39,7 @@ public class ValidObjectTypeCoco implements ODBasisASTODArtifactCoCo {
     ODBasisASTODObjectCoCo odBasisASTODObjectCoCo = new ODBasisASTODObjectCoCo() {
       @Override
       public void check(ASTODObject node) {
-        this.resolveOOTypeSymbol(node, node.getMCObjectType()
-            .printType(new MCBasicTypesFullPrettyPrinter(new IndentPrinter())));
+        this.resolveOOTypeSymbol(node, node.getMCObjectType().printType());
       }
 
       private void resolveOOTypeSymbol(ASTODObject node, String typeName) {
