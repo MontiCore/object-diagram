@@ -286,7 +286,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
       cardModifier = cardModifier(cdRole.get());
     }
     
-    if (OD4DevelopmentMill.globalScope().getSubScopes().size() == 1) {
+    if (OD4DevelopmentMill.globalScope().getSubScopes().size() >= 1) {
       return src + "." + ((roleName.isEmpty())
           ? findObjectAccessorName4Role(tgt) + cardModifier
           : roleName + cardModifier) + "(" + tgt + ")";
@@ -300,7 +300,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   
   protected String cardModifier(CDRoleAdapter cdRole) {
     String cardModifier = "";
-    if (OD4DevelopmentMill.globalScope().getSubScopes().size() == 1) {
+    if (OD4DevelopmentMill.globalScope().getSubScopes().size() >= 1) {
       switch (cdRole.getCardinality()) {
         case ONE:
           cardModifier = "";
