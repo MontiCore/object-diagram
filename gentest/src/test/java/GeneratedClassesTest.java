@@ -6,6 +6,8 @@ import example.A;
 import example.B;
 import examples.ExamplesInstantiator;
 import java.util.List;
+
+import examples.ExamplesODInstances;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +23,8 @@ public class GeneratedClassesTest {
 
   @Test
   public void test() {
-    List<Object> list = new ExamplesInstantiator().instantiate();
-    assertEquals(5, list.size());
+    ExamplesODInstances objs = new ExamplesInstantiator().instantiate();
+    assertEquals(5, objs.getFoo().getX());
+    assertEquals("hello", objs.getFoo().getS());
   }
 }
