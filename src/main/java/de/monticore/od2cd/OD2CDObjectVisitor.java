@@ -31,6 +31,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   protected ASTCDPackage cdPackage;
 
   protected ASTCDClass instantiatorClass;
+  protected ASTCDClass instancesClass;
 
   protected ASTCDClass checkerClass;
 
@@ -83,6 +84,11 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
             .setModifier(CDBasisMill.modifierBuilder().PUBLIC().build())
             .build();
     
+    this.instancesClass = CDBasisMill.cDClassBuilder()
+        .setName(odArtifact.getObjectDiagram().getName() + "ODInstances")
+        .setModifier(CDBasisMill.modifierBuilder().PUBLIC().build())
+        .build();
+    
     this.checkerClass = CDBasisMill.cDClassBuilder()
             .setName(odArtifact.getObjectDiagram().getName() + "Checker")
             .setModifier(CDBasisMill.modifierBuilder().PUBLIC().build())
@@ -90,10 +96,13 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
     
     cd4C.addImport(instantiatorClass, imp.getQName() + ".*");
     cd4C.addImport(instantiatorClass, "java.time.*");
+    cd4C.addImport(instancesClass, imp.getQName() + ".*");
+    cd4C.addImport(instancesClass, "java.time.*");
     cd4C.addImport(checkerClass, imp.getQName() + ".*");
     
     
     this.cdPackage.addCDElement(instantiatorClass);
+    this.cdPackage.addCDElement(instancesClass);
 //    this.cdPackage.addCDElement(checkerClass);
   }
 
@@ -113,7 +122,8 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
                     .map(e -> ((ASTODNamedObject) e).getName())
                     .collect(Collectors.toList()),
             this.linkAttributeList,
-            this.objectNameList);
+            this.objectNameList,
+            odArtifact.getObjectDiagram().getName());
   }
 
   public void createInstantiator(ASTODNamedObject odElement) {
@@ -131,6 +141,10 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
             odElement.getName());
 
     this.objectNameList.add(odElement.getName());
+  }
+  
+  public void createInstanceAccess(ASTODNamedObject odElement) {
+    this.cd4C.addAttribute(this.instancesClass, true, true, cp.genType(odElement.getMCObjectType()) + " " + odElement.getName());
   }
 
   public void createChecker(ASTODNamedObject odElement) {
@@ -224,6 +238,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   public void visit(ASTODElement odElement) {
     if(odElement instanceof ASTODNamedObject) {
       createInstantiator((ASTODNamedObject) odElement);
+      createInstanceAccess((ASTODNamedObject) odElement);
       createChecker((ASTODNamedObject) odElement);
     }
     if(odElement instanceof ASTODLink) {
@@ -286,7 +301,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
       cardModifier = cardModifier(cdRole.get());
     }
     
-    if (OD4DevelopmentMill.globalScope().getSubScopes().size() == 1) {
+    if (OD4DevelopmentMill.globalScope().getSubScopes().size() >= 1) {
       return src + "." + ((roleName.isEmpty())
           ? findObjectAccessorName4Role(tgt) + cardModifier
           : roleName + cardModifier) + "(" + tgt + ")";
@@ -300,7 +315,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   
   protected String cardModifier(CDRoleAdapter cdRole) {
     String cardModifier = "";
-    if (OD4DevelopmentMill.globalScope().getSubScopes().size() == 1) {
+    if (OD4DevelopmentMill.globalScope().getSubScopes().size() >= 1) {
       switch (cdRole.getCardinality()) {
         case ONE:
           cardModifier = "";

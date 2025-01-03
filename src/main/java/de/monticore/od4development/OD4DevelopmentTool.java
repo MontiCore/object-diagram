@@ -14,16 +14,20 @@ import de.monticore.od2cd.OD2CDConverter;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCos;
 import de.monticore.od4development._symboltable.CDRoleSymbolDeSer;
+import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._prettyprint.ODBasisFullPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
+import de.se_rwth.commons.Names;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -65,9 +69,9 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       // parse input file, which is now available
       // (only returns if successful)
       ASTODArtifact ast = parse(cmd.getOptionValue("i"));
-
-      if(cmd.hasOption("s")) {
-        MCPath mcPath = new MCPath(cmd.getOptionValue("s"));
+      
+      if(cmd.hasOption("path")) {
+        MCPath mcPath = new MCPath(cmd.getOptionValue("path"));
         OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
         OD4DevelopmentMill.globalScope().putTypeSymbolDeSer("de.monticore.cdbasis._symboltable.CDTypeSymbol");
         OD4DevelopmentMill.globalScope().putSymbolDeSer("de.monticore.cdassociation._symboltable.CDRoleSymbol", new CDRoleSymbolDeSer());
@@ -76,8 +80,12 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
         for (ASTMCImportStatement i : ast.getMCImportStatementList()) {
           OD4DevelopmentMill.globalScope().loadDiagram(i.getQName());
         }
-      } else {
-        createSymbolTable(ast);
+      }
+      
+      IOD4DevelopmentArtifactScope as = createSymbolTable(ast);
+      
+      if (cmd.hasOption("s")) {
+        storeSymTab(as, cmd.getOptionValue("s"));
       }
 
       if (cmd.hasOption("c")) {
@@ -144,5 +152,22 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   public Options addAdditionalOptions(Options options) {
     options.addOption(new Option("o","output",true,"Sets the output path"));
     return options;
+  }
+  
+  /**
+   * prints the symboltable of the given scope out to a file
+   *
+   * @param as symboltable to store
+   * @param path location of the file or directory containing the printed table
+   */
+  public void storeSymTab(IOD4DevelopmentArtifactScope as, String path) {
+    if (Path.of(path).toFile().isFile()) {
+      this.storeSymbols(as, path);
+    }
+    else {
+      this.storeSymbols(
+          as,
+          Paths.get(path, Names.getPathFromPackage(as.getFullName()) + ".odsym").toString());
+    }
   }
 }
