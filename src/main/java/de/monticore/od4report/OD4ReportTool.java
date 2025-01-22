@@ -10,8 +10,9 @@ import de.monticore.io.paths.MCPath;
 import de.monticore.javalight._symboltable.JavaMethodSymbolDeSer;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
-import de.monticore.od4report.prettyprinter.OD4ReportFullPrettyPrinter;
+import de.monticore.od4report._prettyprint.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.statements.mclowlevelstatements._symboltable.LabelSymbolDeSer;
 import de.monticore.symbols.basicsymbols._symboltable.*;
 import de.monticore.symbols.oosymbols._symboltable.FieldSymbolDeSer;
@@ -61,7 +62,6 @@ public class OD4ReportTool extends OD4ReportToolTOP {
         return;
       }
 
-
       // if -symbols is set: Add symbol types from file to global scope
       if (cmd.hasOption("symtypes")) { //TODO: If length is odd throw warning
         String[] cmdVals = cmd.getOptionValues("symboltypes")[0].split(" ");
@@ -91,12 +91,8 @@ public class OD4ReportTool extends OD4ReportToolTOP {
             default: Log.warn(cmdVals[i+1] + " is not a valid Symbol Deserializer and has been assumed as TypeSymbolDeSer");
               gs.putSymbolDeSer(cmdVals[i], new TypeSymbolDeSer()); break;
           }
-
         }
-
       }
-
-
 
       // if -path is set: save the model paths
       MCPath symbolPath = new MCPath();
@@ -110,16 +106,17 @@ public class OD4ReportTool extends OD4ReportToolTOP {
       // (only returns if successful)
       ASTODArtifact astodArtifact = parse(cmd.getOptionValue("i"));
 
-      // create symbol table
-      IOD4ReportArtifactScope oD4ReportArtifactScope = OD4ReportToolAPI.createSymbolTable(
-        astodArtifact, true);
-
       // -option check cocos
       Set<String> cocoOptionValue = new HashSet<>();
       if (cmd.hasOption("c") && cmd.getOptionValues("c") != null) {
         cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
       }
 
+      // create symbol table
+      IOD4ReportArtifactScope oD4ReportArtifactScope = OD4ReportToolAPI.createSymbolTable(
+          astodArtifact, !cocoOptionValue.contains("intra"));
+
+      // run cocos
       if (cmd.hasOption("c")) {
         if (cocoOptionValue.contains("intra")) {
           OD4ReportToolAPI.runAllIntraCoCos(astodArtifact);
@@ -142,7 +139,7 @@ public class OD4ReportTool extends OD4ReportToolTOP {
       }
     }
     catch (ParseException e) {
-      // ann unexpected error from the apache CLI parser:
+      // an unexpected error from the apache CLI parser:
       Log.error("0xA7110 Could not process CLI parameters: " + e.getMessage());
     }
 
@@ -162,7 +159,7 @@ public class OD4ReportTool extends OD4ReportToolTOP {
   @Override
   public void prettyPrint(ASTODArtifact astodArtifact, String file) {
     // pretty print AST
-    OD4ReportFullPrettyPrinter pp = new OD4ReportFullPrettyPrinter();
+    OD4ReportFullPrettyPrinter pp = new OD4ReportFullPrettyPrinter(new IndentPrinter());
     String od = pp.prettyprint(astodArtifact);
     print(od, file);
   }

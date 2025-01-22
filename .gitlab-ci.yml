@@ -1,13 +1,13 @@
 # (c) https://github.com/MontiCore/monticore
 
-image: registry.git.rwth-aachen.de/monticore/container-registry/gradle:6.8.2-jdk11
+image: registry.git.rwth-aachen.de/monticore/container-registry/gradle:7.6.4-jdk11
 
 variables:
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dmaven.repo.local=$CI_PROJECT_DIR/.m2"
 
 cache:
   paths:
-    - .gradle/wrapper
+    - .gradle/caches
   key: ${CI_COMMIT_REF_SLUG}
 
 before_script:
@@ -16,7 +16,9 @@ before_script:
 stages:
   - build
   - test
+  - check
   - deploy
+  - trigger_languages
   - mirror
 
 build:
@@ -25,8 +27,25 @@ build:
     - "gradle assemble --refresh-dependencies $GRADLE_OPTS $ARGS1"
   artifacts:
     paths:
-      - "."
+      - "target/"
     expire_in: 1 week
+
+# Checks if the links in this repository's Markdown files are valid.
+#
+# For more information, visit: https://git.rwth-aachen.de/se/infrastructure/mdlinkchecker (Available internally only)
+check-links:
+  # We need a JDK 17+ image for this job since the link checker requires Java 17.
+  image: eclipse-temurin:17-jdk-alpine
+  # The check runs parallel to the build since project documentation is not generated.
+  stage: build
+  # Allow failure regardless of whether the tool exists with a non-zero error code. We don't currently want to fail the
+  # pipeline if a link is invalid.
+  allow_failure: true
+  before_script:
+    - 'apk --no-cache add curl'
+  script:
+    - 'curl --location --header "PRIVATE-TOKEN: $secibuildinfstrtoken" "https://git.rwth-aachen.de/api/v4/projects/se%2Finfrastructure%2Fmdlinkchecker/jobs/artifacts/master/raw/target/libs/MDLinkCheckerCLI.jar?job=build" --output MDLinkChecker.jar'
+    - 'java -jar MDLinkChecker.jar -t "$secibuildtoken" -r . -p'
 
 test:
   stage: test
@@ -34,6 +53,20 @@ test:
     - build
   script:
     - "gradle check $GRADLE_OPTS $ARGS2"
+
+checkMLCs:
+  stage: check
+  dependencies:
+    - build
+  needs: [ "build" ]
+  script:
+    - "gradle checkArtifacts"
+  artifacts:
+    name: mlcreports
+    when: always
+    paths:
+      - "target/reports/"
+    expire_in: 1 week
 
 deploy:
   stage: deploy
@@ -47,8 +80,10 @@ deploy:
 # Mirrors this repository's `dev` and `master` branches to GitHub.
 #
 # The mirror will always be at either HEAD or HEAD+1 (depending on whether cleanup is necessary).
-# For more information, visit: https://git.rwth-aachen.de/monticore/auxiliary-development-tools/github-mirror-tools (Available internally only)
+# For more information, visit: https://git.rwth-aachen.de/se/infrastructure/github-mirror-tools (Available internally only)
 githubmirror:
+  # We need a JDK 17+ image for this job since the link checker requires Java 17.
+  image: eclipse-temurin:17-jdk-alpine
   stage: mirror
   variables:
     # The repository is edited during this job. To make sure that no changes persist, we instruct GitLab to always
@@ -56,8 +91,10 @@ githubmirror:
     #
     # See https://docs.gitlab.com/ee/ci/runners/configure_runners.html#git-strategy
     GIT_STRATEGY: clone
+  dependencies: []
+  needs: [ "deploy" ]
   before_script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - 'apk --no-cache add curl git openssh-client'
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SE_CIBUILD_SSH_PRIV_KEY")
     - echo "$SE_CIBUILD_SSH_PRIV_KEY" | tr -d '\r' | ssh-add -
@@ -67,9 +104,12 @@ githubmirror:
     - mkdir -p ~/.ssh
     - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   script:
-    - "curl --location --header \"PRIVATE-TOKEN: $secibuildtoken\" \"https://git.rwth-aachen.de/api/v4/projects/monticore%2Fauxiliary-development-tools%2Fgithub-mirror-tools/repository/files/mirror.sh/raw\" --output mirror.sh"
+    - "curl --location --header \"PRIVATE-TOKEN: $secibuildinfstrtoken\" \"https://git.rwth-aachen.de/api/v4/projects/se%2Finfrastructure%2Fgithub-mirror-tools/repository/files/mirror.sh/raw\" --output mirror.sh"
     - sh mirror.sh
     - rm mirror.sh
+    - 'curl --location --header "PRIVATE-TOKEN: $secibuildinfstrtoken" "https://git.rwth-aachen.de/api/v4/projects/se%2Finfrastructure%2Fmdlinkchecker/jobs/artifacts/master/raw/target/libs/MDLinkCheckerCLI.jar?job=build" --output MDLinkChecker.jar'
+    - 'java -jar MDLinkChecker.jar -t "$secibuildtoken" -r . -p -c -i'
+    - 'rm MDLinkChecker.jar'
     - git add --all
     # We'll simply ignore failures during commit because there is a chance that no files were changed. In this case the
     # remote will be on the same commit as the upstream repository.
@@ -79,3 +119,14 @@ githubmirror:
   only:
     - dev
     - master
+
+trigger-artifacts-dev:
+  stage: trigger_languages
+  except:
+    - pipelines
+  trigger:
+    project: monticore/artifacts/artifacts
+    branch: dev
+    strategy: depend
+  only:
+    - dev

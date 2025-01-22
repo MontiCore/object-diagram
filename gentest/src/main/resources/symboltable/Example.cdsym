@@ -1,0 +1,102 @@
+{
+  "generated-using": "www.MontiCore.de technology",
+  "name": "Example",
+  "symbols": [
+    {
+      "kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
+      "name": "A",
+      "spannedScope":{
+        "symbols":[
+          {
+            "kind":"de.monticore.cdassociation._symboltable.CDRoleSymbol",
+            "name":"blub",
+            "fullName":"A.blub",
+            "isDefinitiveNavigable":true,
+            "cardinality":"[1]",
+            "association":835477872,
+            "type":{
+              "kind":"de.monticore.types.check.SymTypeOfObject",
+              "objName":"example.Customer"
+            },
+            "isPublic":true
+          }
+        ]
+      }
+    },
+    {
+      "kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
+      "name": "B",
+      "spannedScope":{
+        "symbols":[
+          {
+            "kind":"de.monticore.cdassociation._symboltable.CDRoleSymbol",
+            "name":"foo",
+            "fullName":"B.foo",
+            "isDefinitiveNavigable":true,
+            "cardinality":"[*]",
+            "association":835477872,
+            "type":{
+              "kind":"de.monticore.types.check.SymTypeOfObject",
+              "objName":"example.Customer"
+            },
+            "isPublic":true
+          }
+        ]
+      }
+    },
+    {
+      "kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
+      "name": "User"
+    },
+    {
+      "kind":"de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
+      "name":"RentalTransaction",
+      "spannedScope":{
+        "symbols":[
+          {
+            "kind":"de.monticore.cdassociation._symboltable.CDRoleSymbol",
+            "name":"customer",
+            "fullName":"Carrental.RentalTransaction.customer",
+            "packageName":"Carrental",
+            "isDefinitiveNavigable":true,
+            "cardinality":"[1]",
+            "association":835477872,
+            "type":{
+              "kind":"de.monticore.types.check.SymTypeOfObject",
+              "objName":"example.Customer"
+            },
+            "isPublic":true
+          }
+        ]
+      }
+    },
+    {
+      "kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
+      "name": "C",
+      "spannedScope":{
+        "symbols":[
+          {
+            "kind":"de.monticore.cdassociation._symboltable.CDRoleSymbol",
+            "name":"d",
+            "fullName":"A.d",
+            "isDefinitiveNavigable":true,
+            "cardinality":"[1]",
+            "association":835477811,
+            "type":{
+              "kind":"de.monticore.types.check.SymTypeOfObject",
+              "objName":"D"
+            },
+            "isPublic":true
+          }
+        ]
+      }
+    },
+    {
+      "kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
+      "name": "D",
+      "spannedScope":{
+
+      }
+    }
+  ]
+}

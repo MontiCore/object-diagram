@@ -3,13 +3,14 @@
 package de.monticore.od4data;
 
 import de.monticore.od4data._parser.OD4DataParser;
+import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.od4data._symboltable.IOD4DataGlobalScope;
-import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,12 +32,11 @@ public class OD4DataExamplesTest {
 
   @Before
   public void disableFailQuick() {
-    Log.init();
+    LogStub.init();
     Log.enableFailQuick(false);
 
     OD4DataMill.reset();
     OD4DataMill.init();
-    OD4DataMill.globalScope().clear();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
 
     TypeSymbol auction = OD4DataMill.typeSymbolBuilder().setName("Auction").setEnclosingScope(gs).setSpannedScope(OD4DataMill.scope()).build();

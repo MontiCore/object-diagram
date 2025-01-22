@@ -1,0 +1,48 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+plugins {
+  id "java"
+}
+
+repositories {
+  if (("true").equals(getProperty('useLocalRepo'))) {
+    mavenLocal()
+  }
+  maven {
+    credentials.username mavenUser
+    credentials.password mavenPassword
+    url repo
+  }
+}
+
+def junit_version = '4.13.1'
+
+dependencies {
+  implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
+  implementation "de.se_rwth.commons:se-commons-utilities:$mc_version"
+  implementation group: 'junit', name: 'junit', version: junit_version
+  testImplementation group: 'junit', name: 'junit', version: junit_version
+}
+
+sourceSets {
+  main.java.srcDirs += ["$projectDir/target/generated-sources"]
+}
+
+task genExample(type: JavaExec) {
+  classpath += parent.tasks.shadowJar.outputs.files
+  mainClass = 'de.monticore.od4development.OD4DevelopmentTool'
+  args '-i','src/main/resources/Example.od', '-path' , 'src/main/resources/symboltable/', '-o', 'target/generated-sources/'
+  dependsOn parent.tasks.shadowJar
+}
+
+build {
+  dependsOn(genExample)
+}
+
+compileJava {
+  dependsOn genExample
+}
+
+clean.doFirst {
+  delete "${projectDir}/target/"
+}

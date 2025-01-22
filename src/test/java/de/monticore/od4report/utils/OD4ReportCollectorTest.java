@@ -2,9 +2,12 @@
 
 package de.monticore.od4report.utils;
 
+import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report.OD4ReportToolAPI;
 import de.monticore.od4report.util.OD4ReportCollector;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.se_rwth.commons.logging.LogStub;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.nio.file.Path;
@@ -18,6 +21,13 @@ public class OD4ReportCollectorTest {
   private final Path EXAMPLEOD = Paths.get("src/test/resources/examples/od/Examples.od");
 
   private final Path SIMPLEOD2 = Paths.get("src/test/resources/examples/od/SimpleOD2.od");
+
+  @Before
+  public void setup() {
+    LogStub.init();
+    OD4ReportMill.reset();
+    OD4ReportMill.init();
+  }
 
   @Test
   public void testCollector() {

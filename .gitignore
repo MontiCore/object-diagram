@@ -1,3 +1,4 @@
+.DS_Store
 /target/
 target/
 .project
@@ -14,3 +15,4 @@ gradle.properties
 gradle/
 gradlew
 gradlew.bat
+**/build

@@ -1,0 +1,9 @@
+@startuml
+note "OD" as tag #white
+object "__o1:type1__" as o1 {
+  myString = "abc\\def"
+  longValue = 20l
+  bool = true
+  doubleValue = 2.4444
+}
+@enduml

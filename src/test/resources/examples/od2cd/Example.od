@@ -4,12 +4,12 @@ package examples.od2cd;
 
 objectdiagram Examples {
 
-  foo: A {
+  foo: examples.A {
     int x = 5;
     java.lang.String s = "hello";
   };
 
-  bar: B {
+  bar: examples.B {
     boolean b = false;
   };
 

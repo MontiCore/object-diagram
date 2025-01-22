@@ -1,9 +1,9 @@
 <#-- (c) https://github.com/MontiCore/monticore -->
-${tc.signature("type", "attributes", "values", "objectname")}
-${cd4c.method("public ${type} instantiate${objectname?capFirst}()")}
+${tc.signature("type", "printInfo", "attributes", "values", "objectname")}
+${cd4c.method("public ${printInfo} instantiate${objectname?capFirst}()")}
 
-return Mill.${type?uncapFirst}Builder()
+return ${cp.create(type)}
 <#list attributes as attribute>
-  .set${attribute?capFirst}(${values[attribute?index]})
+  ${cp.update(attribute, values[attribute?index])}
 </#list>
-.build();
+;

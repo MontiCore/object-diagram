@@ -3,13 +3,15 @@
 package de.monticore.dateliterals;
 
 import de.monticore.dateliterals._ast.*;
-import de.monticore.dateliterals.prettyprinter.DateLiteralsFullPrettyPrinter;
+import de.monticore.dateliterals._prettyprint.DateLiteralsFullPrettyPrinter;
+import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._ast.ASTODDate;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._ast.ASTODObject;
 import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
+import de.se_rwth.commons.logging.LogStub;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,8 +30,10 @@ public class DateLiteralsTest {
 
   @Before
   public void setup() {
-    Log.init();
-    Log.enableFailQuick(false);
+      LogStub.init();
+      Log.enableFailQuick(false);
+      OD4ReportMill.reset();
+      OD4ReportMill.init();
   }
 
   @Test

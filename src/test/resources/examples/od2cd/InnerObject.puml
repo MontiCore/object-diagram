@@ -1,0 +1,8 @@
+@startuml
+note "OD" as tag #white
+object "__myObject:OuterType__" as myObject {
+}
+object "__InnerObject:OtherObjectType__" as InnerObject {
+}
+myObject "keep it failing" InnerObject
+@enduml

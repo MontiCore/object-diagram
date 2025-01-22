@@ -1,0 +1,28 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.monticore;
+
+mlc OD4Data {
+
+  export "$projectDir/src/main/grammars" {
+    include "**/OD4Data.mc4";
+  }
+
+  export "$projectDir/src/main/java" {
+    include "de/monticore/od4data/**.java";
+  }
+
+  export "$projectDir/target/generated-sources/monticore/sourcecode" {
+    include "de/monticore/od4data/**.java";
+  }
+
+  promote {
+    // allow apache.commons.lang3
+    include "$mp/org/apache/commons/lang3/**";
+  }
+
+  promote {  // allow using other languages
+    mlc "de.monticore.ODLink";
+    mlc "de.monticore.ODAttribute";
+  }
+
+}

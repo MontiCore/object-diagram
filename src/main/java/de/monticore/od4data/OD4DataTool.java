@@ -3,8 +3,9 @@ package de.monticore.od4data;
 
 import de.monticore.io.paths.MCPath;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
-import de.monticore.od4data.prettyprinter.OD4DataFullPrettyPrinter;
+import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
@@ -65,14 +66,18 @@ public class OD4DataTool extends OD4DataToolTOP {
       // (only returns if successful)
       ASTODArtifact astodArtifact = parse(cmd.getOptionValue("i"));
 
-      // create symbol table
-      IOD4DataArtifactScope od4DataArtifactScope = OD4DataToolAPI.createSymbolTable(astodArtifact,
-        true);
-
       // -option check cocos
       Set<String> cocoOptionValue = new HashSet<>();
       if (cmd.hasOption("c") && cmd.getOptionValues("c") != null) {
         cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
+      }
+
+      // create symbol table
+      IOD4DataArtifactScope od4DataArtifactScope = OD4DataToolAPI.createSymbolTable(astodArtifact,
+          !cocoOptionValue.contains("intra"));
+
+      // run cocos
+      if (cmd.hasOption("c")) {
         if (cocoOptionValue.contains("intra")) {
           OD4DataToolAPI.runAllIntraCoCos(astodArtifact);
         }
@@ -87,23 +92,21 @@ public class OD4DataTool extends OD4DataToolTOP {
         prettyPrint(astodArtifact, path);
       }
 
-      // -otion pretty print symboltable
+      // -option pretty print symboltable
       if (cmd.hasOption("s")) {
         String path = cmd.getOptionValue("s", StringUtils.EMPTY);
         storeSymbols(od4DataArtifactScope, path);
       }
     }
     catch (ParseException e) {
-      // ann unexpected error from the apache CLI parser:
+      // an unexpected error from the apache CLI parser:
       Log.error("0xA7121 Could not process CLI parameters: " + e.getMessage());
     }
-
   }
 
   /*=================================================================*/
   /* Part 2: Executing arguments
   /*=================================================================*/
-
 
   /**
    * Prints the contents of the OD-AST to stdout or a specified file.
@@ -115,7 +118,7 @@ public class OD4DataTool extends OD4DataToolTOP {
   @Override
   public void prettyPrint(ASTODArtifact astodArtifact, String file) {
     // pretty print AST
-    OD4DataFullPrettyPrinter pp = new OD4DataFullPrettyPrinter();
+    OD4DataFullPrettyPrinter pp = new OD4DataFullPrettyPrinter(new IndentPrinter());
     String od = pp.prettyprint(astodArtifact);
     print(od, file);
   }
@@ -137,39 +140,55 @@ public class OD4DataTool extends OD4DataToolTOP {
 
     // parse input file
     options.addOption(Option.builder("i")
-      .longOpt("input")
-      .argName("file")
-      .hasArg()
-      .desc("Reads the source file (mandatory) and parses the contents as an " + "object diagram")
-      .build());
+        .longOpt("input")
+        .argName("file")
+        .hasArg()
+        .desc("Reads the source file (mandatory) and parses the contents as an " + "object diagram")
+        .build());
 
     // model paths
     options.addOption(Option.builder("path")
-      .argName("dirlist")
-      .numberOfArgs(Option.UNLIMITED_VALUES)
-      .hasArg()
-      .desc("Sets the artifact path for imported symbols")
-      .build());
+        .argName("dirlist")
+        .numberOfArgs(Option.UNLIMITED_VALUES)
+        .hasArg()
+        .desc("Sets the artifact path for imported symbols")
+        .build());
 
     // pretty print OD
     options.addOption(Option.builder("pp")
-      .longOpt("prettyprint")
-      .argName("file")
-      .optionalArg(true)
-      .numberOfArgs(1)
-      .desc("Prints the OD-AST to stdout or the specified file (optional)")
-      .build());
+        .longOpt("prettyprint")
+        .argName("file")
+        .optionalArg(true)
+        .numberOfArgs(1)
+        .desc("Prints the OD-AST to stdout or the specified file (optional)")
+        .build());
 
     // print OD symtab
     options.addOption(Option.builder("s")
-      .longOpt("symboltable")
-      .argName("file")
-      .optionalArg(true)
-      .numberOfArgs(1)
-      .desc("Prints the symboltable of the object diagram to stdout or the specified file "
-        + "(optional)")
-      .build());
+        .longOpt("symboltable")
+        .argName("file")
+        .optionalArg(true)
+        .numberOfArgs(1)
+        .desc("Prints the symboltable of the object diagram to stdout or the specified file "
+            + "(optional)")
+        .build());
 
     return options;
   }
+
+  @Override
+  public Options addAdditionalOptions(Options options) {
+    // check cocos
+    options.addOption(Option.builder("c")
+        .longOpt("coco")
+        .optionalArg(true)
+        .numberOfArgs(3)
+        .desc("Checks the CoCos for the input. Optional arguments are:\n"
+            + "-c intra to check only the" + " intra-model CoCos,\n"
+            + "-c inter checks also inter-model CoCos,\n" + "-c type "
+            + "(default) checks all CoCos.")
+        .build());
+    return options;
+  }
+
 }
