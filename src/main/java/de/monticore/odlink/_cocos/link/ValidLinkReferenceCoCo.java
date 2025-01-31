@@ -17,7 +17,7 @@ public class ValidLinkReferenceCoCo implements ODLinkASTODLinkCoCo {
       Optional<VariableSymbol> variableSymbol = node.getEnclosingScope().resolveVariable(refName);
       if (!variableSymbol.isPresent()) {
         Log.error(
-            "Violation of CoCo 'ValidLinkReferenceCoCo': " + refName + " cannot be resolved",
+            "0x0D006: Violation of CoCo 'ValidLinkReferenceCoCo': " + refName + " cannot be resolved",
             node.get_SourcePositionStart());
       }
     });
@@ -25,7 +25,7 @@ public class ValidLinkReferenceCoCo implements ODLinkASTODLinkCoCo {
     node.getRightReferenceNames().forEach(refName -> {
       if (!node.getEnclosingScope().resolveVariable(refName).isPresent()) {
         Log.error(
-            "Violation of CoCo 'ValidLinkReferenceCoCo': " + refName + " cannot be resolved",
+            "0x0D006: Violation of CoCo 'ValidLinkReferenceCoCo': " + refName + " cannot be resolved",
             node.get_SourcePositionStart());
       }
     });

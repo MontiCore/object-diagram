@@ -29,10 +29,10 @@ public class OD4ReportToolAPI {
       if (!parser.hasErrors() && optODArtifact.isPresent()) {
         return optODArtifact.get();
       }
-      Log.error("Model could not be parsed.");
+      Log.error("0x0D013: Model could not be parsed.");
     }
     catch (RecognitionException | IOException e) {
-      Log.error("Failed to parse " + model, e);
+      Log.error("0x0D014: Failed to parse " + model, e);
     }
     return null;
   }

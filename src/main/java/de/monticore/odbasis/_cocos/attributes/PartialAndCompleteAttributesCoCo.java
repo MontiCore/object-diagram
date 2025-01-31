@@ -22,7 +22,7 @@ public class PartialAndCompleteAttributesCoCo implements ODBasisASTODObjectCoCo 
         if (firstAttribute.getName().equals(secondAttribute.getName())) {
           if (firstAttribute.isPresentComplete() || (!firstAttribute.isPresentComplete()
               && secondAttribute.isPresentComplete())) {
-            Log.error("Violation of CoCo 'PartialAndCompleteAttributesCoCo'",
+            Log.error("0x0D004: Violation of CoCo 'PartialAndCompleteAttributesCoCo'",
                 node.get_SourcePositionStart());
           }
         }

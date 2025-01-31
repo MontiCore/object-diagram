@@ -16,12 +16,12 @@ public class NoAbstractLinkCoCo implements ODLinkASTODLinkCoCo {
   public void check(ASTODLink node) {
     ASTModifier linkLeftModifier = node.getODLinkLeftSide().getModifier();
     if (linkLeftModifier.isAbstract()) {
-      Log.error("Violation of CoCo 'NoAbstractAttributesCoCo'", node.get_SourcePositionStart());
+      Log.error("0x0D007: Violation of CoCo 'NoAbstractAttributesCoCo'", node.get_SourcePositionStart());
     }
 
     ASTModifier linkRightModifier = node.getODLinkRightSide().getModifier();
     if (linkRightModifier.isAbstract()) {
-      Log.error("Violation of CoCo 'NoAbstractAttributesCoCo'", node.get_SourcePositionStart());
+      Log.error("0x0D007: Violation of CoCo 'NoAbstractAttributesCoCo'", node.get_SourcePositionStart());
     }
   }
 
