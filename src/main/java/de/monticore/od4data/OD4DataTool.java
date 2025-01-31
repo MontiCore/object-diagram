@@ -6,6 +6,7 @@ import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
 import org.apache.commons.lang3.StringUtils;
@@ -59,6 +60,8 @@ public class OD4DataTool extends OD4DataToolTOP {
       if (cmd.hasOption("path")) {
         String[] paths = cmd.getOptionValues("path");
         Arrays.stream(paths).forEach(p -> symbolPath.addEntry(Paths.get(p)));
+        BasicSymbolsMill.initializePrimitives();
+        OD4DataMill.globalScope().putTypeSymbolDeSer("de.monticore.cdbasis._symboltable.CDTypeSymbol");
       }
       OD4DataMill.globalScope().setSymbolPath(symbolPath);
 
