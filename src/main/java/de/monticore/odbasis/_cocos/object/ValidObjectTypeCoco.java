@@ -39,14 +39,14 @@ public class ValidObjectTypeCoco implements ODBasisASTODArtifactCoCo {
     ODBasisASTODObjectCoCo odBasisASTODObjectCoCo = new ODBasisASTODObjectCoCo() {
       @Override
       public void check(ASTODObject node) {
-        this.resolveOOTypeSymbol(node, node.getMCObjectType().printType());
+        this.resolveTypeSymbol(node, node.getMCObjectType().printType());
       }
 
-      private void resolveOOTypeSymbol(ASTODObject node, String typeName) {
+      private void resolveTypeSymbol(ASTODObject node, String typeName) {
         Set<TypeSymbol> typeSymbols = new HashSet<>();
         for (String fqNameCandidate : FullQualifiedNameCalculator.calcFQNameCandidates(
             importStatementList, packageDeclaration.getMCQualifiedName(), typeName)) {
-          typeSymbols.addAll(node.getEnclosingScope().resolveOOTypeMany(fqNameCandidate));
+          typeSymbols.addAll(node.getEnclosingScope().resolveTypeMany(fqNameCandidate));
         }
 
         if (typeSymbols.isEmpty()) {
