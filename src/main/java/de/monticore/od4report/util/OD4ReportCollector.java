@@ -81,6 +81,7 @@ public class OD4ReportCollector {
     od4ReportObjectCollector = new OD4ReportObjectCollector();
     odBasisObjectCollector = new ODBasisObjectCollector();
     odLinkCollector = new ODLinkCollector();
+    init();
   }
 
 }
