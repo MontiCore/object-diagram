@@ -1,0 +1,849 @@
+{
+    "generated-using": "www.MontiCore.de technology",
+    "name": "ArtifactKindModel",
+    "symbols": [
+        {
+            "kind": "de.monticore.cdassociation._symboltable.CDAssociationSymbol",
+            "name": "belongsTo",
+            "association": 643587433
+        },
+        {
+            "kind": "de.monticore.cdassociation._symboltable.CDAssociationSymbol",
+            "name": "subPackage",
+            "association": 2065886345
+        },
+        {
+            "kind": "de.monticore.cdassociation._symboltable.CDAssociationSymbol",
+            "name": "contain",
+            "association": 573102881
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "Artifact",
+            "fullName": "ArtifactKindModel.Artifact",
+            "packageName": "ArtifactKindModel",
+            "isClass": true,
+            "isAbstract": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "Artifact",
+                        "fullName": "Artifact",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.Artifact"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "artifact",
+                        "fullName": "ArtifactKindModel.Artifact.artifact",
+                        "packageName": "ArtifactKindModel",
+                        "cardinality": "[*]",
+                        "association": 1710228600,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.Artifact"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "refersTo",
+                        "fullName": "ArtifactKindModel.Artifact.refersTo",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 1710228600,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.Artifact"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "parent",
+                        "fullName": "ArtifactKindModel.Artifact.parent",
+                        "packageName": "ArtifactKindModel",
+                        "cardinality": "[0..1]",
+                        "association": 606365803,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.ArtifactContainer"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "simpleName",
+                        "fullName": "ArtifactKindModel.Artifact.simpleName",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "nameExtension",
+                        "fullName": "ArtifactKindModel.Artifact.nameExtension",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "name",
+                        "fullName": "ArtifactKindModel.Artifact.name",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "fullName",
+                        "fullName": "ArtifactKindModel.Artifact.fullName",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "modified",
+                        "fullName": "ArtifactKindModel.Artifact.modified",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.util.Date"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "isRoot",
+                        "fullName": "ArtifactKindModel.Artifact.isRoot",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "boolean"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "ArtifactContainer",
+            "fullName": "ArtifactKindModel.ArtifactContainer",
+            "packageName": "ArtifactKindModel",
+            "superTypes": [
+                {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "ArtifactKindModel.Artifact"
+                }
+            ],
+            "isClass": true,
+            "isAbstract": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "ArtifactContainer",
+                        "fullName": "ArtifactContainer",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.ArtifactContainer"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "contains",
+                        "fullName": "ArtifactKindModel.ArtifactContainer.contains",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 606365803,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.Artifact"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "Directory",
+            "fullName": "ArtifactKindModel.Directory",
+            "packageName": "ArtifactKindModel",
+            "superTypes": [
+                {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "ArtifactKindModel.ArtifactContainer"
+                }
+            ],
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "Directory",
+                        "fullName": "Directory",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.Directory"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "JavaArchive",
+            "fullName": "ArtifactKindModel.JavaArchive",
+            "packageName": "ArtifactKindModel",
+            "superTypes": [
+                {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "ArtifactKindModel.ArtifactContainer"
+                }
+            ],
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "JavaArchive",
+                        "fullName": "JavaArchive",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaArchive"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "JavaArtifact",
+            "fullName": "ArtifactKindModel.JavaArtifact",
+            "packageName": "ArtifactKindModel",
+            "isClass": true,
+            "isAbstract": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "JavaArtifact",
+                        "fullName": "JavaArtifact",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaArtifact"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "javaArtifact",
+                        "fullName": "ArtifactKindModel.JavaArtifact.javaArtifact",
+                        "packageName": "ArtifactKindModel",
+                        "cardinality": "[*]",
+                        "association": 8197402,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaArtifact"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "refersTo",
+                        "fullName": "ArtifactKindModel.JavaArtifact.refersTo",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 8197402,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaArtifact"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "reliesOnJavaArtifact",
+                        "fullName": "ArtifactKindModel.JavaArtifact.reliesOnJavaArtifact",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 692838068,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaArtifact"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "javaSourceFile",
+                        "fullName": "ArtifactKindModel.JavaArtifact.javaSourceFile",
+                        "packageName": "ArtifactKindModel",
+                        "cardinality": "[*]",
+                        "association": 1392570698,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaSourceFile"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "definedType",
+                        "fullName": "ArtifactKindModel.JavaArtifact.definedType",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 528877978,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaType"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "simpleName",
+                        "fullName": "ArtifactKindModel.JavaArtifact.simpleName",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "nameExtension",
+                        "fullName": "ArtifactKindModel.JavaArtifact.nameExtension",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "name",
+                        "fullName": "ArtifactKindModel.JavaArtifact.name",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "fullName",
+                        "fullName": "ArtifactKindModel.JavaArtifact.fullName",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "modified",
+                        "fullName": "ArtifactKindModel.JavaArtifact.modified",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.util.Date"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "isRoot",
+                        "fullName": "ArtifactKindModel.JavaArtifact.isRoot",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "boolean"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "JavaSourceFile",
+            "fullName": "ArtifactKindModel.JavaSourceFile",
+            "packageName": "ArtifactKindModel",
+            "superTypes": [
+                {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "ArtifactKindModel.JavaArtifact"
+                }
+            ],
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "compile",
+                        "fullName": "ArtifactKindModel.JavaSourceFile.compile",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfGenerics",
+                            "typeConstructorFullName": "Set",
+                            "arguments": [
+                                {
+                                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                                    "objName": "ArtifactKindModel.JavaClassFile"
+                                }
+                            ]
+                        },
+                        "isMethod": true
+                    },
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "JavaSourceFile",
+                        "fullName": "JavaSourceFile",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaSourceFile"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "imports",
+                        "fullName": "ArtifactKindModel.JavaSourceFile.imports",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 1392570698,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaArtifact"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "compiledTo",
+                        "fullName": "ArtifactKindModel.JavaSourceFile.compiledTo",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 15910024,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaClassFile"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "produces",
+                        "fullName": "ArtifactKindModel.JavaSourceFile.produces",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 1420623741,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaArtifact"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "belongsTo",
+                        "fullName": "ArtifactKindModel.JavaSourceFile.belongsTo",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[1]",
+                        "association": 643587433,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.Package"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "isPresentSyntaxError",
+                        "fullName": "ArtifactKindModel.JavaSourceFile.isPresentSyntaxError",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "boolean"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "JavaClassFile",
+            "fullName": "ArtifactKindModel.JavaClassFile",
+            "packageName": "ArtifactKindModel",
+            "superTypes": [
+                {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "ArtifactKindModel.JavaArtifact"
+                }
+            ],
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "JavaClassFile",
+                        "fullName": "JavaClassFile",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaClassFile"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "javaSourceFile",
+                        "fullName": "ArtifactKindModel.JavaClassFile.javaSourceFile",
+                        "packageName": "ArtifactKindModel",
+                        "cardinality": "[1]",
+                        "association": 15910024,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaSourceFile"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "Package",
+            "fullName": "ArtifactKindModel.Package",
+            "packageName": "ArtifactKindModel",
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "Package",
+                        "fullName": "Package",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.Package"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "javaSourceFile",
+                        "fullName": "ArtifactKindModel.Package.javaSourceFile",
+                        "packageName": "ArtifactKindModel",
+                        "cardinality": "[*]",
+                        "association": 643587433,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaSourceFile"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "parent",
+                        "fullName": "ArtifactKindModel.Package.parent",
+                        "packageName": "ArtifactKindModel",
+                        "cardinality": "[0..1]",
+                        "association": 2065886345,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.Package"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "child",
+                        "fullName": "ArtifactKindModel.Package.child",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 2065886345,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.Package"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "javaType",
+                        "fullName": "ArtifactKindModel.Package.javaType",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 573102881,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaType"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "name",
+                        "fullName": "ArtifactKindModel.Package.name",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "fullName",
+                        "fullName": "ArtifactKindModel.Package.fullName",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "isRoot",
+                        "fullName": "ArtifactKindModel.Package.isRoot",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "boolean"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "JavaType",
+            "fullName": "ArtifactKindModel.JavaType",
+            "packageName": "ArtifactKindModel",
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "JavaType",
+                        "fullName": "JavaType",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaType"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "javaArtifact",
+                        "fullName": "ArtifactKindModel.JavaType.javaArtifact",
+                        "packageName": "ArtifactKindModel",
+                        "cardinality": "[1..*]",
+                        "association": 528877978,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaArtifact"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "typePackage",
+                        "fullName": "ArtifactKindModel.JavaType.typePackage",
+                        "packageName": "ArtifactKindModel",
+                        "cardinality": "[1]",
+                        "association": 573102881,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.Package"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "containingType",
+                        "fullName": "ArtifactKindModel.JavaType.containingType",
+                        "packageName": "ArtifactKindModel",
+                        "cardinality": "[0..1]",
+                        "association": 1898751355,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaType"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "innerType",
+                        "fullName": "ArtifactKindModel.JavaType.innerType",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 1898751355,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaType"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "javaType",
+                        "fullName": "ArtifactKindModel.JavaType.javaType",
+                        "packageName": "ArtifactKindModel",
+                        "cardinality": "[*]",
+                        "association": 1164241227,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaType"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "reliesOn",
+                        "fullName": "ArtifactKindModel.JavaType.reliesOn",
+                        "packageName": "ArtifactKindModel",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 1164241227,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "ArtifactKindModel.JavaType"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "simpleName",
+                        "fullName": "ArtifactKindModel.JavaType.simpleName",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "name",
+                        "fullName": "ArtifactKindModel.JavaType.name",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "fullName",
+                        "fullName": "ArtifactKindModel.JavaType.fullName",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "isInnerType",
+                        "fullName": "ArtifactKindModel.JavaType.isInnerType",
+                        "packageName": "ArtifactKindModel",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "boolean"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol",
+            "name": "ArtifactKindModel",
+            "fullName": "ArtifactKindModel"
+        }
+    ],
+    "furtherObjects": {
+        "8197402": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        },
+        "1710228600": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        },
+        "573102881": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isComposition": true
+        },
+        "1392570698": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        },
+        "2065886345": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isComposition": true
+        },
+        "606365803": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isComposition": true
+        },
+        "1164241227": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        },
+        "1420623741": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        },
+        "643587433": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        },
+        "1898751355": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isComposition": true
+        },
+        "15910024": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        },
+        "528877978": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        },
+        "692838068": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        }
+    }
+}

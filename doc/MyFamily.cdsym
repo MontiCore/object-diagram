@@ -62,8 +62,8 @@
 									"isStatic": false,
 									"isFinal": false,
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "int"
 									},
 									"isReadOnly": false
 								},
@@ -71,8 +71,8 @@
 									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
 									"name": "age",
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "int"
 									},
 									"isReadOnly": false
 								}
@@ -192,8 +192,8 @@
 									"isStatic": false,
 									"isFinal": false,
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "double"
 									},
 									"isReadOnly": false
 								},
@@ -201,8 +201,8 @@
 									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
 									"name": "length",
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "double"
 									},
 									"isReadOnly": false
 								}
@@ -351,8 +351,8 @@
 									"isStatic": false,
 									"isFinal": false,
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "int"
 									},
 									"isReadOnly": false
 								},
@@ -360,8 +360,8 @@
 									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
 									"name": "age",
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "int"
 									},
 									"isReadOnly": false
 								}
@@ -481,8 +481,8 @@
 									"isStatic": false,
 									"isFinal": false,
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "double"
 									},
 									"isReadOnly": false
 								},
@@ -490,8 +490,8 @@
 									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
 									"name": "length",
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "double"
 									},
 									"isReadOnly": false
 								}
@@ -623,8 +623,8 @@
 									"isStatic": false,
 									"isFinal": false,
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "int"
 									},
 									"isReadOnly": false
 								},
@@ -632,8 +632,8 @@
 									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
 									"name": "age",
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "int"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "int"
 									},
 									"isReadOnly": false
 								}
@@ -726,8 +726,8 @@
 									"isStatic": false,
 									"isFinal": false,
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "double"
 									},
 									"isReadOnly": false
 								},
@@ -735,8 +735,8 @@
 									"kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
 									"name": "length",
 									"type": {
-										"kind": "de.monticore.types.check.SymTypeConstant",
-										"constName": "double"
+										"kind": "de.monticore.types.check.SymTypePrimitive",
+										"primitiveName": "double"
 									},
 									"isReadOnly": false
 								}

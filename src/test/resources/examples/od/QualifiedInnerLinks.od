@@ -2,6 +2,8 @@
 
 package examples.od;
 
+import examples.cd.TObjects.*;
+
 objectdiagram QualifiedInnerLinks {
 
   objectName1:T1 {

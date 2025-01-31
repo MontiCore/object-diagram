@@ -3,6 +3,8 @@
 
 package examples.od;
 
+import examples.cd.TObjects.*;
+
 objectdiagram InnerObjectWithoutLink {
 
   myObject:ObjectType{

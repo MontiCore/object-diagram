@@ -2,7 +2,7 @@
 
 package examples.hierarchical;
 
-import examples.cd.Associations;
+import examples.cd.Associations.*;
 
 objectdiagram InnerLinkVariants {
 

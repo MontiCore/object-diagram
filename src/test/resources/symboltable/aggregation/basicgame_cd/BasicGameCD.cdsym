@@ -94,8 +94,8 @@
                         "name": "health",
                         "isPrivate": true,
                         "type": {
-                          "kind": "de.monticore.types.check.SymTypeConstant",
-                          "constName": "int"
+                          "kind": "de.monticore.types.check.SymTypePrimitive",
+                          "primitiveName": "int"
                         }
                       },
                       {
@@ -103,8 +103,8 @@
                         "name": "strength",
                         "isPrivate": true,
                         "type": {
-                          "kind": "de.monticore.types.check.SymTypeConstant",
-                          "constName": "int"
+                          "kind": "de.monticore.types.check.SymTypePrimitive",
+                          "primitiveName": "int"
                         }
                       },
                       {
@@ -112,8 +112,8 @@
                         "name": "armor",
                         "isPrivate": true,
                         "type": {
-                          "kind": "de.monticore.types.check.SymTypeConstant",
-                          "constName": "int"
+                          "kind": "de.monticore.types.check.SymTypePrimitive",
+                          "primitiveName": "int"
                         }
                       }
                     ]

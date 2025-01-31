@@ -2,16 +2,27 @@
 
 package cocos;
 
-objectdiagram WrongDate{
+import examples.cd.Calendar.*;
 
-    myObject1:Wrong{};
+objectdiagram WrongDate {
 
-	myObject2:WrongDate{
-	    wrongDateV1 = 2017-13-20 15:18:12; // month
-	    wrongDateV2 = 2017.12.40 15:18:12; // day
-	    wrongDateV3 = 2017/12/20 15:18:69; // second
+  event1:Event {
+    title = "Wrong1";
+    date = 2017-13-20 15:18:12; // month
+  };
 
-	    myDateV1 = 2017-10-20 15:18:12;
-	};
+  event2:Event {
+    title = "Wrong2";
+    date = 2017.12.40 15:18:12; // day
+  };
 
+  event3:Event {
+    title = "Wrong3";
+    date = 2017/12/20 15:18:69; // second
+  };
+
+  event4:Event {
+    title = "Wrong4";
+    date = 2017-10-20 15:18:12;
+  };
 }

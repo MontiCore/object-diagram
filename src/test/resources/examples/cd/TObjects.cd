@@ -1,0 +1,28 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.cd;
+
+classdiagram TObjects {
+
+  class ObjectType {
+    ObjectType2 linkToAnObject;
+    List<ObjectType2> linkList1;
+  }
+
+  class ObjectType2 { }
+
+  class T { }
+
+  class T1 extends T {
+    int cNumber;
+  }
+
+  class T2 extends T {
+    T obj1;
+    List<T1> qualLinkList1;
+  }
+
+  class T3 extends T {
+    String content;
+  }
+}

@@ -1,0 +1,173 @@
+{
+    "generated-using": "www.MontiCore.de technology",
+    "name": "Calendar",
+    "package": "examples.cd",
+    "symbols": [
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "Calendar",
+            "fullName": "examples.cd.Calendar.Calendar",
+            "packageName": "examples.cd.Calendar",
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "Calendar",
+                        "fullName": "Calendar",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.Calendar.Calendar"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "event",
+                        "fullName": "examples.cd.Calendar.Calendar.event",
+                        "packageName": "examples.cd.Calendar",
+                        "cardinality": "[*]",
+                        "association": 639105046,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.Calendar.Event"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "year",
+                        "fullName": "examples.cd.Calendar.Calendar.year",
+                        "packageName": "examples.cd.Calendar",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "int"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "isPublic",
+                        "fullName": "examples.cd.Calendar.Calendar.isPublic",
+                        "packageName": "examples.cd.Calendar",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "boolean"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "events",
+                        "fullName": "examples.cd.Calendar.Calendar.events",
+                        "packageName": "examples.cd.Calendar",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfGenerics",
+                            "typeConstructorFullName": "List",
+                            "arguments": [
+                                {
+                                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                                    "objName": "examples.cd.Calendar.Event"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "Event",
+            "fullName": "examples.cd.Calendar.Event",
+            "packageName": "examples.cd.Calendar",
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "Event",
+                        "fullName": "Event",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.Calendar.Event"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "calendar",
+                        "fullName": "examples.cd.Calendar.Event.calendar",
+                        "packageName": "examples.cd.Calendar",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[1]",
+                        "association": 639105046,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.Calendar.Calendar"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "title",
+                        "fullName": "examples.cd.Calendar.Event.title",
+                        "packageName": "examples.cd.Calendar",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "description",
+                        "fullName": "examples.cd.Calendar.Event.description",
+                        "packageName": "examples.cd.Calendar",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "data",
+                        "fullName": "examples.cd.Calendar.Event.data",
+                        "packageName": "examples.cd.Calendar",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.util.Date"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "subEvents",
+                        "fullName": "examples.cd.Calendar.Event.subEvents",
+                        "packageName": "examples.cd.Calendar",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfGenerics",
+                            "typeConstructorFullName": "List",
+                            "arguments": [
+                                {
+                                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                                    "objName": "examples.cd.Calendar.Event"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol",
+            "name": "Calendar",
+            "fullName": "examples.cd.Calendar",
+            "packageName": "examples.cd"
+        }
+    ],
+    "furtherObjects": {
+        "639105046": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isComposition": true
+        }
+    }
+}

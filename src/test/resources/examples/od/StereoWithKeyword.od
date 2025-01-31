@@ -2,6 +2,8 @@
 
 package examples.od;
 
+import examples.cd.ArtifactKindModel.*;
+
 objectdiagram StereoWithKeyword {
 
   src_test_resources_classes_A:JavaSourceFile{};
@@ -10,8 +12,8 @@ objectdiagram StereoWithKeyword {
     dir = "src_test_resources_classes";
   };
 
-  de_se_artifacts_D:JavaClassType {
-    Name = "D";
+  de_se_artifacts_D:JavaType {
+    name = "D";
   };
 
   <<static>> link defines src_test_resources_classes_A -> de_se_artifacts_D ;

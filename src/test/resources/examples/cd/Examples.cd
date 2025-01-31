@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.cd;
+
+classdiagram Examples {
+
+  class Rule {
+    String content;
+  }
+
+  class Action { }
+
+  class ActionA extends Action {
+    Rule rule1;
+    Rule rule2;
+  }
+
+  class ActionB extends Action { }
+
+  association [1] Action -> Action [1];
+  association [1] Rule -> Action [*];
+}

@@ -1,0 +1,291 @@
+{
+    "generated-using": "www.MontiCore.de technology",
+    "name": "SimpleOD",
+    "package": "examples.cd",
+    "symbols": [
+        {
+            "kind": "de.monticore.cdassociation._symboltable.CDAssociationSymbol",
+            "name": "firstLink",
+            "association": 1392570698
+        },
+        {
+            "kind": "de.monticore.cdassociation._symboltable.CDAssociationSymbol",
+            "name": "secondLink",
+            "association": 1418245573
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "ObjectType",
+            "fullName": "examples.cd.SimpleOD.ObjectType",
+            "packageName": "examples.cd.SimpleOD",
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "ObjectType",
+                        "fullName": "ObjectType",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleOD.ObjectType"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "objectType",
+                        "fullName": "examples.cd.SimpleOD.ObjectType.objectType",
+                        "packageName": "examples.cd.SimpleOD",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[1]",
+                        "association": 1392570698,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleOD.ObjectType"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "foobar",
+                        "fullName": "examples.cd.SimpleOD.ObjectType.foobar",
+                        "packageName": "examples.cd.SimpleOD",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleOD.ObjectType"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "foobar2",
+                        "fullName": "examples.cd.SimpleOD.ObjectType.foobar2",
+                        "packageName": "examples.cd.SimpleOD",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleOD.ObjectType"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "ObjectType1",
+            "fullName": "examples.cd.SimpleOD.ObjectType1",
+            "packageName": "examples.cd.SimpleOD",
+            "superTypes": [
+                {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "examples.cd.SimpleOD.ObjectType"
+                }
+            ],
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "ObjectType1",
+                        "fullName": "ObjectType1",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleOD.ObjectType1"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "ObjectType2",
+            "fullName": "examples.cd.SimpleOD.ObjectType2",
+            "packageName": "examples.cd.SimpleOD",
+            "superTypes": [
+                {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "examples.cd.SimpleOD.ObjectType"
+                }
+            ],
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "ObjectType2",
+                        "fullName": "ObjectType2",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleOD.ObjectType2"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "foobar3",
+                        "fullName": "examples.cd.SimpleOD.ObjectType2.foobar3",
+                        "packageName": "examples.cd.SimpleOD",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "int"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "foobar4",
+                        "fullName": "examples.cd.SimpleOD.ObjectType2.foobar4",
+                        "packageName": "examples.cd.SimpleOD",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "ObjectType3",
+            "fullName": "examples.cd.SimpleOD.ObjectType3",
+            "packageName": "examples.cd.SimpleOD",
+            "superTypes": [
+                {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "examples.cd.SimpleOD.ObjectType"
+                }
+            ],
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "ObjectType3",
+                        "fullName": "ObjectType3",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleOD.ObjectType3"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "ObjectType4",
+            "fullName": "examples.cd.SimpleOD.ObjectType4",
+            "packageName": "examples.cd.SimpleOD",
+            "superTypes": [
+                {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "examples.cd.SimpleOD.ObjectType"
+                }
+            ],
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "ObjectType4",
+                        "fullName": "ObjectType4",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleOD.ObjectType4"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "foobar",
+                        "fullName": "examples.cd.SimpleOD.ObjectType4.foobar",
+                        "packageName": "examples.cd.SimpleOD",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfGenerics",
+                            "typeConstructorFullName": "List",
+                            "arguments": [
+                                {
+                                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                                    "objName": "examples.cd.SimpleOD.ObjectType"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "ObjectType5",
+            "fullName": "examples.cd.SimpleOD.ObjectType5",
+            "packageName": "examples.cd.SimpleOD",
+            "superTypes": [
+                {
+                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                    "objName": "examples.cd.SimpleOD.ObjectType"
+                }
+            ],
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "ObjectType5",
+                        "fullName": "ObjectType5",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleOD.ObjectType5"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "foobar",
+                        "fullName": "examples.cd.SimpleOD.ObjectType5.foobar",
+                        "packageName": "examples.cd.SimpleOD",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfGenerics",
+                            "typeConstructorFullName": "Map",
+                            "arguments": [
+                                {
+                                    "kind": "de.monticore.types.check.SymTypePrimitive",
+                                    "primitiveName": "int"
+                                },
+                                {
+                                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                                    "objName": "examples.cd.SimpleOD.ObjectType"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol",
+            "name": "SimpleOD",
+            "fullName": "examples.cd.SimpleOD",
+            "packageName": "examples.cd"
+        }
+    ],
+    "furtherObjects": {
+        "1392570698": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        },
+        "1418245573": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        }
+    }
+}

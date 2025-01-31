@@ -2,9 +2,11 @@
 
 package examples.od;
 
+import examples.cd.SimpleTypes.*;
+
 objectdiagram SpecialValues {
 
-  o1:type1 {
+  o1:Type1 {
     myString -> "abc\\def";
     myList = ["a", "b"];
     myEmpty = ...;
