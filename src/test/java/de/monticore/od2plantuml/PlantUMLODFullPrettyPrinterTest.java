@@ -7,9 +7,9 @@ import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -35,7 +35,7 @@ public class PlantUMLODFullPrettyPrinterTest {
   /**
    * Disables the fail-quick behavior of the logging system before running the test cases.
    */
-  @BeforeClass
+  @BeforeAll
   public static void disableFailQuick() {
     Log.initDEBUG();
     Log.enableFailQuick(false);

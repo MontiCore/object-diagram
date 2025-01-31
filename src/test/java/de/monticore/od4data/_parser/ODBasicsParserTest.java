@@ -2,26 +2,24 @@
 
 package de.monticore.od4data._parser;
 
-import de.monticore.od4report.OD4ReportMill;
+import de.monticore.ODTestBasis;
+import de.monticore.od4data.OD4DataMill;
 import de.monticore.odlink._ast.*;
-import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.LogStub;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ODBasicsParserTest {
+public class ODBasicsParserTest extends ODTestBasis {
 
-  @BeforeClass
-  public static void disableFailQuick() {
-    LogStub.init();
-    Log.enableFailQuick(false);
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
+  @BeforeEach
+  public void setUp() {
+    OD4DataMill.reset();
+    OD4DataMill.init();
   }
 
   @Test
@@ -59,6 +57,7 @@ public class ODBasicsParserTest {
     Optional<ASTODUnspecifiedDir> unspecifiedDir = odBasicsParser.parse_StringODUnspecifiedDir(
         "--");
     Optional<ASTODLinkDirection> linkDirection = odBasicsParser.parse_StringODLinkDirection("--");
+    assertTrue(unspecifiedDir.isPresent());
     assertTrue(linkDirection.isPresent());
   }
 

@@ -2,104 +2,109 @@
 
 package de.monticore.od4data._symboltable;
 
+import de.monticore.ODTestBasis;
+import de.monticore.io.paths.MCPath;
 import de.monticore.od4data.OD4DataMill;
+import de.monticore.od4data.OD4DataTestUtil;
 import de.monticore.od4data.OD4DataToolAPI;
-import de.monticore.od4data._parser.OD4DataParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
+import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.se_rwth.commons.Names;
 import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.LogStub;
-import org.junit.Before;
-import org.junit.Test;
 
-import java.io.IOException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class OD4DataDeSerTest {
-
-  private final Path SIMPLEOD2 = Paths.get("src", "test", "resources", "examples", "od",
-      "SimpleOD2" + ".od");
-
-  private final Path SYMBOL_TARGET = Paths.get("target", "deser");
-
-  @Before
+public class OD4DataDeSerTest extends ODTestBasis {
+  
+  private final Path SIMPLEOD2 = PATH.resolve(Paths.get("examples", "od", "SimpleOD2.od"));
+  
+  @BeforeEach
   public void setUp() {
-    LogStub.init();
-    Log.enableFailQuick(false);
-
     OD4DataMill.reset();
     OD4DataMill.init();
-    IOD4DataGlobalScope gs = OD4DataMill.globalScope();
-
-    TypeSymbol objectType = OD4DataMill.typeSymbolBuilder()
-        .setName("ObjectType")
-        .setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope())
-        .build();
-    TypeSymbol objectType2 = OD4DataMill.typeSymbolBuilder()
-        .setName("ObjectType2")
-        .setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope())
-        .build();
-    TypeSymbol t1 = OD4DataMill.typeSymbolBuilder()
-        .setName("T1")
-        .setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope())
-        .build();
-    TypeSymbol t2 = OD4DataMill.typeSymbolBuilder()
-        .setName("T2")
-        .setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope())
-        .build();
-    TypeSymbol t3 = OD4DataMill.typeSymbolBuilder()
-        .setName("T3")
-        .setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope())
-        .build();
-    gs.add(objectType);
-    gs.add(objectType2);
-    gs.add(t1);
-    gs.add(t2);
-    gs.add(t3);
   }
-
+  
   @Test
-  public void testOD4DataDeSer() throws IOException {
-    OD4DataParser od4DataParser = new OD4DataParser();
-    Optional<ASTODArtifact> astodArtifact = od4DataParser.parse(SIMPLEOD2.toString());
-    assertTrue(astodArtifact.isPresent());
-
-    IOD4DataArtifactScope od4DataArtifactScope = OD4DataToolAPI.createSymbolTable(astodArtifact.get(),
-        true);
-
+  public void testOD4DataDeSer() {
+    String artifact = SIMPLEOD2.toString();
+    MCPath symbolPath = new MCPath(PATH);
+    ASTODArtifact astodArtifact = OD4DataTestUtil.loadModel(artifact, symbolPath);
+    
+    IOD4DataArtifactScope od4DataArtifactScope =
+        OD4DataToolAPI.createSymbolTable(astodArtifact, true);
+    
     // serialize
     OD4DataSymbols2Json od4DataSymbols2Json = new OD4DataSymbols2Json();
     String fileName = Paths.get(SIMPLEOD2.toString()).getFileName().toString() + "sym";
     String pathFromQualifiedName = Names.getPathFromQualifiedName(
-        astodArtifact.get().getMCPackageDeclaration().getMCQualifiedName().getQName() + "."
-            + astodArtifact.get().getObjectDiagram().getName());
-    String storedPath = Paths.get(SYMBOL_TARGET.toString(), pathFromQualifiedName, fileName)
-        .toString();
+        astodArtifact.getMCPackageDeclaration().getMCQualifiedName().getQName() + "."
+            + astodArtifact.getObjectDiagram().getName());
+    String storedPath = Paths.get(folder.toString(), pathFromQualifiedName, fileName).toString();
     od4DataSymbols2Json.store(od4DataArtifactScope, storedPath);
-
+    
     Path storedSymTable = Paths.get(storedPath);
     assertTrue(storedSymTable.toFile().exists());
-
+    
     // deserialize
-    IOD4DataArtifactScope loadedBasicsArtifactScope = od4DataSymbols2Json.load(
-        storedSymTable.toString());
-
+    IOD4DataArtifactScope loadedBasicsArtifactScope =
+        od4DataSymbols2Json.load(storedSymTable.toString());
+    
     // clear buffer of traverser, as elements should be traversed again
     od4DataSymbols2Json.getTraverser().clearTraversedElements();
-
+    
     assertEquals(od4DataSymbols2Json.serialize(od4DataArtifactScope),
         od4DataSymbols2Json.serialize(loadedBasicsArtifactScope));
   }
-
+  
+  @Test
+  public void serializationTest() {
+    String artifact = SIMPLEOD2.toString();
+    MCPath symbolPath = new MCPath(PATH);
+    ASTODArtifact ast = OD4DataTestUtil.loadModel(artifact, symbolPath);
+    
+    // create symbol table
+    IOD4DataArtifactScope artifactScope = OD4DataTestUtil.createSymbolTableFromAST(ast);
+    OD4DataSymbols2Json symbols2Json = new OD4DataSymbols2Json();
+    String serialized = symbols2Json.serialize(artifactScope);
+    assertNotNull(serialized);
+    assertNotEquals("", serialized);
+    
+    // check for contents
+    assertContains(serialized, "\"name\":\"SimpleOD2\"");
+    assertContains(serialized, "\"fullName\":\"examples.od.myObject1\"");
+    assertContains(serialized, "\"fullName\":\"examples.od.fooBar2\"");
+    assertContains(serialized, "\"fullName\":\"examples.od.myObject2\"");
+    assertContains(serialized, "\"objName\":\"examples.cd.SimpleOD2.ObjectType2\"");
+    
+    assertEquals(0, Log.getErrorCount());
+  }
+  
+  @Test
+  public void deserializationTest() {
+    IOD4DataGlobalScope gs = OD4DataMill.globalScope();
+    gs.clear();
+    gs.setSymbolPath(new MCPath(PATH));
+    assertTrue(gs.getSubScopes().isEmpty());
+    gs.loadFileForModelName("examples.od.SimpleOD2");
+    assertEquals(1, gs.getSubScopes().size());
+    
+    // resolve for object alice
+    Optional<VariableSymbol> obj1 = gs.resolveVariable("examples.od.SimpleOD2.myObject1");
+    assertTrue(obj1.isPresent());
+    
+    // resolve for object bob
+    Optional<VariableSymbol> obj2 = gs.resolveVariable("examples.od.SimpleOD2.myObject2");
+    assertTrue(obj2.isPresent());
+    
+    // resolve for object tiger
+    Optional<VariableSymbol> obj3 = gs.resolveVariable("examples.od.SimpleOD2.fooBar3");
+    assertTrue(obj3.isPresent());
+  }
 }
