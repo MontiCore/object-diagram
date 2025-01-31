@@ -1,0 +1,43 @@
+{
+    "generated-using": "www.MontiCore.de technology",
+    "name": "MyFamily",
+    "package": "examples.od",
+    "symbols": [
+        {
+            "kind": "de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol",
+            "name": "MyFamily",
+            "fullName": "examples.od.MyFamily",
+            "packageName": "examples.od"
+        },
+        {
+            "kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
+            "name": "alice",
+            "fullName": "examples.od.alice",
+            "packageName": "examples.od",
+            "type": {
+                "kind": "de.monticore.types.check.SymTypeOfObject",
+                "objName": "examples.cd.MyFamily.Person"
+            }
+        },
+        {
+            "kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
+            "name": "tiger",
+            "fullName": "examples.od.tiger",
+            "packageName": "examples.od",
+            "type": {
+                "kind": "de.monticore.types.check.SymTypeOfObject",
+                "objName": "examples.cd.MyFamily.Jaguar"
+            }
+        },
+        {
+            "kind": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol",
+            "name": "bob",
+            "fullName": "examples.od.bob",
+            "packageName": "examples.od",
+            "type": {
+                "kind": "de.monticore.types.check.SymTypeOfObject",
+                "objName": "examples.cd.MyFamily.Person"
+            }
+        }
+    ]
+}

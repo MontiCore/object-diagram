@@ -2,6 +2,8 @@
 
 package examples.od;
 
+import examples.cd.Examples.*;
+
 objectdiagram Examples {
 
   @Multiplicity(7,3!2):Rule {content = "R1:";};

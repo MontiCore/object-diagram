@@ -1,0 +1,21 @@
+/* (c) https://github.com/MontiCore/monticore */
+package examples.cd;
+
+import java.util.Date;
+
+classdiagram Calendar {
+  class Calendar {
+    int year;
+    boolean isPublic;
+    List<Event> events;
+  }
+
+  class Event {
+    String title;
+    String description;
+    Date data;
+    List<Event> subEvents;
+  }
+
+  composition [1] Calendar <- Event [*];
+}
