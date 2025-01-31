@@ -20,7 +20,7 @@ public class UniqueAttributeNamesCoCo implements ODBasisASTODObjectCoCo {
     node.getODAttributeList().forEach(attribute -> {
       if (attribute.isPresentComplete()) {
         if (attributeNames.contains(attribute.getName())) {
-          Log.error("Violation of CoCo 'UniqueAttributeNamesCoCo'",
+          Log.error("0x0D003: Violation of CoCo 'UniqueAttributeNamesCoCo'",
               attribute.get_SourcePositionStart());
         }
         else {

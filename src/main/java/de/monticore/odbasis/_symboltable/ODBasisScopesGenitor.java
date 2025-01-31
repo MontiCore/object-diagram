@@ -44,7 +44,7 @@ public class ODBasisScopesGenitor extends ODBasisScopesGenitorTOP {
     if (checkTypes) {
       TypeCheckResult typeResult = synthesizer.synthesizeType(node.getMCObjectType());
       if (!typeResult.isPresentResult()) {
-        Log.error(String.format("0xODXXX: The type of the return type (%s) could not be calculated",
+        Log.error(String.format("0x0D013: The type of the return type (%s) could not be calculated",
             node.getMCObjectType().getClass().getSimpleName()),
           node.getMCObjectType().get_SourcePositionStart());
       } else {

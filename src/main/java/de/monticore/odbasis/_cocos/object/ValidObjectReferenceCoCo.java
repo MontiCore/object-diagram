@@ -23,7 +23,7 @@ public class ValidObjectReferenceCoCo implements ODBasisASTODObjectCoCo {
           ASTODSimpleAttributeValue simpleAttributeValue = (ASTODSimpleAttributeValue) astodValue;
           if (simpleAttributeValue.getExpression() instanceof ASTNameExpression && !this
               .checkReference((ASTNameExpression) simpleAttributeValue.getExpression(), node)) {
-            Log.error("Violation of CoCo 'ValidObjectReferenceCoCo'",
+            Log.error("0x0D001: Violation of CoCo 'ValidObjectReferenceCoCo'",
                 node.get_SourcePositionStart());
           }
         }

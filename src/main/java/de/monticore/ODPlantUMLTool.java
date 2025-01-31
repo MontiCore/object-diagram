@@ -186,7 +186,7 @@ public class ODPlantUMLTool {
       Log.info("Diagram image generated and saved as: " + destinationPath, "SUCCESS");
     }
     catch (IOException e) {
-      Log.error("Error generating diagram image: " + e.getMessage());
+      Log.error("0x0D010: Error generating diagram image: " + e.getMessage());
     }
   }
   

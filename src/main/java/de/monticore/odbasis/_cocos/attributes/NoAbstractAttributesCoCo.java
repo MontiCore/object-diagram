@@ -16,7 +16,7 @@ public class NoAbstractAttributesCoCo implements ODBasisASTODAttributeCoCo {
   public void check(ASTODAttribute node) {
     ASTModifier attrModifier = node.getModifier();
     if (attrModifier.isAbstract()) {
-      Log.error("Violation of CoCo 'NoAbstractAttributesCoCo'", node.get_SourcePositionStart());
+      Log.error("0x0D005: Violation of CoCo 'NoAbstractAttributesCoCo'", node.get_SourcePositionStart());
     }
   }
 

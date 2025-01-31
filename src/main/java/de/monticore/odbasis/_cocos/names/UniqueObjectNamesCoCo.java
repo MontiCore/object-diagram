@@ -16,7 +16,7 @@ public class UniqueObjectNamesCoCo implements ODBasisASTODNamedObjectCoCo {
     VariableSymbol symbol = node.getSymbol();
     List<VariableSymbol> symbols = symbol.getEnclosingScope().resolveVariableMany(symbol.getName());
     if (symbols.size() != 1) {
-      Log.error("Violation of CoCo 'UniqueObjectNamesCoCo'", node.get_SourcePositionStart());
+      Log.error("0x0D002: Violation of CoCo 'UniqueObjectNamesCoCo'", node.get_SourcePositionStart());
     }
   }
 
