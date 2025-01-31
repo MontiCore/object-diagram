@@ -1,8 +1,7 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.se_rwth.commons.logging;
 
-import de.monticore.odbasis.ODBasisMill;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 
@@ -12,7 +11,7 @@ import java.util.ArrayList;
  */
 public class ODLogReset extends Log {
 
-  @Before
+  @BeforeEach
   public void setup() {
     LogStub.init();
     Log.enableFailQuick(false);
