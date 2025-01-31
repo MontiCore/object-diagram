@@ -7,6 +7,7 @@ import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._symboltable.ODBasisScopesGenitor;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbolBuilder;
+import de.monticore.symboltable.ImportStatement;
 import de.se_rwth.commons.logging.Log;
 
 import java.util.ArrayList;
@@ -61,6 +62,9 @@ public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
       artifactScope.setPackageName("");
     }
     artifactScope.setImportsList(new ArrayList<>());
+    rootNode.getMCImportStatementList()
+        .forEach(i -> artifactScope.addImports(new ImportStatement(i.getQName(), i.isStar())));
+    
     artifactScope.setName(rootNode.getObjectDiagram().getName());
     putOnStack(artifactScope);
     rootNode.accept(getTraverser());
