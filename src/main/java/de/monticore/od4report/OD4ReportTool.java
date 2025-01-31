@@ -14,6 +14,7 @@ import de.monticore.od4report._prettyprint.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.statements.mclowlevelstatements._symboltable.LabelSymbolDeSer;
+import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.symbols.basicsymbols._symboltable.*;
 import de.monticore.symbols.oosymbols._symboltable.FieldSymbolDeSer;
 import de.monticore.symbols.oosymbols._symboltable.MethodSymbolDeSer;
@@ -63,16 +64,17 @@ public class OD4ReportTool extends OD4ReportToolTOP {
       }
 
       // if -symbols is set: Add symbol types from file to global scope
-      if (cmd.hasOption("symtypes")) { //TODO: If length is odd throw warning
-        String[] cmdVals = cmd.getOptionValues("symboltypes")[0].split(" ");
+      if (cmd.hasOption("symtypes")) {
+        String[] cmdVals = cmd.getOptionValues("symboltypes");
         if(cmdVals.length % 2 != 0){
           Log.warn("Odd number of arguments for parameter -symboltypes! Ignoring last argument.");
         }
         OD4ReportMill.reset();
         OD4ReportMill.init();
         OD4ReportMill.globalScope().clear();
+        BasicSymbolsMill.initializePrimitives();
         IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
-        for(int i=0; i<cmdVals.length; i+=2){
+        for (int i = 0; i < cmdVals.length - 1; i += 2) {
           switch(cmdVals[i+1]){
             case "TypeSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new TypeSymbolDeSer()); break;
             case "DiagramSymbolDeSer": gs.putSymbolDeSer(cmdVals[i], new DiagramSymbolDeSer()); break;
@@ -190,7 +192,8 @@ public class OD4ReportTool extends OD4ReportToolTOP {
     options.addOption(Option.builder("symtypes")
             .longOpt("symboltypes")
             .argName("string")
-            .hasArg()
+            .optionalArg(true)
+            .hasArgs()
             .desc("Symbol type followed by deser (repeat for multiple) to be able to resolve smbols from foreign languages.")
             .build());
 
