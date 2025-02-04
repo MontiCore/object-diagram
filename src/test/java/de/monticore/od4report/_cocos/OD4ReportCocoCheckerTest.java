@@ -62,9 +62,11 @@ public class OD4ReportCocoCheckerTest extends ODTestBasis {
     odCoCoChecker.addCoCo(new ValidObjectTypeCoco());
     odCoCoChecker.checkAll(artifact);
     
-    assertEquals(2, Log.getErrorCount());
+    assertEquals(3, Log.getErrorCount());
     assertContains(Log.getFindings().get(0).getMsg(), "0xA0324 Cannot find symbol Jaguar");
     assertContains(Log.getFindings().get(1).getMsg(),
+        "0x0D013: The type of the return type (ASTMCQualifiedType) could not be calculated");
+    assertContains(Log.getFindings().get(2).getMsg(),
         "0xB0035: Type 'Jaguar' is used but not defined.");
     Log.clearFindings();
   }

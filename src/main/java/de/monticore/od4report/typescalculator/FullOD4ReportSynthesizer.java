@@ -7,6 +7,10 @@ import de.monticore.odbasis.typescalculator.FullODBasisSynthesizer;
 import de.monticore.types.check.SynthesizeSymTypeFromMCBasicTypes;
 import de.monticore.types.check.SynthesizeSymTypeFromMCCollectionTypes;
 
+/**
+ * @deprecated using TC3 instead.
+ */
+@Deprecated
 public class FullOD4ReportSynthesizer extends FullODBasisSynthesizer {
 
   public FullOD4ReportSynthesizer(){
