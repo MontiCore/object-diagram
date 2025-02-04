@@ -5,8 +5,9 @@ package de.monticore.odbasis._symboltable;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._ast.ASTODNamedObject;
 import de.monticore.odbasis._ast.ASTObjectDiagram;
-import de.monticore.odbasis.typescalculator.FullODBasisSynthesizer;
-import de.monticore.types.check.TypeCheckResult;
+import de.monticore.types.check.SymTypeExpression;
+import de.monticore.types.mcbasictypes._ast.ASTMCObjectType;
+import de.monticore.types3.TypeCheck3;
 import de.se_rwth.commons.logging.Log;
 
 public class ODBasisScopesGenitor extends ODBasisScopesGenitorTOP {
@@ -14,8 +15,6 @@ public class ODBasisScopesGenitor extends ODBasisScopesGenitorTOP {
   private boolean checkTypes = true;
 
   private ASTODArtifact rootNode;
-
-  private FullODBasisSynthesizer synthesizer = new FullODBasisSynthesizer();
 
   public ODBasisScopesGenitor() {
     super();
@@ -42,19 +41,16 @@ public class ODBasisScopesGenitor extends ODBasisScopesGenitorTOP {
   public void endVisit(ASTODNamedObject node) {
     super.endVisit(node);
     if (checkTypes) {
-      TypeCheckResult typeResult = synthesizer.synthesizeType(node.getMCObjectType());
-      if (!typeResult.isPresentResult()) {
+      ASTMCObjectType objectType = node.getMCObjectType();
+      final SymTypeExpression typeResult = TypeCheck3.symTypeFromAST(objectType);
+      if (typeResult.isObscureType()) {
         Log.error(String.format("0x0D013: The type of the return type (%s) could not be calculated",
-            node.getMCObjectType().getClass().getSimpleName()),
-          node.getMCObjectType().get_SourcePositionStart());
+                node.getMCObjectType().getClass().getSimpleName()),
+            node.getMCObjectType().get_SourcePositionStart());
       } else {
-        node.getSymbol().setType(typeResult.getResult());
+        node.getSymbol().setType(typeResult);
       }
     }
-  }
-
-  public void setSynthesizer(FullODBasisSynthesizer synthesizer) {
-    this.synthesizer = synthesizer;
   }
 
   public boolean isCheckTypes() {
