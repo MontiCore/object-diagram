@@ -33,7 +33,10 @@ public class OD4ReportDeSerTest {
   public void disableFailQuick() {
     LogStub.init();
     Log.enableFailQuick(false);
+  }
 
+  @Test
+  public void testOD4ReportDeSer() throws IOException {
     OD4ReportMill.reset();
     OD4ReportMill.init();
     IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
@@ -57,11 +60,7 @@ public class OD4ReportDeSerTest {
     gs.add(person);
     gs.add(bmw);
     gs.add(jaguar);
-  }
 
-  @Test
-  public void testOD4ReportDeSer() throws IOException {
-    OD4ReportMill.init();
     OD4ReportParser od4ReportParser = new OD4ReportParser();
     Optional<ASTODArtifact> astodArtifact = od4ReportParser.parse(TEASEROD.toString());
     assertTrue(astodArtifact.isPresent());
