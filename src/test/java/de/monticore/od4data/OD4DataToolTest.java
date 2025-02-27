@@ -42,6 +42,7 @@ public class OD4DataToolTest {
     OD4DataMill.reset();
     OD4DataMill.init();
     IOD4DataGlobalScope gs = OD4DataMill.globalScope();
+    gs.clear();
 
     TypeSymbol objectType = OD4DataMill.typeSymbolBuilder()
         .setName("ObjectType")
