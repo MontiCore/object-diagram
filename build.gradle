@@ -210,8 +210,8 @@ fileTree("src").matching { include '**/*.mlc' }.each {
     args = [ "-input", f, "-projectDir", projectDir, "-s", "-reports", "${buildDir}/reports", "-a", "-noFQ"]
     args += modelPath
     dependsOn("generateMCGrammars")
-    showArtifacts.dependsOn("showArtifacts${mlcName}")
   }
+  showArtifacts.dependsOn("showArtifacts${mlcName}")
 
   tasks.register("checkArtifacts${mlcName}", JavaExec) {
     classpath = configurations.MLC
@@ -220,8 +220,8 @@ fileTree("src").matching { include '**/*.mlc' }.each {
     args = ["-input", f, "-projectDir", projectDir, "-s", "-check", "-reports", "${buildDir}/reports"]
     args += modelPath
     dependsOn("generateMCGrammars")
-    checkArtifacts.dependsOn("checkArtifacts${mlcName}")
   }
+  checkArtifacts.dependsOn("checkArtifacts${mlcName}")
 }
 
 // MLC Check dependencies
