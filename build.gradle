@@ -79,11 +79,6 @@ test {
   onOutput { descriptor, event ->
     logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
   }
-  // prevents gradle from creating reports in target/reports/tests
-  reports {
-    junitXml.required = false
-    html.required = false
-  }
   finalizedBy jacocoTestReport
 }
 
