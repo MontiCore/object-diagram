@@ -2,9 +2,9 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-  id 'java'
+  id 'java-library'
   id 'maven-publish'
-  id "monticore" version "$mc_version" // MontiCore Plugin
+  id "de.monticore.generator" version "$mc_version" // MontiCore Plugin
   id "com.github.johnrengelman.shadow" version "$shadow_plugin_version"
   id 'jacoco'
   id "io.github.themrmilchmann.ecj" version "0.2.0"
@@ -14,53 +14,39 @@ def grammarDir = "src/main/grammars"
 
 group = "de.monticore.lang"
 description = "Object Diagram DSL"
-sourceCompatibility = "11"
+
+buildDir = file("$projectDir/target")
 
 // configure non-standard source sets
 sourceSets {
-  main.java.srcDirs += ["$projectDir/target/generated-sources/monticore/sourcecode"]
-  grammars {
+  grammarsForVariant {
+    java.srcDirs = []
     resources {
       srcDirs([grammarDir])
       include "**/*.mc4"
       include "**/*.mlc"
     }
   }
-  test {
-    java.srcDirs += ["$projectDir/target/generated-test-sources/monticore/sourcecode"]
-  }
 }
 
 java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(11)
+  }
+  // Deprecated feature, published for compatibility reasons
   registerFeature('grammars') {
-    usingSourceSet(sourceSets.grammars)
+    usingSourceSet(sourceSets.grammarsForVariant)
   }
 }
-
-subprojects {
-  apply plugin: 'idea'
-  idea {
-    module {
-      testSourceDirs += file("$projectDir/target/generated-test-sources/monticore/sourcecode")
-    }
-  }
-}
-buildDir = file("$projectDir/target")
-
-configurations { grammar }
 
 dependencies {
+  grammar("de.monticore:monticore-grammar:$mc_version")
   implementation "org.antlr:antlr4-runtime:4.12.0"
   implementation 'net.sourceforge.plantuml:plantuml:1.2023.12'
   implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
   implementation "de.monticore:monticore-runtime:$mc_version"
   implementation "de.monticore.lang:cd4analysis:$mc_version"
   implementation "de.monticore:monticore-grammar:$mc_version"
-  grammar("de.monticore:monticore-grammar:$mc_version") {
-    capabilities {
-      requireCapability("de.monticore:monticore-grammar-grammars")
-    }
-  }
   implementation "commons-cli:commons-cli:$commons_cli_version"
   implementation "org.apache.commons:commons-lang3:$commons_lang3_version"
   implementation "com.google.guava:guava:$guava_version"
@@ -81,49 +67,6 @@ repositories {
   }
 }
 
-def grammarDependencies = ext {
-  ODBasis = []
-  ODAttribute = ["ODBasis"]
-  ODLink = ["ODBasis"]
-  OD4Data = ["ODAttribute", "ODLink"]
-  OD4Development = ["OD4Data"]
-  OD4Report = ["OD4Data", "DateLiterals"]
-  DateLiterals = []
-  OD4Development = ["OD4Data"]
-}
-
-// one task per grammar file
-fileTree(grammarDir).matching { include '**/*.mc4' }.each {
-  def g = it
-  def grammarName = it.getName().substring(0, it.getName().lastIndexOf('.'))
-
-  task "generateGrammar${grammarName}"(type: MCTask) {
-    grammar = file g
-    outputDir = file "$buildDir/generated-sources/monticore/sourcecode"
-    // handcodedPath file("$projectDir/src/main/java")
-    def grammarIncludingPackage = file(grammarDir).toURI().relativize(g.toURI()).toString()
-    def uptoDate = incCheck(grammarIncludingPackage)
-    outputs.upToDateWhen { uptoDate }
-  }
-}
-
-compileJava {
-  tasks.findAll { task -> task.name.startsWith("generateGrammar") }.each {
-    def grammarName = it.getName().substring('generateGrammar'.length())
-    def dependsOnGrammars = grammarDependencies[grammarName].collect { name -> tasks["generateGrammar${name}"] }
-    it.dependsOn dependsOnGrammars
-    /*it.outputs.upToDateWhen {
-        it.outputs.upToDateWhen && !dependsOnGrammars.any { !it.outputs.upToDateWhen }
-    }*/
-  }
-
-  dependsOn project.collect { it.tasks.findAll { task -> task.name.startsWith("generateGrammar") } }
-}
-
-compileTestJava {
-  dependsOn project.collect { it.tasks.withType(MCTask) }
-}
-
 test {
   useJUnitPlatform()
   testLogging {
@@ -136,19 +79,7 @@ test {
   onOutput { descriptor, event ->
     logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
   }
-  // prevents gradle from creating reports in target/reports/tests
-  reports {
-    junitXml.required = false
-    html.required = false
-  }
-}
-
-tasks.withType(JavaCompile) {
-  options.fork = true
-  options.encoding = "UTF-8"
-  options.deprecation false
-  options.warnings = false
-  options.headerOutputDirectory.convention(null)
+  finalizedBy jacocoTestReport
 }
 
 shadowJar {
@@ -156,25 +87,25 @@ shadowJar {
 }
 
 // build sources jar in addition
-task sourcesJar(type: Jar) {
-  from sourceSets.main.allJava
+tasks.register('sourcesJar', Jar) {
+  from(sourceSets.main.allJava)
   archiveClassifier = "sources"
 }
 
-sourcesJar.dependsOn project.collect { it.tasks.withType(MCTask) }
+sourcesJar.dependsOn project.collect { it.tasks.withType(MCGenTask) }
 
-tasks.withType(ShadowJar) {
+tasks.withType(ShadowJar).configureEach {
   duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 // build grammar jar as well
-task grammarJar(type: Jar) {
+tasks.register('grammarJar', Jar) {
   from("$projectDir/src/main/grammars/") { include "**/*.mc4" }
   archiveClassifier = "grammars"
 }
 jar.dependsOn(grammarJar)
 
-task buildOD4DataTool(type: ShadowJar) {
+tasks.register('buildOD4DataTool', ShadowJar) {
   minimize()
   archiveFileName = 'MCOD4Data.jar'
   archiveClassifier = "od4data-mc-tool"
@@ -186,7 +117,7 @@ task buildOD4DataTool(type: ShadowJar) {
 }
 jar.dependsOn(buildOD4DataTool)
 
-task buildOD4ReportTool(type: ShadowJar) {
+tasks.register('buildOD4ReportTool', ShadowJar) {
   minimize()
   archiveFileName = 'MCOD4Report.jar'
   archiveClassifier = "od4report-mc-tool"
@@ -198,7 +129,7 @@ task buildOD4ReportTool(type: ShadowJar) {
 }
 jar.dependsOn(buildOD4ReportTool)
 
-task buildOD4DevelopmentTool(type: ShadowJar) {
+tasks.register('buildOD4DevelopmentTool', ShadowJar) {
   minimize()
   archiveFileName = 'MCOD4Development.jar'
   archiveClassifier = "od4development-mc-tool"
@@ -210,10 +141,10 @@ task buildOD4DevelopmentTool(type: ShadowJar) {
 }
 jar.dependsOn(buildOD4DevelopmentTool)
 
-task testReport(type: TestReport) {
-  destinationDir = file("$buildDir/reports/allTests")
+tasks.register('testReport', TestReport) {
+  destinationDirectory = file("$buildDir/reports/allTests")
   // Include the results from the 'test' task
-  reportOn tasks.withType(Test)
+  getTestResults().from(tasks.withType(Test))
 }
 
 // configure deployment
@@ -238,7 +169,7 @@ publishing {
   }
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
   options.fork = true
   options.encoding = "UTF-8"
   options.deprecation false
@@ -249,17 +180,17 @@ tasks.withType(JavaCompile) {
 /**
  * Integration with MLC language and tool
  */
-task showArtifacts {}
-task checkArtifacts {}
+tasks.register('showArtifacts') { group = "MLC" }
+tasks.register('checkArtifacts') {group = "MLC" }
 configurations { MLC }
 dependencies {
   MLC(group: 'de.monticore.lang', name: 'mlc-gradle', version: "$version")
 }
-StringJoiner joiner = new StringJoiner(" ")
-configurations.compileClasspath.resolve().each { joiner.add(it.toString()) }
-configurations.grammar.resolve().each { joiner.add(it.toString()) }
-joiner.add "$projectDir/target/symbols"
-String mp = joiner.toString()
+
+def modelPath = [];
+configurations.compileClasspath.resolve().each { modelPath.addAll(["-mp", it.toString()]) }
+configurations.grammarSymbolDependencies.resolve().each { modelPath.addAll(["-mp", it.toString()]) }
+modelPath.addAll(["-mp", "$projectDir/target/symbols"])
 
 // two tasks per MLC file
 // each task needs to depend on all internally promoted MLCs
@@ -267,23 +198,25 @@ fileTree("src").matching { include '**/*.mlc' }.each {
   def f = it
   def mlcName = it.getName().substring(0, it.getName().lastIndexOf('.'))
 
-  task "showArtifacts${mlcName}"(type: JavaExec) {
+  tasks.register("showArtifacts${mlcName}", JavaExec) {
     classpath = configurations.MLC
     group = 'MLC'
     mainClass = 'de.monticore.mlc.MLCTool'
-    args "-input", f, "-projectDir", projectDir, "-mp", mp, "-s", "-reports", "${buildDir}/reports", "-a", "-noFQ"
-    dependsOn("generateGrammar${mlcName}")
-    showArtifacts.dependsOn("showArtifacts${mlcName}")
+    args = [ "-input", f, "-projectDir", projectDir, "-s", "-reports", "${buildDir}/reports", "-a", "-noFQ"]
+    args += modelPath
+    dependsOn("generateMCGrammars")
   }
+  showArtifacts.dependsOn("showArtifacts${mlcName}")
 
-  task "checkArtifacts${mlcName}"(type: JavaExec) {
+  tasks.register("checkArtifacts${mlcName}", JavaExec) {
     classpath = configurations.MLC
     group = 'MLC'
     mainClass = 'de.monticore.mlc.MLCTool'
-    args "-input", f, "-projectDir", projectDir, "-mp", mp, "-s", "-check", "-reports", "${buildDir}/reports"
-    dependsOn("generateGrammar${mlcName}")
-    checkArtifacts.dependsOn("checkArtifacts${mlcName}")
+    args = ["-input", f, "-projectDir", projectDir, "-s", "-check", "-reports", "${buildDir}/reports"]
+    args += modelPath
+    dependsOn("generateMCGrammars")
   }
+  checkArtifacts.dependsOn("checkArtifacts${mlcName}")
 }
 
 // MLC Check dependencies
