@@ -1,4 +1,4 @@
-package de.monticore;
+package de.monticore.od2plantuml.prettyprinter;
 
 import de.monticore.types.mcbasictypes._visitor.MCBasicTypesHandler;
 import de.monticore.types.mcbasictypes._visitor.MCBasicTypesTraverser;

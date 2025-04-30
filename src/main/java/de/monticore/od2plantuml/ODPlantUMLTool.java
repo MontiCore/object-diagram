@@ -1,6 +1,7 @@
-package de.monticore;/* (c) https://github.com/MontiCore/monticore */
+package de.monticore.od2plantuml;/* (c) https://github.com/MontiCore/monticore */
 
 import de.monticore.io.paths.MCPath;
+import de.monticore.od2plantuml.prettyprinter.PlantUMLODFullPrettyPrinter;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;

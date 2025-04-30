@@ -1,4 +1,4 @@
-package de.monticore;
+package de.monticore.od2plantuml.prettyprinter;
 
 import de.monticore.dateliterals._prettyprint.DateLiteralsPrettyPrinter;
 import de.monticore.literals.mccommonliterals._prettyprint.MCCommonLiteralsPrettyPrinter;

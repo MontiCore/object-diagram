@@ -1,5 +1,6 @@
-package de.monticore;
+package de.monticore.od2plantuml;
 
+import de.monticore.od2plantuml.prettyprinter.PlantUMLODFullPrettyPrinter;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
