@@ -24,10 +24,10 @@ object "__bp:BiddingPolicy__" as bp {
 }
 object "__tp:TimingPolicy__" as tp {
 }
-kupfer912<-->theo
-kupfer912<-->otto
-kupfer912<-->lisa
-kupfer912<-->lisa
-kupfer912*--*bp
-kupfer912--*tp
+kupfer912 <--> theo : participants
+kupfer912 <--> otto : participants
+kupfer912 <--> lisa : participants
+kupfer912 <--> lisa : observers
+kupfer912 *--* bp
+kupfer912 *--> tp
 @enduml

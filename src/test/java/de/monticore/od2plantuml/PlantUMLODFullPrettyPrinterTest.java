@@ -1,11 +1,15 @@
 package de.monticore.od2plantuml;
 
 import de.monticore.od2plantuml.prettyprinter.PlantUMLODFullPrettyPrinter;
+import de.monticore.od4data.trafo.OD4DataAttributeValueCompositionTrafo;
+import de.monticore.od4data.trafo.OD4DataDeAnonymizeObjectsTrafo;
+import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.se_rwth.commons.logging.Log;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -37,6 +41,12 @@ public class PlantUMLODFullPrettyPrinterTest {
     Log.enableFailQuick(false);
   }
   
+  @BeforeEach
+  public void setupMills(){
+    OD4ReportMill.reset();
+    OD4ReportMill.init();
+  }
+  
   /**
    * Parameterized test method that reads test data from CSV files and compares the generated
    * PlantUML syntax with expected results.
@@ -55,28 +65,30 @@ public class PlantUMLODFullPrettyPrinterTest {
       "od2cd/QualifiedInnerLinks",
       "od/AuctionParticipants",
       "od2cd/ProjectListOD",
-      /*"od2cd/Variants",
+      "od2cd/Variants",
       "od2cd/InnerObject",
-      "od2cd/MyFamily"*/
+      "od2cd/MyFamily"
   })
   public void test(String input) throws IOException {
-    OD4ReportParser parser = new OD4ReportParser();
+    OD4ReportParser parser = OD4ReportMill.parser();
     Optional<ASTODArtifact> optOD = parser.parse(basedir + input + ".od");
     Assertions.assertTrue(optOD.isPresent());
     
+    ASTODArtifact transformableArtifact = optOD.get();
+    new OD4DataDeAnonymizeObjectsTrafo().transform(transformableArtifact);
+    new OD4DataAttributeValueCompositionTrafo().transform(transformableArtifact);
+    
     PlantUMLODFullPrettyPrinter prettyPrinter = new PlantUMLODFullPrettyPrinter();
-    String plantUML = prettyPrinter.prettyprint(optOD.get());
+    String plantUML = prettyPrinter.prettyprint(transformableArtifact);
     
     byte[] bytes = Files.readAllBytes(Path.of(basedir + input + ".puml"));
     String expectedPlantUML = new String(bytes, StandardCharsets.UTF_8);
     
     var expected = removeSpace(expectedPlantUML);
     var actual = removeSpace(plantUML);
-    Assertions.assertEquals(expected, actual, () -> {
-          return String.format(
-              "The printed output\n\n\"\"\"\n%s\n\"\"\"\n\ndoes not match with the expected PlantUML output\n\n\"\"\"\n%s\n\"\"\"\n.",
-              plantUML, expectedPlantUML);
-        }
+    Assertions.assertEquals(expected, actual, () -> String.format(
+        "The printed output\n\n\"\"\"\n%s\n\"\"\"\n\ndoes not match with the expected PlantUML output\n\n\"\"\"\n%s\n\"\"\"\n.",
+        plantUML, expectedPlantUML)
     );
     
     // TODO MSm parse PlantUML
