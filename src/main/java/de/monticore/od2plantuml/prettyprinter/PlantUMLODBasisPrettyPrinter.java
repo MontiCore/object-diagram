@@ -45,8 +45,19 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
   public void visit(ASTODNamedObject node) {
     var typesPrinter = new MCBasicTypesFullPrettyPrinter(new IndentPrinter());
     var printedType = typesPrinter.prettyprint(node.getMCObjectType());
-    printer.println(
-        String.format("object \"__%1$s:%2$s__\" as %1$s {", node.getName(), printedType));
+    String nodeName = node.getName();
+    if (hasBeenDeAnonymizedByTrafo(node)) {
+      printer.println(
+          String.format("object \"__:%2$s__\" as %1$s {", nodeName, printedType));
+    }else {
+      printer.println(
+          String.format("object \"__%1$s:%2$s__\" as %1$s {", node.getName(), printedType));
+    }
+  }
+  
+  protected boolean hasBeenDeAnonymizedByTrafo(ASTODNamedObject node) {
+    String typeName = node.getMCObjectType().printType().toLowerCase().replaceAll("\\.", "_");
+    return node.getName().startsWith("__" + typeName + "_anonymous_");
   }
   
   @Override
@@ -56,7 +67,7 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
     this.anonymousObjectsNameCache.putIfAbsent(node, UUID.randomUUID());
     String nodeName = this.anonymousObjectsNameCache.get(node).toString();
     printer.println(
-        String.format("object \"__%1$s:%2$s__\" as %1$s {", nodeName, printedType));
+        String.format("object \"__:%2$s__\" as %1$s {", nodeName, printedType));
   }
   
   @Override

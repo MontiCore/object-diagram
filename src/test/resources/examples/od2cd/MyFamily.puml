@@ -8,7 +8,7 @@ object "__bob:Person__" as bob {
   cars = tiger
 }
 alice <--> bob : married
-object "____bmw_anonymous_1:BMW__" as __bmw_anonymous_1 {
+object "__:BMW__" as __bmw_anonymous_1 {
   bought = 2020-01-05 15:30:00
   color = BLUE
 }

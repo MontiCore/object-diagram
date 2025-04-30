@@ -46,7 +46,6 @@ public class OD4DataAttributeValueCompositionTrafoExtension
           list.removeAllODValues(valueToRemove);
           if (list.isEmptyODValues()) {
             attributesToRemove.add(attribute);
-            //node.removeODAttribute(attribute);
           }
         }
         else if (OD4DataMill.typeDispatcher().isODAttributeASTODMap(attribute.getODValue())) {
@@ -68,7 +67,6 @@ public class OD4DataAttributeValueCompositionTrafoExtension
           }
           map.removeAllODMapElements(mapElementsToRemove);
           if (map.isEmptyODMapElements()) {
-            //node.removeODAttribute(attribute);
             attributesToRemove.add(attribute);
           }
         }

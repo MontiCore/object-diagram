@@ -9,7 +9,7 @@ myObject1 --> myObject2 : someLink
 object "__fooBar3:T3__" as fooBar3 {
   content = "on4"
 }
-object "____t1_anonymous_1:T1__" as __t1_anonymous_1 {
+object "__:T1__" as __t1_anonymous_1 {
 }
 object "__fooBar2:T2__" as fooBar2 {
 }
