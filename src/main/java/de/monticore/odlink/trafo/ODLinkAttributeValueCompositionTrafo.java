@@ -46,6 +46,7 @@ public class ODLinkAttributeValueCompositionTrafo implements ODBasisVisitor2, OD
           compositionsToCreate.add(link);
         }
         else if (ODLinkMill.typeDispatcher().isExpressionsBasisASTNameExpression(value)) {
+          // TODO JRa: Use Typecheck3 to check the reference of the NameExpression. Do not transform, if its an ENUM value!
           ASTNameExpression nameExpression =
               ODLinkMill.typeDispatcher().asExpressionsBasisASTNameExpression(value);
           ASTODLink link = createAssociation(node.getName(), nameExpression.getName(), attribute.getName());
