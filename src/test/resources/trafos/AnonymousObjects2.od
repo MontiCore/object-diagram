@@ -1,0 +1,16 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package trafos;
+
+import examples.cd.SimpleOD.*;
+
+objectdiagram AnonymousObjects2 {
+
+  foo:ObjectType1{};
+
+  bar:ObjectType2{
+   foobar = foo;
+   foobar2 = :ObjectType2{};
+   foobar3 = 3;
+  };
+}
