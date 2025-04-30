@@ -2,7 +2,9 @@ package de.monticore.od2plantuml.prettyprinter;
 
 import de.monticore.odbasis._visitor.ODBasisHandler;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;
+import de.monticore.odlink.ODLinkMill;
 import de.monticore.odlink._ast.*;
+import de.monticore.odlink._util.IODLinkTypeDispatcher;
 import de.monticore.odlink._visitor.ODLinkHandler;
 import de.monticore.odlink._visitor.ODLinkTraverser;
 import de.monticore.odlink._visitor.ODLinkVisitor2;
@@ -13,6 +15,7 @@ import de.monticore.prettyprint.IndentPrinter;
  * {@link ODBasisHandler}.
  */
 public class PlantUMLODLinkPrettyPrinter implements ODLinkVisitor2, ODLinkHandler {
+  
   private final IndentPrinter printer;
   private ODLinkTraverser traverser;
   
@@ -30,49 +33,56 @@ public class PlantUMLODLinkPrettyPrinter implements ODLinkVisitor2, ODLinkHandle
     this.traverser = traverser;
   }
   
-  /**
-   * This method handles the link ast node by visiting the left and right side of the link.
-   *
-   * @param node link ast node
-   */
   @Override
   public void handle(ASTODLink node) {
-    String symbol = node.isAggregation() ? "o" : node.isComposition() ? "*" : "";
-    String linkRepresentation = "--";
-    ASTODLinkDirection linkDirection = node.getODLinkDirection();
-    
-    if (linkDirection instanceof ASTODLeftToRightDir) {
-      linkRepresentation = linkRepresentation + (symbol.isEmpty() ? ">" : symbol);
-    }
-    else if (linkDirection instanceof ASTODRightToLeftDir) {
-      linkRepresentation = (symbol.isEmpty() ? "<" : symbol) + linkRepresentation;
-    }
-    else if (linkDirection instanceof ASTODBiDir) {
-      linkRepresentation = (symbol.isEmpty() ? "<" : symbol) + linkRepresentation +
-          (symbol.isEmpty() ? ">" : symbol);
-    }
-    
-    String finalLinkRepresentation = linkRepresentation;
+    String linkRepresentation = getLinkRepresentation(node);
     
     node.getODLinkLeftSide().getReferenceNamesList().forEach(leftRef -> {
       node.getODLinkRightSide().getReferenceNamesList().forEach(rightRef -> {
         leftRef.accept(getTraverser());
         
         node.getODLinkLeftSide().accept(getTraverser());
-        printer.print(finalLinkRepresentation);
+        printer.print(linkRepresentation);
         node.getODLinkRightSide().accept(getTraverser());
         
         rightRef.accept(getTraverser());
+        
+        if (node.isPresentName()) {
+          printer.print(" : " + node.getName());
+        }
+        
         printer.println();
       });
     });
   }
   
-  /**
-   * This method handles the left side of ast node
-   *
-   * @param node left linked ast node
-   */
+  protected String getLinkRepresentation(ASTODLink node) {
+    String symbol = node.isAggregation() ? "o" : node.isComposition() ? "*" : "";
+    String linkRepresentation = "--";
+    ASTODLinkDirection linkDirection = node.getODLinkDirection();
+    
+    IODLinkTypeDispatcher typeDispatcher = ODLinkMill.typeDispatcher();
+    
+    if (typeDispatcher.isODLinkASTODLeftToRightDir(linkDirection)) {
+      if (!symbol.isEmpty()) {
+        linkRepresentation = symbol + linkRepresentation;
+      }
+      linkRepresentation = linkRepresentation + ">";
+    }
+    else if (typeDispatcher.isODLinkASTODRightToLeftDir(linkDirection)) {
+      if (!symbol.isEmpty()) {
+        linkRepresentation = linkRepresentation + symbol;
+      }
+      linkRepresentation = "<" + linkRepresentation;
+    }
+    else if (typeDispatcher.isODLinkASTODBiDir(linkDirection)) {
+      linkRepresentation =
+          (symbol.isEmpty() ? "<" : symbol) + linkRepresentation + (symbol.isEmpty() ? ">"
+                                                                                     : symbol);
+    }
+    return " " + linkRepresentation + " ";
+  }
+  
   @Override
   public void handle(ASTODLinkLeftSide node) {
     if (node.isPresentRole()) {
@@ -80,11 +90,6 @@ public class PlantUMLODLinkPrettyPrinter implements ODLinkVisitor2, ODLinkHandle
     }
   }
   
-  /**
-   * This method handles the right side of ast node
-   *
-   * @param node right linked ast node
-   */
   @Override
   public void handle(ASTODLinkRightSide node) {
     if (node.isPresentRole()) {
