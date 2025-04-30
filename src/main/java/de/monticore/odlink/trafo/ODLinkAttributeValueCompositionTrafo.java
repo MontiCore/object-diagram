@@ -4,6 +4,7 @@
 
 package de.monticore.odlink.trafo;
 
+import de.monticore.expressions.expressionsbasis._ast.ASTNameExpression;
 import de.monticore.odbasis._ast.*;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;
 import de.monticore.odlink.ODLinkMill;
@@ -31,12 +32,25 @@ public class ODLinkAttributeValueCompositionTrafo implements ODBasisVisitor2, OD
           attributesToRemove.add(attribute);
           objectsToMove.add(namedObject);
           
-          ASTODLink link = createLink(node.getName(), namedObject.getName(), attribute.getName());
+          ASTODLink link = createComposition(node.getName(), namedObject.getName(), attribute.getName());
           compositionsToCreate.add(link);
         }
         else if (ODLinkMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
           Log.warn("0x0D021: Could not extract composed object because its anonymous!",
               value.get_SourcePositionStart());
+        }
+        else if (ODLinkMill.typeDispatcher().isODBasisASTODName(value)) {
+          ASTODName odName = ODLinkMill.typeDispatcher().asODBasisASTODName(value);
+          ASTODLink link = createAssociation(node.getName(), odName.getName(), attribute.getName());
+          attributesToRemove.add(attribute);
+          compositionsToCreate.add(link);
+        }
+        else if (ODLinkMill.typeDispatcher().isExpressionsBasisASTNameExpression(value)) {
+          ASTNameExpression nameExpression =
+              ODLinkMill.typeDispatcher().asExpressionsBasisASTNameExpression(value);
+          ASTODLink link = createAssociation(node.getName(), nameExpression.getName(), attribute.getName());
+          attributesToRemove.add(attribute);
+          compositionsToCreate.add(link);
         }
       }
     }
@@ -63,20 +77,38 @@ public class ODLinkAttributeValueCompositionTrafo implements ODBasisVisitor2, OD
         ODLinkMill.oDLinkRightSideBuilder().addReferenceNames(rightSideName).setRole(roleName)
             .setModifier(rightModifier).build();
     ASTODLinkDirection linkDirection = ODLinkMill.oDLeftToRightDirBuilder().build();
-    return ODLinkMill.oDLinkBuilder().setComposition(true).setODLinkLeftSide(leftSide)
+    return ODLinkMill.oDLinkBuilder().setODLinkLeftSide(leftSide)
         .setODLinkDirection(linkDirection).setODLinkRightSide(rightSide);
   }
   
-  protected ASTODLink createLink(String sourceName, String targetName, String roleName,
+  protected ASTODLinkBuilder createLink(String sourceName, String targetName, String roleName,
       ASTODValue qualifierValue) {
     ASTODLinkBuilder linkBaseBuilder = createLinkBase(sourceName, targetName, roleName);
     ASTODLinkQualifier qualifier =
         ODLinkMill.oDLinkQualifierBuilder().setODValue(qualifierValue).build();
     linkBaseBuilder.getODLinkLeftSide().setODLinkQualifier(qualifier);
-    return linkBaseBuilder.build();
+    return linkBaseBuilder;
   }
   
-  protected ASTODLink createLink(String sourceName, String targetName, String roleName) {
-    return createLinkBase(sourceName, targetName, roleName).build();
+  protected ASTODLinkBuilder createLink(String sourceName, String targetName, String roleName) {
+    return createLinkBase(sourceName, targetName, roleName);
+  }
+  
+  protected ASTODLink createAssociation(String sourceName, String targetName, String roleName,
+      ASTODValue qualifierValue) {
+    return createLink(sourceName, targetName, roleName, qualifierValue).build();
+  }
+  
+  protected ASTODLink createAssociation(String sourceName, String targetName, String roleName) {
+    return createLink(sourceName, targetName, roleName).build();
+  }
+  
+  protected ASTODLink createComposition(String sourceName, String targetName, String roleName,
+      ASTODValue qualifierValue) {
+    return createLink(sourceName, targetName, roleName, qualifierValue).setComposition(true).build();
+  }
+  
+  protected ASTODLink createComposition(String sourceName, String targetName, String roleName) {
+    return createLink(sourceName, targetName, roleName).setComposition(true).build();
   }
 }

@@ -39,7 +39,7 @@ public class OD4DataAttributeValueCompositionTrafoExtension
               objectsToMove.add(namedObject);
               
               ASTODLink link =
-                  createLink(node.getName(), namedObject.getName(), attribute.getName());
+                  createComposition(node.getName(), namedObject.getName(), attribute.getName());
               compositionsToCreate.add(link);
             }
           }
@@ -60,7 +60,7 @@ public class OD4DataAttributeValueCompositionTrafoExtension
               objectsToMove.add(namedObject);
               
               ASTODLink link =
-                  createLink(node.getName(), namedObject.getName(), attribute.getName(),
+                  createComposition(node.getName(), namedObject.getName(), attribute.getName(),
                       mapElement.getKey());
               compositionsToCreate.add(link);
             }

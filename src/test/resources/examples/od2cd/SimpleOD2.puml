@@ -1,7 +1,6 @@
 @startuml
 note "OD" as tag #white
 object "__myObject1:ObjectType__" as myObject1 {
-  innerLink = fooBar3
 }
 object "__myObject2:ObjectType2__" as myObject2 {
 }
@@ -16,4 +15,5 @@ object "__fooBar2:T2__" as fooBar2 {
 fooBar2 *-->  "foo" fooBar3
 myObject1 *-->  "linkList1" __t1_anonymous_1
 myObject1 *-->  "linkList1" fooBar2
+myObject1 -->  "innerLink" fooBar3
 @enduml
