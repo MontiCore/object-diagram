@@ -1,0 +1,35 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.cd;
+
+classdiagram SimpleOD {
+
+  class ObjectType {
+    ObjectType foobar;
+    ObjectType foobar2;
+  }
+
+  class ObjectType1 extends ObjectType {
+
+  }
+
+  class ObjectType2 extends ObjectType {
+      int foobar3;
+      String foobar4;
+  }
+
+  class ObjectType3 extends ObjectType {
+
+  }
+
+  class ObjectType4 extends ObjectType {
+    List<ObjectType> foobar;
+  }
+
+  class ObjectType5 extends ObjectType {
+    Map<int, ObjectType> foobar;
+  }
+
+  association firstLink [1] ObjectType <-> ObjectType [1];
+  association secondLink [1] ObjectType <-> ObjectType [1];
+}

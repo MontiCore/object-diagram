@@ -13,7 +13,6 @@ public class ODLinkCoCos {
 
     // links
     checker.addCoCo(new NoAbstractLinkCoCo());
-    checker.addCoCo(new ValidLinkReferenceCoCo());
 
     // objects
     checker.addCoCo(new ValidLinkReferenceCoCo());
@@ -23,14 +22,12 @@ public class ODLinkCoCos {
 
   public ODLinkCoCoChecker getCheckerForAllCoCos() {
     final ODLinkCoCoChecker checker = new ODLinkCoCoChecker();
+    checker.addChecker(getCheckerForAllIntraCoCos());
 
     // links
     checker.addCoCo(new LinkEndConsistencyCoCo());
-    checker.addCoCo(new NoAbstractLinkCoCo());
-    checker.addCoCo(new ValidLinkReferenceCoCo());
-
+    
     // objects
-    checker.addCoCo(new ValidLinkReferenceCoCo());
 
     return checker;
   }

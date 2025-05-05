@@ -2,7 +2,7 @@
 
 package symboltable;
 
-import examples.cd.Associations;
+import examples.cd.Associations.*;
 
 objectdiagram STInnerLinkVariants {
 

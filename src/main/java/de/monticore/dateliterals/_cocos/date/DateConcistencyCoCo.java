@@ -26,7 +26,7 @@ public class DateConcistencyCoCo implements DateLiteralsASTDateCoCo {
               node.getTimePart().getMinute().getValue(), node.getTimePart().getSecond().getValue());
     }
     catch (DateTimeException e) {
-      Log.error("Violation of CoCo 'DateConcistencyCoCo'", node.get_SourcePositionStart());
+      Log.error("0x0D009: Violation of CoCo 'DateConcistencyCoCo'", node.get_SourcePositionStart());
     }
   }
 

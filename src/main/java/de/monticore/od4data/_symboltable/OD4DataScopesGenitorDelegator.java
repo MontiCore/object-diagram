@@ -6,10 +6,8 @@ package de.monticore.od4data._symboltable;
 
 import de.monticore.odbasis.ODBasisMill;
 import de.monticore.odbasis._symboltable.ODBasisScopesGenitor;
-import de.monticore.odbasis.typescalculator.FullODBasisSynthesizer;
 
 public class OD4DataScopesGenitorDelegator extends OD4DataScopesGenitorDelegatorTOP {
-  private FullODBasisSynthesizer synthesizer;
 
   public OD4DataScopesGenitorDelegator() {
     super();
@@ -23,15 +21,4 @@ public class OD4DataScopesGenitorDelegator extends OD4DataScopesGenitorDelegator
     traverser.add4ODBasis(odBasisScopesGenitor);
     traverser.setODBasisHandler(odBasisScopesGenitor);
   }
-
-  public FullODBasisSynthesizer getSynthesizer() {
-    return synthesizer;
-  }
-
-  public void setSynthesizer(FullODBasisSynthesizer synthesizer) {
-    this.synthesizer = synthesizer;
-
-    ((ODBasisScopesGenitor) this.traverser.getODBasisHandler().get()).setSynthesizer(synthesizer);
-  }
-
 }

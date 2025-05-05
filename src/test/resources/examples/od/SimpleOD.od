@@ -2,6 +2,8 @@
 
 package examples.od;
 
+import examples.cd.SimpleOD.*;
+
 objectdiagram SimpleOD{
 
   myObject1:ObjectType{};

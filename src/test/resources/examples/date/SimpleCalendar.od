@@ -1,0 +1,25 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.date;
+
+import examples.cd.Calendar.*;
+
+objectdiagram SimpleCalendar{
+
+  event1:Event{};
+
+  event2:Event {
+    title = "Event2";
+    date = 2017-12-20 15:18:12;
+  };
+
+  event3:Event {
+    title = "Event3";
+    date = 2017.12.20 15:18:12;
+  };
+
+  event4:Event {
+    title = "Event4";
+    date = 2017/12/20 15:18:12;
+  };
+}

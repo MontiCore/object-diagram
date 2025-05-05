@@ -2,6 +2,8 @@
 
 package cocos;
 
+import examples.cd.SimpleOD.*;
+
 objectdiagram AnonymusObject {
 
   :ObjectType{};

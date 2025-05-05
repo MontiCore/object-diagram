@@ -23,16 +23,16 @@ public class OD4ReportToolAPI {
    */
   public static ASTODArtifact parse(String model) {
     try {
-      OD4ReportParser parser = new OD4ReportParser();
+      OD4ReportParser parser = OD4ReportMill.parser();
       Optional<ASTODArtifact> optODArtifact = parser.parse(model);
 
       if (!parser.hasErrors() && optODArtifact.isPresent()) {
         return optODArtifact.get();
       }
-      Log.error("Model could not be parsed.");
+      Log.error("0x0D013: Model could not be parsed.");
     }
     catch (RecognitionException | IOException e) {
-      Log.error("Failed to parse " + model, e);
+      Log.error("0x0D014: Failed to parse " + model, e);
     }
     return null;
   }

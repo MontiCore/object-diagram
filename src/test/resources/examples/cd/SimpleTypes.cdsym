@@ -1,0 +1,368 @@
+{
+    "generated-using": "www.MontiCore.de technology",
+    "name": "SimpleTypes",
+    "package": "examples.cd",
+    "symbols": [
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "Type1",
+            "fullName": "examples.cd.SimpleTypes.Type1",
+            "packageName": "examples.cd.SimpleTypes",
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "Type1",
+                        "fullName": "Type1",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleTypes.Type1"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "type3",
+                        "fullName": "examples.cd.SimpleTypes.Type1.type3",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 141015648,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleTypes.Type3"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "myString",
+                        "fullName": "examples.cd.SimpleTypes.Type1.myString",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "myList",
+                        "fullName": "examples.cd.SimpleTypes.Type1.myList",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfGenerics",
+                            "typeConstructorFullName": "List",
+                            "arguments": [
+                                {
+                                    "kind": "de.monticore.types.check.SymTypeOfObject",
+                                    "objName": "java.lang.String"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "myEmpty",
+                        "fullName": "examples.cd.SimpleTypes.Type1.myEmpty",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "java.lang.String"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "negative",
+                        "fullName": "examples.cd.SimpleTypes.Type1.negative",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "int"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "longValue",
+                        "fullName": "examples.cd.SimpleTypes.Type1.longValue",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "long"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "bool",
+                        "fullName": "examples.cd.SimpleTypes.Type1.bool",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "boolean"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "doubleValue",
+                        "fullName": "examples.cd.SimpleTypes.Type1.doubleValue",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "double"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "negDoubleValue",
+                        "fullName": "examples.cd.SimpleTypes.Type1.negDoubleValue",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "double"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "Type2",
+            "fullName": "examples.cd.SimpleTypes.Type2",
+            "packageName": "examples.cd.SimpleTypes",
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "Type2",
+                        "fullName": "Type2",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleTypes.Type2"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "attr1",
+                        "fullName": "examples.cd.SimpleTypes.Type2.attr1",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "int"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "attr2",
+                        "fullName": "examples.cd.SimpleTypes.Type2.attr2",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleTypes.Type1"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "attr3",
+                        "fullName": "examples.cd.SimpleTypes.Type2.attr3",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "int"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "attr4",
+                        "fullName": "examples.cd.SimpleTypes.Type2.attr4",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "int"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "attr5",
+                        "fullName": "examples.cd.SimpleTypes.Type2.attr5",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "int"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "attr6",
+                        "fullName": "examples.cd.SimpleTypes.Type2.attr6",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "int"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "attr7",
+                        "fullName": "examples.cd.SimpleTypes.Type2.attr7",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "int"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "attr8",
+                        "fullName": "examples.cd.SimpleTypes.Type2.attr8",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "int"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "attr9",
+                        "fullName": "examples.cd.SimpleTypes.Type2.attr9",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypePrimitive",
+                            "primitiveName": "int"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "Type3",
+            "fullName": "examples.cd.SimpleTypes.Type3",
+            "packageName": "examples.cd.SimpleTypes",
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "Type3",
+                        "fullName": "Type3",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleTypes.Type3"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "type1",
+                        "fullName": "examples.cd.SimpleTypes.Type3.type1",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 141015648,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleTypes.Type1"
+                        }
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "myObject",
+                        "fullName": "examples.cd.SimpleTypes.Type3.myObject",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 23053378,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleTypes.MyObject"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "Type6",
+            "fullName": "examples.cd.SimpleTypes.Type6",
+            "packageName": "examples.cd.SimpleTypes",
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "Type6",
+                        "fullName": "Type6",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleTypes.Type6"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+            "name": "MyObject",
+            "fullName": "examples.cd.SimpleTypes.MyObject",
+            "packageName": "examples.cd.SimpleTypes",
+            "isClass": true,
+            "spannedScope": {
+                "symbols": [
+                    {
+                        "kind": "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol",
+                        "name": "MyObject",
+                        "fullName": "MyObject",
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleTypes.MyObject"
+                        },
+                        "isConstructor": true,
+                        "isPublic": true,
+                        "isStatic": true
+                    },
+                    {
+                        "kind": "de.monticore.cdassociation._symboltable.CDRoleSymbol",
+                        "name": "type3",
+                        "fullName": "examples.cd.SimpleTypes.MyObject.type3",
+                        "packageName": "examples.cd.SimpleTypes",
+                        "isDefinitiveNavigable": true,
+                        "cardinality": "[*]",
+                        "association": 23053378,
+                        "isLeft": true,
+                        "type": {
+                            "kind": "de.monticore.types.check.SymTypeOfObject",
+                            "objName": "examples.cd.SimpleTypes.Type3"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol",
+            "name": "SimpleTypes",
+            "fullName": "examples.cd.SimpleTypes",
+            "packageName": "examples.cd"
+        }
+    ],
+    "furtherObjects": {
+        "141015648": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isAssociation": true
+        },
+        "23053378": {
+            "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
+            "isComposition": true
+        }
+    }
+}

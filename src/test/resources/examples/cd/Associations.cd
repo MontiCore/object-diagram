@@ -1,0 +1,52 @@
+/* (c) https://github.com/MontiCore/monticore */
+package examples.cd;
+
+classdiagram Associations {
+
+  class OuterType {
+    ObjectType linkToAnObject;
+    List<Type> linkList;
+  }
+
+  class ObjectType { }
+
+  class OtherObjectType extends ObjectType { }
+
+  class InnerObjectType extends ObjectType {
+    int someInt;
+    boolean someBool;
+    String someString;
+  }
+
+  class TypeOfObject {
+    ObjectType innerLink;
+    TypeOfAnonymousObject innerLink2;
+    List<T> linkList1;
+  }
+
+  class TypeOfAnonymousObject {
+    String name;
+  }
+
+  class Type { }
+
+  class TypeOne extends Type { }
+
+  class TypeTwo extends Type { }
+
+  class TypeThree extends Type {
+    String content;
+  }
+
+  class T { }
+
+  class T1 extends T { }
+
+  class T2 extends T {
+    T3 foo;
+  }
+
+  class T3 extends T {
+    String content;
+  }
+}
