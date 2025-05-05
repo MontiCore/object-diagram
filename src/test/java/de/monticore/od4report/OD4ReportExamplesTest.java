@@ -40,7 +40,7 @@ public class OD4ReportExamplesTest extends ODTestBasis {
       "src/test/resources/examples/od/MyFamily.od" })
   public void testSuccessfulParsePP(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
-    OD4ReportParser parser = new OD4ReportParser();
+    OD4ReportParser parser = OD4ReportMill.parser();
     Optional<ASTODArtifact> odDef = parser.parse(model.toString());
     assertFalse(parser.hasErrors());
     assertTrue(odDef.isPresent());
@@ -61,7 +61,7 @@ public class OD4ReportExamplesTest extends ODTestBasis {
   
   private void negativTest(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
-    OD4ReportParser parser = new OD4ReportParser();
+    OD4ReportParser parser = OD4ReportMill.parser();
     parser.parseODArtifact(model.toString());
     assertTrue(parser.hasErrors());
     assertEquals(0, Log.getFindingsCount());

@@ -23,7 +23,7 @@ public class OD4DataToolAPI {
    */
   public static ASTODArtifact parse(String model) {
     try {
-      OD4DataParser parser = new OD4DataParser();
+      OD4DataParser parser = OD4DataMill.parser();
       Optional<ASTODArtifact> optODArtifact = parser.parse(model);
 
       if (!parser.hasErrors() && optODArtifact.isPresent()) {

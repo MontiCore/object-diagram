@@ -23,7 +23,7 @@ public class OD4ReportToolAPI {
    */
   public static ASTODArtifact parse(String model) {
     try {
-      OD4ReportParser parser = new OD4ReportParser();
+      OD4ReportParser parser = OD4ReportMill.parser();
       Optional<ASTODArtifact> optODArtifact = parser.parse(model);
 
       if (!parser.hasErrors() && optODArtifact.isPresent()) {

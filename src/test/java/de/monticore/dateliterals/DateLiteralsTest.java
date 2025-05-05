@@ -36,7 +36,7 @@ public class DateLiteralsTest extends ODTestBasis {
   
   @Test
   public void testSimpleDate() throws IOException {
-    OD4ReportParser od4ReportParser = new OD4ReportParser();
+    OD4ReportParser od4ReportParser = OD4ReportMill.parser();
     
     Optional<ASTODArtifact> astodArtifact =
         od4ReportParser.parseODArtifact(SIMPLE_CALENDAR.toString());
@@ -64,7 +64,7 @@ public class DateLiteralsTest extends ODTestBasis {
     DateLiteralsFullPrettyPrinter dateLiteralsPrettyPrinter;
     Optional<ASTODDate> astodDate;
     
-    OD4ReportParser od4ReportParser = new OD4ReportParser();
+    OD4ReportParser od4ReportParser = OD4ReportMill.parser();
     
     // hyphen
     String dateHyphen = "2017-12-20 15:18:12";
@@ -102,7 +102,7 @@ public class DateLiteralsTest extends ODTestBasis {
   
   @Test
   public void testDatePart() throws IOException {
-    OD4ReportParser od4ReportParser = new OD4ReportParser();
+    OD4ReportParser od4ReportParser = OD4ReportMill.parser();
     
     String dateString = "2017.12.20 15:18:12";
     Optional<ASTODDate> astodDate = od4ReportParser.parse_StringODDate(dateString);
@@ -115,7 +115,7 @@ public class DateLiteralsTest extends ODTestBasis {
   
   @Test
   public void testTimePart() throws IOException {
-    OD4ReportParser od4ReportParser = new OD4ReportParser();
+    OD4ReportParser od4ReportParser = OD4ReportMill.parser();
     
     String dateString = "2017.12.20 15:18:12";
     Optional<ASTODDate> astodDate = od4ReportParser.parse_StringODDate(dateString);
@@ -128,7 +128,7 @@ public class DateLiteralsTest extends ODTestBasis {
   
   @Test
   public void testLocalDateTime() throws IOException {
-    OD4ReportParser od4ReportParser = new OD4ReportParser();
+    OD4ReportParser od4ReportParser = OD4ReportMill.parser();
     
     String dateString = "2017.12.20 15:18:12";
     Optional<ASTODDate> astodDate = od4ReportParser.parse_StringODDate(dateString);
@@ -175,7 +175,7 @@ public class DateLiteralsTest extends ODTestBasis {
         .build();
     
     String prettyPrint = new DateLiteralsFullPrettyPrinter(new IndentPrinter()).prettyprint(date);
-    Optional<ASTDate> ppDate = new OD4ReportParser().parse_StringDate(prettyPrint);
+    Optional<ASTDate> ppDate = OD4ReportMill.parser().parse_StringDate(prettyPrint);
     assertTrue(ppDate.isPresent());
     assertEquals("00", ppDate.get().getTimePart().getMinute().getDigits());
     assertEquals("00", ppDate.get().getTimePart().getSecond().getDigits());

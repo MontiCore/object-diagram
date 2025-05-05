@@ -54,7 +54,7 @@ public class OD4DataExamplesTest extends ODTestBasis {
     String ppResult = new OD4DataFullPrettyPrinter(new IndentPrinter()).prettyprint(artifact);
     
     // parse the printers content
-    OD4DataParser parser = new OD4DataParser();
+    OD4DataParser parser = OD4DataMill.parser();
     Optional<ASTODArtifact> ppOd = parser.parse_StringODArtifact(ppResult);
     
     assertFalse(parser.hasErrors());
@@ -68,7 +68,7 @@ public class OD4DataExamplesTest extends ODTestBasis {
   @ValueSource(strings = { "src/test/resources/examples/od/InnerObjectWithoutLink.od" })
   public void negativTest(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
-    OD4DataParser parser = new OD4DataParser();
+    OD4DataParser parser = OD4DataMill.parser();
     parser.parseODArtifact(model.toString());
     assertTrue(parser.hasErrors());
     assertEquals(1, Log.getErrorCount());
