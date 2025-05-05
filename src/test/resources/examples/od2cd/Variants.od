@@ -2,11 +2,13 @@
 
 package examples.od;
 
+import examples.cd.SimpleTypes.*;
+
 <<global_stereotypes>>
 objectdiagram Variants {
 
-  <<object_specific_stereotypes>> o1:type1{};
-  o3:type3 {
+  <<object_specific_stereotypes>> o1:Type1{};
+  o3:Type3 {
     public int attr1;
     private static type1 attr2;
     protected final attr3 = 5;
@@ -18,7 +20,7 @@ objectdiagram Variants {
     / attr9;
   };
   local o4:MyObject{};
-  :type6{};
+  :Type6{};
 
   <<link_specific_stereotypes>> link o1 -> o2;
   link association1 o2 [[ID]] (leftRole) -- (rightRole) o1;

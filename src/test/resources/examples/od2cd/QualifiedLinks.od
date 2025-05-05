@@ -2,6 +2,8 @@
 
 package examples.od;
 
+import examples.cd.Auction.*;
+
 objectdiagram QualifiedLinks {
 
   local o1:AllData{};

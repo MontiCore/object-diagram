@@ -1,8 +1,8 @@
 @startuml
 note "OD" as tag #white
-object "__o1:type1__" as o1 {
+object "__o1:Type1__" as o1 {
 }
-object "__o3:type3__" as o3 {
+object "__o3:Type3__" as o3 {
   attr1
   attr2
   attr3 = 5
@@ -15,7 +15,7 @@ object "__o3:type3__" as o3 {
 }
 object "__o4:MyObject__" as o4 {
 }
-object "__:type6__" as __type6_anonymous_1 {
+object "__:Type6__" as __type6_anonymous_1 {
 }
 o1 --> o2
 o2 "leftRole"  --  "rightRole" o1 : association1

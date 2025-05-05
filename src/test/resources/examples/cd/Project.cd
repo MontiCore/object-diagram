@@ -1,0 +1,21 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.cd;
+
+classdiagram Project {
+
+  class GitLab {
+  }
+
+  class Test {
+    java.lang.String simpleName;
+    java.lang.String gitLabId;
+    java.lang.String fullName;
+    java.lang.String webUrl;
+    java.lang.String id;
+    java.lang.String created_at;
+    java.lang.String last_activity_at;
+  }
+
+  association test [1] GitLab -> Test [*];
+}

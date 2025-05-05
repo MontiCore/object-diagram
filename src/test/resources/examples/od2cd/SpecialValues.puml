@@ -1,6 +1,6 @@
 @startuml
 note "OD" as tag #white
-object "__o1:type1__" as o1 {
+object "__o1:Type1__" as o1 {
   myString = "abc\\def"
   myList = "a""b"
   myEmpty =

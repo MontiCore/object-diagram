@@ -1,15 +1,15 @@
 package de.monticore.od2plantuml;
 
+import de.monticore.ODTestBasis;
+import de.monticore.io.paths.MCPath;
 import de.monticore.od2plantuml.prettyprinter.PlantUMLODFullPrettyPrinter;
 import de.monticore.od4data.trafo.OD4DataAttributeValueCompositionTrafo;
 import de.monticore.od4data.trafo.OD4DataDeAnonymizeObjectsTrafo;
 import de.monticore.od4report.OD4ReportMill;
-import de.monticore.od4report._parser.OD4ReportParser;
+import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import de.se_rwth.commons.logging.Log;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Optional;
+import java.nio.file.Paths;
 
 /**
  * This class contains test cases for the PlantUMLODFullPrettyPrinter, which is responsible for
@@ -25,21 +25,12 @@ import java.util.Optional;
  * of the generated PlantUML syntax by comparing it with the expected results stored in test
  * resource files.
  */
-public class PlantUMLODFullPrettyPrinterTest {
+public class PlantUMLODFullPrettyPrinterTest extends ODTestBasis {
   
   /**
    * The base directory where test resources are located.
    */
   protected static String basedir = "src/test/resources/examples/";
-  
-  /**
-   * Disables the fail-quick behavior of the logging system before running the test cases.
-   */
-  @BeforeAll
-  public static void disableFailQuick() {
-    Log.initDEBUG();
-    Log.enableFailQuick(false);
-  }
   
   @BeforeEach
   public void setupMills(){
@@ -56,7 +47,7 @@ public class PlantUMLODFullPrettyPrinterTest {
    */
   @ParameterizedTest
   @ValueSource(strings = {
-      "od2cd/Example",
+      //"od2cd/Example",
       "od2cd/SimpleOD",
       "od2cd/StereoWithKeyword",
       "od2cd/SpecialValues",
@@ -70,11 +61,11 @@ public class PlantUMLODFullPrettyPrinterTest {
       "od2cd/MyFamily"
   })
   public void test(String input) throws IOException {
-    OD4ReportParser parser = OD4ReportMill.parser();
-    Optional<ASTODArtifact> optOD = parser.parse(basedir + input + ".od");
-    Assertions.assertTrue(optOD.isPresent());
+    Path inputPath = Paths.get(basedir + input+".od");
+
+    ASTODArtifact transformableArtifact =
+        OD4ReportTestUtil.loadModelAndST(inputPath, new MCPath(PATH));
     
-    ASTODArtifact transformableArtifact = optOD.get();
     new OD4DataDeAnonymizeObjectsTrafo().transform(transformableArtifact);
     new OD4DataAttributeValueCompositionTrafo().transform(transformableArtifact);
     

@@ -5,8 +5,8 @@ object "__src_test_resources_classes_A:JavaSourceFile__" as src_test_resources_c
 object "__src_test_resources_classes:Directory__" as src_test_resources_classes {
   dir = "src_test_resources_classes"
 }
-object "__de_se_artifacts_D:JavaClassType__" as de_se_artifacts_D {
-  Name = "D"
+object "__de_se_artifacts_D:JavaType__" as de_se_artifacts_D {
+  name = "D"
 }
 src_test_resources_classes_A --> de_se_artifacts_D : defines
 @enduml
