@@ -1,0 +1,16 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package trafos;
+
+import examples.cd.SimpleOD.*;
+
+objectdiagram AttributeObjectComposition {
+
+  foo:ObjectType1{};
+
+  bar:ObjectType2{
+   foobar = foo;
+   foobar2 = blaa:ObjectType2{}; // should be moved outside and references via composition
+   foobar3 = 3;
+  };
+}

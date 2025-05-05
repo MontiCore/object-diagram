@@ -1,6 +1,7 @@
-package de.monticore;
+package de.monticore.od2plantuml.prettyprinter;
 
 import de.monticore.dateliterals._prettyprint.DateLiteralsPrettyPrinter;
+import de.monticore.expressions.commonexpressions._prettyprint.CommonExpressionsPrettyPrinter;
 import de.monticore.literals.mccommonliterals._prettyprint.MCCommonLiteralsPrettyPrinter;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._visitor.OD4ReportTraverser;
@@ -23,6 +24,10 @@ public class PlantUMLODFullPrettyPrinter {
         new MCCommonLiteralsPrettyPrinter(printer, false);
     traverser.add4MCCommonLiterals(literalsPrettyPrinter);
     traverser.setMCCommonLiteralsHandler(literalsPrettyPrinter);
+    CommonExpressionsPrettyPrinter commonExpressionsPrettyPrinter =
+        new CommonExpressionsPrettyPrinter(printer, false);
+    traverser.add4CommonExpressions(commonExpressionsPrettyPrinter);
+    traverser.setCommonExpressionsHandler(commonExpressionsPrettyPrinter);
     DateLiteralsPrettyPrinter dateLiteralsPrettyPrinter =
         new DateLiteralsPrettyPrinter(printer, false);
     traverser.add4DateLiterals(dateLiteralsPrettyPrinter);

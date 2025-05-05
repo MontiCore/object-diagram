@@ -1,6 +1,9 @@
-package de.monticore;/* (c) https://github.com/MontiCore/monticore */
+package de.monticore.od2plantuml;/* (c) https://github.com/MontiCore/monticore */
 
 import de.monticore.io.paths.MCPath;
+import de.monticore.od2plantuml.prettyprinter.PlantUMLODFullPrettyPrinter;
+import de.monticore.od4data.trafo.OD4DataAttributeValueCompositionTrafo;
+import de.monticore.od4data.trafo.OD4DataDeAnonymizeObjectsTrafo;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
@@ -58,22 +61,29 @@ public class ODPlantUMLTool {
       
       // parse input file, which is now available
       // (only returns if successful)
-      ASTODArtifact ast = parse(cmd.getOptionValue("i"));
+      Optional<ASTODArtifact> ast = parse(cmd.getOptionValue("i"));
+      
+      if (ast.isEmpty()) {
+        return;
+      }
       
       if (cmd.hasOption("s")) {
         MCPath mcPath = new MCPath(cmd.getOptionValue("s"));
         OD4ReportMill.globalScope().setSymbolPath(mcPath);
       }
       else {
-        createSymbolTable(ast);
+        createSymbolTable(ast.get());
       }
+      
+      new OD4DataDeAnonymizeObjectsTrafo().transform(ast.get());
+      new OD4DataAttributeValueCompositionTrafo().transform(ast.get());
       
       // -option pretty print
       if (cmd.hasOption("pp")) {
         String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
         FileFormat extension = FileFormat.valueOf(FilenameUtils.getExtension(path).toUpperCase());
         String base = FilenameUtils.getBaseName(path);
-        prettyPrint(ast, base, extension);
+        prettyPrint(ast.get(), base, extension);
       }
       
     }
@@ -89,20 +99,20 @@ public class ODPlantUMLTool {
    * @param model filename for the OD model, not null
    * @return the ast for the OD artifact
    */
-  private ASTODArtifact parse(String model) {
+  private Optional<ASTODArtifact> parse(String model) {
     try {
       OD4ReportParser parser = OD4ReportMill.parser();
       Optional<ASTODArtifact> optAst = parser.parse(model);
       
       if (!parser.hasErrors() && optAst.isPresent()) {
-        return optAst.get();
+        return optAst;
       }
       Log.error("0xA1050x51507 Model could not be parsed.");
     }
     catch (NullPointerException | IOException e) {
       Log.error("0xA1051x70629 Failed to parse " + model, e);
     }
-    return null;
+    return Optional.empty();
   }
   
   /**

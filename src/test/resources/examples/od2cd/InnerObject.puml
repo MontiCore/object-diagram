@@ -2,7 +2,17 @@
 note "OD" as tag #white
 object "__myObject:OuterType__" as myObject {
 }
+object "__objectThree:TypeThree__" as objectThree {
+  content = "someString"
+}
+object "__objectOne:TypeOne__" as objectOne {
+}
+object "__objectTwo:TypeTwo__" as objectTwo {
+}
 object "__InnerObject:OtherObjectType__" as InnerObject {
 }
-myObject "keep it failing" InnerObject
+objectTwo *-->  "nestedObject" objectThree
+myObject *-->  "linkList" objectOne
+myObject *-->  "linkList" objectTwo
+myObject *-->  "linkToAnObject" InnerObject
 @enduml

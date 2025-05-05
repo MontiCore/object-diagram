@@ -1,0 +1,17 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package trafos;
+
+import examples.cd.SimpleOD.*;
+
+objectdiagram AttributeObjectComposition3 {
+
+  foo:ObjectType5{
+    foobar = [
+      1 -> foo1:ObjectType1{},
+      2 -> bar
+    ];
+  };
+
+  bar:ObjectType1{};
+}
