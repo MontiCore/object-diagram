@@ -45,13 +45,16 @@ public class ODLinkAttributeValueCompositionTrafo implements ODBasisVisitor2, OD
           attributesToRemove.add(attribute);
           compositionsToCreate.add(link);
         }
-        else if (ODLinkMill.typeDispatcher().isExpressionsBasisASTNameExpression(value)) {
-          // TODO JRa: Use Typecheck3 to check the reference of the NameExpression. Do not transform, if its an ENUM value!
-          ASTNameExpression nameExpression =
-              ODLinkMill.typeDispatcher().asExpressionsBasisASTNameExpression(value);
-          ASTODLink link = createAssociation(node.getName(), nameExpression.getName(), attribute.getName());
-          attributesToRemove.add(attribute);
-          compositionsToCreate.add(link);
+        else if (ODLinkMill.typeDispatcher().isODBasisASTODSimpleAttributeValue(value)) {
+          ASTODSimpleAttributeValue simpleValue = ODLinkMill.typeDispatcher().asODBasisASTODSimpleAttributeValue(value);
+          if (ODLinkMill.typeDispatcher().isExpressionsBasisASTNameExpression(simpleValue.getExpression())) {
+            // TODO JRa: Use Typecheck3 to check the reference of the NameExpression. Do not transform, if its an ENUM value!
+            ASTNameExpression nameExpression =
+                ODLinkMill.typeDispatcher().asExpressionsBasisASTNameExpression(simpleValue.getExpression());
+            ASTODLink link = createAssociation(node.getName(), nameExpression.getName(), attribute.getName());
+            attributesToRemove.add(attribute);
+            compositionsToCreate.add(link);
+          }
         }
       }
     }
