@@ -50,15 +50,17 @@ public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
     new OD4DataAttributeValueCompositionTrafo().transform(artifact);
     
     // Assertions post trafo
-    assertEquals(4, diagram.getODElementList().size());
+    assertEquals(5, diagram.getODElementList().size());
     ASTODNamedObject foo2 = assertAndGetAsODNamedObject(diagram.getODElement(0));
     assertEquals("foo", foo2.getName());
     ASTODNamedObject bar2 = assertAndGetAsODNamedObject(diagram.getODElement(1));
     assertEquals("bar", bar2.getName());
-    assertEquals(2, bar2.getODAttributeList().size());
+    assertEquals(1, bar2.getODAttributeList().size());
     ASTODNamedObject blaa = assertAndGetAsODNamedObject(diagram.getODElement(2));
     assertEquals("blaa", blaa.getName());
-    ASTODLink blaaLink = assertAndGetAsODLink(diagram.getODElement(3));
+    ASTODLink fooLink = assertAndGetAsODLink(diagram.getODElement(3));
+    assertLinkConfig(fooLink, "bar", "foo", "foobar", false);
+    ASTODLink blaaLink = assertAndGetAsODLink(diagram.getODElement(4));
     assertLinkCompositionConfig(blaaLink, "bar", "blaa", "foobar2");
   }
   
@@ -162,11 +164,16 @@ public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
   
   protected void assertLinkCompositionConfig(ASTODLink link, String source, String target,
       String role) {
+    assertLinkConfig(link, source, target, role, true);
+  }
+  
+  protected void assertLinkConfig(ASTODLink link, String source, String target,
+      String role, boolean isComposition) {
     assertEquals(1, link.getLeftReferenceNames().size());
     assertEquals(source, link.getLeftReferenceNames().get(0));
     assertEquals(1, link.getRightReferenceNames().size());
     assertEquals(target, link.getRightReferenceNames().get(0));
-    assertTrue(link.isComposition());
+    assertEquals(isComposition, link.isComposition());
     assertFalse(link.isLink());
     assertFalse(link.isAggregation());
     assertTrue(OD4DataMill.typeDispatcher().isODLinkASTODLeftToRightDir(link.getODLinkDirection()));
