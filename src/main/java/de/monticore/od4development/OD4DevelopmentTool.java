@@ -20,9 +20,9 @@ import de.monticore.odbasis._prettyprint.ODBasisFullPrettyPrinter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
-import de.se_rwth.commons.Names;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -32,7 +32,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
-
+  
+  protected static final String PARSE_SUCCESSFUL = "Successfully parsed %s\n";
+  
+  protected static final String CHECK_SUCCESSFUL =
+      "Successfully checked the CoCos for class " + "diagram %s\n";
+  
+  protected static final String CHECK_ERROR = "Error while parsing or CoCo checking";
+  
+  protected static final String STEXPORT_SUCCESSFUL = "Creation of symbol file %s successful\n";
+  
+  protected static final String INPUT_FILE_NOT_EXISTENT = "Input file '%s' does not exist\n";
+  
   public void run(String[] args) {
     Log.init();
     OD4DevelopmentMill.init();
@@ -65,10 +76,23 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       } else {
         Log.init();
       }
-
-      // parse input file, which is now available
-      // (only returns if successful)
-      ASTODArtifact ast = parse(cmd.getOptionValue("i"));
+      
+      // don't output to stdout when the prettyprint is output to stdout
+      final boolean doPrintToStdOut = !(cmd.hasOption("pp") && cmd.getOptionValue("pp") == null);
+      
+      // parse input file
+      String modelFile = cmd.getOptionValue("i");
+      Path modelFilePath = Paths.get(modelFile);
+      if (!modelFilePath.toFile().exists()) {
+        System.out.printf(INPUT_FILE_NOT_EXISTENT, modelFile);
+        return;
+      }
+      
+      ASTODArtifact ast = parse(modelFile);
+      
+      if (doPrintToStdOut) {
+        System.out.printf(PARSE_SUCCESSFUL, ast.getObjectDiagram().getName());
+      }
       
       if(cmd.hasOption("path")) {
         MCPath mcPath = new MCPath(cmd.getOptionValue("path"));
@@ -85,11 +109,24 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       IOD4DevelopmentArtifactScope as = createSymbolTable(ast);
       
       if (cmd.hasOption("s")) {
-        storeSymTab(as, cmd.getOptionValue("s"));
+        Path symTabPath = storeSymTab(as, modelFilePath, cmd.getOptionValue("s"));
+        if (doPrintToStdOut) {
+          System.out.printf(STEXPORT_SUCCESSFUL, symTabPath.toAbsolutePath());
+        }
       }
 
       if (cmd.hasOption("c")) {
         runDefaultCoCos(ast);
+        
+        if (doPrintToStdOut) {
+          if (Log.getErrorCount() == 0) {
+            System.out.printf(CHECK_SUCCESSFUL, ast.getObjectDiagram().getName());
+          }
+          else {
+            System.out.println(CHECK_ERROR);
+            return;
+          }
+        }
       }
 
       // -option pretty print
@@ -158,16 +195,23 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
    * prints the symboltable of the given scope out to a file
    *
    * @param as symboltable to store
-   * @param path location of the file or directory containing the printed table
+   * @param modelPath location of the file containing the OD
+   * @param symTabPath location of the file or directory containing the printed table
    */
-  public void storeSymTab(IOD4DevelopmentArtifactScope as, String path) {
-    if (Path.of(path).toFile().isFile()) {
-      this.storeSymbols(as, path);
+  public Path storeSymTab(IOD4DevelopmentArtifactScope as, Path modelPath, String symTabPath) {
+    Path targetPath;
+    if (symTabPath == null || symTabPath.isBlank()) {
+      String symTabName = FilenameUtils.getBaseName(modelPath.toString()) + ".odsym";
+      targetPath = modelPath.getParent().resolve(symTabName);
     }
     else {
-      this.storeSymbols(
-          as,
-          Paths.get(path, Names.getPathFromPackage(as.getFullName()) + ".odsym").toString());
+      targetPath = Paths.get(symTabPath);
+      if (targetPath.toFile().exists() && targetPath.toFile().isDirectory()) {
+        String symTabName = FilenameUtils.getBaseName(modelPath.toString()) + ".odsym";
+        targetPath = targetPath.resolve(symTabName);
+      }
     }
+    this.storeSymbols(as, targetPath.toString());
+    return targetPath;
   }
 }

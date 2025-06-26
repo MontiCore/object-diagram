@@ -52,7 +52,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
         Paths.get(INPUT_DIR.toString(), "cocos").toString() };
     OD4DataTool.main(input);
     
-    assertEquals("", getOut());
+    assertEquals(String.format(OD4DataTool.PARSE_SUCCESSFUL, "SimpleOD2"), getOut());
     assertEquals(0, Log.getFindingsCount());
   }
   
@@ -61,7 +61,8 @@ public class OD4DataToolTest extends ODOutTestBasis {
     String[] input = { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-c", "intra" };
     OD4DataTool.main(input);
     
-    assertEquals("", getOut());
+    assertEquals(String.format(OD4DataTool.PARSE_SUCCESSFUL, "SimpleOD2") + String.format(
+        OD4DataTool.CHECK_SUCCESSFUL, "SimpleOD2"), getOut());
     assertEquals(0, Log.getFindingsCount());
   }
   

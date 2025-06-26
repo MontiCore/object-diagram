@@ -35,11 +35,22 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
   
   @Test
   public void testStoreSymtabFile() {
+    Path stTargetPath = TARGET_PATH_DIR.resolve(Paths.get("examples", "od2cd", "Examples.odsym"));
+    OD4DevelopmentToolTOP.main(
+        new String[] { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-s",
+            stTargetPath.toString() });
+    File symTab = stTargetPath.toFile();
+    assertTrue(symTab.exists() && symTab.isFile());
+  }
+  
+  @Test
+  public void testStoreSymtabFile2() {
+    TARGET_PATH_DIR.toFile().mkdirs();
     OD4DevelopmentToolTOP.main(
         new String[] { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-s",
             TARGET_PATH_DIR.toString() });
     File symTab =
-        TARGET_PATH_DIR.resolve(Paths.get("examples", "od2cd", "Examples.odsym")).toFile();
+        TARGET_PATH_DIR.resolve("Example.odsym").toFile();
     assertTrue(symTab.exists() && symTab.isFile());
   }
   

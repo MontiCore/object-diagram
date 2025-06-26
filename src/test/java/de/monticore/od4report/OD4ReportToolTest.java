@@ -49,7 +49,8 @@ public class OD4ReportToolTest extends ODOutTestBasis {
         INPUT_DIR.getParent().getParent().resolve("cocos").toString(), "-c", "intra" };
     OD4ReportTool.main(input);
     
-    assertEquals("", getOut());
+    assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "Examples") + String.format(
+        OD4ReportTool.CHECK_SUCCESSFUL, "Examples"), getOut());
     assertEquals(0, Log.getFindingsCount());
   }
   
@@ -60,7 +61,8 @@ public class OD4ReportToolTest extends ODOutTestBasis {
             "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer", "-c" };
     OD4ReportTool.main(input);
     
-    assertEquals("", getOut());
+    assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "MyFamily") + String.format(
+        OD4ReportTool.CHECK_SUCCESSFUL, "MyFamily"), getOut());
     assertEquals(0, Log.getFindingsCount());
   }
   
@@ -71,7 +73,8 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     assertEquals("", getOut());
     OD4ReportTool.main(input);
     
-    assertEquals("", getOut());
+    assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "SimpleOD") + String.format(
+        OD4ReportTool.CHECK_SUCCESSFUL, "SimpleOD"), getOut());
     assertEquals(0, Log.getFindingsCount());
   }
   
