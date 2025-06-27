@@ -184,10 +184,14 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
 
     hpp.processValue(tc, ast, configTemplateArgs);
   }
-
+  
   @Override
   public Options addAdditionalOptions(Options options) {
-    options.addOption(new Option("o","output",true,"Sets the output path"));
+    options.addOption(new Option("o", "output", true, "Sets the output path"));
+    // check cocos
+    options.addOption(
+        Option.builder("c").longOpt("coco").desc("Checks the intra-model CoCos for the input.")
+            .build());
     return options;
   }
   
