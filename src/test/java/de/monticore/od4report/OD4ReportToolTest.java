@@ -5,14 +5,15 @@ package de.monticore.od4report;
 import de.monticore.ODOutTestBasis;
 import de.se_rwth.commons.logging.Log;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OD4ReportToolTest extends ODOutTestBasis {
   
@@ -89,7 +90,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
   
   @Test
   public void testOD4ReportToolPrettyPrintToFile() {
-    String ppOutPath = getTmpFilePath("pp.od");
+    String ppOutPath = getTmpFilePath("pp.od").toString();
     String[] input = { "-i", INPUT_OD.toString(), "-pp", ppOutPath, "-c", "intra" };
     OD4ReportTool.main(input);
     
@@ -99,13 +100,48 @@ public class OD4ReportToolTest extends ODOutTestBasis {
   
   @Test
   public void testOD4ReportStoreST() {
-    String symOutPath = getTmpFilePath("Examples.odsym");
+    String symOutPath = getTmpFilePath("Examples.odsym").toString();
     String[] input =
         { "-i", INPUT_OD.toString(), "-s", symOutPath, "-path", PATH.toString(), "-symtypes",
             "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer" };
     OD4ReportTool.main(input);
     
     assertTrue(Paths.get(symOutPath).toFile().exists());
+    assertEquals(0, Log.getFindingsCount());
+  }
+  
+  @Test
+  public void testStoreSymtabFile() {
+    Path stTargetPath = getTmpFilePath("symboltable", "examples", "od", "Examples.odsym");
+    OD4ReportTool.main(new String[] { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-s",
+        stTargetPath.toString(), "-symtypes", "de.monticore.cdbasis._symboltable.CDTypeSymbol",
+        "TypeSymbolDeSer" });
+    File symTab = stTargetPath.toFile();
+    assertTrue(symTab.exists() && symTab.isFile());
+    assertEquals(0, Log.getFindingsCount());
+  }
+  
+  @Test
+  public void testStoreSymtabFile2() {
+    Path existingTargetDirPath = getTmpFilePath("existing");
+    assertTrue(existingTargetDirPath.toFile().mkdir());
+    OD4ReportTool.main(new String[] { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-s",
+        existingTargetDirPath.toString(), "-symtypes",
+        "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer" });
+    File symTab = existingTargetDirPath.resolve("Examples.odsym").toFile();
+    assertTrue(symTab.exists() && symTab.isFile());
+    assertEquals(0, Log.getFindingsCount());
+  }
+  
+  @Test
+  public void testStoreSymtabFile3() {
+    Path copiedInputFile = getTmpFilePath("examples", "od", "Examples.od");
+    assertDoesNotThrow(() -> FileUtils.copyFile(INPUT_OD.toFile(), copiedInputFile.toFile()));
+    OD4ReportTool.main(
+        new String[] { "-i", copiedInputFile.toString(), "-path", PATH.toString(), "-s",
+            "-symtypes", "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer" });
+    File symTab = copiedInputFile.getParent().resolve("Examples.odsym").toFile();
+    assertTrue(symTab.exists() && symTab.isFile());
     assertEquals(0, Log.getFindingsCount());
   }
   
