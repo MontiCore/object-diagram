@@ -1,7 +1,8 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4development;
 
-import de.monticore.ODTestBasis;
+import de.monticore.ODOutTestBasis;
+import de.se_rwth.commons.logging.Log;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,14 +10,12 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class OD4DevelopmentToolTest extends ODTestBasis {
+public class OD4DevelopmentToolTest extends ODOutTestBasis {
   
   private final Path INPUT_OD = PATH.resolve(Paths.get("examples", "od2cd", "Example.od"));
   private final Path INPUT_PATH_DIR = PATH.resolve(Paths.get("symboltable", "tooltest"));
-  private final Path TARGET_PATH_DIR =
-      Paths.get("target", "generated-test-sources", "tooltest", "symboltable");
   
   @BeforeEach
   public void before() {
@@ -25,33 +24,84 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
   }
   
   @Test
+  public void testOD4DevelopmentToolHelp() {
+    String[] help = { "-h" };
+    OD4DevelopmentTool.main(help);
+    
+    assertContains(getOut(), "usage: OD4DevelopmentTool");
+    checkLogError();
+  }
+  
+  @Test
+  public void testOD4DevelopmentToolMissingInput() {
+    String[] input = {};
+    OD4DevelopmentTool.main(input);
+    
+    assertContains(getOut(), "usage: OD4DevelopmentTool");
+    checkLogError();
+  }
+  
+  @Test
+  public void testOD4DevelopmentToolPath() {
+    String[] input = { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(),
+        Paths.get(INPUT_PATH_DIR.toString(), "cocos").toString() };
+    OD4DevelopmentTool.main(input);
+    
+    assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), getOut());
+  }
+  
+  @Test
+  public void testOD4DevelopmentToolIntraCoCos() {
+    String[] input =
+        { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-c", "intra" };
+    OD4DevelopmentTool.main(input);
+    
+    assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples") + String.format(
+        OD4DevelopmentTool.CHECK_SUCCESSFUL, "Examples"), getOut());
+  }
+  
+  @Test
+  public void testOD4ToolPrettyPrint() {
+    String ppOutPath = getTmpFilePath("pp.od").toString();
+    String[] input =
+        { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-pp", ppOutPath };
+    OD4DevelopmentTool.main(input);
+    
+    assertTrue(Paths.get(ppOutPath).toFile().exists());
+  }
+  
+  @Test
   public void testAddSymtabFile() {
     String[] args = new String[] { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString() };
     assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().isEmpty());
-    OD4DevelopmentToolTOP.main(args);
+    OD4DevelopmentTool.main(args);
     assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().toString()
         .endsWith("resources/symboltable/tooltest/]"));
+    assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), getOut());
   }
   
   @Test
   public void testStoreSymtabFile() {
-    Path stTargetPath = TARGET_PATH_DIR.resolve(Paths.get("examples", "od2cd", "Examples.odsym"));
-    OD4DevelopmentToolTOP.main(
+    Path stTargetPath = getTmpFilePath("symboltable", "examples", "od2cd", "Examples.odsym");
+    OD4DevelopmentTool.main(
         new String[] { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-s",
             stTargetPath.toString() });
     File symTab = stTargetPath.toFile();
     assertTrue(symTab.exists() && symTab.isFile());
+    assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples") + String.format(
+        OD4DevelopmentTool.STEXPORT_SUCCESSFUL, symTab.getAbsolutePath()), getOut());
   }
   
   @Test
   public void testStoreSymtabFile2() {
-    TARGET_PATH_DIR.toFile().mkdirs();
-    OD4DevelopmentToolTOP.main(
+    Path existingTargetDirPath = getTmpFilePath("existing");
+    assertTrue(existingTargetDirPath.toFile().mkdir());
+    OD4DevelopmentTool.main(
         new String[] { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-s",
-            TARGET_PATH_DIR.toString() });
-    File symTab =
-        TARGET_PATH_DIR.resolve("Example.odsym").toFile();
+            existingTargetDirPath.toString() });
+    File symTab = getTmpFilePath("existing", "Example.odsym").toFile();
     assertTrue(symTab.exists() && symTab.isFile());
+    assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples") + String.format(
+        OD4DevelopmentTool.STEXPORT_SUCCESSFUL, symTab.getAbsolutePath()), getOut());
   }
-  
 }
