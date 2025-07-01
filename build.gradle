@@ -50,6 +50,7 @@ dependencies {
   implementation "commons-cli:commons-cli:$commons_cli_version"
   implementation "org.apache.commons:commons-lang3:$commons_lang3_version"
   implementation "com.google.guava:guava:$guava_version"
+  testImplementation testFixtures("de.monticore:monticore-grammar:$mc_version")
   testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
   testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit_version"
   testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
