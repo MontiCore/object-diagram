@@ -9,8 +9,8 @@ import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.runtime.junit.MCAssertions;
 import de.monticore.runtime.junit.TestWithMCLanguage;
-import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -66,8 +66,7 @@ public class OD4DataExamplesTest extends ODTestBasis {
     OD4DataParser parser = OD4DataMill.parser();
     parser.parseODArtifact(model.toString());
     assertTrue(parser.hasErrors());
-    assertEquals(1, Log.getErrorCount());
-    Log.clearFindings();
+    MCAssertions.assertHasFindingStartingWith("missing ';' at '}' in rule stack");
   }
   
 }

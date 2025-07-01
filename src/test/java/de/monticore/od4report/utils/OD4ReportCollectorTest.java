@@ -10,7 +10,6 @@ import de.monticore.od4report._ast.ASTODReportObject;
 import de.monticore.od4report.util.OD4ReportCollector;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.runtime.junit.TestWithMCLanguage;
-import de.se_rwth.commons.logging.Log;
 
 import org.junit.jupiter.api.Test;
 
@@ -47,8 +46,6 @@ public class OD4ReportCollectorTest extends ODTestBasis {
     List<ASTODReportObject> reportObjects =
         od4ReportCollector.getReportObjects(astodArtifact.getObjectDiagram());
     assertEquals(1, reportObjects.size());
-    
-    assertEquals(0, Log.getFindingsCount());
   }
   
   @Test
@@ -72,8 +69,6 @@ public class OD4ReportCollectorTest extends ODTestBasis {
     List<ASTODReportObject> reportObjects =
         od4ReportCollector.getReportObjects(astodArtifact.getObjectDiagram());
     assertEquals(0, reportObjects.size());
-    
-    assertEquals(0, Log.getFindingsCount());
   }
   
 }

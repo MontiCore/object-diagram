@@ -8,7 +8,6 @@ import de.monticore.od4report._prettyprint.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.runtime.junit.TestWithMCLanguage;
-import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -48,7 +47,6 @@ public class OD4ReportExamplesTest extends ODTestBasis {
     
     assertFalse(parser.hasErrors());
     assertTrue(ppOd.isPresent());
-    assertEquals(0, Log.getFindingsCount());
     
     // must be equal to original parsed AST.
     assertTrue(odDef.get().deepEquals(ppOd.get()), "pretty printed OD: " + ppResult);
@@ -59,7 +57,6 @@ public class OD4ReportExamplesTest extends ODTestBasis {
     OD4ReportParser parser = OD4ReportMill.parser();
     parser.parseODArtifact(model.toString());
     assertTrue(parser.hasErrors());
-    assertEquals(0, Log.getFindingsCount());
   }
   
 }

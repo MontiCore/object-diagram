@@ -3,7 +3,7 @@
 package de.monticore.od4data;
 
 import de.monticore.ODOutTestBasis;
-import de.se_rwth.commons.logging.Log;
+import de.monticore.runtime.junit.MCAssertions;
 
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +24,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(help);
     
     assertContains(getOut(), "usage: OD4DataTool");
-    checkLogError();
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -33,7 +33,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(input);
     
     assertContains(getOut(), "usage: OD4DataTool");
-    checkLogError();
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -43,7 +43,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(input);
     
     assertEquals("", getOut());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -52,7 +52,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(input);
     
     assertEquals("", getOut());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -62,7 +62,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(input);
     
     assertTrue(Paths.get(ppOutPath).toFile().exists());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -72,7 +72,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(input);
     
     assertTrue(Paths.get(symOutPath).toFile().exists());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
 }

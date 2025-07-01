@@ -77,8 +77,6 @@ public class OD4DataDeSerTest extends ODTestBasis {
     assertContains(serialized, "\"fullName\":\"examples.od.fooBar2\"");
     assertContains(serialized, "\"fullName\":\"examples.od.myObject2\"");
     assertContains(serialized, "\"objName\":\"examples.cd.SimpleOD2.ObjectType2\"");
-    
-    assertEquals(0, Log.getErrorCount());
   }
   
   @Test

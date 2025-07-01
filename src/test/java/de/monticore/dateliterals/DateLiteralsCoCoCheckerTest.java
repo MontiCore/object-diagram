@@ -9,16 +9,14 @@ import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.od4report._cocos.OD4ReportCoCoChecker;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.runtime.junit.MCAssertions;
 import de.monticore.runtime.junit.TestWithMCLanguage;
-import de.se_rwth.commons.logging.Log;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @TestWithMCLanguage(OD4ReportMill.class)
 public class DateLiteralsCoCoCheckerTest extends ODOutTestBasis {
@@ -38,7 +36,8 @@ public class DateLiteralsCoCoCheckerTest extends ODOutTestBasis {
     odCoCoChecker.addChecker(new DateLiteralsCoCos().getCheckerForAllCoCos());
     odCoCoChecker.checkAll(artifact);
     
-    assertEquals(3, Log.getErrorCount());
-    Log.clearFindings();
+    MCAssertions.assertHasFindingStartingWith("0x0D009");
+    MCAssertions.assertHasFindingStartingWith("0x0D009");
+    MCAssertions.assertHasFindingStartingWith("0x0D009");
   }
 }

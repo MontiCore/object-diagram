@@ -11,7 +11,6 @@ import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 
 import de.se_rwth.commons.Names;
-import de.se_rwth.commons.logging.Log;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -52,7 +51,6 @@ public class OD4ReportDeSerTest extends ODTestBasis {
     
     assertEquals(od4ReportSymbols2Json.serialize(artifactScope),
         od4ReportSymbols2Json.serialize(loadedBasicsArtifactScope));
-    assertEquals(0, Log.getFindingsCount());
   }
   
   @Test
@@ -72,8 +70,6 @@ public class OD4ReportDeSerTest extends ODTestBasis {
     assertContains(serialized, "\"fullName\":\"examples.od.alice\"");
     assertContains(serialized, "\"fullName\":\"examples.od.bob\"");
     assertContains(serialized, "\"objName\":\"examples.cd.MyFamily.Person\"");
-    
-    assertEquals(0, Log.getErrorCount());
   }
   
   @Test

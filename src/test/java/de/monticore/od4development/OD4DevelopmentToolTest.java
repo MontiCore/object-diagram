@@ -1,16 +1,18 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4development;
 
-import de.monticore.ODTestBasis;
+import de.monticore.ODOutTestBasis;
+import de.monticore.runtime.junit.MCAssertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class OD4DevelopmentToolTest extends ODTestBasis {
+public class OD4DevelopmentToolTest extends ODOutTestBasis {
   
   private final Path INPUT_OD = PATH.resolve(Paths.get("examples", "od2cd", "Example.od"));
   private final Path INPUT_PATH_DIR = PATH.resolve(Paths.get("symboltable", "tooltest"));
@@ -24,6 +26,9 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     OD4DevelopmentTool.main(args);
     assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().toString()
         .endsWith("resources/symboltable/tooltest/]"));
+    
+    assertEquals("", getOut());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -34,6 +39,9 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     File symTab =
         TARGET_PATH_DIR.resolve(Paths.get("examples", "od2cd", "Examples.odsym")).toFile();
     assertTrue(symTab.exists() && symTab.isFile());
+    
+    assertEquals("", getOut());
+    MCAssertions.assertNoFindings();
   }
   
 }

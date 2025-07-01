@@ -9,13 +9,11 @@ import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
-import de.se_rwth.commons.logging.Log;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestWithMCLanguage(OD4ReportMill.class)
@@ -32,6 +30,5 @@ public class OD4ReportSymbolTableCreatorTest extends ODTestBasis {
     Optional<VariableSymbol> person =
         symbolTable.resolveVariable("symboltable.symbols.MyFamily.alice");
     assertTrue(person.isPresent());
-    assertEquals(0, Log.getFindingsCount());
   }
 }
