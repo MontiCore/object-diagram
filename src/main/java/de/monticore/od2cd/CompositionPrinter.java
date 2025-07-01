@@ -6,8 +6,6 @@ import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
 import de.monticore.od4development._symboltable.IOD4DevelopmentGlobalScope;
 import de.monticore.types.mcbasictypes._ast.ASTMCType;
 
-import java.util.List;
-
 public class CompositionPrinter {
   
   public String create(ASTMCType type) {

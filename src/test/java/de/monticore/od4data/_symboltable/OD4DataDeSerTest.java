@@ -11,7 +11,6 @@ import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.se_rwth.commons.Names;
-import de.se_rwth.commons.logging.Log;
 
 import org.junit.jupiter.api.Test;
 

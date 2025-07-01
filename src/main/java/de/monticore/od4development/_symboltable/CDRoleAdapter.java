@@ -5,7 +5,6 @@ import de.monticore.symbols.oosymbols._symboltable.FieldSymbol;
 
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Adapter for importing role symbols from CDs.
