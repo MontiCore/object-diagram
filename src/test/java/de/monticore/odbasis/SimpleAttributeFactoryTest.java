@@ -8,20 +8,15 @@ import de.monticore.ODTestBasis;
 import de.monticore.odbasis._ast.ASTODAttribute;
 import de.monticore.odbasis.utils.SimpleAttributeFactory;
 
-import org.junit.jupiter.api.BeforeEach;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestWithMCLanguage(ODBasisMill.class)
 public class SimpleAttributeFactoryTest extends ODTestBasis {
-  
-  @BeforeEach
-  public void setup() {
-    ODBasisMill.reset();
-    ODBasisMill.init();
-  }
   
   @Test
   public void testCreateInteger() {

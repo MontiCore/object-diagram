@@ -2,7 +2,6 @@
 package de.monticore.od4development;
 
 import de.monticore.ODTestBasis;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -18,24 +17,18 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
   private final Path TARGET_PATH_DIR =
       Paths.get("target", "generated-test-sources", "tooltest", "symboltable");
   
-  @BeforeEach
-  public void before() {
-    OD4DevelopmentMill.reset();
-    OD4DevelopmentMill.init();
-  }
-  
   @Test
   public void testAddSymtabFile() {
     String[] args = new String[] { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString() };
     assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().isEmpty());
-    OD4DevelopmentToolTOP.main(args);
+    OD4DevelopmentTool.main(args);
     assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().toString()
         .endsWith("resources/symboltable/tooltest/]"));
   }
   
   @Test
   public void testStoreSymtabFile() {
-    OD4DevelopmentToolTOP.main(
+    OD4DevelopmentTool.main(
         new String[] { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-s",
             TARGET_PATH_DIR.toString() });
     File symTab =

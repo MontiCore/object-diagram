@@ -9,6 +9,7 @@ import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.od4report._cocos.OD4ReportCoCoChecker;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.se_rwth.commons.logging.Log;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,15 +20,13 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestWithMCLanguage(OD4ReportMill.class)
 public class DateLiteralsCoCoCheckerTest extends ODOutTestBasis {
   
   private static OD4ReportCoCoChecker odCoCoChecker;
   
   @BeforeEach
   public void setup() {
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
-    
     odCoCoChecker = new OD4ReportCoCoChecker();
   }
   

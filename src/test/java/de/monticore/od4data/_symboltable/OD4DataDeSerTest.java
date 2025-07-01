@@ -8,11 +8,11 @@ import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data.OD4DataTestUtil;
 import de.monticore.od4data.OD4DataToolAPI;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.se_rwth.commons.Names;
 import de.se_rwth.commons.logging.Log;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -21,15 +21,10 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestWithMCLanguage(OD4DataMill.class)
 public class OD4DataDeSerTest extends ODTestBasis {
   
   private final Path SIMPLEOD2 = PATH.resolve(Paths.get("examples", "od", "SimpleOD2.od"));
-  
-  @BeforeEach
-  public void setUp() {
-    OD4DataMill.reset();
-    OD4DataMill.init();
-  }
   
   @Test
   public void testOD4DataDeSer() {

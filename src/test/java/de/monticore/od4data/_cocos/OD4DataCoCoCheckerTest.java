@@ -12,6 +12,7 @@ import de.monticore.odbasis._cocos.names.UniqueObjectNamesCoCo;
 import de.monticore.odbasis._cocos.object.ValidObjectReferenceCoCo;
 import de.monticore.odlink._cocos.link.LinkEndConsistencyCoCo;
 import de.monticore.odlink._cocos.link.ValidLinkReferenceCoCo;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.se_rwth.commons.logging.Log;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +22,7 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestWithMCLanguage(OD4DataMill.class)
 public class OD4DataCoCoCheckerTest extends ODOutTestBasis {
   
   private final Path cocoExamples = PATH.resolve("cocos");
@@ -30,9 +32,6 @@ public class OD4DataCoCoCheckerTest extends ODOutTestBasis {
   @BeforeEach
   public void setUp() {
     odCoCoChecker = new OD4DataCoCoChecker();
-    
-    OD4DataMill.reset();
-    OD4DataMill.init();
   }
   
   @Test

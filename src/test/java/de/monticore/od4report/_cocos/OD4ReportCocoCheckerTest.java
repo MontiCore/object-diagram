@@ -12,6 +12,7 @@ import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._cocos.object.ValidObjectTypeCoco;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
 import de.se_rwth.commons.logging.Log;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,7 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestWithMCLanguage(OD4ReportMill.class)
 public class OD4ReportCocoCheckerTest extends ODTestBasis {
   
   private OD4ReportCoCoChecker odCoCoChecker;
@@ -29,9 +31,6 @@ public class OD4ReportCocoCheckerTest extends ODTestBasis {
   @BeforeEach
   public void setUp() {
     odCoCoChecker = new OD4ReportCoCoChecker();
-    
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
   }
   
   @Test

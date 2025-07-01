@@ -11,8 +11,8 @@ import de.monticore.od4data.OD4DataTestUtil;
 import de.monticore.odattribute._ast.ASTODList;
 import de.monticore.odattribute._ast.ASTODMap;
 import de.monticore.odbasis._ast.*;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.se_rwth.commons.logging.Log;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -20,15 +20,10 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
+@TestWithMCLanguage(OD4DataMill.class)
 public class OD4DataDeAnonymizeObjectsTrafoTest extends ODTestBasis {
   
   private final Path TRAFO_EXAMPLES = PATH.resolve("trafos");
-  
-  @BeforeEach
-  void setUp() {
-    OD4DataMill.reset();
-    OD4DataMill.init();
-  }
   
   @Test
   void testDeAnonymizationOuterObject() {

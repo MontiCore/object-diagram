@@ -4,10 +4,8 @@ package de.monticore;
 import com.google.common.base.Joiner;
 import de.se_rwth.commons.logging.Finding;
 import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.LogStub;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
@@ -28,12 +26,6 @@ public abstract class ODTestBasis {
   
   @TempDir
   public File folder;
-  
-  @BeforeEach
-  public void initLog() {
-    LogStub.init();
-    Log.enableFailQuick(false);
-  }
   
   @AfterEach
   public void checkLog() {

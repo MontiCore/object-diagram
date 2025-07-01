@@ -9,10 +9,10 @@ import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
 import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -27,13 +27,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * This test compares the ASTs of the files in the examples folder with the pretty-printed versions
  * of these files.
  */
+@TestWithMCLanguage(OD4DataMill.class)
 public class OD4DataExamplesTest extends ODTestBasis {
-  
-  @BeforeEach
-  public void setUp() {
-    OD4DataMill.reset();
-    OD4DataMill.init();
-  }
   
   @ParameterizedTest
   @ValueSource(strings = { "examples/od/SpecialValues.od", "examples/od/QualifiedLinks.od",

@@ -9,9 +9,9 @@ import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.od4report._ast.ASTODReportObject;
 import de.monticore.od4report.util.OD4ReportCollector;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.se_rwth.commons.logging.Log;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -21,15 +21,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@TestWithMCLanguage(OD4ReportMill.class)
 public class OD4ReportCollectorTest extends ODTestBasis {
   
   private final Path EXAMPLE_DIR = PATH.resolve(Paths.get("examples", "od"));
-  
-  @BeforeEach
-  public void setUp() {
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
-  }
   
   @Test
   public void testCollector() {

@@ -7,10 +7,10 @@ import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._prettyprint.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -25,13 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * This test compares the ASTs of the files in the examples folder with the pretty-printed versions
  * of these files.
  */
+@TestWithMCLanguage(OD4ReportMill.class)
 public class OD4ReportExamplesTest extends ODTestBasis {
-  
-  @BeforeEach
-  public void setUp() {
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
-  }
   
   @ParameterizedTest
   @ValueSource(strings = { "src/test/resources/examples/od/Examples.od",
