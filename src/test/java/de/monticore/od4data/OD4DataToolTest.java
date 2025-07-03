@@ -3,10 +3,8 @@
 package de.monticore.od4data;
 
 import de.monticore.ODOutTestBasis;
-import de.monticore.od4data._symboltable.IOD4DataGlobalScope;
-import de.se_rwth.commons.logging.Log;
+import de.monticore.runtime.junit.MCAssertions;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -17,16 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OD4DataToolTest extends ODOutTestBasis {
   
-  private final Path INPUT_DIR = PATH.resolve(Paths.get("examples","od"));
+  private final Path INPUT_DIR = PATH.resolve(Paths.get("examples", "od"));
   private final Path INPUT_OD = INPUT_DIR.resolve("SimpleOD2.od");
-  
-  @BeforeEach
-  public void setUp() {
-    OD4DataMill.reset();
-    OD4DataMill.init();
-    IOD4DataGlobalScope gs = OD4DataMill.globalScope();
-    gs.clear();
-  }
   
   @Test
   public void testOD4DataToolHelp() {
@@ -34,7 +24,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(help);
     
     assertContains(getOut(), "usage: OD4DataTool");
-    checkLogError();
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -43,7 +33,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(input);
     
     assertContains(getOut(), "usage: OD4DataTool");
-    checkLogError();
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -53,7 +43,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(input);
     
     assertEquals("", getOut());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -62,7 +52,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(input);
     
     assertEquals("", getOut());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -72,7 +62,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(input);
     
     assertTrue(Paths.get(ppOutPath).toFile().exists());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -82,7 +72,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     OD4DataTool.main(input);
     
     assertTrue(Paths.get(symOutPath).toFile().exists());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
 }

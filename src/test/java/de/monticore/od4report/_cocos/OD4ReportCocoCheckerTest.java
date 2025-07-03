@@ -12,16 +12,16 @@ import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._cocos.object.ValidObjectTypeCoco;
+import de.monticore.runtime.junit.MCAssertions;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
-import de.se_rwth.commons.logging.Log;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+@TestWithMCLanguage(OD4ReportMill.class)
 public class OD4ReportCocoCheckerTest extends ODTestBasis {
   
   private OD4ReportCoCoChecker odCoCoChecker;
@@ -29,9 +29,6 @@ public class OD4ReportCocoCheckerTest extends ODTestBasis {
   @BeforeEach
   public void setUp() {
     odCoCoChecker = new OD4ReportCoCoChecker();
-    
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
   }
   
   @Test
@@ -41,9 +38,6 @@ public class OD4ReportCocoCheckerTest extends ODTestBasis {
     
     odCoCoChecker.addCoCo(new ValidObjectTypeCoco());
     odCoCoChecker.checkAll(artifact);
-    
-    assertEquals(0, Log.getErrorCount());
-    
   }
   
   @Test
@@ -62,13 +56,10 @@ public class OD4ReportCocoCheckerTest extends ODTestBasis {
     odCoCoChecker.addCoCo(new ValidObjectTypeCoco());
     odCoCoChecker.checkAll(artifact);
     
-    assertEquals(3, Log.getErrorCount());
-    assertContains(Log.getFindings().get(0).getMsg(), "0xA0324 Cannot find symbol Jaguar");
-    assertContains(Log.getFindings().get(1).getMsg(),
+    MCAssertions.assertHasFindingStartingWith("0xA0324 Cannot find symbol Jaguar");
+    MCAssertions.assertHasFindingStartingWith(
         "0x0D013: The type of the return type (ASTMCQualifiedType) could not be calculated");
-    assertContains(Log.getFindings().get(2).getMsg(),
-        "0xB0035: Type 'Jaguar' is used but not defined.");
-    Log.clearFindings();
+    MCAssertions.assertHasFindingStartingWith("0xB0035: Type 'Jaguar' is used but not defined.");
   }
   
 }

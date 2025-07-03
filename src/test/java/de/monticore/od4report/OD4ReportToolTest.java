@@ -3,9 +3,9 @@
 package de.monticore.od4report;
 
 import de.monticore.ODOutTestBasis;
-import de.se_rwth.commons.logging.Log;
+import de.monticore.runtime.junit.MCAssertions;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -14,16 +14,11 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestWithMCLanguage(OD4ReportMill.class)
 public class OD4ReportToolTest extends ODOutTestBasis {
   
   private final Path INPUT_DIR = PATH.resolve(Paths.get("examples", "od"));
   private final Path INPUT_OD = INPUT_DIR.resolve("Examples.od");
-  
-  @BeforeEach
-  public void setUp() {
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
-  }
   
   @Test
   public void testOD4ReportToolHelp() {
@@ -31,7 +26,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(help);
     
     assertContains(getOut(), "usage: OD4ReportTool");
-    checkLogError();
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -40,7 +35,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(input);
     
     assertContains(getOut(), "usage: OD4ReportTool");
-    checkLogError();
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -50,7 +45,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(input);
     
     assertEquals("", getOut());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -61,7 +56,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(input);
     
     assertEquals("", getOut());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -72,7 +67,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(input);
     
     assertEquals("", getOut());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -81,7 +76,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(input);
     
     assertContains(getOut(), "objectdiagram Examples {");
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -91,7 +86,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(input);
     
     assertTrue(Paths.get(ppOutPath).toFile().exists());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -103,7 +98,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(input);
     
     assertTrue(Paths.get(symOutPath).toFile().exists());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
 }

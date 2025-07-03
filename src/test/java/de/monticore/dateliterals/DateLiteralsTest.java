@@ -12,7 +12,7 @@ import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._ast.ASTODObject;
 import de.monticore.prettyprint.IndentPrinter;
 
-import org.junit.jupiter.api.BeforeEach;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -23,16 +23,11 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestWithMCLanguage(OD4ReportMill.class)
 public class DateLiteralsTest extends ODTestBasis {
   
   private final Path SIMPLE_CALENDAR =
       PATH.resolve(Paths.get("examples", "date", "SimpleCalendar.od"));
-  
-  @BeforeEach
-  public void setup() {
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
-  }
   
   @Test
   public void testSimpleDate() throws IOException {

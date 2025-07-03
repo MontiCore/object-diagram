@@ -8,8 +8,7 @@ import de.monticore.od4data.trafo.OD4DataDeAnonymizeObjectsTrafo;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -19,24 +18,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * This class contains test cases for the PlantUMLODFullPrettyPrinter, which is responsible for
  * generating PlantUML syntax from parsed Object Diagram artifacts. The tests ensure the correctness
  * of the generated PlantUML syntax by comparing it with the expected results stored in test
  * resource files.
  */
+@TestWithMCLanguage(OD4ReportMill.class)
 public class PlantUMLODFullPrettyPrinterTest extends ODTestBasis {
   
   /**
    * The base directory where test resources are located.
    */
   protected static String basedir = "src/test/resources/examples/";
-  
-  @BeforeEach
-  public void setupMills(){
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
-  }
   
   /**
    * Parameterized test method that reads test data from CSV files and compares the generated
@@ -77,7 +73,7 @@ public class PlantUMLODFullPrettyPrinterTest extends ODTestBasis {
     
     var expected = removeSpace(expectedPlantUML);
     var actual = removeSpace(plantUML);
-    Assertions.assertEquals(expected, actual, () -> String.format(
+    assertEquals(expected, actual, () -> String.format(
         "The printed output\n\n\"\"\"\n%s\n\"\"\"\n\ndoes not match with the expected PlantUML output\n\n\"\"\"\n%s\n\"\"\"\n.",
         plantUML, expectedPlantUML)
     );

@@ -4,7 +4,6 @@ package de.monticore.odbasis.typescalculator;
 import de.monticore.odbasis.ODBasisMill;
 import de.monticore.odbasis._visitor.ODBasisTraverser;
 import de.monticore.types.check.*;
-import de.monticore.visitor.ITraverser;
 
 /**
  * @deprecated using TC3 instead.
