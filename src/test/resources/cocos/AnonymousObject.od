@@ -4,7 +4,7 @@ package cocos;
 
 import examples.cd.SimpleOD.*;
 
-objectdiagram AnonymusObject {
+objectdiagram AnonymousObject {
 
   :ObjectType{};
   :ObjectType{};

@@ -21,15 +21,28 @@ import de.monticore.symbols.oosymbols._symboltable.MethodSymbolDeSer;
 import de.monticore.symbols.oosymbols._symboltable.OOTypeSymbolDeSer;
 import de.se_rwth.commons.logging.Log;
 import org.apache.commons.cli.*;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 public class OD4ReportTool extends OD4ReportToolTOP {
-
+  
+  protected static final String PARSE_SUCCESSFUL = "Successfully parsed %s\n";
+  
+  protected static final String CHECK_SUCCESSFUL =
+      "Successfully checked the CoCos for class " + "diagram %s\n";
+  
+  protected static final String CHECK_ERROR = "Error while parsing or CoCo checking";
+  
+  protected static final String STEXPORT_SUCCESSFUL = "Creation of symbol file %s successful\n";
+  
+  protected static final String INPUT_FILE_NOT_EXISTENT = "Input file '%s' does not exist\n";
+  
   /*=================================================================*/
   /* Part 1: Handling the arguments and options
   /*=================================================================*/
@@ -62,6 +75,10 @@ public class OD4ReportTool extends OD4ReportToolTOP {
         // do not continue, when help is printed
         return;
       }
+      
+      
+      // don't output to stdout when the prettyprint is output to stdout
+      final boolean doPrintToStdOut = !(cmd.hasOption("pp") && cmd.getOptionValue("pp") == null);
 
       // if -symbols is set: Add symbol types from file to global scope
       if (cmd.hasOption("symtypes")) {
@@ -103,10 +120,20 @@ public class OD4ReportTool extends OD4ReportToolTOP {
         Arrays.stream(paths).forEach(p -> symbolPath.addEntry(Paths.get(p)));
       }
       OD4ReportMill.globalScope().setSymbolPath(symbolPath);
-
-      // parse input file, which is now available
-      // (only returns if successful)
-      ASTODArtifact astodArtifact = parse(cmd.getOptionValue("i"));
+      
+      // parse input file
+      String modelFile = cmd.getOptionValue("i");
+      Path modelFilePath = Paths.get(modelFile);
+      if (!modelFilePath.toFile().exists()) {
+        System.out.printf(INPUT_FILE_NOT_EXISTENT, modelFile);
+        return;
+      }
+      
+      ASTODArtifact astodArtifact = parse(modelFile);
+      
+      if (doPrintToStdOut) {
+        System.out.printf(PARSE_SUCCESSFUL, astodArtifact.getObjectDiagram().getName());
+      }
 
       // -option check cocos
       Set<String> cocoOptionValue = new HashSet<>();
@@ -126,6 +153,16 @@ public class OD4ReportTool extends OD4ReportToolTOP {
         else {
           OD4ReportToolAPI.runAllCoCos(astodArtifact);
         }
+        
+        if (doPrintToStdOut) {
+          if (Log.getErrorCount() == 0) {
+            System.out.printf(CHECK_SUCCESSFUL, astodArtifact.getObjectDiagram().getName());
+          }
+          else {
+            System.out.println(CHECK_ERROR);
+            return;
+          }
+        }
       }
 
       // -option pretty print
@@ -136,8 +173,10 @@ public class OD4ReportTool extends OD4ReportToolTOP {
 
       // -option pretty print symboltable
       if (cmd.hasOption("s")) {
-        String path = cmd.getOptionValue("s", StringUtils.EMPTY);
-        storeSymbols(oD4ReportArtifactScope, path);
+        Path symTabPath = storeSymTab(oD4ReportArtifactScope, modelFilePath, cmd.getOptionValue("s"));
+        if (doPrintToStdOut) {
+          System.out.printf(STEXPORT_SUCCESSFUL, symTabPath.toAbsolutePath());
+        }
       }
     }
     catch (ParseException e) {
@@ -219,8 +258,7 @@ public class OD4ReportTool extends OD4ReportToolTOP {
       .argName("file")
       .optionalArg(true)
       .numberOfArgs(1)
-      .desc("Prints the symboltable of the object diagram to stdout or the specified file "
-        + "(optional)")
+      .desc("Stores the symbol table of the OD. The default value is `{ODName}.odsym`.")
       .build());
     return options;
   }
@@ -238,6 +276,30 @@ public class OD4ReportTool extends OD4ReportToolTOP {
         + "(default) checks all CoCos.")
       .build());
     return options;
+  }
+  
+  /**
+   * prints the symboltable of the given scope out to a file
+   *
+   * @param as symboltable to store
+   * @param modelPath location of the file containing the OD
+   * @param symTabPath location of the file or directory containing the printed table
+   */
+  public Path storeSymTab(IOD4ReportArtifactScope as, Path modelPath, String symTabPath) {
+    Path targetPath;
+    if (symTabPath == null || symTabPath.isBlank()) {
+      String symTabName = FilenameUtils.getBaseName(modelPath.toString()) + ".odsym";
+      targetPath = modelPath.getParent().resolve(symTabName);
+    }
+    else {
+      targetPath = Paths.get(symTabPath);
+      if (targetPath.toFile().exists() && targetPath.toFile().isDirectory()) {
+        String symTabName = FilenameUtils.getBaseName(modelPath.toString()) + ".odsym";
+        targetPath = targetPath.resolve(symTabName);
+      }
+    }
+    this.storeSymbols(as, targetPath.toString());
+    return targetPath;
   }
 
 }

@@ -26,8 +26,20 @@ public abstract class ODTestBasis {
     return folder.getAbsolutePath();
   }
   
-  public String getTmpFilePath(String fileName) {
-    return getTmpAbsolutePath() + File.separator + fileName;
+  public Path getTmpFilePath(String fileName) {
+    return getTmpDirPath().resolve(fileName).toAbsolutePath();
+  }
+  
+  public Path getTmpFilePath(Path path) {
+    return getTmpDirPath().resolve(path).toAbsolutePath();
+  }
+  
+  public Path getTmpFilePath(String first, String... more) {
+    return getTmpDirPath().resolve(Paths.get(first, more)).toAbsolutePath();
+  }
+  
+  public Path getTmpDirPath() {
+    return folder.toPath();
   }
   
   protected boolean modelFileExists(String fileName) {
