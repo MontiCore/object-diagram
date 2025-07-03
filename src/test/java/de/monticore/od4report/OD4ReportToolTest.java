@@ -7,20 +7,25 @@ import de.monticore.runtime.junit.MCAssertions;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestWithMCLanguage(OD4ReportMill.class)
 public class OD4ReportToolTest extends ODOutTestBasis {
   
   private final Path INPUT_DIR = PATH.resolve(Paths.get("examples", "od"));
   private final Path INPUT_OD = INPUT_DIR.resolve("Examples.od");
+  
+  @BeforeEach
+  void setUp() {
+    OD4ReportMill.reset();
+  }
   
   @Test
   public void testOD4ReportToolHelp() {

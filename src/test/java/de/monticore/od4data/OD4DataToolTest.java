@@ -6,6 +6,7 @@ import de.monticore.ODOutTestBasis;
 import de.monticore.runtime.junit.MCAssertions;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -18,6 +19,11 @@ public class OD4DataToolTest extends ODOutTestBasis {
   
   private final Path INPUT_DIR = PATH.resolve(Paths.get("examples", "od"));
   private final Path INPUT_OD = INPUT_DIR.resolve("SimpleOD2.od");
+  
+  @BeforeEach
+  void setUp() {
+    OD4DataMill.reset();
+  }
   
   @Test
   public void testOD4DataToolHelp() {

@@ -3,6 +3,7 @@ package de.monticore.od4development;
 
 import de.monticore.ODOutTestBasis;
 import de.monticore.runtime.junit.MCAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -15,6 +16,11 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
   
   private final Path INPUT_OD = PATH.resolve(Paths.get("examples", "od2cd", "Example.od"));
   private final Path INPUT_PATH_DIR = PATH.resolve(Paths.get("symboltable", "tooltest"));
+  
+  @BeforeEach
+  void setUp() {
+    OD4DevelopmentMill.reset();
+  }
   
   @Test
   public void testOD4DevelopmentToolHelp() {

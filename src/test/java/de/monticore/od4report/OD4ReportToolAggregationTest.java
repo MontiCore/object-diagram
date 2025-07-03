@@ -5,6 +5,7 @@ package de.monticore.od4report;
 import de.monticore.ODOutTestBasis;
 import de.monticore.runtime.junit.MCAssertions;
 import org.apache.commons.lang3.ArrayUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -20,6 +21,11 @@ public class OD4ReportToolAggregationTest extends ODOutTestBasis {
           "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer",
           "de.monticore.symbols.oosymbols._symboltable.FieldSymbol", "FieldSymbolDeSer" };
   
+  @BeforeEach
+  void setUp() {
+    OD4ReportMill.reset();
+  }
+  
   @Test
   public void testOD4ReportSymboltypesTOGS() {
     String[] basisArgs = { "-i", "src/test/resources/symboltable/aggregation/TestOD.od", "-path",
@@ -27,7 +33,7 @@ public class OD4ReportToolAggregationTest extends ODOutTestBasis {
     String[] testArgs = ArrayUtils.addAll(basisArgs, SYMTYPE_ARGS);
     OD4ReportTool.main(testArgs);
     
-    assertEquals("", getOut());
+    assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "TestOD"), getOut());
     MCAssertions.assertNoFindings();
   }
   
@@ -39,7 +45,7 @@ public class OD4ReportToolAggregationTest extends ODOutTestBasis {
     String[] testArgs = ArrayUtils.addAll(basisArgs, SYMTYPE_ARGS);
     OD4ReportTool.main(testArgs);
     
-    assertEquals("", getOut());
+    assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "BasicGameOD"), getOut());
     MCAssertions.assertNoFindings();
   }
   
@@ -52,7 +58,7 @@ public class OD4ReportToolAggregationTest extends ODOutTestBasis {
     String[] testArgs = ArrayUtils.addAll(basisArgs, oddSymtypeArgs);
     OD4ReportTool.main(testArgs);
     
-    assertEquals("", getOut());
+    assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "BasicGameOD"), getOut());
     MCAssertions.assertHasFindingStartingWith(
         "Odd number of arguments for parameter -symboltypes! Ignoring last argument.");
   }
