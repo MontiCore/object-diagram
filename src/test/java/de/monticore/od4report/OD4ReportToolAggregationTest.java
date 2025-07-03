@@ -2,8 +2,8 @@
 
 package de.monticore.od4report;
 
-import de.monticore.ODTestBasis;
-import de.se_rwth.commons.logging.Log;
+import de.monticore.ODOutTestBasis;
+import de.monticore.runtime.junit.MCAssertions;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class OD4ReportToolAggregationTest extends ODTestBasis {
+public class OD4ReportToolAggregationTest extends ODOutTestBasis {
   
   private final String[] SYMTYPE_ARGS =
       { "-symboltypes", "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer",
@@ -26,7 +26,9 @@ public class OD4ReportToolAggregationTest extends ODTestBasis {
         "src/test/resources/symboltable/aggregation/cd" };
     String[] testArgs = ArrayUtils.addAll(basisArgs, SYMTYPE_ARGS);
     OD4ReportTool.main(testArgs);
-    assertEquals(0, Log.getFindingsCount());
+    
+    assertEquals("", getOut());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -36,7 +38,9 @@ public class OD4ReportToolAggregationTest extends ODTestBasis {
             "src/test/resources/symboltable/aggregation/basicgame_cd" };
     String[] testArgs = ArrayUtils.addAll(basisArgs, SYMTYPE_ARGS);
     OD4ReportTool.main(testArgs);
-    assertEquals(0, Log.getFindingsCount());
+    
+    assertEquals("", getOut());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -47,10 +51,10 @@ public class OD4ReportToolAggregationTest extends ODTestBasis {
     String[] oddSymtypeArgs = Arrays.copyOf(SYMTYPE_ARGS, SYMTYPE_ARGS.length - 1);
     String[] testArgs = ArrayUtils.addAll(basisArgs, oddSymtypeArgs);
     OD4ReportTool.main(testArgs);
-    assertEquals(1, Log.getFindingsCount());
-    assertContains(Log.getFindings().get(0).getMsg(),
+    
+    assertEquals("", getOut());
+    MCAssertions.assertHasFindingStartingWith(
         "Odd number of arguments for parameter -symboltypes! Ignoring last argument.");
-    Log.clearFindings();
   }
   
 }

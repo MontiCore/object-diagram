@@ -7,10 +7,9 @@ import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._prettyprint.OD4ReportFullPrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
-import de.se_rwth.commons.logging.Log;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import org.antlr.v4.runtime.RecognitionException;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -25,13 +24,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * This test compares the ASTs of the files in the examples folder with the pretty-printed versions
  * of these files.
  */
+@TestWithMCLanguage(OD4ReportMill.class)
 public class OD4ReportExamplesTest extends ODTestBasis {
-  
-  @BeforeEach
-  public void setUp() {
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
-  }
   
   @ParameterizedTest
   @ValueSource(strings = { "src/test/resources/examples/od/Examples.od",
@@ -53,7 +47,6 @@ public class OD4ReportExamplesTest extends ODTestBasis {
     
     assertFalse(parser.hasErrors());
     assertTrue(ppOd.isPresent());
-    assertEquals(0, Log.getFindingsCount());
     
     // must be equal to original parsed AST.
     assertTrue(odDef.get().deepEquals(ppOd.get()), "pretty printed OD: " + ppResult);
@@ -64,7 +57,6 @@ public class OD4ReportExamplesTest extends ODTestBasis {
     OD4ReportParser parser = OD4ReportMill.parser();
     parser.parseODArtifact(model.toString());
     assertTrue(parser.hasErrors());
-    assertEquals(0, Log.getFindingsCount());
   }
   
 }

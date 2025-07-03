@@ -3,28 +3,24 @@
 package de.monticore.od4report;
 
 import de.monticore.ODOutTestBasis;
-import de.se_rwth.commons.logging.Log;
+import de.monticore.runtime.junit.MCAssertions;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestWithMCLanguage(OD4ReportMill.class)
 public class OD4ReportToolTest extends ODOutTestBasis {
   
   private final Path INPUT_DIR = PATH.resolve(Paths.get("examples", "od"));
   private final Path INPUT_OD = INPUT_DIR.resolve("Examples.od");
-  
-  @BeforeEach
-  public void setUp() {
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
-  }
   
   @Test
   public void testOD4ReportToolHelp() {
@@ -32,7 +28,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(help);
     
     assertContains(getOut(), "usage: OD4ReportTool");
-    checkLogError();
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -41,7 +37,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(input);
     
     assertContains(getOut(), "usage: OD4ReportTool");
-    checkLogError();
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -52,7 +48,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     
     assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "Examples") + String.format(
         OD4ReportTool.CHECK_SUCCESSFUL, "Examples"), getOut());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -64,7 +60,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     
     assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "MyFamily") + String.format(
         OD4ReportTool.CHECK_SUCCESSFUL, "MyFamily"), getOut());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -76,7 +72,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     
     assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "SimpleOD") + String.format(
         OD4ReportTool.CHECK_SUCCESSFUL, "SimpleOD"), getOut());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -85,7 +81,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(input);
     
     assertContains(getOut(), "objectdiagram Examples {");
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -95,7 +91,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(input);
     
     assertTrue(Paths.get(ppOutPath).toFile().exists());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -107,7 +103,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     OD4ReportTool.main(input);
     
     assertTrue(Paths.get(symOutPath).toFile().exists());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -118,7 +114,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
         "TypeSymbolDeSer" });
     File symTab = stTargetPath.toFile();
     assertTrue(symTab.exists() && symTab.isFile());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -130,7 +126,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
         "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer" });
     File symTab = existingTargetDirPath.resolve("Examples.odsym").toFile();
     assertTrue(symTab.exists() && symTab.isFile());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -142,7 +138,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
             "-symtypes", "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer" });
     File symTab = copiedInputFile.getParent().resolve("Examples.odsym").toFile();
     assertTrue(symTab.exists() && symTab.isFile());
-    assertEquals(0, Log.getFindingsCount());
+    MCAssertions.assertNoFindings();
   }
   
 }

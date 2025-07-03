@@ -7,9 +7,9 @@ import de.monticore.io.paths.MCPath;
 import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4data.OD4DataTestUtil;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -19,13 +19,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestWithMCLanguage(OD4DataMill.class)
 public class ODSymbolTableCreatorTest extends ODTestBasis {
-
-  @BeforeEach
-  public void setup() {
-    OD4DataMill.reset();
-    OD4DataMill.init();
-  }
 
   @Test
   public void testResolveODObjectFromFile() {

@@ -2,22 +2,15 @@
 package de.monticore;
 
 import com.google.common.base.Joiner;
-import de.se_rwth.commons.logging.Finding;
 import de.se_rwth.commons.logging.Log;
-import de.se_rwth.commons.logging.LogStub;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public abstract class ODTestBasis {
@@ -28,17 +21,6 @@ public abstract class ODTestBasis {
   
   @TempDir
   public File folder;
-  
-  @BeforeEach
-  public void initLog() {
-    LogStub.init();
-    Log.enableFailQuick(false);
-  }
-  
-  @AfterEach
-  public void checkLog() {
-    checkLogError();
-  }
   
   public String getTmpAbsolutePath() {
     return folder.getAbsolutePath();
@@ -79,24 +61,6 @@ public abstract class ODTestBasis {
       Log.getFindings().clear();
       fail("Following errors occurred: \n" + joinedErrors);
     }
-  }
-  
-  public static void expectErrorCount(int i, List<String> listOfErrors) {
-    if (Log.getErrorCount() == 0) {
-      if (i == 0) {
-        return;
-      }
-      else {
-        fail("expected " + i + " errors, but none were present");
-      }
-    }
-    
-    assertEquals(Log.getErrorCount(), i,
-        "expected to get exact " + i + " errors, the errors where:\n" + getJoinedErrors());
-    final List<Finding> findings = Log.getFindings();
-    IntStream.range(0, i)
-        .forEach(c -> assertEquals(listOfErrors.get(c), findings.get(c).toString()));
-    Log.getFindings().clear();
   }
   
   protected void assertContains(String haystack, String needle) {

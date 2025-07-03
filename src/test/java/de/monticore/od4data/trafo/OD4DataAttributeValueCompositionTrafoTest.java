@@ -13,22 +13,17 @@ import de.monticore.odattribute._ast.ASTODList;
 import de.monticore.odattribute._ast.ASTODMap;
 import de.monticore.odbasis._ast.*;
 import de.monticore.odlink._ast.ASTODLink;
-import org.junit.jupiter.api.BeforeEach;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestWithMCLanguage(OD4DataMill.class)
 public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
   
   private final Path TRAFO_EXAMPLES = PATH.resolve("trafos");
-  
-  @BeforeEach
-  void setUp() {
-    OD4DataMill.reset();
-    OD4DataMill.init();
-  }
   
   @Test
   void testAttributeCompositionTrafo() {
@@ -167,8 +162,8 @@ public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
     assertLinkConfig(link, source, target, role, true);
   }
   
-  protected void assertLinkConfig(ASTODLink link, String source, String target,
-      String role, boolean isComposition) {
+  protected void assertLinkConfig(ASTODLink link, String source, String target, String role,
+      boolean isComposition) {
     assertEquals(1, link.getLeftReferenceNames().size());
     assertEquals(source, link.getLeftReferenceNames().get(0));
     assertEquals(1, link.getRightReferenceNames().size());

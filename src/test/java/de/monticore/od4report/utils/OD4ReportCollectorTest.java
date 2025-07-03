@@ -9,9 +9,8 @@ import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.od4report._ast.ASTODReportObject;
 import de.monticore.od4report.util.OD4ReportCollector;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import de.se_rwth.commons.logging.Log;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -21,15 +20,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@TestWithMCLanguage(OD4ReportMill.class)
 public class OD4ReportCollectorTest extends ODTestBasis {
   
   private final Path EXAMPLE_DIR = PATH.resolve(Paths.get("examples", "od"));
-  
-  @BeforeEach
-  public void setUp() {
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
-  }
   
   @Test
   public void testCollector() {
@@ -52,8 +46,6 @@ public class OD4ReportCollectorTest extends ODTestBasis {
     List<ASTODReportObject> reportObjects =
         od4ReportCollector.getReportObjects(astodArtifact.getObjectDiagram());
     assertEquals(1, reportObjects.size());
-    
-    assertEquals(0, Log.getFindingsCount());
   }
   
   @Test
@@ -77,8 +69,6 @@ public class OD4ReportCollectorTest extends ODTestBasis {
     List<ASTODReportObject> reportObjects =
         od4ReportCollector.getReportObjects(astodArtifact.getObjectDiagram());
     assertEquals(0, reportObjects.size());
-    
-    assertEquals(0, Log.getFindingsCount());
   }
   
 }

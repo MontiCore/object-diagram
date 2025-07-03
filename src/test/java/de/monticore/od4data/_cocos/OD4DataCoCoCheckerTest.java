@@ -12,15 +12,15 @@ import de.monticore.odbasis._cocos.names.UniqueObjectNamesCoCo;
 import de.monticore.odbasis._cocos.object.ValidObjectReferenceCoCo;
 import de.monticore.odlink._cocos.link.LinkEndConsistencyCoCo;
 import de.monticore.odlink._cocos.link.ValidLinkReferenceCoCo;
-import de.se_rwth.commons.logging.Log;
+import de.monticore.runtime.junit.MCAssertions;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@TestWithMCLanguage(OD4DataMill.class)
 public class OD4DataCoCoCheckerTest extends ODOutTestBasis {
   
   private final Path cocoExamples = PATH.resolve("cocos");
@@ -30,9 +30,6 @@ public class OD4DataCoCoCheckerTest extends ODOutTestBasis {
   @BeforeEach
   public void setUp() {
     odCoCoChecker = new OD4DataCoCoChecker();
-    
-    OD4DataMill.reset();
-    OD4DataMill.init();
   }
   
   @Test
@@ -42,8 +39,8 @@ public class OD4DataCoCoCheckerTest extends ODOutTestBasis {
     
     odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
     odCoCoChecker.checkAll(artifact);
-    assertEquals(2, Log.getErrorCount());
-    Log.clearFindings();
+    MCAssertions.assertHasFindingStartingWith("0x0D002");
+    MCAssertions.assertHasFindingStartingWith("0x0D002");
   }
   
   @Test
@@ -53,7 +50,6 @@ public class OD4DataCoCoCheckerTest extends ODOutTestBasis {
     
     odCoCoChecker.addCoCo(new UniqueObjectNamesCoCo());
     odCoCoChecker.checkAll(artifact);
-    assertEquals(0, Log.getErrorCount());
   }
   
   @Test
@@ -63,8 +59,7 @@ public class OD4DataCoCoCheckerTest extends ODOutTestBasis {
     
     odCoCoChecker.addCoCo(new ValidLinkReferenceCoCo());
     odCoCoChecker.checkAll(artifact);
-    assertEquals(1, Log.getErrorCount());
-    Log.clearFindings();
+    MCAssertions.assertHasFindingStartingWith("0x0D006");
   }
   
   @Test
@@ -74,8 +69,7 @@ public class OD4DataCoCoCheckerTest extends ODOutTestBasis {
     
     odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
     odCoCoChecker.checkAll(artifact);
-    assertEquals(1, Log.getErrorCount());
-    Log.clearFindings();
+    MCAssertions.assertHasFindingStartingWith("0x0D001");
   }
   
   @Test
@@ -85,8 +79,9 @@ public class OD4DataCoCoCheckerTest extends ODOutTestBasis {
     
     odCoCoChecker.addCoCo(new PartialAndCompleteAttributesCoCo());
     odCoCoChecker.checkAll(artifact);
-    assertEquals(3, Log.getErrorCount());
-    Log.clearFindings();
+    MCAssertions.assertHasFindingStartingWith("0x0D004");
+    MCAssertions.assertHasFindingStartingWith("0x0D004");
+    MCAssertions.assertHasFindingStartingWith("0x0D004");
   }
   
   @Test
@@ -96,8 +91,7 @@ public class OD4DataCoCoCheckerTest extends ODOutTestBasis {
     
     odCoCoChecker.addCoCo(new LinkEndConsistencyCoCo());
     odCoCoChecker.checkAll(artifact);
-    assertEquals(1, Log.getErrorCount());
-    Log.clearFindings();
+    MCAssertions.assertHasFindingStartingWith("0x0D008");
   }
   
 }

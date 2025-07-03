@@ -2,8 +2,7 @@
 package de.monticore.od4development;
 
 import de.monticore.ODOutTestBasis;
-import de.se_rwth.commons.logging.Log;
-import org.junit.jupiter.api.BeforeEach;
+import de.monticore.runtime.junit.MCAssertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -17,19 +16,13 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
   private final Path INPUT_OD = PATH.resolve(Paths.get("examples", "od2cd", "Example.od"));
   private final Path INPUT_PATH_DIR = PATH.resolve(Paths.get("symboltable", "tooltest"));
   
-  @BeforeEach
-  public void before() {
-    OD4DevelopmentMill.reset();
-    OD4DevelopmentMill.init();
-  }
-  
   @Test
   public void testOD4DevelopmentToolHelp() {
     String[] help = { "-h" };
     OD4DevelopmentTool.main(help);
     
     assertContains(getOut(), "usage: OD4DevelopmentTool");
-    checkLogError();
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -38,7 +31,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
     OD4DevelopmentTool.main(input);
     
     assertContains(getOut(), "usage: OD4DevelopmentTool");
-    checkLogError();
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -48,6 +41,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
     OD4DevelopmentTool.main(input);
     
     assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), getOut());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -58,6 +52,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
     
     assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples") + String.format(
         OD4DevelopmentTool.CHECK_SUCCESSFUL, "Examples"), getOut());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -68,6 +63,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
     OD4DevelopmentTool.main(input);
     
     assertTrue(Paths.get(ppOutPath).toFile().exists());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -77,7 +73,9 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
     OD4DevelopmentTool.main(args);
     assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().toString()
         .endsWith("resources/symboltable/tooltest/]"));
+    
     assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), getOut());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -90,6 +88,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
     assertTrue(symTab.exists() && symTab.isFile());
     assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples") + String.format(
         OD4DevelopmentTool.STEXPORT_SUCCESSFUL, symTab.getAbsolutePath()), getOut());
+    MCAssertions.assertNoFindings();
   }
   
   @Test
@@ -103,5 +102,6 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
     assertTrue(symTab.exists() && symTab.isFile());
     assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples") + String.format(
         OD4DevelopmentTool.STEXPORT_SUCCESSFUL, symTab.getAbsolutePath()), getOut());
+    MCAssertions.assertNoFindings();
   }
 }

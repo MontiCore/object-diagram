@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-public class ODOutTestBasis extends ODTestBasis {
+public abstract class ODOutTestBasis extends ODTestBasis {
   
   protected static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   protected static final ByteArrayOutputStream errContent = new ByteArrayOutputStream();

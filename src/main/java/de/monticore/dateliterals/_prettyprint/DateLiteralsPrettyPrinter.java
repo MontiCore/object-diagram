@@ -3,9 +3,6 @@
 package de.monticore.dateliterals._prettyprint;
 
 import de.monticore.dateliterals._ast.*;
-import de.monticore.dateliterals._visitor.DateLiteralsHandler;
-import de.monticore.dateliterals._visitor.DateLiteralsTraverser;
-import de.monticore.dateliterals._visitor.DateLiteralsVisitor2;
 import de.monticore.prettyprint.IndentPrinter;
 
 public class DateLiteralsPrettyPrinter extends DateLiteralsPrettyPrinterTOP {

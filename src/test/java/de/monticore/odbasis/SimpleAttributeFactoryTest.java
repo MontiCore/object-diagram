@@ -8,20 +8,15 @@ import de.monticore.ODTestBasis;
 import de.monticore.odbasis._ast.ASTODAttribute;
 import de.monticore.odbasis.utils.SimpleAttributeFactory;
 
-import org.junit.jupiter.api.BeforeEach;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestWithMCLanguage(ODBasisMill.class)
 public class SimpleAttributeFactoryTest extends ODTestBasis {
-  
-  @BeforeEach
-  public void setup() {
-    ODBasisMill.reset();
-    ODBasisMill.init();
-  }
   
   @Test
   public void testCreateInteger() {
@@ -47,7 +42,7 @@ public class SimpleAttributeFactoryTest extends ODTestBasis {
   @Test
   public void testCreateLong() {
     ASTODAttribute longAttribute = SimpleAttributeFactory.createSimpleLongAttribute(
-        ODBasisMill.modifierBuilder().PROTECTED().build(), "test", -1l);
+        ODBasisMill.modifierBuilder().PROTECTED().build(), "test", -1L);
     
     String result = ODBasisMill.prettyPrint(longAttribute, false);
     // replace '#' due to generated prettyprinter
@@ -57,7 +52,7 @@ public class SimpleAttributeFactoryTest extends ODTestBasis {
         result.replaceFirst(Pattern.quote("#"), " ").replaceAll("\\n$", ""));
     
     longAttribute = SimpleAttributeFactory.createSimpleLongAttribute(
-        ODBasisMill.modifierBuilder().PROTECTED().build(), "test", 1l);
+        ODBasisMill.modifierBuilder().PROTECTED().build(), "test", 1L);
     result = ODBasisMill.prettyPrint(longAttribute, false);
     // replace '#' due to generated prettyprinter
     // remove once it is possible to select between print and alt print for constants

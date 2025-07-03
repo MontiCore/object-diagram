@@ -7,11 +7,10 @@ import de.monticore.io.paths.MCPath;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 
 import de.se_rwth.commons.Names;
-import de.se_rwth.commons.logging.Log;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -20,19 +19,12 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestWithMCLanguage(OD4ReportMill.class)
 public class OD4ReportDeSerTest extends ODTestBasis {
   
   private final Path INPUT_OD = PATH.resolve(Paths.get("examples", "od", "MyFamily.od"));
   
   private final Path SYMBOL_TARGET = Paths.get("target", "deser");
-  
-  @BeforeEach
-  public void setUp() {
-    OD4ReportMill.reset();
-    OD4ReportMill.init();
-    IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
-    gs.clear();
-  }
   
   @Test
   public void testOD4ReportDeSer() {
@@ -59,7 +51,6 @@ public class OD4ReportDeSerTest extends ODTestBasis {
     
     assertEquals(od4ReportSymbols2Json.serialize(artifactScope),
         od4ReportSymbols2Json.serialize(loadedBasicsArtifactScope));
-    assertEquals(0, Log.getFindingsCount());
   }
   
   @Test
@@ -79,8 +70,6 @@ public class OD4ReportDeSerTest extends ODTestBasis {
     assertContains(serialized, "\"fullName\":\"examples.od.alice\"");
     assertContains(serialized, "\"fullName\":\"examples.od.bob\"");
     assertContains(serialized, "\"objName\":\"examples.cd.MyFamily.Person\"");
-    
-    assertEquals(0, Log.getErrorCount());
   }
   
   @Test
