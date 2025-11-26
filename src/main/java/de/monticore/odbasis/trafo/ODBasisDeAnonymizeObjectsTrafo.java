@@ -9,7 +9,7 @@ import de.monticore.odbasis._ast.*;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;
 import de.monticore.types.mcbasictypes._ast.ASTMCObjectType;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
   
-  protected Map<ASTMCObjectType, Integer> pseudoCounts = new HashMap<>();
+  protected Map<ASTMCObjectType, Integer> pseudoCounts = new LinkedHashMap<>();
   
   @Override
   public void endVisit(ASTObjectDiagram node) {
