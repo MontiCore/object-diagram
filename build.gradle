@@ -15,7 +15,7 @@ def grammarDir = "src/main/grammars"
 group = "de.monticore.lang"
 description = "Object Diagram DSL"
 
-buildDir = file("$projectDir/target")
+layout.buildDirectory = file("$projectDir/target")
 
 // configure non-standard source sets
 sourceSets {
@@ -143,7 +143,7 @@ tasks.register('buildOD4DevelopmentTool', ShadowJar) {
 jar.dependsOn(buildOD4DevelopmentTool)
 
 tasks.register('testReport', TestReport) {
-  destinationDirectory = file("$buildDir/reports/allTests")
+  destinationDirectory = file("${layout.buildDirectory}/reports/allTests")
   // Include the results from the 'test' task
   getTestResults().from(tasks.withType(Test))
 }
@@ -203,7 +203,7 @@ fileTree("src").matching { include '**/*.mlc' }.each {
     classpath = configurations.MLC
     group = 'MLC'
     mainClass = 'de.monticore.mlc.MLCTool'
-    args = [ "-input", f, "-projectDir", projectDir, "-s", "-reports", "${buildDir}/reports", "-a", "-noFQ"]
+    args = [ "-input", f, "-projectDir", projectDir, "-s", "-reports", "${layout.buildDirectory}/reports", "-a", "-noFQ"]
     args += modelPath
     dependsOn("generateMCGrammars")
   }
@@ -213,7 +213,7 @@ fileTree("src").matching { include '**/*.mlc' }.each {
     classpath = configurations.MLC
     group = 'MLC'
     mainClass = 'de.monticore.mlc.MLCTool'
-    args = ["-input", f, "-projectDir", projectDir, "-s", "-check", "-reports", "${buildDir}/reports"]
+    args = ["-input", f, "-projectDir", projectDir, "-s", "-check", "-reports", "${layout.buildDirectory}/reports"]
     args += modelPath
     dependsOn("generateMCGrammars")
   }
