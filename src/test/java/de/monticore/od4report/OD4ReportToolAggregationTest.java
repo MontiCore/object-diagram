@@ -31,7 +31,7 @@ public class OD4ReportToolAggregationTest extends ODOutTestBasis {
     String[] basisArgs = { "-i", "src/test/resources/symboltable/aggregation/TestOD.od", "-path",
         "src/test/resources/symboltable/aggregation/cd" };
     String[] testArgs = ArrayUtils.addAll(basisArgs, SYMTYPE_ARGS);
-    OD4ReportTool.main(testArgs);
+    new OD4ReportTool().run(testArgs);
     
     assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "TestOD"), getOut());
     MCAssertions.assertNoFindings();
@@ -43,7 +43,7 @@ public class OD4ReportToolAggregationTest extends ODOutTestBasis {
         { "-i", "src/test/resources/symboltable/aggregation/BasicGameOD.od", "-path",
             "src/test/resources/symboltable/aggregation/basicgame_cd" };
     String[] testArgs = ArrayUtils.addAll(basisArgs, SYMTYPE_ARGS);
-    OD4ReportTool.main(testArgs);
+    new OD4ReportTool().run(testArgs);
     
     assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "BasicGameOD"), getOut());
     MCAssertions.assertNoFindings();
@@ -56,7 +56,7 @@ public class OD4ReportToolAggregationTest extends ODOutTestBasis {
             "src/test/resources/symboltable/aggregation/basicgame_cd" };
     String[] oddSymtypeArgs = Arrays.copyOf(SYMTYPE_ARGS, SYMTYPE_ARGS.length - 1);
     String[] testArgs = ArrayUtils.addAll(basisArgs, oddSymtypeArgs);
-    OD4ReportTool.main(testArgs);
+    new OD4ReportTool().run(testArgs);
     
     assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "BasicGameOD"), getOut());
     MCAssertions.assertHasFindingStartingWith(

@@ -25,7 +25,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
   @Test
   public void testOD4DevelopmentToolHelp() {
     String[] help = { "-h" };
-    OD4DevelopmentTool.main(help);
+    new OD4DevelopmentTool().run(help);
     
     assertContains(getOut(), "usage: OD4DevelopmentTool");
     MCAssertions.assertNoFindings();
@@ -34,7 +34,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
   @Test
   public void testOD4DevelopmentToolMissingInput() {
     String[] input = {};
-    OD4DevelopmentTool.main(input);
+    new OD4DevelopmentTool().run(input);
     
     assertContains(getOut(), "usage: OD4DevelopmentTool");
     MCAssertions.assertNoFindings();
@@ -44,7 +44,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
   public void testOD4DevelopmentToolPath() {
     String[] input = { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(),
         Paths.get(INPUT_PATH_DIR.toString(), "cocos").toString() };
-    OD4DevelopmentTool.main(input);
+    new OD4DevelopmentTool().run(input);
     
     assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), getOut());
     MCAssertions.assertNoFindings();
@@ -54,7 +54,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
   public void testOD4DevelopmentToolIntraCoCos() {
     String[] input =
         { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-c", "intra" };
-    OD4DevelopmentTool.main(input);
+    new OD4DevelopmentTool().run(input);
     
     assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples") + String.format(
         OD4DevelopmentTool.CHECK_SUCCESSFUL, "Examples"), getOut());
@@ -66,7 +66,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
     String ppOutPath = getTmpFilePath("pp.od").toString();
     String[] input =
         { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-pp", ppOutPath };
-    OD4DevelopmentTool.main(input);
+    new OD4DevelopmentTool().run(input);
     
     assertTrue(Paths.get(ppOutPath).toFile().exists());
     MCAssertions.assertNoFindings();
@@ -76,7 +76,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
   public void testAddSymtabFile() {
     String[] args = new String[] { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString() };
     assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().isEmpty());
-    OD4DevelopmentTool.main(args);
+    new OD4DevelopmentTool().run(args);
     assertTrue(OD4DevelopmentMill.globalScope().getSymbolPath().toString()
         .endsWith("resources/symboltable/tooltest/]"));
     
@@ -87,7 +87,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
   @Test
   public void testStoreSymtabFile() {
     Path stTargetPath = getTmpFilePath("symboltable", "examples", "od2cd", "Examples.odsym");
-    OD4DevelopmentTool.main(
+    new OD4DevelopmentTool().run(
         new String[] { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-s",
             stTargetPath.toString() });
     File symTab = stTargetPath.toFile();
@@ -101,7 +101,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
   public void testStoreSymtabFile2() {
     Path existingTargetDirPath = getTmpFilePath("existing");
     assertTrue(existingTargetDirPath.toFile().mkdir());
-    OD4DevelopmentTool.main(
+    new OD4DevelopmentTool().run(
         new String[] { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-s",
             existingTargetDirPath.toString() });
     File symTab = getTmpFilePath("existing", "Example.odsym").toFile();

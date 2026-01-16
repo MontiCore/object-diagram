@@ -28,7 +28,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
   @Test
   public void testOD4DataToolHelp() {
     String[] help = { "-h" };
-    OD4DataTool.main(help);
+    new OD4DataTool().run(help);
     
     assertContains(getOut(), "usage: OD4DataTool");
     MCAssertions.assertNoFindings();
@@ -37,7 +37,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
   @Test
   public void testOD4DataToolMissingInput() {
     String[] input = {};
-    OD4DataTool.main(input);
+    new OD4DataTool().run(input);
     
     assertContains(getOut(), "usage: OD4DataTool");
     MCAssertions.assertNoFindings();
@@ -47,7 +47,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
   public void testOD4DataToolPath() {
     String[] input = { "-i", INPUT_OD.toString(), "-path", PATH.toString(),
         Paths.get(INPUT_DIR.toString(), "cocos").toString() };
-    OD4DataTool.main(input);
+    new OD4DataTool().run(input);
     
     assertEquals(String.format(OD4DataTool.PARSE_SUCCESSFUL, "SimpleOD2"), getOut());
     MCAssertions.assertNoFindings();
@@ -56,7 +56,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
   @Test
   public void testOD4DataToolIntraCoCos() {
     String[] input = { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-c", "intra" };
-    OD4DataTool.main(input);
+    new OD4DataTool().run(input);
     
     assertEquals(String.format(OD4DataTool.PARSE_SUCCESSFUL, "SimpleOD2") + String.format(
         OD4DataTool.CHECK_SUCCESSFUL, "SimpleOD2"), getOut());
@@ -67,7 +67,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
   public void testOD4ToolPrettyPrint() {
     String ppOutPath = getTmpFilePath("pp.od").toString();
     String[] input = { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-pp", ppOutPath };
-    OD4DataTool.main(input);
+    new OD4DataTool().run(input);
     
     assertTrue(Paths.get(ppOutPath).toFile().exists());
     MCAssertions.assertNoFindings();
@@ -77,7 +77,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
   public void testOD4DataStoreST() {
     String symOutPath = getTmpFilePath("SimpleOD2.odsym").toString();
     String[] input = { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-s", symOutPath };
-    OD4DataTool.main(input);
+    new OD4DataTool().run(input);
     
     assertTrue(Paths.get(symOutPath).toFile().exists());
     MCAssertions.assertNoFindings();
@@ -86,7 +86,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
   @Test
   public void testStoreSymtabFile() {
     Path stTargetPath = getTmpFilePath("symboltable", "examples", "od", "SimpleOD2.odsym");
-    OD4DataTool.main(new String[] { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-s",
+    new OD4DataTool().run(new String[] { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-s",
         stTargetPath.toString() });
     File symTab = stTargetPath.toFile();
     assertTrue(symTab.exists() && symTab.isFile());
@@ -97,7 +97,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
   public void testStoreSymtabFile2() {
     Path existingTargetDirPath = getTmpFilePath("existing");
     assertTrue(existingTargetDirPath.toFile().mkdir());
-    OD4DataTool.main(new String[] { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-s",
+    new OD4DataTool().run(new String[] { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-s",
         existingTargetDirPath.toString() });
     File symTab = existingTargetDirPath.resolve("SimpleOD2.odsym").toFile();
     assertTrue(symTab.exists() && symTab.isFile());
@@ -108,7 +108,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
   public void testStoreSymtabFile3() {
     Path copiedInputFile = getTmpFilePath("examples", "od", "SimpleOD2.od");
     assertDoesNotThrow(() -> FileUtils.copyFile(INPUT_OD.toFile(), copiedInputFile.toFile()));
-    OD4DataTool.main(
+    new OD4DataTool().run(
         new String[] { "-i", copiedInputFile.toString(), "-path", PATH.toString(), "-s" });
     File symTab = copiedInputFile.getParent().resolve("SimpleOD2.odsym").toFile();
     assertTrue(symTab.exists() && symTab.isFile());

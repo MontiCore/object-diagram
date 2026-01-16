@@ -17,7 +17,7 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
   
   private final IndentPrinter printer;
   private ODBasisTraverser traverser;
-  private final Map<ASTODAnonymousObject, UUID> anonymousObjectsNameCache = new HashMap<>();
+  private final Map<ASTODAnonymousObject, UUID> anonymousObjectsNameCache = new LinkedHashMap<>();
   
   public PlantUMLODBasisPrettyPrinter(IndentPrinter printer) {
     this.printer = printer;

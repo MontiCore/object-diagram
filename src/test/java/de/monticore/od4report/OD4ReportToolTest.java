@@ -30,7 +30,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
   @Test
   public void testOD4ReportToolHelp() {
     String[] help = { "-h" };
-    OD4ReportTool.main(help);
+    new OD4ReportTool().run(help);
     
     assertContains(getOut(), "usage: OD4ReportTool");
     MCAssertions.assertNoFindings();
@@ -39,7 +39,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
   @Test
   public void testOD4ReportToolMissingInput() {
     String[] input = {};
-    OD4ReportTool.main(input);
+    new OD4ReportTool().run(input);
     
     assertContains(getOut(), "usage: OD4ReportTool");
     MCAssertions.assertNoFindings();
@@ -49,7 +49,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
   public void testOD4ReportToolPath() {
     String[] input = { "-i", INPUT_OD.toString(), "-path", PATH.toString(),
         INPUT_DIR.getParent().getParent().resolve("cocos").toString(), "-c", "intra" };
-    OD4ReportTool.main(input);
+    new OD4ReportTool().run(input);
     
     assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "Examples") + String.format(
         OD4ReportTool.CHECK_SUCCESSFUL, "Examples"), getOut());
@@ -61,7 +61,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     String[] input =
         { "-i", INPUT_DIR.resolve("MyFamily.od").toString(), "-path", PATH.toString(), "-symtypes",
             "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer", "-c" };
-    OD4ReportTool.main(input);
+    new OD4ReportTool().run(input);
     
     assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "MyFamily") + String.format(
         OD4ReportTool.CHECK_SUCCESSFUL, "MyFamily"), getOut());
@@ -73,7 +73,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     String[] input = { "-i", INPUT_DIR.resolve("SimpleOD.od").toString(), "-c", "intra" };
     
     assertEquals("", getOut());
-    OD4ReportTool.main(input);
+    new OD4ReportTool().run(input);
     
     assertEquals(String.format(OD4ReportTool.PARSE_SUCCESSFUL, "SimpleOD") + String.format(
         OD4ReportTool.CHECK_SUCCESSFUL, "SimpleOD"), getOut());
@@ -83,7 +83,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
   @Test
   public void testOD4ReportToolPrettyPrint() {
     String[] input = { "-i", INPUT_OD.toString(), "-pp", "-c", "intra" };
-    OD4ReportTool.main(input);
+    new OD4ReportTool().run(input);
     
     assertContains(getOut(), "objectdiagram Examples {");
     MCAssertions.assertNoFindings();
@@ -93,7 +93,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
   public void testOD4ReportToolPrettyPrintToFile() {
     String ppOutPath = getTmpFilePath("pp.od").toString();
     String[] input = { "-i", INPUT_OD.toString(), "-pp", ppOutPath, "-c", "intra" };
-    OD4ReportTool.main(input);
+    new OD4ReportTool().run(input);
     
     assertTrue(Paths.get(ppOutPath).toFile().exists());
     MCAssertions.assertNoFindings();
@@ -105,7 +105,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     String[] input =
         { "-i", INPUT_OD.toString(), "-s", symOutPath, "-path", PATH.toString(), "-symtypes",
             "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer" };
-    OD4ReportTool.main(input);
+    new OD4ReportTool().run(input);
     
     assertTrue(Paths.get(symOutPath).toFile().exists());
     MCAssertions.assertNoFindings();
@@ -114,7 +114,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
   @Test
   public void testStoreSymtabFile() {
     Path stTargetPath = getTmpFilePath("symboltable", "examples", "od", "Examples.odsym");
-    OD4ReportTool.main(new String[] { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-s",
+    new OD4ReportTool().run(new String[] { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-s",
         stTargetPath.toString(), "-symtypes", "de.monticore.cdbasis._symboltable.CDTypeSymbol",
         "TypeSymbolDeSer" });
     File symTab = stTargetPath.toFile();
@@ -126,7 +126,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
   public void testStoreSymtabFile2() {
     Path existingTargetDirPath = getTmpFilePath("existing");
     assertTrue(existingTargetDirPath.toFile().mkdir());
-    OD4ReportTool.main(new String[] { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-s",
+    new OD4ReportTool().run(new String[] { "-i", INPUT_OD.toString(), "-path", PATH.toString(), "-s",
         existingTargetDirPath.toString(), "-symtypes",
         "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer" });
     File symTab = existingTargetDirPath.resolve("Examples.odsym").toFile();
@@ -138,7 +138,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
   public void testStoreSymtabFile3() {
     Path copiedInputFile = getTmpFilePath("examples", "od", "Examples.od");
     assertDoesNotThrow(() -> FileUtils.copyFile(INPUT_OD.toFile(), copiedInputFile.toFile()));
-    OD4ReportTool.main(
+    new OD4ReportTool().run(
         new String[] { "-i", copiedInputFile.toString(), "-path", PATH.toString(), "-s",
             "-symtypes", "de.monticore.cdbasis._symboltable.CDTypeSymbol", "TypeSymbolDeSer" });
     File symTab = copiedInputFile.getParent().resolve("Examples.odsym").toFile();

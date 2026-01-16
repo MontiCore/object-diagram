@@ -13,7 +13,7 @@ import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 import de.monticore.types.mcbasictypes._ast.ASTMCPackageDeclaration;
 import de.se_rwth.commons.logging.Log;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -43,7 +43,7 @@ public class ValidObjectTypeCoco implements ODBasisASTODArtifactCoCo {
       }
 
       private void resolveTypeSymbol(ASTODObject node, String typeName) {
-        Set<TypeSymbol> typeSymbols = new HashSet<>();
+        Set<TypeSymbol> typeSymbols = new LinkedHashSet<>();
         for (String fqNameCandidate : FullQualifiedNameCalculator.calcFQNameCandidates(
             importStatementList, packageDeclaration.getMCQualifiedName(), typeName)) {
           typeSymbols.addAll(node.getEnclosingScope().resolveTypeMany(fqNameCandidate));
