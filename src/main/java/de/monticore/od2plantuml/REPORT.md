@@ -83,7 +83,7 @@ foo--> "blub" bar
 
 ### Dependencies 
 * Java 21 (or higher)
-* Gradle 8.4 (or higher)
+* Gradle 8.5 (or higher)
 
 ### Installation of the project
 * Clone the project from Gitlab
