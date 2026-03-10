@@ -82,8 +82,8 @@ foo--> "blub" bar
 ## Usage of ODPlantUMLTool
 
 ### Dependencies 
-* Java 11 (or higher)
-* Gradle 7.5 (or higher)
+* Java 21 (or higher)
+* Gradle 8.5 (or higher)
 
 ### Installation of the project
 * Clone the project from Gitlab

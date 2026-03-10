@@ -54,7 +54,7 @@ used when processing models. To this effect, it provides funcionality for
 * storing symbols in symbol files,
 * ,and loading symbols from symbol files.
 
-The requirements for building and using the OD tool are that Java 11, Git, and Gradle are
+The requirements for building and using the OD tool are that Java 21, Git, and Gradle 8.5 are
 installed and available for use in Bash.
 
 The following subsection describes how to download the tool. Then, this document describes how
@@ -76,7 +76,7 @@ Alternatively, the tools can be built from source code.
 
 ### Prerequisites
 
-To build the project, it is required to install a Java 11 JDK and git.
+To build the project, it is required to install a Java 21 JDK and git.
 
 #### Step 1: Clone Project with git
 

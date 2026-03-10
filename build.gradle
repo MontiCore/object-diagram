@@ -5,9 +5,13 @@ plugins {
   id 'java-library'
   id 'maven-publish'
   id "de.monticore.generator" version "$mc_version" // MontiCore Plugin
-  id "com.github.johnrengelman.shadow" version "$shadow_plugin_version"
+  id "com.gradleup.shadow" version "$shadow_plugin_version"
   id 'jacoco'
   id "io.github.themrmilchmann.ecj" version "0.2.0"
+}
+
+ecj {
+  compilerVersion = "3.43.0"
 }
 
 def grammarDir = "src/main/grammars"
@@ -31,7 +35,7 @@ sourceSets {
 
 java {
   toolchain {
-    languageVersion = JavaLanguageVersion.of(11)
+    languageVersion = JavaLanguageVersion.of(21)
   }
   // Deprecated feature, published for compatibility reasons
   registerFeature('grammars') {
