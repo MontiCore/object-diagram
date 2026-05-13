@@ -1,6 +1,7 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4data._symboltable;
 
+import com.google.common.base.Preconditions;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._symboltable.ODBasisScopesGenitor;
 import de.monticore.symboltable.ImportStatement;
@@ -18,7 +19,7 @@ public class OD4DataScopesGenitor extends OD4DataScopesGenitorTOP {
 
   @Override
   public IOD4DataArtifactScope createFromAST(ASTODArtifact rootNode) {
-    Log.errorIfNull(rootNode,
+    Preconditions.checkNotNull(rootNode,
         "0xAE882 Error by creating of the OD4DataScopesGenitor symbol table: top ast node"
             + " is null");
     IOD4DataArtifactScope artifactScope = de.monticore.od4data.OD4DataMill.artifactScope();
