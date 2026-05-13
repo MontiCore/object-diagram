@@ -27,7 +27,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class OD4ReportTool extends OD4ReportToolTOP {
@@ -136,7 +136,7 @@ public class OD4ReportTool extends OD4ReportToolTOP {
       }
 
       // -option check cocos
-      Set<String> cocoOptionValue = new HashSet<>();
+      Set<String> cocoOptionValue = new LinkedHashSet<>();
       if (cmd.hasOption("c") && cmd.getOptionValues("c") != null) {
         cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
       }

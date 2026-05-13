@@ -35,7 +35,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
 
   protected ASTCDClass checkerClass;
 
-  protected final Map<String, ASTCDClass> objectToClassMap = new HashMap<>();
+  protected final Map<String, ASTCDClass> objectToClassMap = new LinkedHashMap<>();
 
   protected final List<String> linkAttributeList = new ArrayList<>();
 
