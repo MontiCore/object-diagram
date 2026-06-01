@@ -2,10 +2,7 @@
 
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.LogStub;
-import example.A;
-import example.B;
 import examples.ExamplesInstantiator;
-import java.util.List;
 
 import examples.ExamplesODInstances;
 import org.junit.jupiter.api.BeforeEach;

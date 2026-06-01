@@ -66,9 +66,9 @@ repositories {
     mavenLocal()
   }
   maven {
-    credentials.username mavenUser
-    credentials.password mavenPassword
-    url repo
+    credentials.username = mavenUser
+    credentials.password = mavenPassword
+    url = repo
   }
 }
 
@@ -81,14 +81,17 @@ test {
   }
 
   // listen to standard out and standard error of the test JVM(s)
-  onOutput { descriptor, event ->
-    logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
-  }
+  addTestOutputListener(new TestOutputListener() {
+    @Override
+    void onOutput(TestDescriptor testDescriptor, TestOutputEvent outputEvent) {
+      logger.lifecycle("Test: " + testDescriptor.getName() + " produced standard out/err: " + outputEvent.getMessage())
+    }
+  })
   finalizedBy jacocoTestReport
 }
 
 shadowJar {
-  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 // build sources jar in addition
@@ -166,8 +169,8 @@ publishing {
     }
   }
   repositories.maven {
-    credentials.username mavenUser
-    credentials.password mavenPassword
+    credentials.username = mavenUser
+    credentials.password = mavenPassword
     def releasesRepoUrl = "https://nexus.se.rwth-aachen.de/content/repositories/monticore-releases/"
     def snapshotsRepoUrl = "https://nexus.se.rwth-aachen.de/content/repositories/monticore-snapshots/"
     url = version.endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
@@ -177,7 +180,7 @@ publishing {
 tasks.withType(JavaCompile).configureEach {
   options.fork = true
   options.encoding = "UTF-8"
-  options.deprecation false
+  options.deprecation = false
   options.warnings = false
   options.headerOutputDirectory.convention(null)
 }
@@ -189,7 +192,7 @@ tasks.register('showArtifacts') { group = "MLC" }
 tasks.register('checkArtifacts') {group = "MLC" }
 configurations { MLC }
 dependencies {
-  MLC(group: 'de.monticore.lang', name: 'mlc-gradle', version: "$version")
+  MLC("de.monticore.lang:mlc-gradle:$version")
 }
 
 def modelPath = [];
