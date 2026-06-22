@@ -1,12 +1,11 @@
 // (c) https://github.com/MontiCore/monticore
 
-package de.monticore.od4data._symboltable;
+package de.monticore.od4development._symboltable;
 
 import de.monticore.ODTestBasis;
 import de.monticore.io.paths.MCPath;
-import de.monticore.od4data.OD4DataMill;
-import de.monticore.od4data.OD4DataTestUtil;
-import de.monticore.od4data.OD4DataToolAPI;
+import de.monticore.od4development.OD4DevelopmentTestUtil;
+import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
@@ -20,8 +19,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestWithMCLanguage(OD4DataMill.class)
-public class OD4DataDeSerTest extends ODTestBasis {
+@TestWithMCLanguage(OD4DevelopmentMill.class)
+public class OD4DevelopmentDeSerTest extends ODTestBasis {
   
   private final Path SIMPLEOD2 = PATH.resolve(Paths.get("examples", "od", "SimpleOD2.od"));
   
@@ -29,13 +28,12 @@ public class OD4DataDeSerTest extends ODTestBasis {
   public void testOD4DataDeSer() {
     String artifact = SIMPLEOD2.toString();
     MCPath symbolPath = new MCPath(PATH);
-    ASTODArtifact astodArtifact = OD4DataTestUtil.loadModel(artifact, symbolPath);
+    ASTODArtifact astodArtifact = OD4DevelopmentTestUtil.loadModel(artifact, symbolPath);
     
-    IOD4DataArtifactScope od4DataArtifactScope =
-        OD4DataToolAPI.createSymbolTable(astodArtifact, true);
+    IOD4DevelopmentArtifactScope od4DataArtifactScope = OD4DevelopmentTestUtil.createSymbolTableFromAST(astodArtifact);
     
     // serialize
-    OD4DataSymbols2Json od4DataSymbols2Json = new OD4DataSymbols2Json();
+    OD4DevelopmentSymbols2Json od4DataSymbols2Json = new OD4DevelopmentSymbols2Json();
     String fileName = Paths.get(SIMPLEOD2.toString()).getFileName().toString() + "sym";
     String pathFromQualifiedName = Names.getPathFromQualifiedName(
         astodArtifact.getMCPackageDeclaration().getMCQualifiedName().getQName() + "."
@@ -47,7 +45,7 @@ public class OD4DataDeSerTest extends ODTestBasis {
     assertTrue(storedSymTable.toFile().exists());
     
     // deserialize
-    IOD4DataArtifactScope loadedBasicsArtifactScope =
+    IOD4DevelopmentArtifactScope loadedBasicsArtifactScope =
         od4DataSymbols2Json.load(storedSymTable.toString());
     
     // clear buffer of traverser, as elements should be traversed again
@@ -61,11 +59,11 @@ public class OD4DataDeSerTest extends ODTestBasis {
   public void serializationTest() {
     String artifact = SIMPLEOD2.toString();
     MCPath symbolPath = new MCPath(PATH);
-    ASTODArtifact ast = OD4DataTestUtil.loadModel(artifact, symbolPath);
+    ASTODArtifact ast = OD4DevelopmentTestUtil.loadModel(artifact, symbolPath);
     
     // create symbol table
-    IOD4DataArtifactScope artifactScope = OD4DataTestUtil.createSymbolTableFromAST(ast);
-    OD4DataSymbols2Json symbols2Json = new OD4DataSymbols2Json();
+    IOD4DevelopmentArtifactScope artifactScope = OD4DevelopmentTestUtil.createSymbolTableFromAST(ast);
+    OD4DevelopmentSymbols2Json symbols2Json = new OD4DevelopmentSymbols2Json();
     String serialized = symbols2Json.serialize(artifactScope);
     assertNotNull(serialized);
     assertNotEquals("", serialized);
@@ -80,7 +78,7 @@ public class OD4DataDeSerTest extends ODTestBasis {
   
   @Test
   public void deserializationTest() {
-    IOD4DataGlobalScope gs = OD4DataMill.globalScope();
+    IOD4DevelopmentGlobalScope gs = OD4DevelopmentMill.globalScope();
     gs.clear();
     gs.setSymbolPath(new MCPath(PATH));
     assertTrue(gs.getSubScopes().isEmpty());

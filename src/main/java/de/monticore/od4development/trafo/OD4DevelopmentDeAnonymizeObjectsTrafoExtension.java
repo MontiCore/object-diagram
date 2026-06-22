@@ -2,9 +2,9 @@
  *  (c) https://github.com/MontiCore/monticore
  */
 
-package de.monticore.od4data.trafo;
+package de.monticore.od4development.trafo;
 
-import de.monticore.od4data.OD4DataMill;
+import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.odattribute._ast.ASTODList;
 import de.monticore.odattribute._ast.ASTODMap;
 import de.monticore.odattribute._ast.ASTODMapElement;
@@ -36,16 +36,16 @@ import de.monticore.odbasis.trafo.ODBasisDeAnonymizeObjectsTrafo;
  *   };
  * </pre>
  */
-public class OD4DataDeAnonymizeObjectsTrafoExtension extends ODBasisDeAnonymizeObjectsTrafo
+public class OD4DevelopmentDeAnonymizeObjectsTrafoExtension extends ODBasisDeAnonymizeObjectsTrafo
     implements ODAttributeVisitor2 {
   
   @Override
   public void endVisit(ASTODList node) {
     for (int i = 0; i < node.getODValueList().size(); i++) {
       ASTODValue value = node.getODValue(i);
-      if (OD4DataMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
+      if (OD4DevelopmentMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
         ASTODAnonymousObject anonymousObject =
-            OD4DataMill.typeDispatcher().asODBasisASTODAnonymousObject(value);
+            OD4DevelopmentMill.typeDispatcher().asODBasisASTODAnonymousObject(value);
         ASTODNamedObject namedObject = copyToNamedObject(anonymousObject);
         node.setODValue(i, namedObject);
       }
@@ -58,9 +58,9 @@ public class OD4DataDeAnonymizeObjectsTrafoExtension extends ODBasisDeAnonymizeO
       ASTODMapElement mapElement = node.getODMapElement(i);
       ASTODValue value = mapElement.getVal();
       
-      if (OD4DataMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
+      if (OD4DevelopmentMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
         ASTODAnonymousObject anonymousObject =
-            OD4DataMill.typeDispatcher().asODBasisASTODAnonymousObject(value);
+            OD4DevelopmentMill.typeDispatcher().asODBasisASTODAnonymousObject(value);
         ASTODNamedObject namedObject = copyToNamedObject(anonymousObject);
         mapElement.setVal(namedObject);
       }

@@ -2,13 +2,13 @@
  *  (c) https://github.com/MontiCore/monticore
  */
 
-package de.monticore.od4data.trafo;
+package de.monticore.od4development.trafo;
 
 import de.monticore.ODTestBasis;
 import de.monticore.expressions.expressionsbasis._ast.ASTLiteralExpression;
 import de.monticore.io.paths.MCPath;
-import de.monticore.od4data.OD4DataMill;
-import de.monticore.od4data.OD4DataTestUtil;
+import de.monticore.od4development.OD4DevelopmentTestUtil;
+import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.odattribute._ast.ASTODList;
 import de.monticore.odattribute._ast.ASTODMap;
 import de.monticore.odbasis._ast.*;
@@ -20,15 +20,15 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestWithMCLanguage(OD4DataMill.class)
-public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
+@TestWithMCLanguage(OD4DevelopmentMill.class)
+public class OD4DevelopmentAttributeValueCompositionTrafoTest extends ODTestBasis {
   
   private final Path TRAFO_EXAMPLES = PATH.resolve("trafos");
   
   @Test
   void testAttributeCompositionTrafo() {
     String testOD = TRAFO_EXAMPLES.resolve("AttributeObjectComposition.od").toString();
-    ASTODArtifact artifact = OD4DataTestUtil.loadModelAndST(testOD, new MCPath(PATH));
+    ASTODArtifact artifact = OD4DevelopmentTestUtil.loadModelAndST(testOD, new MCPath(PATH));
     
     ASTObjectDiagram diagram = artifact.getObjectDiagram();
     
@@ -42,7 +42,7 @@ public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
     ASTODNamedObject barAttr = assertAndGetAsODNamedObject(bar.getODAttribute(1).getODValue());
     assertEquals("blaa", barAttr.getName());
     
-    new OD4DataAttributeValueCompositionTrafo().transform(artifact);
+    new OD4DevelopmentAttributeValueCompositionTrafo().transform(artifact);
     
     // Assertions post trafo
     assertEquals(5, diagram.getODElementList().size());
@@ -62,7 +62,7 @@ public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
   @Test
   void testAttributeCompositionTrafoInList() {
     String testOD = TRAFO_EXAMPLES.resolve("AttributeObjectComposition2.od").toString();
-    ASTODArtifact artifact = OD4DataTestUtil.loadModelAndST(testOD, new MCPath(PATH));
+    ASTODArtifact artifact = OD4DevelopmentTestUtil.loadModelAndST(testOD, new MCPath(PATH));
     
     ASTObjectDiagram diagram = artifact.getObjectDiagram();
     
@@ -78,7 +78,7 @@ public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
     ASTODNamedObject fooListVal1 = assertAndGetAsODNamedObject(fooList.getODValue(0));
     assertEquals("foo1", fooListVal1.getName());
     
-    new OD4DataAttributeValueCompositionTrafo().transform(artifact);
+    new OD4DevelopmentAttributeValueCompositionTrafo().transform(artifact);
     
     // Assertions post trafo
     assertEquals(4, diagram.getODElementList().size());
@@ -98,7 +98,7 @@ public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
   @Test
   void testAttributeCompositionTrafoInMap() {
     String testOD = TRAFO_EXAMPLES.resolve("AttributeObjectComposition3.od").toString();
-    ASTODArtifact artifact = OD4DataTestUtil.loadModelAndST(testOD, new MCPath(PATH));
+    ASTODArtifact artifact = OD4DevelopmentTestUtil.loadModelAndST(testOD, new MCPath(PATH));
     
     ASTObjectDiagram diagram = artifact.getObjectDiagram();
     
@@ -114,7 +114,7 @@ public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
     ASTODNamedObject fooMapVal1 = assertAndGetAsODNamedObject(fooMap.getODMapElement(0).getVal());
     assertEquals("foo1", fooMapVal1.getName());
     
-    new OD4DataAttributeValueCompositionTrafo().transform(artifact);
+    new OD4DevelopmentAttributeValueCompositionTrafo().transform(artifact);
     
     // Assertions post trafo
     assertEquals(4, diagram.getODElementList().size());
@@ -134,27 +134,27 @@ public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
   
   protected ASTODList assertAndGetAsODList(ASTODValue value) {
     assertInstanceOf(ASTODList.class, value);
-    return OD4DataMill.typeDispatcher().asODAttributeASTODList(value);
+    return OD4DevelopmentMill.typeDispatcher().asODAttributeASTODList(value);
   }
   
   protected ASTODMap assertAndGetAsODMap(ASTODValue value) {
     assertInstanceOf(ASTODMap.class, value);
-    return OD4DataMill.typeDispatcher().asODAttributeASTODMap(value);
+    return OD4DevelopmentMill.typeDispatcher().asODAttributeASTODMap(value);
   }
   
   protected ASTODNamedObject assertAndGetAsODNamedObject(ASTODElement element) {
     assertInstanceOf(ASTODNamedObject.class, element);
-    return OD4DataMill.typeDispatcher().asODBasisASTODNamedObject(element);
+    return OD4DevelopmentMill.typeDispatcher().asODBasisASTODNamedObject(element);
   }
   
   protected ASTODNamedObject assertAndGetAsODNamedObject(ASTODValue value) {
     assertInstanceOf(ASTODNamedObject.class, value);
-    return OD4DataMill.typeDispatcher().asODBasisASTODNamedObject(value);
+    return OD4DevelopmentMill.typeDispatcher().asODBasisASTODNamedObject(value);
   }
   
   protected ASTODLink assertAndGetAsODLink(ASTODElement element) {
     assertInstanceOf(ASTODLink.class, element);
-    return OD4DataMill.typeDispatcher().asODLinkASTODLink(element);
+    return OD4DevelopmentMill.typeDispatcher().asODLinkASTODLink(element);
   }
   
   protected void assertLinkCompositionConfig(ASTODLink link, String source, String target,
@@ -171,22 +171,22 @@ public class OD4DataAttributeValueCompositionTrafoTest extends ODTestBasis {
     assertEquals(isComposition, link.isComposition());
     assertFalse(link.isLink());
     assertFalse(link.isAggregation());
-    assertTrue(OD4DataMill.typeDispatcher().isODLinkASTODLeftToRightDir(link.getODLinkDirection()));
+    assertTrue(OD4DevelopmentMill.typeDispatcher().isODLinkASTODLeftToRightDir(link.getODLinkDirection()));
     assertEquals(role, link.getODLinkRightSide().getRole());
   }
   
   protected void assertLinkQualifier(ASTODLink link, int qualifier) {
     ASTODValue qualifierValue = link.getODLinkLeftSide().getODLinkQualifier().getODValue();
-    if (OD4DataMill.typeDispatcher().isODBasisASTODSimpleAttributeValue(qualifierValue)) {
+    if (OD4DevelopmentMill.typeDispatcher().isODBasisASTODSimpleAttributeValue(qualifierValue)) {
       ASTODSimpleAttributeValue value =
-          OD4DataMill.typeDispatcher().asODBasisASTODSimpleAttributeValue(qualifierValue);
-      ASTLiteralExpression expectedExpression = OD4DataMill.literalExpressionBuilder()
-          .setLiteral(OD4DataMill.natLiteralBuilder().setDigits(String.valueOf(qualifier)).build())
+          OD4DevelopmentMill.typeDispatcher().asODBasisASTODSimpleAttributeValue(qualifierValue);
+      ASTLiteralExpression expectedExpression = OD4DevelopmentMill.literalExpressionBuilder()
+          .setLiteral(OD4DevelopmentMill.natLiteralBuilder().setDigits(String.valueOf(qualifier)).build())
           .build();
       assertTrue(value.getExpression().deepEquals(expectedExpression));
     }
-    else if (OD4DataMill.typeDispatcher().isODBasisASTODName(qualifierValue)) {
-      ASTODName name = OD4DataMill.typeDispatcher().asODBasisASTODName(qualifierValue);
+    else if (OD4DevelopmentMill.typeDispatcher().isODBasisASTODName(qualifierValue)) {
+      ASTODName name = OD4DevelopmentMill.typeDispatcher().asODBasisASTODName(qualifierValue);
       assertEquals(String.valueOf(qualifier), name.getName());
     }
   }

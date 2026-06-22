@@ -3,6 +3,7 @@ package de.monticore.od4development;
 
 import de.monticore.ODOutTestBasis;
 import de.monticore.runtime.junit.MCAssertions;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -108,6 +109,17 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
     assertTrue(symTab.exists() && symTab.isFile());
     assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples") + String.format(
         OD4DevelopmentTool.STEXPORT_SUCCESSFUL, symTab.getAbsolutePath()), getOut());
+    MCAssertions.assertNoFindings();
+  }
+  
+  @Test
+  public void testStoreSymtabFile3() {
+    Path copiedInputFile = getTmpFilePath("examples", "od", "SimpleOD2.od");
+    assertDoesNotThrow(() -> FileUtils.copyFile(INPUT_OD.toFile(), copiedInputFile.toFile()));
+    new OD4DevelopmentTool().run(
+        new String[] { "-i", copiedInputFile.toString(), "-path", INPUT_PATH_DIR.toString(), "-s" });
+    File symTab = copiedInputFile.getParent().resolve("SimpleOD2.odsym").toFile();
+    assertTrue(symTab.exists() && symTab.isFile());
     MCAssertions.assertNoFindings();
   }
 }

@@ -171,8 +171,8 @@ e.g. attribute values.
 
 ### OD4Development
 
-The [OD4Development](../../../grammars/de/monticore/OD4Development.mc4) grammar extends
-the `OD4Data` language by adding an extended namespace for objects and attribute values.
+The [OD4Development](../../../grammars/de/monticore/OD4Development.mc4) grammar combines the language
+components `ODAttribute` and `ODLink` and adds an extended namespace for objects and attribute values.
 
 It focusses on the modelling phase in typical object-oriented development projects and is therefore
 mainly used for data modelling. Consequently, it omits method signatures and complex generics.

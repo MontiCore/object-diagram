@@ -1,11 +1,11 @@
 // (c) https://github.com/MontiCore/monticore
 
-package de.monticore.od4data._symboltable;
+package de.monticore.od4development._symboltable;
 
 import de.monticore.ODTestBasis;
 import de.monticore.io.paths.MCPath;
-import de.monticore.od4data.OD4DataMill;
-import de.monticore.od4data.OD4DataTestUtil;
+import de.monticore.od4development.OD4DevelopmentTestUtil;
+import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.DiagramSymbol;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestWithMCLanguage(OD4DataMill.class)
+@TestWithMCLanguage(OD4DevelopmentMill.class)
 public class ODSymbolTableCreatorTest extends ODTestBasis {
 
   @Test
@@ -74,9 +74,9 @@ public class ODSymbolTableCreatorTest extends ODTestBasis {
   
   private DiagramSymbol createObjectDiagramFromAST(String odName) {
     Path odPath = PATH.resolve(Paths.get("symboltable", odName + ".od"));
-    ASTODArtifact artifact = OD4DataTestUtil.loadModel(odPath, new MCPath(PATH));
-    IOD4DataArtifactScope odBasisArtifactScope = OD4DataTestUtil.createSymbolTableFromAST(artifact);
-    return odBasisArtifactScope.getDiagramSymbols().get(odName).get(0);
+    ASTODArtifact artifact = OD4DevelopmentTestUtil.loadModel(odPath, new MCPath(PATH));
+    IOD4DevelopmentArtifactScope odBasisArtifactScope = OD4DevelopmentMill.scopesGenitorDelegator().createFromAST(artifact);
+    return odBasisArtifactScope.getDiagramSymbols().get(odName).getFirst();
   }
 
 }

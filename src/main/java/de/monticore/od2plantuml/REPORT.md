@@ -157,4 +157,4 @@ objectdiagram MyFamily {
 
 [od4report-link]: http://www.monticore.de/download/MCOD4Report.jar
 
-[od4data-link]: http://www.monticore.de/download/MCOD4Data.jar
+[od4dev-link]: http://www.monticore.de/download/MCOD4Development.jar

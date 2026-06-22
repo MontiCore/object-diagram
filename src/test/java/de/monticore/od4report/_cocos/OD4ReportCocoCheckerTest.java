@@ -6,7 +6,6 @@ package de.monticore.od4report._cocos;
 
 import de.monticore.ODTestBasis;
 import de.monticore.io.paths.MCPath;
-import de.monticore.od4data.OD4DataMill;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
@@ -44,9 +43,9 @@ public class OD4ReportCocoCheckerTest extends ODTestBasis {
   public void checkValidObjectTypeCocoFailure() {
     IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
     TypeSymbol person = OD4ReportMill.typeSymbolBuilder().setName("Person").setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope()).build();
+        .setSpannedScope(OD4ReportMill.scope()).build();
     TypeSymbol bmw = OD4ReportMill.typeSymbolBuilder().setName("BMW").setEnclosingScope(gs)
-        .setSpannedScope(OD4DataMill.scope()).build();
+        .setSpannedScope(OD4ReportMill.scope()).build();
     gs.add(person);
     gs.add(bmw);
     

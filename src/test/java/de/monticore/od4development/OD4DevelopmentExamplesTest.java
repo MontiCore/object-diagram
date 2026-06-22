@@ -1,12 +1,11 @@
 // (c) https://github.com/MontiCore/monticore
 
-package de.monticore.od4data;
+package de.monticore.od4development;
 
 import de.monticore.ODTestBasis;
 import de.monticore.io.paths.MCPath;
-import de.monticore.od4data._parser.OD4DataParser;
-import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
-import de.monticore.od4data._symboltable.IOD4DataArtifactScope;
+import de.monticore.od4development._parser.OD4DevelopmentParser;
+import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.runtime.junit.MCAssertions;
@@ -27,8 +26,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * This test compares the ASTs of the files in the examples folder with the pretty-printed versions
  * of these files.
  */
-@TestWithMCLanguage(OD4DataMill.class)
-public class OD4DataExamplesTest extends ODTestBasis {
+@TestWithMCLanguage(OD4DevelopmentMill.class)
+public class OD4DevelopmentExamplesTest extends ODTestBasis {
   
   @ParameterizedTest
   @ValueSource(strings = { "examples/od/SpecialValues.od", "examples/od/QualifiedLinks.od",
@@ -39,17 +38,17 @@ public class OD4DataExamplesTest extends ODTestBasis {
   public void test(String modelName) throws RecognitionException, IOException {
     Path model = PATH.resolve(Paths.get(modelName));
     
-    ASTODArtifact artifact = OD4DataTestUtil.loadModel(model, new MCPath(PATH));
+    ASTODArtifact artifact = OD4DevelopmentTestUtil.loadModel(model, new MCPath(PATH));
     
-    IOD4DataArtifactScope odBasicsArtifactScope =
-        OD4DataTestUtil.createSymbolTableFromAST(artifact);
+    IOD4DevelopmentArtifactScope odBasicsArtifactScope =
+        OD4DevelopmentTestUtil.createSymbolTableFromAST(artifact);
     assertNotNull(odBasicsArtifactScope);
     
     // pretty print the AST
-    String ppResult = new OD4DataFullPrettyPrinter(new IndentPrinter()).prettyprint(artifact);
+    String ppResult = OD4DevelopmentMill.prettyPrint(artifact, false);
     
     // parse the printers content
-    OD4DataParser parser = OD4DataMill.parser();
+    OD4DevelopmentParser parser = OD4DevelopmentMill.parser();
     Optional<ASTODArtifact> ppOd = parser.parse_StringODArtifact(ppResult);
     
     assertFalse(parser.hasErrors());
@@ -63,7 +62,7 @@ public class OD4DataExamplesTest extends ODTestBasis {
   @ValueSource(strings = { "src/test/resources/examples/od/InnerObjectWithoutLink.od" })
   public void negativTest(String modelName) throws RecognitionException, IOException {
     Path model = Paths.get(modelName);
-    OD4DataParser parser = OD4DataMill.parser();
+    OD4DevelopmentParser parser = OD4DevelopmentMill.parser();
     parser.parseODArtifact(model.toString());
     assertTrue(parser.hasErrors());
     MCAssertions.assertHasFindingStartingWith("missing ';' at '}' in rule stack");

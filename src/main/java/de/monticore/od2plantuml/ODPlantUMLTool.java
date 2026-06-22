@@ -2,8 +2,8 @@ package de.monticore.od2plantuml;/* (c) https://github.com/MontiCore/monticore *
 
 import de.monticore.io.paths.MCPath;
 import de.monticore.od2plantuml.prettyprinter.PlantUMLODFullPrettyPrinter;
-import de.monticore.od4data.trafo.OD4DataAttributeValueCompositionTrafo;
-import de.monticore.od4data.trafo.OD4DataDeAnonymizeObjectsTrafo;
+import de.monticore.od4development.trafo.OD4DevelopmentAttributeValueCompositionTrafo;
+import de.monticore.od4development.trafo.OD4DevelopmentDeAnonymizeObjectsTrafo;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
@@ -75,8 +75,8 @@ public class ODPlantUMLTool {
         createSymbolTable(ast.get());
       }
       
-      new OD4DataDeAnonymizeObjectsTrafo().transform(ast.get());
-      new OD4DataAttributeValueCompositionTrafo().transform(ast.get());
+      new OD4DevelopmentDeAnonymizeObjectsTrafo().transform(ast.get());
+      new OD4DevelopmentAttributeValueCompositionTrafo().transform(ast.get());
       
       // -option pretty print
       if (cmd.hasOption("pp")) {

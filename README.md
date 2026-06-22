@@ -69,7 +69,7 @@ gradle. The following explains this.
 
 ### Tool Download
 
-* [**Download OD Language OD4Data**][od4data-link]
+* [**Download OD Language OD4Development**][od4dev-link]
 * [**Download OD Language OD4Report**][od4report-link]
 
 Alternatively, the tools can be built from source code.
@@ -94,7 +94,7 @@ Afterward, the jars of the tools are available in `od/target/libs`.
 The previous sections describe how to obtain an executable JAR file
 (OD command line tool). This section provides a tutorial for using the OD tool. The following examples
 assume that you locally named the tool `MCOD4Report`. Note that after setting up the tool in the
-previous step, you will also find a `MCOD4Data`. The following instruction also hold for this tool.
+previous step, you will also find a `MCOD4Development`. The following instruction also hold for this tool.
 
 ### Step 1: Laying the basis
 
@@ -225,7 +225,7 @@ You may notice that the tool prints nothing to the console when executing this c
 that the model satisfies all context conditions.
 
 Let us now consider a more complex scenario. Note that these commands do not work with the
-`MCOD4Data` Tool, since the `MyFamily.od` dates as attribute values.
+`MCOD4Development` Tool, since the `MyFamily.od` uses dates as attribute values.
 You can check the different kinds of context
 conditions, using the `-c,--coco <arg>` option:
 
@@ -365,4 +365,4 @@ much done reading this README!
 
 [od4report-link]: http://www.monticore.de/download/MCOD4Report.jar
 
-[od4data-link]: http://www.monticore.de/download/MCOD4Data.jar
+[od4dev-link]: http://www.monticore.de/download/MCOD4Development.jar
