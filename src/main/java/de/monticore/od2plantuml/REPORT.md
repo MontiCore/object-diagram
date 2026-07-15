@@ -1,125 +1,55 @@
-# Object Diagram PlantUML Tool (ODPlantUMLTool)
+# Object Diagram PlantUML Tool (`ODPlantUMLTool`)
 
-The [ODPlantUMLTool](ODPlantUMLTool.java) is a Pretty Printer primarily used to pretty print 
-*MontiCore's Object Diagram* models first into the PlantUML syntax and then generate 
-the object diagrams as a diagrammatic image. Most of the information is kept, but some, e.g. 
-attribute types are lost.
-
-## Internal Structure of the Functionality
-
-**Step 1. Parse the Object Diagrams**
-
-1. The tool takes an Object Diagrams as input and parses it into 
-its abstract syntax tree (AST) based on the 
-[OD4Report](../../../grammar) grammar.
-
-### Example Object Diagram
-
-Below is an OD defined as in MontiCore's textual notation:
-
-``` 
-objectdiagram Examples {
-
-  foo: A {
-    int x = 5;
-    java.lang.String s = "hello";
-  };
-
-  bar: B {
-    boolean b = false;
-  };
-
-  link foo -> (blub) bar;
-
-}
-```
-
-Objects in ODs can also be nested, expressions be used to define values. Objects and attributes 
-are generally typed (here e.g. `A`, `B`), links can be explicitly defined quite like in
-MontiCore's class diagrams. Further extensions e.g. through language composition allow
-various forms and uses object diagrams. 
-
-![*Figure 1:* The graphical syntax of an example OD.](../../../../../doc/pics/ODExample4DiagramTrafo.png)
-<br><b>Figure 1:</b> The OD ```Example``` in graphical syntax.
-
-
-**Step 2. Pretty Print the Object Diagram as a PlantUML text.**
-
-1. The tool uses the [Monticore](https://monticore.github.io/monticore/) `Visitor` and 
-   `Handler` Infrastructure to iterate through the AST nodes and pretty prints the 
-   PlantUML model.
-2. Detailed Implementation can be found here: 
-   [PlantUMLODFullPrettyPrinter](PlantUMLODFullPrettyPrinter.java)
-
-This is the pretty-printed PlantUML model by the ODPlantUMLTool, which contains most of the
-OD information (but missing e.g. attribute types):  
-
-``` 
-@startuml
-note "OD" as tag #white
-object "__foo:A__" as foo {
-  x = 5 
-  s = "hello"
-}
-object "__bar:B__" as bar {
-  b = false 
-}
-foo--> "blub" bar
-@enduml
-```
-
-**Step 3. Generate an image representing the OD as image.**
-
-1. The tool uses the PlantUML Java library to take the pretty printed 
-   PlantUML text as input and generates an image representing the OD.
-2. Detailed Implementation can be found here: [generateImage](ODPlantUMLTool.java) 
-
-
-![*Figure 2:* Generation of graphical OD from PlantUML text.](../../../../../doc/pics/GeneratePlantUMLDiagram.png)
-<br><b>Figure 2:</b> Generation of Object Diagram from PlantUML Model.
-
+The [`ODPlantUMLTool`](ODPlantUMLTool.java) is a pretty printer for MontiCore Object Diagrams (ODs).
+It transforms OD models into PlantUML text and then renders that text as an image.
+Most OD information is preserved during the transformation, but some details (for example attribute types)
+are currently not included in the generated PlantUML output.
 
 ## Usage of ODPlantUMLTool
 
-### Dependencies 
+### Dependencies
 * Java 21 (or higher)
 * Gradle 8.5 (or higher)
 
 ### Installation of the project
 * Clone the project from Gitlab
-* run *./gradlew clean*
-* run *./gradlew build*
+* This project has **no Gradle wrapper** (`gradlew` is not part of the repository).
+* Ensure Gradle is installed locally and available on your `PATH`.
+```shell
+gradle clean build
+```
 
 ### Running the application
 
 * The tool can be found here: [ODPlantUMLTool](ODPlantUMLTool.java)
 
 
-* Run the Tool using the following CLI arguments:
-  * ``` -i gentest/src/main/resources/Example.od -s gentest/src/main/resources/symboltable -pp diagram.png ```
+* Example invocations:
+   * Generate image output to file:
+      * ``` -i gentest/src/main/resources/Example.od -pp diagram.png ```
+   * Print PlantUML text to stdout:
+      * ``` -i gentest/src/main/resources/Example.od -pp ```
+   * Use external symbol table and symbol path(s):
+      * ``` -i gentest/src/main/resources/Example.od -s gentest/src/main/resources/symboltable -path some/symbol/dir -path another/symbol/dir -pp diagram.png ```
 
 
 * Explanation of the CLI arguments:
-    * ``` -i ``` flag is used to specify the location of the input `Object Diagram` model
-    * ``` -s ``` flag is used to specify the location of the symbol table that must be used by the `Pretty Printer`.
-    * ``` pp ``` flag is used to specify the name of the output image of the `Object Diagram` that is generated from the pretty printed `PlantUML` model.
-    * These arguments values can be *modified according to individual user's requirements* like format of images (png, jpeg), location of models etc.
-
-
-* To view the pretty printed `PlantUML` model, then following steps must be performed: 
-    * Navigate to the tool: [ODPlantUMLTool](ODPlantUMLTool.java)
-    * Move to the `prettyPrint` function at `Line 124`
-    * Add and additional fragment to print the result `PlantUML model` at `Line 127` : Log.info(result,"INFO");
-    * Build the project again.
-    * Run the `PlantUML` Tool using suitable CLI arguments.
-    * The pretty printed `PlantUML` model will be available in the logs.
+   * ``` -h ``` / ``` --help ``` prints CLI help and exits.
+   * ``` -i ``` / ``` --input <file> ``` is **mandatory** and specifies the input `Object Diagram` model.
+   * ``` -pp ``` / ``` --prettyprint [file] ``` is optional:
+      * with a file argument, output is written/rendered to that file,
+      * without a file argument, generated PlantUML text is printed to stdout.
+   * ``` -s ``` / ``` --symboltable <file> ``` is optional and loads a symbol table from file.
+     If omitted, the symbol table is derived from the AST.
+   * ``` -path <dirlist> ``` is optional and can be provided multiple times to configure symbol paths.
+   * If ``` -i ``` is missing, the tool prints help and exits.
 
 ### Limitation of the Tool
 * Handling of Complex `Object Diagrams` with lists of objects:
-  * The tool is not capable of handling OD models which have nested lists of objects within a given object.
-  * An Example is shown below where we have a nested list of `cars` within an object `alice`:
+   * The tool is not capable of handling OD models which have nested lists of objects within a given object.
+   * An Example is shown below where we have a nested list of `cars` within an object `alice`:
 
-``` 
+```text
 objectdiagram MyFamily {
   alice:Person {
     age = 29;
@@ -142,6 +72,76 @@ objectdiagram MyFamily {
   link married alice <-> bob;
 }
 ```
+
+## How the Tool Works
+
+### Step 1: Parse the Object Diagram
+
+The tool reads an Object Diagram model and parses it into an Abstract Syntax Tree (AST)
+based on the OD4Development grammar.
+
+### Example OD Input
+
+```text
+objectdiagram Examples {
+
+  foo: A {
+    int x = 5;
+    java.lang.String s = "hello";
+  };
+
+  bar: B {
+    boolean b = false;
+  };
+
+  link foo -> (blub) bar;
+
+}
+```
+
+ODs may contain nested objects and expressions.
+Objects and attributes are typically typed (for example `A` and `B`), and links are modeled similarly to
+MontiCore class diagram associations.
+
+![Figure 1: Graphical syntax of an example OD.](../../../../../../doc/pics/ODExample4DiagramTrafo.png)
+<br><b>Figure 1:</b> The OD <code>Examples</code> in graphical syntax.
+
+### Step 2: Pretty Print the OD to PlantUML
+
+The tool uses MontiCore's visitor and handler infrastructure to traverse the AST and generate PlantUML text.
+
+1. The tool uses the [Monticore](https://monticore.github.io/monticore/) `Visitor` and
+   `Handler` Infrastructure to iterate through the AST nodes and pretty prints the
+   PlantUML model.
+2. Detailed Implementation can be found here:
+   [PlantUMLODFullPrettyPrinter](PlantUMLODFullPrettyPrinter.java)
+
+This is the pretty-printed PlantUML model by the ODPlantUMLTool, which contains most of the
+OD information (but missing e.g. attribute types):
+
+```text
+@startuml
+note "OD" as tag #white
+object "__foo:A__" as foo {
+  x = 5
+  s = "hello"
+}
+object "__bar:B__" as bar {
+  b = false
+}
+foo--> "blub" bar
+@enduml
+```
+
+**Step 3. Generate an image representing the OD as image.**
+
+1. The tool uses the PlantUML Java library to take the pretty printed
+   PlantUML text as input and generates an image representing the OD.
+2. Detailed Implementation can be found here: [generateImage](ODPlantUMLTool.java)
+
+
+![*Figure 2:* Generation of graphical OD from PlantUML text.](../../../../../../doc/pics/GeneratePlantUMLDiagram.png)
+<br><b>Figure 2:</b> Generation of Object Diagram from PlantUML Model.
 
 
 ## Further Information
