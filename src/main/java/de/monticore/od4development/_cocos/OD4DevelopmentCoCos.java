@@ -22,4 +22,12 @@ public class OD4DevelopmentCoCos {
     return checker;
   }
 
+  public OD4DevelopmentCoCoChecker getCheckerForAllInterCoCos() {
+    final OD4DevelopmentCoCoChecker checker = new OD4DevelopmentCoCoChecker();
+    checker.addChecker(new ODBasicsCoCos().getCheckerForAllInterCoCos());
+    checker.addChecker(new ODLinkCoCos().getCheckerForAllInterCoCos());
+
+    return checker;
+  }
+
 }

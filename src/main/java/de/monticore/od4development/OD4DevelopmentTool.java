@@ -26,12 +26,12 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   
@@ -45,7 +45,31 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   protected static final String STEXPORT_SUCCESSFUL = "Creation of symbol file %s successful\n";
   
   protected static final String INPUT_FILE_NOT_EXISTENT = "Input file '%s' does not exist\n";
+  protected static final String OUTPUT_PATH_INVALID =
+      "Output path '%s' is not a valid directory path\n";
+  protected static final String COCO_OPTION_INVALID =
+      "Invalid argument '%s' for option -c. Allowed values are: intra, inter.";
+  protected static final String COCO_OPTION_TOO_MANY_ARGS =
+      "Option -c accepts at most one argument: intra or inter.";
   
+  /**
+   * Processes CLI arguments and executes parsing, symbol table creation, CoCo checks,
+   * pretty printing, symbol export and optional OD-to-CD generation.
+   * <pre>
+   * <ul>
+   *     <li>{@code -h}/{@code --help}: prints the help dialog and exits.</li>
+   *     <li>{@code -i}/{@code --input <file>}: sets the mandatory input OD file to parse.</li>
+   *     <li>{@code -d}: enables debug logging output.</li>
+   *     <li>{@code -path <dirlist>}: sets one or more symbol path entries for imported symbols.</li>
+   *     <li>{@code -pp}/{@code --prettyprint [file]}: pretty prints the AST to stdout or the optional file.</li>
+   *     <li>{@code -s}/{@code --symboltable [file]}: writes the symbol table to the optional file or a default name.</li>
+   *     <li>{@code -c}/{@code --coco [intra|inter]}: runs all CoCos by default, or only intra/inter CoCos when specified.</li>
+   *     <li>{@code -o}/{@code --output <dir>}: generates a class diagram into the given output directory.</li>
+   * </ul>
+   * </pre>
+   *
+   * @param args command line arguments
+   */
   public void run(String[] args) {
     Log.init();
     OD4DevelopmentMill.init();
@@ -79,7 +103,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
         return;
       }
       
-      // don't output to stdout when the prettyprint is output to stdout
+      // avoid duplicate console output when pretty print already writes to stdout
       final boolean doPrintToStdOut = !(cmd.hasOption("pp") && cmd.getOptionValue("pp") == null);
       
       // parse input file
@@ -101,7 +125,12 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       
       // if -path is set: set symbol path and load imported diagrams
       if (cmd.hasOption("path")) {
-        MCPath mcPath = new MCPath(cmd.getOptionValue("path"));
+        MCPath mcPath = new MCPath();
+        String[] paths = cmd.getOptionValues("path");
+        if (paths != null) {
+          // support multiple -path entries passed via CLI
+          Arrays.stream(paths).forEach(p -> mcPath.addEntry(Paths.get(p)));
+        }
         OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
         OD4DevelopmentMill.globalScope()
             .putTypeSymbolDeSer("de.monticore.cdbasis._symboltable.CDTypeSymbol");
@@ -124,17 +153,27 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       }
       
       // -option check cocos
-      Set<String> cocoOptionValue = new LinkedHashSet<>();
-      if (cmd.hasOption("c") && cmd.getOptionValues("c") != null) {
-        cocoOptionValue.addAll(Arrays.asList(cmd.getOptionValues("c")));
-      }
-      
       if (cmd.hasOption("c")) {
-        if (cocoOptionValue.contains("intra")) {
-          runDefaultCoCos(ast);
+        String[] cocoArgs = cmd.getOptionValues("c");
+        if (cocoArgs == null || cocoArgs.length == 0) {
+          runAllCoCos(ast);
+        }
+        else if (cocoArgs.length == 1) {
+          String cocoArg = cocoArgs[0];
+          if ("intra".equals(cocoArg)) {
+            runDefaultCoCos(ast);
+          }
+          else if ("inter".equals(cocoArg)) {
+            runInterCoCos(ast);
+          }
+          else {
+            Log.error(String.format("0xA7107 " + COCO_OPTION_INVALID, cocoArg));
+            return;
+          }
         }
         else {
-          runAllCoCos(ast);
+          Log.error("0xA7108 " + COCO_OPTION_TOO_MANY_ARGS);
+          return;
         }
         
         if (doPrintToStdOut) {
@@ -154,9 +193,23 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
         prettyPrint(ast, path);
       }
       
-      String outputDir = cmd.hasOption("o") ? cmd.getOptionValue("o") : "target/gen-test/";
       if (cmd.hasOption("o")) {
-        generateCD(ast, outputDir);
+        String outputDirArgument = cmd.getOptionValue("o");
+        if (outputDirArgument != null && !outputDirArgument.isBlank()) {
+          try {
+            Path outputDirPath = Paths.get(outputDirArgument);
+            // allow non-existing directory paths; reject only existing non-directory targets
+            if (!Files.exists(outputDirPath) || Files.isDirectory(outputDirPath)) {
+              generateCD(ast, outputDirPath);
+            }
+            else {
+              Log.error(String.format("0xA7106 " + OUTPUT_PATH_INVALID, outputDirArgument));
+            }
+          }
+          catch (InvalidPathException e) {
+            Log.error(String.format("0xA7106 " + OUTPUT_PATH_INVALID, outputDirArgument));
+          }
+        }
       }
       
     }
@@ -166,6 +219,12 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
     }
   }
   
+  /**
+   * Pretty prints the OD artifact either to stdout or to the given target file.
+   *
+   * @param ast parsed OD artifact
+   * @param file target file path; empty means stdout
+   */
   @Override
   public void prettyPrint(ASTODArtifact ast, String file) {
     ODBasisFullPrettyPrinter printer = new ODBasisFullPrettyPrinter(new IndentPrinter());
@@ -173,35 +232,59 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
     print(result, file);
   }
   
+  /**
+   * Runs only intra-model CoCos.
+   *
+   * @param ast parsed OD artifact
+   */
   @Override
   public void runDefaultCoCos(ASTODArtifact ast) {
     OD4DevelopmentCoCoChecker checker = new OD4DevelopmentCoCos().getCheckerForAllIntraCoCos();
     checker.checkAll(ast);
   }
   
+  /**
+   * Runs all available CoCos (intra- and inter-model checks).
+   *
+   * @param ast parsed OD artifact
+   */
   public void runAllCoCos(ASTODArtifact ast) {
     OD4DevelopmentCoCoChecker checker = new OD4DevelopmentCoCos().getCheckerForAllCoCos();
     checker.checkAll(ast);
   }
   
-  public void generateCD(ASTODArtifact ast, String outputDir) {
+  /**
+   * Runs only inter-model CoCos.
+   *
+   * @param ast parsed OD artifact
+   */
+  public void runInterCoCos(ASTODArtifact ast) {
+    OD4DevelopmentCoCoChecker checker = new OD4DevelopmentCoCos().getCheckerForAllInterCoCos();
+    checker.checkAll(ast);
+  }
+  
+  /**
+   * Generates a class diagram from the given OD artifact into the provided output directory.
+   *
+   * @param ast parsed OD artifact
+   * @param outputDir target directory for generated files
+   */
+  public void generateCD(ASTODArtifact ast, Path outputDir) {
     GeneratorSetup setup = new GeneratorSetup();
     GlobalExtensionManagement glex = new GlobalExtensionManagement();
     setup.setGlex(glex);
     glex.setGlobalValue("cdPrinter", new CdUtilsPrinter());
     glex.setGlobalValue("cp", new CompositionPrinter());
     
-    if (!outputDir.isEmpty()) {
-      File targetDir = new File(outputDir);
-      setup.setOutputDirectory(targetDir);
-    }
+    File targetDir = outputDir.toFile();
+    setup.setOutputDirectory(targetDir);
     
     String configTemplate = "od2cd.OD2CD";
     TemplateController tc = setup.getNewTemplateController(configTemplate);
     CDGenerator generator = new CDGenerator(setup);
     TemplateHookPoint hpp = new TemplateHookPoint(configTemplate);
     List<Object> configTemplateArgs;
-    // select the conversion variant:
+    // template arguments define converter variant and generator context
     OD2CDConverter converter = new OD2CDConverter();
     configTemplateArgs = Arrays.asList(glex, converter, setup.getHandcodedPath(), generator);
     
@@ -219,7 +302,9 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
     Path targetPath;
     if (symTabPath == null || symTabPath.isBlank()) {
       String symTabName = FilenameUtils.getBaseName(modelPath.toString()) + ".odsym";
-      targetPath = modelPath.getParent().resolve(symTabName);
+      Path modelParent = modelPath.getParent();
+      // handle relative input files that do not have an explicit parent directory
+      targetPath = modelParent != null ? modelParent.resolve(symTabName) : Paths.get(symTabName);
     }
     else {
       targetPath = Paths.get(symTabPath);
@@ -270,13 +355,19 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
     return options;
   }
   
+  /**
+   * Adds tool-specific CLI options beyond the standard options.
+   *
+   * @param options current options instance
+   * @return options including additional OD4Development options
+   */
   @Override
   public Options addAdditionalOptions(Options options) {
     // check cocos
-    options.addOption(Option.builder("c").longOpt("coco").optionalArg(true).numberOfArgs(3).desc(
+    options.addOption(Option.builder("c").longOpt("coco").optionalArg(true).numberOfArgs(1).desc(
         "Checks the CoCos for the input. Optional arguments are:\n" + "-c intra to check only the"
-            + " intra-model CoCos,\n" + "-c inter checks also inter-model CoCos,\n" + "-c type "
-            + "(default) checks all CoCos.").build());
+            + " intra-model CoCos,\n" + "-c inter to check only inter-model CoCos."
+            + " Without an argument, all CoCos are checked.").build());
     
     options.addOption(
         Option.builder("o").longOpt("output").optionalArg(true).hasArg().numberOfArgs(1)

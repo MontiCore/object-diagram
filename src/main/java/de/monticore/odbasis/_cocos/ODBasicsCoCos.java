@@ -35,4 +35,13 @@ public class ODBasicsCoCos {
     return checker;
   }
 
+  public ODBasisCoCoChecker getCheckerForAllInterCoCos() {
+    final ODBasisCoCoChecker checker = new ODBasisCoCoChecker();
+
+    // types
+    checker.addCoCo(new ValidObjectTypeCoco());
+
+    return checker;
+  }
+
 }
