@@ -35,18 +35,22 @@ import java.util.List;
 
 public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   
-  protected static final String PARSE_SUCCESSFUL = "Successfully parsed %s\n";
+  protected static final String PARSE_SUCCESSFUL = "Successfully parsed %s";
   
   protected static final String CHECK_SUCCESSFUL =
-      "Successfully checked the CoCos for class " + "diagram %s\n";
+      "Successfully checked the CoCos for class " + "diagram %s";
   
   protected static final String CHECK_ERROR = "Error while parsing or CoCo checking";
   
-  protected static final String STEXPORT_SUCCESSFUL = "Creation of symbol file %s successful\n";
+  protected static final String STEXPORT_SUCCESSFUL = "Creation of symbol file %s successful";
+  protected static final String PRETTYPRINT_SUCCESSFUL =
+      "Pretty printed OD to file %s";
   
-  protected static final String INPUT_FILE_NOT_EXISTENT = "Input file '%s' does not exist\n";
+  protected static final String INPUT_FILE_NOT_EXISTENT = "Input file '%s' does not exist";
   protected static final String OUTPUT_PATH_INVALID =
-      "Output path '%s' is not a valid directory path\n";
+      "Output path '%s' is not a valid directory path";
+  protected static final String OUTPUT_OPTION_MISSING_ARG =
+      "Option -o requires an argument specifying the output directory.";
   protected static final String COCO_OPTION_INVALID =
       "Invalid argument '%s' for option -c. Allowed values are: intra, inter.";
   protected static final String COCO_OPTION_TOO_MANY_ARGS =
@@ -110,14 +114,14 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       String modelFile = cmd.getOptionValue("i");
       Path modelFilePath = Paths.get(modelFile);
       if (!modelFilePath.toFile().exists()) {
-        System.out.printf(INPUT_FILE_NOT_EXISTENT, modelFile);
+        System.out.println(String.format(INPUT_FILE_NOT_EXISTENT, modelFile));
         return;
       }
       
       ASTODArtifact ast = parse(modelFile);
       
       if (doPrintToStdOut) {
-        System.out.printf(PARSE_SUCCESSFUL, ast.getObjectDiagram().getName());
+        System.out.println(String.format(PARSE_SUCCESSFUL, ast.getObjectDiagram().getName()));
       }
       
       // initialize primitives
@@ -148,7 +152,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       if (cmd.hasOption("s")) {
         Path symTabPath = storeSymTab(as, modelFilePath, cmd.getOptionValue("s"));
         if (doPrintToStdOut) {
-          System.out.printf(STEXPORT_SUCCESSFUL, symTabPath.toAbsolutePath());
+          System.out.println(String.format(STEXPORT_SUCCESSFUL, symTabPath.toAbsolutePath()));
         }
       }
       
@@ -167,18 +171,18 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
             runInterCoCos(ast);
           }
           else {
-            Log.error(String.format("0xA7107 " + COCO_OPTION_INVALID, cocoArg));
+            System.out.println(String.format(COCO_OPTION_INVALID, cocoArg));
             return;
           }
         }
         else {
-          Log.error("0xA7108 " + COCO_OPTION_TOO_MANY_ARGS);
+          System.out.println(COCO_OPTION_TOO_MANY_ARGS);
           return;
         }
         
         if (doPrintToStdOut) {
           if (Log.getErrorCount() == 0) {
-            System.out.printf(CHECK_SUCCESSFUL, ast.getObjectDiagram().getName());
+            System.out.println(String.format(CHECK_SUCCESSFUL, ast.getObjectDiagram().getName()));
           }
           else {
             System.out.println(CHECK_ERROR);
@@ -191,31 +195,36 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       if (cmd.hasOption("pp")) {
         String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
         prettyPrint(ast, path);
+        if (StringUtils.isNotBlank(path)) {
+          System.out.println(PRETTYPRINT_SUCCESSFUL.formatted(path));
+        }
       }
       
       if (cmd.hasOption("o")) {
         String outputDirArgument = cmd.getOptionValue("o");
-        if (outputDirArgument != null && !outputDirArgument.isBlank()) {
-          try {
-            Path outputDirPath = Paths.get(outputDirArgument);
-            // allow non-existing directory paths; reject only existing non-directory targets
-            if (!Files.exists(outputDirPath) || Files.isDirectory(outputDirPath)) {
-              generateCD(ast, outputDirPath);
-            }
-            else {
-              Log.error(String.format("0xA7106 " + OUTPUT_PATH_INVALID, outputDirArgument));
-            }
+        if (outputDirArgument == null || outputDirArgument.isBlank()) {
+          System.out.println(OUTPUT_OPTION_MISSING_ARG);
+          return;
+        }
+        try {
+          Path outputDirPath = Paths.get(outputDirArgument);
+          // allow non-existing directory paths; reject only existing non-directory targets
+          if (!Files.exists(outputDirPath) || Files.isDirectory(outputDirPath)) {
+            generateCD(ast, outputDirPath);
           }
-          catch (InvalidPathException e) {
-            Log.error(String.format("0xA7106 " + OUTPUT_PATH_INVALID, outputDirArgument));
+          else {
+            System.out.println(String.format(OUTPUT_PATH_INVALID, outputDirArgument));
           }
+        }
+        catch (InvalidPathException e) {
+          System.out.println(String.format(OUTPUT_PATH_INVALID, outputDirArgument));
         }
       }
       
     }
     catch (ParseException e) {
       // an unexpected error from the apache CLI parser:
-      Log.error("0xA7105 Could not process parameters: " + e.getMessage());
+      System.out.println("Could not process parameters: " + e.getMessage());
     }
   }
   
