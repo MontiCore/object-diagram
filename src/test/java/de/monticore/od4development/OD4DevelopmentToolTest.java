@@ -4,7 +4,6 @@ package de.monticore.od4development;
 import de.monticore.ODTestBasis;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -52,7 +51,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(1, out.size());
-    assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
   }
   
   @Test
@@ -63,7 +62,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.get(0));
+    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
     assertEquals(OD4DevelopmentTool.CHECK_SUCCESSFUL.formatted("Examples"), out.get(1));
   }
 
@@ -73,8 +72,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.get(0));
-    assertEquals(String.format(OD4DevelopmentTool.CHECK_SUCCESSFUL, "Examples"), out.get(1));
+    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
+    assertEquals(OD4DevelopmentTool.CHECK_SUCCESSFUL.formatted("Examples"), out.get(1));
   }
 
   @Test
@@ -84,7 +83,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.get(0));
+    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
     assertEquals(OD4DevelopmentTool.COCO_OPTION_INVALID.formatted("foo"), out.get(1));
   }
 
@@ -95,7 +94,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples").strip(), out.get(0));
+    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples").strip(), out.getFirst());
     assertEquals(OD4DevelopmentTool.COCO_OPTION_TOO_MANY_ARGS, out.get(1));
   }
 
@@ -105,7 +104,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(18, out.size());
-    assertEquals("/* (c) https://github.com/MontiCore/monticore */", out.get(0));
+    assertEquals("/* (c) https://github.com/MontiCore/monticore */", out.getFirst());
     assertEquals("package examples.od2cd;", out.get(1));
     assertEquals("objectdiagram Examples { ", out.get(2));
   }
@@ -116,7 +115,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.get(0));
+    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
     assertEquals(OD4DevelopmentTool.OUTPUT_OPTION_MISSING_ARG, out.get(1));
   }
 
@@ -126,20 +125,18 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.get(0));
+    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
     assertEquals(OD4DevelopmentTool.OUTPUT_OPTION_MISSING_ARG, out.get(1));
   }
 
   @Test
-  @Disabled("Generator exception")
   public void testOD4DevelopmentToolOutputDirectoryGeneration() throws Exception {
     Path outputDir = getTmpFilePath("generated-cd");
     String[] input = { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-o", outputDir.toString() };
-    new OD4DevelopmentTool().run(input);
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
-    assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples").strip(), out.get(0));
+    assertEquals(3, out.size());
+    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples").strip(), out.getFirst());
     assertTrue(Files.isDirectory(outputDir));
     try (Stream<Path> generatedFiles = Files.walk(outputDir)) {
       assertTrue(generatedFiles.anyMatch(Files::isRegularFile));
@@ -155,7 +152,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples").strip(), out.get(0));
+    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples").strip(), out.getFirst());
     assertEquals(OD4DevelopmentTool.OUTPUT_PATH_INVALID.formatted(invalidOutput.toString()), out.get(1));
   }
   
@@ -167,8 +164,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(String.format(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.get(0));
-    assertEquals(String.format(OD4DevelopmentTool.PRETTYPRINT_SUCCESSFUL, ppOutPath), out.get(1));
+    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
+    assertEquals(OD4DevelopmentTool.PRETTYPRINT_SUCCESSFUL.formatted(ppOutPath), out.get(1));
     assertTrue(Paths.get(ppOutPath).toFile().exists());
   }
   

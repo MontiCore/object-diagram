@@ -70,8 +70,8 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
             .setCDDefinition(cdDefinition)
             .build();
     
-    if (odArtifact.getMCImportStatementList().size() > 0) {
-      ASTMCImportStatement i = odArtifact.getMCImportStatementList().get(0);
+    if (!odArtifact.getMCImportStatementList().isEmpty()) {
+      ASTMCImportStatement i = odArtifact.getMCImportStatementList().getFirst();
       imp = CDBasisMill.mCImportStatementBuilder()
           .setMCQualifiedName(CDBasisMill.mCQualifiedNameBuilder().addParts(i.getQName().toLowerCase()).build())
           .setStar(true).build();
@@ -92,12 +92,13 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
             .setModifier(CDBasisMill.modifierBuilder().PUBLIC().build())
             .build();
     
-    cd4C.addImport(instantiatorClass, imp.getQName() + ".*");
     cd4C.addImport(instantiatorClass, "java.time.*");
-    cd4C.addImport(instancesClass, imp.getQName() + ".*");
     cd4C.addImport(instancesClass, "java.time.*");
-    cd4C.addImport(checkerClass, imp.getQName() + ".*");
-    
+    if (imp != null) {
+      cd4C.addImport(instantiatorClass, imp.getQName() + ".*");
+      cd4C.addImport(instancesClass, imp.getQName() + ".*");
+      cd4C.addImport(checkerClass, imp.getQName() + ".*");
+    }
     
     this.cdPackage.addCDElement(instantiatorClass);
     this.cdPackage.addCDElement(instancesClass);
@@ -265,13 +266,20 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
     if (objSym.isPresent()) {
       // find type of object
       String typeName = objSym.get().getMCObjectType().printType();
-      TypeSymbol type = OD4DevelopmentMill.globalScope().resolveType(typeName).get();
+      Optional<TypeSymbol> resolvedType = OD4DevelopmentMill.globalScope().resolveType(typeName);
+      if (resolvedType.isEmpty()) {
+        return res;
+      }
+      TypeSymbol type = resolvedType.get();
+      if (!(type.getSpannedScope() instanceof IODLinkScope)) {
+        return res;
+      }
       
       // find hidden cdRole in resolved type
       String roleName2resolve = roleName.isEmpty() ? tgt : roleName;
       List<FieldSymbol> types = ((IODLinkScope) type.getSpannedScope()).resolveFieldDownMany(roleName2resolve);
-      if (types.size() > 0 && types.get(0) instanceof CDRoleAdapter) {
-        res = Optional.of((CDRoleAdapter) types.get(0));
+      if (!types.isEmpty() && types.getFirst() instanceof CDRoleAdapter) {
+        res = Optional.of((CDRoleAdapter) types.getFirst());
       }
     }
   
@@ -299,7 +307,7 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
       cardModifier = cardModifier(cdRole.get());
     }
     
-    if (OD4DevelopmentMill.globalScope().getSubScopes().size() >= 1) {
+    if (!OD4DevelopmentMill.globalScope().getSubScopes().isEmpty()) {
       return src + "." + ((roleName.isEmpty())
           ? findObjectAccessorName4Role(tgt) + cardModifier
           : roleName + cardModifier) + "(" + tgt + ")";
@@ -313,36 +321,16 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   
   protected String cardModifier(CDRoleAdapter cdRole) {
     String cardModifier = "";
-    if (OD4DevelopmentMill.globalScope().getSubScopes().size() >= 1) {
-      switch (cdRole.getCardinality()) {
-        case ONE:
-          cardModifier = "";
-          break;
-        case OPTIONAL:
-          cardModifier = "";
-          break;
-        case STAR:
-          cardModifier = "Add";
-          break;
-        case PLUS:
-          cardModifier = "Add";
-          break;
-      }
+    if (!OD4DevelopmentMill.globalScope().getSubScopes().isEmpty()) {
+      cardModifier = switch (cdRole.getCardinality()) {
+        case ONE, OPTIONAL -> "";
+        case STAR, PLUS -> "Add";
+      };
     } else {
-      switch (cdRole.getCardinality()) {
-        case ONE:
-          cardModifier = "set";
-          break;
-        case OPTIONAL:
-          cardModifier = "set";
-          break;
-        case STAR:
-          cardModifier = "add";
-          break;
-        case PLUS:
-          cardModifier = "add";
-          break;
-      }
+      cardModifier = switch (cdRole.getCardinality()) {
+        case ONE, OPTIONAL -> "set";
+        case STAR, PLUS -> "add";
+      };
     }
     return cardModifier;
   }
