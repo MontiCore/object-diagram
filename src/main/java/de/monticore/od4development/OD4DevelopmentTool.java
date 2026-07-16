@@ -38,9 +38,9 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   protected static final String PARSE_SUCCESSFUL = "Successfully parsed %s";
   
   protected static final String CHECK_SUCCESSFUL =
-      "Successfully checked the CoCos for class " + "diagram %s";
+      "Successfully checked the CoCos for object diagram %s";
   
-  protected static final String CHECK_ERROR = "Error while parsing or CoCo checking";
+  protected static final String CHECK_ERROR = "Error while processing the object diagram";
   
   protected static final String STEXPORT_SUCCESSFUL = "Creation of symbol file %s successful";
   protected static final String PRETTYPRINT_SUCCESSFUL =
