@@ -15,8 +15,10 @@ import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCos;
 import de.monticore.od4development._symboltable.CDRoleSymbolDeSer;
 import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
+import de.monticore.od4development._visitor.OD4DevelopmentTraverser;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._prettyprint.ODBasisFullPrettyPrinter;
+import de.monticore.odbasis._symboltable.ODBasisSymbolTableCompleter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
@@ -43,8 +45,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   protected static final String CHECK_ERROR = "0x0D020 Error while processing the object diagram";
   
   protected static final String STEXPORT_SUCCESSFUL = "Creation of symbol file %s successful";
-  protected static final String PRETTYPRINT_SUCCESSFUL =
-      "Pretty printed OD to file %s";
+  protected static final String PRETTYPRINT_SUCCESSFUL = "Pretty printed OD to file %s";
   
   protected static final String INPUT_FILE_NOT_EXISTENT = "0x0D015 Input file '%s' does not exist";
   protected static final String OUTPUT_PATH_INVALID =
@@ -55,8 +56,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       "0x0D018 Invalid argument '%s' for option -c. Allowed values are: intra, inter.";
   protected static final String COCO_OPTION_TOO_MANY_ARGS =
       "0x0D019 Option -c accepts at most one argument: intra or inter.";
-  protected static final String PARSE_EXCEPTION_MSG =
-      "0x0D021 Could not process parameters: %s";
+  protected static final String PARSE_EXCEPTION_MSG = "0x0D021 Could not process parameters: %s";
   
   /**
    * Processes CLI arguments and executes parsing, symbol table creation, CoCo checks,
@@ -123,7 +123,8 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       ASTODArtifact ast = parse(modelFile);
       
       if (doPrintToStdOut) {
-        Log.info(String.format(PARSE_SUCCESSFUL, ast.getObjectDiagram().getName()), getClass().getName());
+        Log.info(String.format(PARSE_SUCCESSFUL, ast.getObjectDiagram().getName()),
+            getClass().getName());
       }
       
       // initialize primitives
@@ -151,10 +152,15 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       
       IOD4DevelopmentArtifactScope as = createSymbolTable(ast);
       
+      boolean checkTypes = cmd.hasOption("s") || cmd.hasOption("o") || (cmd.hasOption("c") && (
+          cmd.getOptionValue("c") == null || !cmd.getOptionValue("c").equals("intra")));
+      completeSymbolTable(ast, checkTypes);
+      
       if (cmd.hasOption("s")) {
         Path symTabPath = storeSymTab(as, modelFilePath, cmd.getOptionValue("s"));
         if (doPrintToStdOut) {
-          Log.info(String.format(STEXPORT_SUCCESSFUL, symTabPath.toAbsolutePath()), getClass().getName());
+          Log.info(String.format(STEXPORT_SUCCESSFUL, symTabPath.toAbsolutePath()),
+              getClass().getName());
         }
       }
       
@@ -184,7 +190,8 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
         
         if (doPrintToStdOut) {
           if (Log.getErrorCount() == 0) {
-            Log.info(String.format(CHECK_SUCCESSFUL, ast.getObjectDiagram().getName()), getClass().getName());
+            Log.info(String.format(CHECK_SUCCESSFUL, ast.getObjectDiagram().getName()),
+                getClass().getName());
           }
           else {
             Log.error(CHECK_ERROR);
@@ -327,6 +334,16 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
     return targetPath;
   }
   
+  public void completeSymbolTable(ASTODArtifact ast, boolean checkObjectTypes) {
+    OD4DevelopmentTraverser traverser = OD4DevelopmentMill.inheritanceTraverser();
+    
+    ODBasisSymbolTableCompleter odBasisCompleter =
+        new ODBasisSymbolTableCompleter(checkObjectTypes);
+    traverser.add4ODBasis(odBasisCompleter);
+    odBasisCompleter.setTraverser(traverser);
+    ast.accept(traverser);
+  }
+  
   /*=================================================================*/
   /* Defining the options incl. help-texts
   /*=================================================================*/
@@ -339,28 +356,28 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   @Override
   public Options addStandardOptions(Options options) {
     // help dialog
-    options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").build());
+    options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").get());
     
     // parse input file
     options.addOption(Option.builder("i").longOpt("input").argName("file").hasArg()
         .desc("Reads the source file (mandatory) and parses the contents as an " + "object diagram")
-        .build());
+        .get());
     
     // model paths
     options.addOption(
         Option.builder("path").argName("dirlist").numberOfArgs(Option.UNLIMITED_VALUES).hasArg()
-            .desc("Sets the artifact path for imported symbols").build());
+            .desc("Sets the artifact path for imported symbols").get());
     
     // pretty print OD
     options.addOption(Option.builder("pp").longOpt("prettyprint").argName("file").optionalArg(true)
         .numberOfArgs(1).desc("Prints the OD-AST to stdout or the specified file (optional)")
-        .build());
+        .get());
     
     // print OD symtab
     options.addOption(
         Option.builder("s").longOpt("symboltable").argName("file").optionalArg(true).numberOfArgs(1)
             .desc("Stores the symbol table of the OD. The default value is `{ODName}.odsym`.")
-            .build());
+            .get());
     
     return options;
   }
@@ -377,11 +394,11 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
     options.addOption(Option.builder("c").longOpt("coco").optionalArg(true).numberOfArgs(1).desc(
         "Checks the CoCos for the input. Optional arguments are:\n" + "-c intra to check only the"
             + " intra-model CoCos,\n" + "-c inter to check only inter-model CoCos."
-            + " Without an argument, all CoCos are checked.").build());
+            + " Without an argument, all CoCos are checked.").get());
     
     options.addOption(
         Option.builder("o").longOpt("output").optionalArg(true).hasArg().numberOfArgs(1)
-            .desc("The output path for the generated/derivated classdiagram").build());
+            .desc("The output path for the generated/derivated classdiagram").get());
     return options;
   }
 }

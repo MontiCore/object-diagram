@@ -57,8 +57,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
   @Test
   public void testOD4DevelopmentToolIntraCoCos() {
     String[] input =
-        { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-c", "intra" };
-    
+        { "-i", INPUT_OD.toString(), "-c", "intra" };
+    new OD4DevelopmentTool().run(input);
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
@@ -100,7 +100,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
 
   @Test
   public void testOD4DevelopmentToolPrettyPrintToStdout() {
-    String[] input = { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-pp" };
+    String[] input = { "-i", INPUT_OD.toString(), "-pp" };
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(18, out.size());
@@ -160,7 +160,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
   public void testOD4ToolPrettyPrint() {
     String ppOutPath = getTmpFilePath("pp.od").toString();
     String[] input =
-        { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-pp", ppOutPath };
+        { "-i", INPUT_OD.toString(), "-pp", ppOutPath };
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
