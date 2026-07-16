@@ -11,10 +11,11 @@ are currently not included in the generated PlantUML output.
 * Java 21 (or higher)
 * Gradle 8.5 (or higher)
 
-### Installation of the project
-* Clone the project from Gitlab
+### Contributing to the project
+* Clone the project from GitHub
 * This project has **no Gradle wrapper** (`gradlew` is not part of the repository).
 * Ensure Gradle is installed locally and available on your `PATH`.
+
 ```shell
 gradle clean build
 ```
@@ -43,35 +44,6 @@ gradle clean build
      If omitted, the symbol table is derived from the AST.
    * ``` -path <dirlist> ``` is optional and can be provided multiple times to configure symbol paths.
    * If ``` -i ``` is missing, the tool prints help and exits.
-
-### Limitation of the Tool
-* Handling of Complex `Object Diagrams` with lists of objects:
-   * The tool is not capable of handling OD models which have nested lists of objects within a given object.
-   * An Example is shown below where we have a nested list of `cars` within an object `alice`:
-
-```text
-objectdiagram MyFamily {
-  alice:Person {
-    age = 29;
-    cars = [
-      :BMW {
-        bought = 2020-01-05 15:30:00;
-        color = BLUE;
-      },
-      tiger:Jaguar {
-        bought = 2000/01/05 15:00:00;
-        color = RED;
-        length = 5.3;
-      }
-    ];
-  };
-  bob:Person {
-    nicknames = ["Bob", "Bobby", "Robert"];
-    cars -> tiger;
-  };
-  link married alice <-> bob;
-}
-```
 
 ## How the Tool Works
 
