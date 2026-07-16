@@ -51,7 +51,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(1, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
   }
   
   @Test
@@ -62,8 +62,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
-    assertEquals(OD4DevelopmentTool.CHECK_SUCCESSFUL.formatted("Examples"), out.get(1));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsInfo(OD4DevelopmentTool.CHECK_SUCCESSFUL, "Examples"), out.get(1));
   }
 
   @Test
@@ -72,8 +72,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
-    assertEquals(OD4DevelopmentTool.CHECK_SUCCESSFUL.formatted("Examples"), out.get(1));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsInfo(OD4DevelopmentTool.CHECK_SUCCESSFUL, "Examples"), out.get(1));
   }
 
   @Test
@@ -83,8 +83,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
-    assertEquals(OD4DevelopmentTool.COCO_OPTION_INVALID.formatted("foo"), out.get(1));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsError(OD4DevelopmentTool.COCO_OPTION_INVALID, "foo"), out.get(1));
   }
 
   @Test
@@ -94,8 +94,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples").strip(), out.getFirst());
-    assertEquals(OD4DevelopmentTool.COCO_OPTION_TOO_MANY_ARGS, out.get(1));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsError(OD4DevelopmentTool.COCO_OPTION_TOO_MANY_ARGS), out.get(1));
   }
 
   @Test
@@ -115,8 +115,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
-    assertEquals(OD4DevelopmentTool.OUTPUT_OPTION_MISSING_ARG, out.get(1));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsError(OD4DevelopmentTool.OUTPUT_OPTION_MISSING_ARG), out.get(1));
   }
 
   @Test
@@ -125,8 +125,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
-    assertEquals(OD4DevelopmentTool.OUTPUT_OPTION_MISSING_ARG, out.get(1));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsError(OD4DevelopmentTool.OUTPUT_OPTION_MISSING_ARG), out.get(1));
   }
 
   @Test
@@ -136,7 +136,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(3, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples").strip(), out.getFirst());
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
     assertTrue(Files.isDirectory(outputDir));
     try (Stream<Path> generatedFiles = Files.walk(outputDir)) {
       assertTrue(generatedFiles.anyMatch(Files::isRegularFile));
@@ -152,8 +152,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples").strip(), out.getFirst());
-    assertEquals(OD4DevelopmentTool.OUTPUT_PATH_INVALID.formatted(invalidOutput.toString()), out.get(1));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsError(OD4DevelopmentTool.OUTPUT_PATH_INVALID, invalidOutput.toString()), out.get(1));
   }
   
   @Test
@@ -164,8 +164,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
-    assertEquals(OD4DevelopmentTool.PRETTYPRINT_SUCCESSFUL.formatted(ppOutPath), out.get(1));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsInfo(OD4DevelopmentTool.PRETTYPRINT_SUCCESSFUL, ppOutPath), out.get(1));
     assertTrue(Paths.get(ppOutPath).toFile().exists());
   }
   
@@ -179,8 +179,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     assertTrue(symTab.exists() && symTab.isFile());
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
-    assertEquals(OD4DevelopmentTool.STEXPORT_SUCCESSFUL.formatted(symTab.getAbsolutePath()), out.get(1));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsInfo(OD4DevelopmentTool.STEXPORT_SUCCESSFUL, symTab.getAbsolutePath()), out.get(1));
   }
   
   @Test
@@ -195,8 +195,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     assertTrue(symTab.exists() && symTab.isFile());
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
-    assertEquals(OD4DevelopmentTool.STEXPORT_SUCCESSFUL.formatted(symTab.getAbsolutePath()), out.get(1));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsInfo(OD4DevelopmentTool.STEXPORT_SUCCESSFUL, symTab.getAbsolutePath()), out.get(1));
   }
   
   @Test
@@ -210,8 +210,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     assertTrue(symTab.exists() && symTab.isFile());
     
     assertEquals(2, out.size());
-    assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
-    assertEquals(OD4DevelopmentTool.STEXPORT_SUCCESSFUL.formatted(symTab.getAbsolutePath()), out.get(1));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsInfo(OD4DevelopmentTool.STEXPORT_SUCCESSFUL, symTab.getAbsolutePath()), out.get(1));
   }
 
   @Test
@@ -229,8 +229,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
       List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(args);
       
       assertEquals(2, out.size());
-      assertEquals(OD4DevelopmentTool.PARSE_SUCCESSFUL.formatted("Examples"), out.getFirst());
-      assertEquals(OD4DevelopmentTool.STEXPORT_SUCCESSFUL.formatted(relativeInput.getParent().resolve("Example.odsym").toFile().getAbsolutePath()), out.get(1));
+      assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+      assertEquals(getAsInfo(OD4DevelopmentTool.STEXPORT_SUCCESSFUL, relativeInput.getParent().resolve("Example.odsym").toFile().getAbsolutePath()), out.get(1));
     }
     finally {
       System.setProperty("user.dir", previousUserDir);
@@ -238,5 +238,13 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
 
     File symTab = tempDir.resolve("Example.odsym").toFile();
     assertTrue(symTab.exists() && symTab.isFile());
+  }
+  
+  protected String getAsInfo(String base, String ...data) {
+    return "[INFO]  de.monticore.od4development.OD4DevelopmentTool " + base.formatted(data).strip();
+  }
+  
+  protected String getAsError(String base, String ...data) {
+    return "[ERROR]  " + base.formatted(data).strip();
   }
 }

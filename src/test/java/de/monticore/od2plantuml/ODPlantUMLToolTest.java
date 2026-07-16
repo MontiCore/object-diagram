@@ -74,8 +74,7 @@ public class ODPlantUMLToolTest extends ODTestBasis {
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
     assertEquals(2, out.size());
-    assertEquals("[ERROR]  " + ODPlantUMLTool.ERROR_UNSUPPORTED_FORMAT.formatted("xyz"),
-        out.get(1));
+    assertEquals(getAsError(ODPlantUMLTool.ERROR_UNSUPPORTED_FORMAT, "xyz"), out.get(1));
     
     assertFalse(Files.exists(output));
   }
@@ -90,7 +89,7 @@ public class ODPlantUMLToolTest extends ODTestBasis {
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
     assertEquals(2, out.size());
-    assertEquals("[ERROR]  " + ODPlantUMLTool.ERROR_MISSING_EXTENSION, out.get(1));
+    assertEquals(getAsError(ODPlantUMLTool.ERROR_MISSING_EXTENSION), out.get(1));
     assertFalse(Files.exists(output));
   }
   
@@ -125,8 +124,11 @@ public class ODPlantUMLToolTest extends ODTestBasis {
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
     assertEquals(18, out.size());
-    assertEquals(
-        "[ERROR]  " + ODPlantUMLTool.PARSE_ERROR_IO.formatted("nonexistent/does_not_exist.od"),
+    assertEquals(getAsError(ODPlantUMLTool.PARSE_ERROR_IO, "nonexistent/does_not_exist.od"),
         out.get(0));
+  }
+  
+  protected String getAsError(String base, String... data) {
+    return "[ERROR]  " + base.formatted(data).strip();
   }
 }
