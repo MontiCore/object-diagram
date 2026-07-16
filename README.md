@@ -9,6 +9,32 @@ For **language engineers** (language development, grammar work, tool extensions)
 technical documentation is available at
 [`src/main/grammars/de/monticore/OD4Report.md`](src/main/grammars/de/monticore/OD4Report.md).
 
+# Table of Contents
+
+- [What is OD4Development?](#what-is-od4development)
+- [Example Model](#example-model)
+- [OD Language Primer](#od-language-primer)
+  - [Object Diagrams](#object-diagrams)
+  - [Comments](#comments)
+  - [Packages and Imports](#packages-and-imports)
+  - [Objects](#objects)
+  - [Attributes and Values](#attributes-and-values)
+  - [Links](#links)
+  - [When CD References Are Required](#when-cd-references-are-required)
+- [Setup and Build](#setup-and-build)
+  - [Prerequisites](#prerequisites)
+  - [Getting the Tools](#getting-the-tools)
+- [Focus: OD4Development](#focus-od4development)
+  - [Quick Start](#quick-start)
+  - [CLI Reference: OD4Development](#cli-reference-od4development)
+  - [Typical Workflows](#typical-workflows)
+    - [1) Run CoCos](#1-run-cocos)
+    - [2) Pretty Printing](#2-pretty-printing)
+    - [3) Export Symbol Table](#3-export-symbol-table)
+    - [4) Resolve Symbols](#4-resolve-symbols-via--path)
+    - [5) Derive a Class Diagram from an OD](#5-derive-a-class-diagram-from-an-od--o)
+- [Further Information](#further-information)
+
 # What is OD4Development?
 
 OD4Development provides a complete toolchain for working with object diagrams:
@@ -58,6 +84,109 @@ objectdiagram MyFamily {
 ```
 
 This notation is intentionally aligned with the readability of class diagram syntax.
+
+# OD Language Primer
+
+This section gives a compact introduction to the OD language using the examples from this repository.
+
+## Object Diagrams
+
+OD models are stored in `.od` files. Each file starts with `objectdiagram <Name> { ... }` and
+contains object instances and links between them.
+
+```txt
+objectdiagram Example {
+  // objects and links
+}
+```
+
+## Comments
+
+The textual syntax supports Java-style comments.
+
+```txt
+/** Multi-line comment */
+objectdiagram Example {
+  // Single-line comment
+}
+```
+
+## Packages and Imports
+
+You can organize models with `package` declarations and import symbols from other models.
+Imports are especially useful when your OD references external types.
+
+```txt
+package my.examples;
+import Types.*;
+
+objectdiagram Example {
+  ...
+}
+```
+
+## Objects
+
+Objects are declared as `<objectName>:<Type> { ... };`, for example `alice:Person { ... };`.
+The `MyFamily` example also shows anonymous typed objects like `:BMW { ... }`.
+
+```txt
+objectdiagram Example {
+  alice:Person {
+    age = 29;
+  };
+
+  :BMW {
+    color = BLUE;
+  };
+}
+```
+
+## Attributes and Values
+
+Attributes are assigned inside object blocks using `name = value;`. Values can be literals,
+lists, enum constants, and other expression forms supported by the language.
+
+```txt
+objectdiagram Example {
+  tiger:Jaguar {
+    color = RED;
+    length = 5.3;
+  };
+
+  bob:Person {
+    nicknames = ["Bob", "Bobby", "Robert"];
+  };
+}
+```
+
+## Links
+
+Links represent relationships between object instances. In this example, you can see both
+top-level link statements and role-based references.
+
+```txt
+objectdiagram Example {
+  bob:Person {
+    cars -> tiger;
+  };
+  tiger:Jaguar { };
+
+  link married bob <-> alice;
+}
+```
+
+## When CD References Are Required
+
+Referencing a class diagram (via imported symbol files) is **not always mandatory**.
+
+- You can use core tool functions like parsing and pretty printing without importing CD symbols.
+- Intra-model CoCos can also be run without full external type resolution.
+- CD symbol references become important when you want to resolve external types reliably,
+  for example in inter-model or full CoCo checks.
+
+In practice: start without imports for syntax and formatting tasks, and add `-path` plus `import`
+statements once your workflow requires cross-model type resolution.
 
 # Setup and Build
 
