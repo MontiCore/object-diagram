@@ -58,7 +58,7 @@ public class ODPlantUMLToolTest extends ODTestBasis {
             output.toString() };
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
-    assertEquals(2, out.size());
+    assertEquals(2, out.size(), String.join("\n", out));
     assertEquals(ODPlantUMLTool.SUCCESS_IMAGE_GENERATED.formatted(output.toString()), out.get(1));
     
     assertTrue(Files.exists(output));
@@ -102,7 +102,7 @@ public class ODPlantUMLToolTest extends ODTestBasis {
             output.toString() };
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
-    assertEquals(2, out.size());
+    assertEquals(2, out.size(), String.join("\n", out));
     assertEquals(ODPlantUMLTool.SUCCESS_IMAGE_GENERATED.formatted(output.toString()), out.get(1));
     assertTrue(Files.exists(output));
   }
