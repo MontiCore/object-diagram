@@ -4,7 +4,9 @@ package de.monticore.od4development;
 import com.google.common.collect.Lists;
 import de.monticore.io.paths.MCPath;
 import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
+import de.monticore.od4development._visitor.OD4DevelopmentTraverser;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.odbasis._symboltable.ODBasisSymbolTableCompleter;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.symboltable.ImportStatement;
 
@@ -60,6 +62,16 @@ public class OD4DevelopmentTestUtil {
         .forEach(i -> imports.add(new ImportStatement(i.getQName(), i.isStar())));
     as.setImportsList(imports);
     return as;
+  }
+  
+  public static void completeSymbolTable(ASTODArtifact ast, boolean checkObjectTypes) {
+    OD4DevelopmentTraverser traverser = OD4DevelopmentMill.inheritanceTraverser();
+    
+    ODBasisSymbolTableCompleter odBasisCompleter =
+        new ODBasisSymbolTableCompleter(checkObjectTypes);
+    traverser.add4ODBasis(odBasisCompleter);
+    odBasisCompleter.setTraverser(traverser);
+    ast.accept(traverser);
   }
 
   /**

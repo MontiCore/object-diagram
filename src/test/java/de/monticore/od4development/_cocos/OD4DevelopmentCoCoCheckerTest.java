@@ -88,6 +88,7 @@ public class OD4DevelopmentCoCoCheckerTest extends ODOutTestBasis {
   public void checkLinkEndConsistencyCoCo() {
     String testOD = cocoExamples.resolve("InvalidLinkEndConsistency.od").toString();
     ASTODArtifact artifact = OD4DevelopmentTestUtil.loadModelAndST(testOD, new MCPath(PATH));
+    OD4DevelopmentTestUtil.completeSymbolTable(artifact, true);
     
     odCoCoChecker.addCoCo(new LinkEndConsistencyCoCo());
     odCoCoChecker.checkAll(artifact);

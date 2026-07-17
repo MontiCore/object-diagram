@@ -6,6 +6,7 @@ import de.monticore.ODTestBasis;
 import de.monticore.io.paths.MCPath;
 import de.monticore.od4development.OD4DevelopmentTestUtil;
 import de.monticore.od4development.OD4DevelopmentMill;
+import de.monticore.od4development.OD4DevelopmentTool;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
@@ -31,6 +32,7 @@ public class OD4DevelopmentDeSerTest extends ODTestBasis {
     ASTODArtifact astodArtifact = OD4DevelopmentTestUtil.loadModel(artifact, symbolPath);
     
     IOD4DevelopmentArtifactScope od4DataArtifactScope = OD4DevelopmentTestUtil.createSymbolTableFromAST(astodArtifact);
+    OD4DevelopmentTestUtil.completeSymbolTable(astodArtifact, true);
     
     // serialize
     OD4DevelopmentSymbols2Json od4DataSymbols2Json = new OD4DevelopmentSymbols2Json();
@@ -63,6 +65,7 @@ public class OD4DevelopmentDeSerTest extends ODTestBasis {
     
     // create symbol table
     IOD4DevelopmentArtifactScope artifactScope = OD4DevelopmentTestUtil.createSymbolTableFromAST(ast);
+    OD4DevelopmentTestUtil.completeSymbolTable(ast, true);
     OD4DevelopmentSymbols2Json symbols2Json = new OD4DevelopmentSymbols2Json();
     String serialized = symbols2Json.serialize(artifactScope);
     assertNotNull(serialized);

@@ -6,7 +6,7 @@
     {
       "kind": "de.monticore.cdassociation._symboltable.CDAssociationSymbol",
       "name": "related",
-      "association": 1736293769
+      "association": 1337835760
     },
     {
       "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
@@ -35,7 +35,7 @@
             "packageName": "examples.cd.SimpleOD2",
             "isDefinitiveNavigable": true,
             "cardinality": "[*]",
-            "association": 1736293769,
+            "association": 1337835760,
             "type": {
               "kind": "de.monticore.types.check.SymTypeOfObject",
               "objName": "examples.cd.SimpleOD2.ObjectType2"
@@ -63,6 +63,22 @@
                 {
                   "kind": "de.monticore.types.check.SymTypeOfObject",
                   "objName": "examples.cd.SimpleOD2.T"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "objectType2",
+            "fullName": "examples.cd.SimpleOD2.ObjectType.objectType2",
+            "packageName": "examples.cd.SimpleOD2",
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfGenerics",
+              "typeConstructorFullName": "java.util.Set",
+              "arguments": [
+                {
+                  "kind": "de.monticore.types.check.SymTypeOfObject",
+                  "objName": "examples.cd.SimpleOD2.ObjectType2"
                 }
               ]
             }
@@ -97,11 +113,27 @@
             "packageName": "examples.cd.SimpleOD2",
             "isDefinitiveNavigable": true,
             "cardinality": "[*]",
-            "association": 1736293769,
+            "association": 1337835760,
             "isLeft": true,
             "type": {
               "kind": "de.monticore.types.check.SymTypeOfObject",
               "objName": "examples.cd.SimpleOD2.ObjectType"
+            }
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "objectType",
+            "fullName": "examples.cd.SimpleOD2.ObjectType2.objectType",
+            "packageName": "examples.cd.SimpleOD2",
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfGenerics",
+              "typeConstructorFullName": "java.util.Set",
+              "arguments": [
+                {
+                  "kind": "de.monticore.types.check.SymTypeOfObject",
+                  "objName": "examples.cd.SimpleOD2.ObjectType"
+                }
+              ]
             }
           }
         ]
@@ -245,7 +277,7 @@
     }
   ],
   "furtherObjects": {
-    "1736293769": {
+    "1337835760": {
       "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
       "isAssociation": true
     }

@@ -44,6 +44,15 @@ public class OD4ReportTool extends OD4ReportToolTOP {
 
   protected static final String COCO_OPTION_TOO_MANY_ARGS =
       "0x0D025 Option -c accepts at most one argument: intra or inter.";
+
+  protected static final String WARN_NO_SYMBOLTYPES_ARGS =
+      "No arguments provided for parameter -symboltypes. Skipping custom symbol deserializer mapping.";
+
+  protected static final String WARN_ODD_SYMBOLTYPES_ARGS =
+      "Odd number of arguments for parameter -symboltypes! Ignoring last argument.";
+
+  protected static final String WARN_INVALID_SYMBOL_DESER =
+      "%s is not a valid Symbol Deserializer and has been assumed as TypeSymbolDeSer";
   
   protected static final String STEXPORT_SUCCESSFUL = "Creation of symbol file %s successful";
   
@@ -105,12 +114,11 @@ public class OD4ReportTool extends OD4ReportToolTOP {
       if (cmd.hasOption("symtypes")) {
         String[] cmdVals = cmd.getOptionValues("symtypes");
         if (cmdVals == null || cmdVals.length == 0) {
-          Log.warn(
-              "No arguments provided for parameter -symboltypes. Skipping custom symbol deserializer mapping.");
+          Log.warn(WARN_NO_SYMBOLTYPES_ARGS);
         }
         else {
           if (cmdVals.length % 2 != 0) {
-            Log.warn("Odd number of arguments for parameter -symboltypes! Ignoring last argument.");
+            Log.warn(WARN_ODD_SYMBOLTYPES_ARGS);
           }
           OD4ReportMill.reset();
           OD4ReportMill.init();
@@ -140,8 +148,7 @@ public class OD4ReportTool extends OD4ReportToolTOP {
                   gs.putSymbolDeSer(cmdVals[i], new JavaMethodSymbolDeSer());
               case "LabelSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new LabelSymbolDeSer());
               default -> {
-                Log.warn(cmdVals[i + 1]
-                    + " is not a valid Symbol Deserializer and has been assumed as TypeSymbolDeSer");
+                Log.warn(String.format(WARN_INVALID_SYMBOL_DESER, cmdVals[i + 1]));
                 gs.putSymbolDeSer(cmdVals[i], new TypeSymbolDeSer());
               }
             }
