@@ -6,7 +6,7 @@
     {
       "kind": "de.monticore.cdassociation._symboltable.CDAssociationSymbol",
       "name": "test",
-      "association": 1764291958
+      "association": 1262237002
     },
     {
       "kind": "de.monticore.cdbasis._symboltable.CDTypeSymbol",
@@ -35,7 +35,7 @@
             "packageName": "examples.cd.Project",
             "isDefinitiveNavigable": true,
             "cardinality": "[*]",
-            "association": 1764291958,
+            "association": 1262237002,
             "type": {
               "kind": "de.monticore.types.check.SymTypeOfObject",
               "objName": "examples.cd.Project.Test"
@@ -70,7 +70,7 @@
             "fullName": "examples.cd.Project.Test.gitLab",
             "packageName": "examples.cd.Project",
             "cardinality": "[1]",
-            "association": 1764291958,
+            "association": 1262237002,
             "isLeft": true,
             "type": {
               "kind": "de.monticore.types.check.SymTypeOfObject",
@@ -158,9 +158,17 @@
     }
   ],
   "furtherObjects": {
-    "1764291958": {
+    "1262237002": {
       "kind": "de.monticore.cdassociation._symboltable.SymAssociation",
       "isAssociation": true
     }
+  },
+  "symbolHierarchy": {
+    "de.monticore.cdbasis._symboltable.CDTypeSymbol": "de.monticore.symbols.oosymbols._symboltable.OOTypeSymbol",
+    "de.monticore.symbols.oosymbols._symboltable.MethodSymbol": "de.monticore.symbols.basicsymbols._symboltable.FunctionSymbol",
+    "de.monticore.symbols.oosymbols._symboltable.OOTypeSymbol": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
+    "de.monticore.cd4codebasis._symboltable.CDMethodSignatureSymbol": "de.monticore.symbols.oosymbols._symboltable.MethodSymbol",
+    "de.monticore.symbols.basicsymbols._symboltable.TypeVarSymbol": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
+    "de.monticore.symbols.oosymbols._symboltable.FieldSymbol": "de.monticore.symbols.basicsymbols._symboltable.VariableSymbol"
   }
 }
