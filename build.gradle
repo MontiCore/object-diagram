@@ -46,7 +46,7 @@ java {
 dependencies {
   grammar("de.monticore:monticore-grammar:$mc_version")
   implementation "org.antlr:antlr4-runtime:4.12.0"
-  implementation 'net.sourceforge.plantuml:plantuml:1.2023.12'
+  implementation "net.sourceforge.plantuml:plantuml:$plantuml_version"
   implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
   implementation "de.monticore:monticore-runtime:$mc_version"
   implementation "de.monticore.lang:cd4analysis:$mc_version"
