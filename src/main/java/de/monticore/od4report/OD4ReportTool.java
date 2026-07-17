@@ -173,10 +173,13 @@ public class OD4ReportTool extends OD4ReportToolTOP {
       }
       
       // create symbol table
+      BasicSymbolsMill.initializePrimitives();
       IOD4ReportArtifactScope oD4ReportArtifactScope =
           OD4ReportToolAPI.createSymbolTable(astodArtifact);
       
-      OD4ReportToolAPI.completeSymbolTable(astodArtifact, true);
+      boolean checkTypes = cmd.hasOption("s") || cmd.hasOption("o") || (cmd.hasOption("c") && (
+          cmd.getOptionValue("c") == null || cmd.getOptionValue("c").equals("inter")));
+      OD4ReportToolAPI.completeSymbolTable(astodArtifact, checkTypes);
       
       // run cocos
       if (cmd.hasOption("c")) {

@@ -153,7 +153,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
       IOD4DevelopmentArtifactScope as = createSymbolTable(ast);
       
       boolean checkTypes = cmd.hasOption("s") || cmd.hasOption("o") || (cmd.hasOption("c") && (
-          cmd.getOptionValue("c") == null || !cmd.getOptionValue("c").equals("intra")));
+          cmd.getOptionValue("c") == null || cmd.getOptionValue("c").equals("inter")));
       completeSymbolTable(ast, checkTypes);
       
       if (cmd.hasOption("s")) {
