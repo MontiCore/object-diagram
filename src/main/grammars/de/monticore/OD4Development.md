@@ -12,7 +12,7 @@ constraint language OCL
 
 This MontiCore project contains
 
-* seven language components, defined by their own grammars,
+* six language components, defined by their own grammars,
 * appropriate context conditions for each language component,
 * which also includes a symbol table infrastructure for managing and storing symbol tables, and
 * pretty-printers.
@@ -47,10 +47,10 @@ objectdiagram MyFamily {
 
 examples.A graphical version is shown in Figure 1.
 
-<img width="400" src="../../../../../doc/pics/OD_Example.png" alt="The graphical syntax of an example OD" style="float: left; margin-right: 10px;">
-<br><b>Figure 1:</b> The graphical syntax of example OD MyFamiliy. <br/>
-
-&nbsp;
+<figure>
+  <img width="700" src="../../../../../doc/pics/OD_Example.png" alt="The graphical syntax of the example OD">
+  <figcaption><b>Figure 1:</b> The graphical syntax of the example OD.</figcaption>
+</figure>
 
 The conceptual elements of ODs are similar to JSOM or XML, but deliver (hopefully) a better readable
 syntax:
@@ -59,6 +59,7 @@ syntax:
   like `tiger`.
 * Objects also have a *type*, e.g. `:Person`.
 * UML allows both to be optional, if not needed or reconstructable from context.
+  * However, OD4Development allows anonymous objects but always requires a type.
 * *Attributes* are defined with their value, e.g. `color = RED`.
 * *Link*s can be explicitly defined, allowing *arbitrary graph structures*, e.g. use of `tiger` or
   the `alice <-> bob` link.
@@ -71,30 +72,24 @@ syntax:
 
 Below follow more detailed explanations about the project:
 
-## Tools: `OD4ReportTool` and  `ODDataTool`
+## Tools: `ODDataTool` and `OD4ReportTool`
 
-By default, the project creates two tools, stored in `MCOD4Report.jar` and  `MCODData.jar`.
+By default, the project creates two tools, stored in `MCOD4Development.jar` and  `MCOD4Report.jar`.
 
-Both classes, [```OD4ReportTool```](../../../java/de/monticore/od4report/OD4ReportTool.java)
-and [```OD4DataTool```](../../../java/de/monticore/od4data/OD4DataTool.java) provide typical
-functionality used when processing models from commandlin. To this effect, the classes
+Both classes, [```OD4DevelopmentTool```](../../../java/de/monticore/od4development/OD4DevelopmentTool.java)
+and [```OD4ReportTool```](../../../java/de/monticore/od4report/OD4ReportTool.java) provide typical
+functionality used when processing models from commandline. To this effect, the classes
 provide methods for parsing, pretty-printing, creating symbol tables, storing symbols, and loading
 symbols. Detailed information about the methods can be found in the Javadoc documentation of each
 class.
 
-[```OD4DataTool```](../../../java/de/monticore/od4data/OD4DataTool.java) provides typical
-functionality used when processing models from commandline. To this effect, the class provides
-methods for parsing, pretty-printing, creating symbol tables, storing symbols, and loading symbols.
-Detailed information about the methods can be found in the Javadoc documentation of the
-class [```OD4DataTool```](../../../java/de/monticore/od4data/OD4DataTool.java).
-
-Each tool can be found in the ```target``` folder once the project build was successful. Each tool
+Each tool can be found in the ```target\libs``` folder once the project build was successful. Each tool
 provides a ``-h`` parameter providing further information on how to use it.
 
 Example calls:
 
 ```
-  java -jar target/libs/MCOD4Data.jar -h
+  java -jar target/libs/MCOD4Development.jar -h
   java -jar target/libs/MCOD4Report.jar -h
   
   // pretty print an OD:
@@ -102,19 +97,19 @@ Example calls:
            -pp
 
   // read an OD and store the symbols it defines and exports in a symboltable:
-  java -jar target/libs/MCOD4Data.jar -i src/test/resources/examples/od/Teaser.od \
+  java -jar target/libs/MCOD4Development.jar -i src/test/resources/examples/od/Teaser.od \
            -s Teaser.symod
 ```
 
 ## Grammars (i.e. language components)
 
-This MontiCore project contains seven grammars, which provide the possibility to describe object
+This MontiCore project contains six grammars, which provide the possibility to describe object
 diagrams in various extensions:
 
 * [ODBasis](../../../grammars/de/monticore/ODBasis.mc4),
 * [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4),
 * [ODLink](../../../grammars/de/monticore/ODLink.mc4),
-* [OD4Data](../../../grammars/de/monticore/OD4Data.mc4),
+* [OD4Development](../../../grammars/de/monticore/OD4Development.mc4),
 * [OD4Report](../../../grammars/de/monticore/OD4Report.mc4), and
 * [DateLiterals](../../../grammars/de/monticore/DateLiterals.mc4).
 
@@ -131,60 +126,47 @@ The grammar [ODBasis](../../../grammars/de/monticore/ODBasis.mc4) defines the sy
 
 The grammar [ODBasis](../../../grammars/de/monticore/ODBasis.mc4) extends the grammars
 
-* [MCBasicTypes](https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/types/MCBasicTypes.mc4)
+* [MCBasicTypes](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCBasicTypes.mc4)
   that provides possible object types.
-* [OOSymbols](https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/symbols/OOSymbols.mc4)
+* [OOSymbols](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/symbols/OOSymbols.mc4)
   for using symbols of kind `Diagram` and `Variable`.
-* [CommonExpressions](https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/expressions/CommonExpressions.mc4)
+* [CommonExpressions](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/CommonExpressions.mc4)
   to be able to reuse simple forms of expressions (and the typechecking functionality).
-* [UMLStereotype](https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/UMLStereotype.mc4)
+* [UMLModifier](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/UMLModifier.mc4)
   for adding UMLStereotypes as possible extension points to the grammar.
 
 ### ODAttribute
 
-The grammar [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4) adds more complex types of
-attributes, i.e. *lists* and *maps*, to UML/P ODs.
-
-The grammar [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4) defines the syntax for
-
-* lists of values,
-* and maps of key-value pairs.
+The grammar [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4) adds
+more complex types of attributes, i.e. *lists* and *maps*, to UML/P ODs by
+defining the syntax for *lists of values* and *maps of key-value pairs*.
 
 ### ODLink
 
-The grammar [ODLink](../../../grammars/de/monticore/ODLink.mc4) adds links to UML/P ODs. There are
-two main types of link representations, namely the explicit mentioning as `link`
-that connects two objects and the nested link, that occurs when the nesting objects into a
-hierarchy.
+The grammar [ODLink](../../../grammars/de/monticore/ODLink.mc4) adds links to
+UML/P ODs. There are two main types of link representations, namely the explicit
+mentioning as `link` that connects two objects and the nested link, that occurs
+when the nesting objects into a hierarchy.
 
-Furthermore, links may be *directed* and can be *ordinary*, *aggregations* or *compositions*, but
-also
-*derived*.
-
-### OD4Data
-
-The grammar [OD4Data](../../../grammars/de/monticore/OD4Data.mc4) only combines the language
-components `ODAttribute`
-and `ODLink` to form a variant of OD language mainly used for representing data. For that purpose,
-the language component also offers to use *dates* as expressions in certain structures of a model,
-e.g. attribute values.
+Furthermore, links may be *directed* and can be *ordinary*, *aggregations* or
+*compositions*, but also *derived*.
 
 ### OD4Development
 
-The [OD4Development](../../../grammars/de/monticore/OD4Development.mc4) grammar combines the language
-components `ODAttribute` and `ODLink` and adds an extended namespace for objects and attribute values.
-
-It focusses on the modelling phase in typical object-oriented development projects and is therefore
-mainly used for data modelling. Consequently, it omits method signatures and complex generics.
+The [OD4Development](../../../grammars/de/monticore/OD4Development.mc4) grammar
+combines the language components `ODAttribute` and `ODLink`. It focuses on the
+modeling phase in typical object-oriented development projects and is therefore
+mainly used for data modeling. Consequently, it omits method signatures and
+complex generics.
 
 `OD4Development` is the textual representation to describe UML object diagrams
-(it uses the UML/P variant). `OD4Development` covers objects, attributes with values (and optional)
-types, and all kinds of associations and composition, including qualified and ordered associations.
-It allows to define
+(it uses the UML/P variant). `OD4Development` covers objects, attributes with
+values (and optional) types, and all kinds of associations and composition,
+including qualified and ordered associations. It allows to define
 
 * (1) desired object structures,
 * (2) unwanted object structures,
-* (3) initial object structures e.g. for a test setup or the specifictaion of a construction method.
+* (3) initial object structures e.g. for a test setup or the specification of a construction method.
   It allows incomplete structures (omitting uninteresting links or attributes); values can be either
   given directly or as expressions using other values and thus also allows to describe
 * (4) desired test results (oracle), and has also been used for
@@ -192,13 +174,13 @@ It allows to define
 
 `OD4Development` fits very well to the `CD4Analysis`language component.
 
-It builds on MCTypes, but disallows e.g. List<int> as type, because they can be represented via
+It builds on MCTypes, but disallows e.g. List<T> as type, because they can be represented via
 associations.
 
 ### OD4Report
 
-The [OD4Report](../../../grammars/de/monticore/OD4Report.mc4) grammar extends the `OD4Data` language
-by adding an extended namespace for objects and attribute values. Its main appliciation are
+The [OD4Report](../../../grammars/de/monticore/OD4Report.mc4) grammar extends the `OD4Development` language
+by adding an extended namespace for objects and attribute values. Its main application are
 reporting, e.g. in MontiCore's generated reports, or data formats which need make use of the
 extended namespace, e.g. artifact-based analyses. For that purpose, it mainly extends the
 possibility to define names by nonterminal `ODSpecialName`, which encodes a number of additional
@@ -206,7 +188,7 @@ information into the object name. An example for such a special name is `@State(
 this state has occurred in line 2, column 3. Moreover, the set of supported types is extended. The
 grammar therefore extends:
 
-* [MCCollectionTypes](https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/types/MCCollectionTypes.mc4)
+* [MCCollectionTypes](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCCollectionTypes.mc4)
   for the extension of supported types.
 
 ### DateLiterals
@@ -218,7 +200,7 @@ dates and times. Dates consist of a date part modeling year, month, and day, as 
 modeling hour, minute, and second.
 
 The above defined object diagrams, especially the `OD4Report` language component makes heavy use of
-this possbility.
+this possibility.
 
 ## Context Conditions
 
@@ -226,7 +208,6 @@ This section lists the context conditions for
 the [ODBasis](../../../grammars/de/monticore/ODBasis.mc4) grammar, context conditions for
 the [ODAttribute](../../../grammars/de/monticore/ODAttribute.mc4) grammar, context conditions for
 the [ODLink](../../../grammars/de/monticore/ODLink.mc4) grammar, context conditions for
-the [OD4Data](../../../grammars/de/monticore/OD4Data.mc4) grammar context conditions for
 the [OD4Development](../../../grammars/de/monticore/OD4Development.mc4) grammar. context conditions
 for the [OD4Report](../../../grammars/de/monticore/OD4Report.mc4) grammar. context conditions for
 the [DateLiterals](../../../grammars/de/monticore/DateLiterals.mc4) grammar.
@@ -257,6 +238,10 @@ located [here](../../../java/de/monticore/odbasis/_cocos).
 * The context
   condition [```ValidObjectReferenceCoCo```](../../../java/de/monticore/odbasis/_cocos/object/ValidObjectReferenceCoCo.java)
   checks object references as an attribute value actually exist.
+ 
+* The context
+  condition [```ValidObjectTypeCoCo```](../../../java/de/monticore/odbasis/_cocos/object/ValidObjectTypeCoCo.java)
+  checks object types actually exist.
 
 ### ODAttribute Context Conditions
 
@@ -280,10 +265,6 @@ located [here](../../../java/de/monticore/odlink/_cocos).
 * The context
   condition [```ValidLinkReferenceCoCo```](../../../java/de/monticore/odlink/_cocos/link/ValidLinkReferenceCoCo.java)
   checks if the object referenced actually exist.
-
-### OD4Data Context Conditions
-
-None.
 
 ### OD4Development Context Conditions
 
@@ -318,10 +299,10 @@ and [```OOTypeSymbols```][OOSymbolsRef].
 
 ### Symbol Table Data Structure
 
-<img width="400" src="../../../../../doc/pics/STDataStructure.png" alt="The data structure of the symbol table of the OD language" style="float:left; margin-right: 10px;">
-<br><b>Figure 2:</b> The data structure of the symbol table of the OD language.
-
-&nbsp;
+<figure style="clear: both; margin: 0 0 1em 0; text-align: left;">
+  <img width="400" src="../../../../../doc/pics/STDataStructure.png" alt="The data structure of the symbol table of the OD language" style="background-color: #fff;">
+  <figcaption><b>Figure 2:</b> The data structure of the symbol table of the OD language.</figcaption>
+</figure>
 
 Figure 2 depicts the symbol table data structure of
 the [```OD4Report```](../../../grammars/de/monticore/OD4Report.mc4) language, when then built from
@@ -336,40 +317,36 @@ OD.
 As usual the `OD4DReportArtifactScope` is not stored in the symboltable, but the top level symbols
 and potentially associated scopes are.
 
-<img width="400" src="../../../../../doc/pics/STInstanceExample.png" alt="Symbol table instance of the OD depicted in Figure 1" style="float: left; margin-right: 10px;">
-<br><b>Figure 3:</b> Symbol table instance of the OD depicted in Figure 1.
-
-&nbsp;
+<figure style="clear: both; margin: 0 0 1em 0; text-align: left;">
+  <img width="400" src="../../../../../doc/pics/STInstanceExample.png" alt="Symbol table instance of the OD depicted in Figure 1" style="background-color: #fff;">
+  <figcaption><b>Figure 3:</b> Symbol table instance of the OD depicted in Figure 1.</figcaption>
+</figure>
 
 Figure 3 depicts the symbol table instance for the OD ```MyFamily```. The three explicitly named
 objects
 ```alice:Person```, ```bob:Person``` and  ```tiger:Jaguar``` are stored as  
 [```VariableSymbol```][BasicSymbolsRef]
-instances and maintaiend i the ```OD4ReportArtifactScope```. The object ```:DiagramSymbol```
+instances and are maintained in the ```OD4ReportArtifactScope```. The object ```:DiagramSymbol```
 containing the name of the object diagram is also linked to that scope.
 
 As usual, symbols can only be accessed, if they have an explicit name, which is why an anonymous
 object, such as `:BMW`, as well as any form of links do not occur in the symbol table. Please also
 note, that types, such as `BMW` or `Person`
-are imported by the object diagram, but not internally defined.
+are imported by the object diagram, but are not internally defined.
 
-Handwritten extensions of the symbol table creator can be found as follows:
+Handwritten extensions of the ScopesGenitor can be found as follows:
 
-* The creator for the [```ODBasis```](../../../grammars/de/monticore/ODBasis.mc4) grammar can be
+* The genitor for the [```ODBasis```](../../../grammars/de/monticore/ODBasis.mc4) grammar can be
   found in the
-  class  [```ODBasisSymbolTableCreator```](../../../java/de/monticore/odbasis/_symboltable/ODBasisSymbolTableCreator.java)
+  class  [```ODBasisScopesGenitor```](../../../java/de/monticore/odbasis/_symboltable/ODBasisScopesGenitor.java)
   .
 * The creator for the [```ODAttribute```](../../../grammars/de/monticore/ODAttribute.mc4) grammar
   can be found in the
-  class  [```ODAttributeSymbolTableCreator```](../../../java/de/monticore/odattribute/_symboltable/ODAttributeSymbolTableCreator.java)
-  .
-* The creator for the [```ODLink```](../../../grammars/de/monticore/ODLink.mc4) grammar can be found
-  in the
-  class  [```ODLinkSymbolTableCreator```](../../../java/de/monticore/odlink/_symboltable/ODLinkSymbolTableCreator.java)
+  class  [```ODAttributeScopesGenitor```](../../../java/de/monticore/odattribute/_symboltable/ODAttributeScopesGenitor.java)
   .
 * The creator for the [```OD4Report```](../../../grammars/de/monticore/OD4Report.mc4) grammar can be
   found in the
-  class  [```OD4ReportSymbolTableCreator```](../../../java/de/monticore/od4report/_symboltable/OD4ReportSymbolTableCreator.java)
+  class  [```OD4ReportScopesGenitor```](../../../java/de/monticore/od4report/_symboltable/OD4ReportScopesGenitor.java)
   .
 
 ### Symbol kinds used by the OD Language (importable or subclassed)
@@ -384,7 +361,7 @@ None.
 
 ### Symbols imported by OD models:
 
-* ODs import [```VariableSymbols```][BasicSymbolsRef] as externally defined objects. The importet
+* ODs import [```VariableSymbols```][BasicSymbolsRef] as externally defined objects. The imported
   objects can be used as attribute values and link targets.
 * ODs import [```TypeSymbols```][BasicSymbolsRef] that can be used as types for objects.
 
@@ -394,7 +371,7 @@ None.
   with explicit names are visible from outside the object diagram. There is no hiding, not even for
   nested objects (this was a deliberate design decision; alternatives would have been possible.)
   With this mechanism, object diagrams can extend each other, defining a more complex object
-  structure in several artefacts.
+  structure in several artifacts.
 
 * Each OD exports exactly one [```DiagramSymbol```][BasicSymbolsRef] corresponding to the
   ODArtifact.
@@ -444,31 +421,31 @@ table instance depicted in Figure 3:
 }
 ```
 
-[BasicSymbolsRef]:https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/symbols/BasicSymbols.mc4
+[BasicSymbolsRef]:https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/symbols/BasicSymbols.mc4
 
-[TypeSymbolsRef]:https://github.com/MontiCore/monticore/tree/opendev/monticore-grammar/src/main/grammars/de/monticore/types
+[TypeSymbolsRef]:https://github.com/MontiCore/monticore/tree/dev/monticore-grammar/src/main/grammars/de/monticore/types
 
-[MCBasicTypesRef]:https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/types/MCBasicTypes.mc4
+[MCBasicTypesRef]:https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/types/MCBasicTypes.mc4
 
-[OOSymbolsRef]:https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/symbols/OOSymbols.mc4
+[OOSymbolsRef]:https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/symbols/OOSymbols.mc4
 
-[ExpressionsBasisRef]:https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/expressions/ExpressionsBasis.mc4
+[ExpressionsBasisRef]:https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/ExpressionsBasis.mc4
 
-[UMLStereotypeRef]:https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/UMLStereotype.mc4
+[UMLStereotypeRef]:https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/UMLStereotype.mc4
 
-[MCCommonLiteralsRef]:https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/literals/MCCommonLiterals.mc4
+[MCCommonLiteralsRef]:https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/literals/MCCommonLiterals.mc4
 
-[CommonExpressionsRef]:https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/expressions/CommonExpressions.mc4
+[CommonExpressionsRef]:https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/CommonExpressions.mc4
 
-[OCLExpressionsRef]:https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/expressions/OCLExpressions.mc4
+[OCLExpressionsRef]:https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/expressions/OCLExpressions.mc4
 
 ## Further Information
 
 * [Project root: MontiCore @github](https://github.com/MontiCore/monticore)
 * [MontiCore documentation](http://www.monticore.de/)
-* [**List of languages**](https://github.com/MontiCore/monticore/blob/opendev/docs/Languages.md)
+* [**List of languages**](https://github.com/MontiCore/monticore/blob/dev/docs/Languages.md)
 * [**MontiCore Core Grammar
-  Library**](https://github.com/MontiCore/monticore/blob/opendev/monticore-grammar/src/main/grammars/de/monticore/Grammars.md)
-* [Best Practices](https://github.com/MontiCore/monticore/blob/opendev/docs/BestPractices.md)
+  Library**](https://github.com/MontiCore/monticore/blob/dev/monticore-grammar/src/main/grammars/de/monticore/Grammars.md)
+* [Best Practices](https://github.com/MontiCore/monticore/blob/dev/docs/BestPractices.md)
 * [Publications about MBSE and MontiCore](https://www.se-rwth.de/publications/)
 * [Licence definition](https://github.com/MontiCore/monticore/blob/master/00.org/Licenses/LICENSE-MONTICORE-3-LEVEL.md)

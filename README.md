@@ -7,7 +7,7 @@ from ODs (for example, deriving a class diagram).
 
 For **language engineers** (language development, grammar work, tool extensions), detailed
 technical documentation is available at
-[`src/main/grammars/de/monticore/OD4Report.md`](src/main/grammars/de/monticore/OD4Report.md).
+[`src/main/grammars/de/monticore/OD4Development.md`](src/main/grammars/de/monticore/OD4Development.md).
 
 # Table of Contents
 

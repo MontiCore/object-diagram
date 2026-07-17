@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * This is a inter model coco checking if the type of the object is defined.
  */
-public class ValidObjectTypeCoco implements ODBasisASTODArtifactCoCo {
+public class ValidObjectTypeCoCo implements ODBasisASTODArtifactCoCo {
 
   private final String TYPE_DEFINED_MUTLIPLE_TIMES =
       "0xB0032: Type '%s' is defined more " + "than once.";
