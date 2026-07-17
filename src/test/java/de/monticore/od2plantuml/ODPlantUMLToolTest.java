@@ -1,6 +1,7 @@
 package de.monticore.od2plantuml;
 
 import de.monticore.ODTestBasis;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -50,6 +51,7 @@ public class ODPlantUMLToolTest extends ODTestBasis {
   }
   
   @Test
+  @Disabled("Disabled because PlantUML currently requires local GraphViz installation on Linux")
   void testPrettyPrintToPngFile() {
     Path output = getTmpFilePath("diagram.png");
     
@@ -94,6 +96,7 @@ public class ODPlantUMLToolTest extends ODTestBasis {
   }
   
   @Test
+  @Disabled("Disabled because PlantUML currently requires local GraphViz installation on Linux")
   void testPrettyPrintToSvgFile() {
     Path output = getTmpFilePath("diagram.svg");
     
@@ -125,7 +128,7 @@ public class ODPlantUMLToolTest extends ODTestBasis {
     
     assertEquals(18, out.size());
     assertEquals(getAsError(ODPlantUMLTool.PARSE_ERROR_IO, "nonexistent/does_not_exist.od"),
-        out.get(0));
+        out.getFirst());
   }
   
   protected String getAsError(String base, String... data) {
