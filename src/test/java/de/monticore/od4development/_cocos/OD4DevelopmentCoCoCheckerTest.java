@@ -8,6 +8,7 @@ import de.monticore.od4development.OD4DevelopmentTestUtil;
 import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._cocos.attributes.PartialAndCompleteAttributesCoCo;
+import de.monticore.odbasis._cocos.attributes.UniqueAttributeNamesCoCo;
 import de.monticore.odbasis._cocos.names.UniqueObjectNamesCoCo;
 import de.monticore.odbasis._cocos.object.ValidObjectReferenceCoCo;
 import de.monticore.odlink._cocos.link.LinkEndConsistencyCoCo;
@@ -54,17 +55,17 @@ public class OD4DevelopmentCoCoCheckerTest extends ODOutTestBasis {
   
   @Test
   public void checkValidReferenceCoCo() {
-    String testOD = cocoExamples.resolve("InvalidLinkReference.od").toString();
+    String testOD = cocoExamples.resolve("InvalidLeftLinkReference.od").toString();
     ASTODArtifact artifact = OD4DevelopmentTestUtil.loadModelAndST(testOD, new MCPath(PATH));
     
     odCoCoChecker.addCoCo(new ValidLinkReferenceCoCo());
     odCoCoChecker.checkAll(artifact);
-    MCAssertions.assertHasFindingStartingWith("0x0D006");
+    MCAssertions.assertHasFindingStartingWith("0x0D00C");
   }
   
   @Test
   public void checkObjectReferenceCoCo() {
-    String testOD = cocoExamples.resolve("InvalidObjectReference.od").toString();
+    String testOD = cocoExamples.resolve("InvalidSingleObjectReference.od").toString();
     ASTODArtifact artifact = OD4DevelopmentTestUtil.loadModelAndST(testOD, new MCPath(PATH));
     
     odCoCoChecker.addCoCo(new ValidObjectReferenceCoCo());
@@ -83,6 +84,16 @@ public class OD4DevelopmentCoCoCheckerTest extends ODOutTestBasis {
     MCAssertions.assertHasFindingStartingWith("0x0D004");
     MCAssertions.assertHasFindingStartingWith("0x0D004");
   }
+
+  @Test
+  public void checkUniqueAttributeNamesCoCo() {
+    String testOD = cocoExamples.resolve("InvalidDuplicateAttributeNames.od").toString();
+    ASTODArtifact artifact = OD4DevelopmentTestUtil.loadModelAndST(testOD, new MCPath(PATH));
+
+    odCoCoChecker.addCoCo(new UniqueAttributeNamesCoCo());
+    odCoCoChecker.checkAll(artifact);
+    MCAssertions.assertHasFindingStartingWith("0x0D003");
+  }
   
   @Test
   public void checkLinkEndConsistencyCoCo() {
@@ -92,7 +103,7 @@ public class OD4DevelopmentCoCoCheckerTest extends ODOutTestBasis {
     
     odCoCoChecker.addCoCo(new LinkEndConsistencyCoCo());
     odCoCoChecker.checkAll(artifact);
-    MCAssertions.assertHasFindingStartingWith("0x0D008");
+    MCAssertions.assertHasFindingStartingWith("0x0D009");
   }
   
 }

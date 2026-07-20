@@ -7,6 +7,7 @@ import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.od4development.OD4DevelopmentTestUtil;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.runtime.junit.MCAssertions;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.se_rwth.commons.logging.Log;
 
@@ -58,6 +59,7 @@ class ValidObjectTypeCoCoTest extends ODOutTestBasis {
     odCoCoChecker.checkAll(artifact);
 
     assertEquals(1, Log.getFindings().size());
+    MCAssertions.assertHasFindingStartingWith("0xB0035");
     assertEquals(
         ValidObjectTypeCoCo.ERROR_TYPE_USED_BUT_UNDEFINED.formatted("UndefinedType"),
         Log.getFindings().getFirst().getMsg());

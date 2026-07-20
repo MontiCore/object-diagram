@@ -7,6 +7,7 @@ import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.od4development.OD4DevelopmentTestUtil;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.runtime.junit.MCAssertions;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.se_rwth.commons.logging.Log;
 
@@ -58,6 +59,7 @@ class PartialAndCompleteAttributesCoCoTest extends ODOutTestBasis {
     odCoCoChecker.checkAll(artifact);
 
     assertEquals(1, Log.getFindings().size());
+    MCAssertions.assertHasFindingStartingWith("0x0D004");
     assertEquals(
         PartialAndCompleteAttributesCoCo.ERROR_PARTIAL_AND_COMPLETE_ATTRIBUTE_MIX.formatted("foobar"),
         Log.getFindings().getFirst().getMsg());
