@@ -18,14 +18,21 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This is a inter model coco checking if the type of the object is defined.
+ * Checks that every object type used in an object diagram can be resolved to exactly one
+ * available type symbol in the enclosing scope.
+ * <p>
+ * For each {@link ASTODObject} in the artifact, this CoCo resolves the object's declared type by
+ * combining the current package, the import statements, and the declared type name. If no type
+ * symbol can be found, the object type is considered undefined. If more than one type symbol can
+ * be resolved, the type usage is considered ambiguous.
  */
 public class ValidObjectTypeCoCo implements ODBasisASTODArtifactCoCo {
 
-  private final String TYPE_DEFINED_MUTLIPLE_TIMES =
-      "0xB0032: Type '%s' is defined more " + "than once.";
+  public static final String ERROR_TYPE_DEFINED_MULTIPLE_TIMES =
+      "0xB0032: Type '%s' is defined more than once.";
 
-  private final String TYPE_USED_BUT_UNDEFINED = "0xB0035: Type '%s' is used but not " + "defined.";
+  public static final String ERROR_TYPE_USED_BUT_UNDEFINED =
+      "0xB0035: Type '%s' is used but not defined.";
 
   private List<ASTMCImportStatement> importStatementList;
 
@@ -35,6 +42,8 @@ public class ValidObjectTypeCoCo implements ODBasisASTODArtifactCoCo {
   public void check(ASTODArtifact node) {
     importStatementList = node.getMCImportStatementList();
     packageDeclaration = node.getMCPackageDeclaration();
+    
+    // TODO: This inner CoCo does not seem to be needed....should be possible without...
 
     ODBasisASTODObjectCoCo odBasisASTODObjectCoCo = new ODBasisASTODObjectCoCo() {
       @Override
@@ -50,11 +59,11 @@ public class ValidObjectTypeCoCo implements ODBasisASTODArtifactCoCo {
         }
 
         if (typeSymbols.isEmpty()) {
-          Log.error(String.format(TYPE_USED_BUT_UNDEFINED, typeName),
+          Log.error(String.format(ERROR_TYPE_USED_BUT_UNDEFINED, typeName),
               node.get_SourcePositionStart());
         }
         else if (typeSymbols.size() > 1) {
-          Log.error(String.format(TYPE_DEFINED_MUTLIPLE_TIMES, typeName),
+          Log.error(String.format(ERROR_TYPE_DEFINED_MULTIPLE_TIMES, typeName),
               node.get_SourcePositionStart());
         }
       }
