@@ -5,6 +5,7 @@ package de.monticore.odbasis._cocos;
 import de.monticore.odbasis._cocos.attributes.NoAbstractAttributesCoCo;
 import de.monticore.odbasis._cocos.attributes.PartialAndCompleteAttributesCoCo;
 import de.monticore.odbasis._cocos.attributes.UniqueAttributeNamesCoCo;
+import de.monticore.odbasis._cocos.attributes.ValidObjectAttributesCoCo;
 import de.monticore.odbasis._cocos.names.UniqueObjectNamesCoCo;
 import de.monticore.odbasis._cocos.object.ValidObjectTypeCoCo;
 
@@ -37,6 +38,9 @@ public class ODBasicsCoCos {
 
   public ODBasisCoCoChecker getCheckerForAllInterCoCos() {
     final ODBasisCoCoChecker checker = new ODBasisCoCoChecker();
+    
+    // attributes
+    checker.addCoCo(new ValidObjectAttributesCoCo());
 
     // types
     checker.addCoCo(new ValidObjectTypeCoCo());

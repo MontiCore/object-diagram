@@ -9,6 +9,7 @@ import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._cocos.attributes.PartialAndCompleteAttributesCoCo;
 import de.monticore.odbasis._cocos.attributes.UniqueAttributeNamesCoCo;
+import de.monticore.odbasis._cocos.attributes.ValidObjectAttributesCoCo;
 import de.monticore.odbasis._cocos.names.UniqueObjectNamesCoCo;
 import de.monticore.odbasis._cocos.object.ValidObjectReferenceCoCo;
 import de.monticore.odlink._cocos.link.LinkEndConsistencyCoCo;
@@ -104,6 +105,17 @@ public class OD4DevelopmentCoCoCheckerTest extends ODOutTestBasis {
     odCoCoChecker.addCoCo(new LinkEndConsistencyCoCo());
     odCoCoChecker.checkAll(artifact);
     MCAssertions.assertHasFindingStartingWith("0x0D009");
+  }
+
+  @Test
+  public void checkValidObjectAttributeCoCo() {
+    String testOD = cocoExamples.resolve("InvalidObjectAttributes.od").toString();
+    ASTODArtifact artifact = OD4DevelopmentTestUtil.loadModelAndST(testOD, new MCPath(PATH));
+    OD4DevelopmentTestUtil.completeSymbolTable(artifact, true);
+
+    odCoCoChecker.addCoCo(new ValidObjectAttributesCoCo());
+    odCoCoChecker.checkAll(artifact);
+    MCAssertions.assertHasFindingStartingWith("0x0D006");
   }
   
 }
