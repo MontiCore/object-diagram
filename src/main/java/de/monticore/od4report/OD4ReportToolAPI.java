@@ -6,7 +6,9 @@ import de.monticore.od4report._cocos.OD4ReportCoCos;
 import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
 import de.monticore.od4report._symboltable.OD4ReportScopesGenitorDelegator;
+import de.monticore.od4report._visitor.OD4ReportTraverser;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.odbasis._symboltable.ODBasisSymbolTableCompleter;
 import de.se_rwth.commons.logging.Log;
 import org.antlr.v4.runtime.RecognitionException;
 
@@ -43,15 +45,19 @@ public class OD4ReportToolAPI {
    * @param ast ODArtifact AST
    * @return SymbolTable created from AST
    */
-  public static IOD4ReportArtifactScope createSymbolTable(ASTODArtifact ast, boolean checkTypes) {
+  public static IOD4ReportArtifactScope createSymbolTable(ASTODArtifact ast) {
     OD4ReportScopesGenitorDelegator od4ReportScopesGenitorDelegator =
         OD4ReportMill.scopesGenitorDelegator();
-    od4ReportScopesGenitorDelegator.setCheckTypes(checkTypes);
     return od4ReportScopesGenitorDelegator.createFromAST(ast);
   }
-
-  public static IOD4ReportArtifactScope createSymbolTable(ASTODArtifact ast) {
-    return OD4ReportToolAPI.createSymbolTable(ast, false);
+  
+  public static void completeSymbolTable(ASTODArtifact ast, boolean checkObjectTypes) {
+    OD4ReportTraverser traverser = OD4ReportMill.inheritanceTraverser();
+    
+    ODBasisSymbolTableCompleter odbasisSymbolTableCompleter = new ODBasisSymbolTableCompleter(checkObjectTypes);
+    traverser.add4ODBasis(odbasisSymbolTableCompleter);
+    odbasisSymbolTableCompleter.setTraverser(traverser);
+    ast.accept(traverser);
   }
 
   public static void runAllCoCos(ASTODArtifact ast) {

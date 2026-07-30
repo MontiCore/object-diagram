@@ -4,7 +4,7 @@ package examples.od;
 
 import examples.cd.SimpleOD.*;
 
-objectdiagram SimpleOD{
+objectdiagram SimpleOD {
 
   myObject1:ObjectType{};
 
