@@ -77,8 +77,8 @@ public class OD4ReportTool extends OD4ReportToolTOP {
    *     <li>{@code -symtypes}/{@code --symboltypes <sym> <deser> ...}: registers custom symbol
    *         deserializers for foreign-language symbols.</li>
    *     <li>{@code -path <dirlist>}: sets one or more symbol path entries for imported symbols.</li>
-    *     <li>{@code -c}/{@code --coco [intra|inter]}: runs all CoCos by default, or only
-    *         intra/inter CoCos when specified.</li>
+   *     <li>{@code -c}/{@code --coco [intra|inter]}: runs all CoCos by default, or only
+   *         intra-model or inter-model CoCos when specified.</li>
    *     <li>{@code -pp}/{@code --prettyprint [file]}: pretty prints the AST to stdout or the
    *         optional file.</li>
    *     <li>{@code -s}/{@code --symboltable [file]}: writes the symbol table to the optional file

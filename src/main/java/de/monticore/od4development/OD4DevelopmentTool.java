@@ -68,19 +68,19 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
    * <ul>
    *     <li>{@code -h}/{@code --help}: prints the help dialog and exits.</li>
    *     <li>{@code -i}/{@code --input <file>}: sets the mandatory input OD file to parse.</li>
-   *     <li>{@code -d}: enables debug logging output.</li>
    *     <li>{@code -path <dirlist>}: sets one or more symbol path entries for imported symbols.</li>
    *     <li>{@code -pp}/{@code --prettyprint [file]}: pretty prints the AST to stdout or the optional file.</li>
    *     <li>{@code -s}/{@code --symboltable [file]}: writes the symbol table to the optional file or a default name.</li>
    *     <li>{@code -c}/{@code --coco [intra|inter]}: runs all CoCos by default, or only intra/inter CoCos when specified.</li>
    *     <li>{@code -o}/{@code --output <dir>}: generates a class diagram into the given output directory.</li>
+   *     <li>{@code --stacktrace}: prints stack traces for errors.</li>
    * </ul>
    * </pre>
    *
    * @param cmd command line
    */
   public void doRun(CommandLine cmd) {
-    // if -i input is missing: also print help and stop
+    // if -i input is missing: stop
     if (!cmd.hasOption("i")) {
       Log.error(INPUT_OPTION_NOT_PRESENT);
       return;
@@ -370,7 +370,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
     
     options.addOption(
         Option.builder("o").longOpt("output").optionalArg(true).hasArg().numberOfArgs(1)
-            .desc("The output path for the generated/derivated classdiagram").get());
+            .desc("The output path for the generated/derived classdiagram").get());
     return options;
   }
 }
