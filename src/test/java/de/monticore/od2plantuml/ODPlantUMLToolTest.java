@@ -1,6 +1,7 @@
 package de.monticore.od2plantuml;
 
 import de.monticore.ODTestBasis;
+import de.se_rwth.commons.logging.RichConsoleLogHook;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -126,12 +127,12 @@ public class ODPlantUMLToolTest extends ODTestBasis {
             "-pp" };
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
-    assertEquals(18, out.size());
+    assertEquals(1, out.size());
     assertEquals(getAsError(ODPlantUMLTool.PARSE_ERROR_IO, "nonexistent/does_not_exist.od"),
         out.getFirst());
   }
   
   protected String getAsError(String base, String... data) {
-    return "[ERROR]  " + base.formatted(data).strip();
+    return RichConsoleLogHook.RED_BOLD + "[ERROR]" + RichConsoleLogHook.RESET + "  " + base.formatted(data).strip();
   }
 }

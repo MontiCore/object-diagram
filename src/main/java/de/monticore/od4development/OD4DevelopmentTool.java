@@ -23,7 +23,9 @@ import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 import de.se_rwth.commons.logging.Log;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -48,6 +50,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   protected static final String PRETTYPRINT_SUCCESSFUL = "Pretty printed OD to file %s";
   
   protected static final String INPUT_FILE_NOT_EXISTENT = "0x0D015 Input file '%s' does not exist";
+  protected static final String INPUT_OPTION_NOT_PRESENT = "0x0D026 No input file given. Use -i <FILE> to declare the tool input.";
   protected static final String OUTPUT_PATH_INVALID =
       "0x0D016 Output path '%s' is not a valid directory path";
   protected static final String OUTPUT_OPTION_MISSING_ARG =
@@ -74,165 +77,134 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
    * </ul>
    * </pre>
    *
-   * @param args command line arguments
+   * @param cmd command line
    */
-  public void run(String[] args) {
-    Log.init();
-    OD4DevelopmentMill.init();
-    Options options = initOptions();
+  public void doRun(CommandLine cmd) {
+    // if -i input is missing: also print help and stop
+    if (!cmd.hasOption("i")) {
+      Log.error(INPUT_OPTION_NOT_PRESENT);
+      return;
+    }
     
-    try {
-      
-      // create CLI parser and parse input options from command line
-      CommandLineParser cliParser = new DefaultParser();
-      CommandLine cmd = cliParser.parse(options, args);
-      
-      // -option developer logging
-      if (cmd.hasOption("d")) {
-        Log.initDEBUG();
+    // avoid duplicate console output when pretty print already writes to stdout
+    final boolean doPrintToStdOut = !(cmd.hasOption("pp") && cmd.getOptionValue("pp") == null);
+    
+    // parse input file
+    String modelFile = cmd.getOptionValue("i");
+    Path modelFilePath = Paths.get(modelFile);
+    if (!modelFilePath.toFile().exists()) {
+      Log.error(String.format(INPUT_FILE_NOT_EXISTENT, modelFile));
+      return;
+    }
+    
+    ASTODArtifact ast = parse(modelFile);
+    
+    if (doPrintToStdOut) {
+      Log.info(String.format(PARSE_SUCCESSFUL, ast.getObjectDiagram().getName()),
+          getClass().getName());
+    }
+    
+    // initialize primitives
+    BasicSymbolsMill.initializePrimitives();
+    
+    // if -path is set: set symbol path and load imported diagrams
+    if (cmd.hasOption("path")) {
+      MCPath mcPath = new MCPath();
+      String[] paths = cmd.getOptionValues("path");
+      if (paths != null) {
+        // support multiple -path entries passed via CLI
+        Arrays.stream(paths).forEach(p -> mcPath.addEntry(Paths.get(p)));
       }
-      else {
-        Log.init();
+      OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
+      OD4DevelopmentMill.globalScope()
+          .putTypeSymbolDeSer("de.monticore.cdbasis._symboltable.CDTypeSymbol");
+      OD4DevelopmentMill.globalScope()
+          .putSymbolDeSer("de.monticore.cdassociation._symboltable.CDRoleSymbol",
+              new CDRoleSymbolDeSer());
+      
+      for (ASTMCImportStatement i : ast.getMCImportStatementList()) {
+        OD4DevelopmentMill.globalScope().loadDiagram(i.getQName());
       }
-      
-      // help: when --help
-      if (cmd.hasOption("h")) {
-        printHelp(options);
-        // do not continue, when help is printed
-        return;
-      }
-      
-      // if -i input is missing: also print help and stop
-      if (!cmd.hasOption("i")) {
-        printHelp(options);
-        // do not continue, when help is printed
-        return;
-      }
-      
-      // avoid duplicate console output when pretty print already writes to stdout
-      final boolean doPrintToStdOut = !(cmd.hasOption("pp") && cmd.getOptionValue("pp") == null);
-      
-      // parse input file
-      String modelFile = cmd.getOptionValue("i");
-      Path modelFilePath = Paths.get(modelFile);
-      if (!modelFilePath.toFile().exists()) {
-        Log.error(String.format(INPUT_FILE_NOT_EXISTENT, modelFile));
-        return;
-      }
-      
-      ASTODArtifact ast = parse(modelFile);
-      
+    }
+    
+    IOD4DevelopmentArtifactScope as = createSymbolTable(ast);
+    
+    boolean checkTypes = cmd.hasOption("s") || cmd.hasOption("o") || (cmd.hasOption("c") && (
+        cmd.getOptionValue("c") == null || cmd.getOptionValue("c").equals("inter")));
+    completeSymbolTable(ast, checkTypes);
+    
+    if (cmd.hasOption("s")) {
+      Path symTabPath = storeSymTab(as, modelFilePath, cmd.getOptionValue("s"));
       if (doPrintToStdOut) {
-        Log.info(String.format(PARSE_SUCCESSFUL, ast.getObjectDiagram().getName()),
+        Log.info(String.format(STEXPORT_SUCCESSFUL, symTabPath.toAbsolutePath()),
             getClass().getName());
       }
-      
-      // initialize primitives
-      BasicSymbolsMill.initializePrimitives();
-      
-      // if -path is set: set symbol path and load imported diagrams
-      if (cmd.hasOption("path")) {
-        MCPath mcPath = new MCPath();
-        String[] paths = cmd.getOptionValues("path");
-        if (paths != null) {
-          // support multiple -path entries passed via CLI
-          Arrays.stream(paths).forEach(p -> mcPath.addEntry(Paths.get(p)));
-        }
-        OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
-        OD4DevelopmentMill.globalScope()
-            .putTypeSymbolDeSer("de.monticore.cdbasis._symboltable.CDTypeSymbol");
-        OD4DevelopmentMill.globalScope()
-            .putSymbolDeSer("de.monticore.cdassociation._symboltable.CDRoleSymbol",
-                new CDRoleSymbolDeSer());
-        
-        for (ASTMCImportStatement i : ast.getMCImportStatementList()) {
-          OD4DevelopmentMill.globalScope().loadDiagram(i.getQName());
-        }
+    }
+    
+    // -option check cocos
+    if (cmd.hasOption("c")) {
+      String[] cocoArgs = cmd.getOptionValues("c");
+      if (cocoArgs == null || cocoArgs.length == 0) {
+        runAllCoCos(ast);
       }
-      
-      IOD4DevelopmentArtifactScope as = createSymbolTable(ast);
-      
-      boolean checkTypes = cmd.hasOption("s") || cmd.hasOption("o") || (cmd.hasOption("c") && (
-          cmd.getOptionValue("c") == null || cmd.getOptionValue("c").equals("inter")));
-      completeSymbolTable(ast, checkTypes);
-      
-      if (cmd.hasOption("s")) {
-        Path symTabPath = storeSymTab(as, modelFilePath, cmd.getOptionValue("s"));
-        if (doPrintToStdOut) {
-          Log.info(String.format(STEXPORT_SUCCESSFUL, symTabPath.toAbsolutePath()),
-              getClass().getName());
+      else if (cocoArgs.length == 1) {
+        String cocoArg = cocoArgs[0];
+        if ("intra".equals(cocoArg)) {
+          runDefaultCoCos(ast);
         }
-      }
-      
-      // -option check cocos
-      if (cmd.hasOption("c")) {
-        String[] cocoArgs = cmd.getOptionValues("c");
-        if (cocoArgs == null || cocoArgs.length == 0) {
-          runAllCoCos(ast);
-        }
-        else if (cocoArgs.length == 1) {
-          String cocoArg = cocoArgs[0];
-          if ("intra".equals(cocoArg)) {
-            runDefaultCoCos(ast);
-          }
-          else if ("inter".equals(cocoArg)) {
-            runInterCoCos(ast);
-          }
-          else {
-            Log.error(String.format(COCO_OPTION_INVALID, cocoArg));
-            return;
-          }
+        else if ("inter".equals(cocoArg)) {
+          runInterCoCos(ast);
         }
         else {
-          Log.error(COCO_OPTION_TOO_MANY_ARGS);
+          Log.error(String.format(COCO_OPTION_INVALID, cocoArg));
           return;
         }
-        
-        if (doPrintToStdOut) {
-          if (Log.getErrorCount() == 0) {
-            Log.info(String.format(CHECK_SUCCESSFUL, ast.getObjectDiagram().getName()),
-                getClass().getName());
-          }
-          else {
-            Log.error(CHECK_ERROR);
-            return;
-          }
-        }
+      }
+      else {
+        Log.error(COCO_OPTION_TOO_MANY_ARGS);
+        return;
       }
       
-      // -option pretty print
-      if (cmd.hasOption("pp")) {
-        String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
-        prettyPrint(ast, path);
-        if (StringUtils.isNotBlank(path)) {
-          Log.info(PRETTYPRINT_SUCCESSFUL.formatted(path), getClass().getName());
+      if (doPrintToStdOut) {
+        if (Log.getErrorCount() == 0) {
+          Log.info(String.format(CHECK_SUCCESSFUL, ast.getObjectDiagram().getName()),
+              getClass().getName());
         }
-      }
-      
-      if (cmd.hasOption("o")) {
-        String outputDirArgument = cmd.getOptionValue("o");
-        if (outputDirArgument == null || outputDirArgument.isBlank()) {
-          Log.error(OUTPUT_OPTION_MISSING_ARG);
+        else {
+          Log.error(CHECK_ERROR);
           return;
         }
-        try {
-          Path outputDirPath = Paths.get(outputDirArgument);
-          // allow non-existing directory paths; reject only existing non-directory targets
-          if (!Files.exists(outputDirPath) || Files.isDirectory(outputDirPath)) {
-            generateCD(ast, outputDirPath);
-          }
-          else {
-            Log.error(String.format(OUTPUT_PATH_INVALID, outputDirArgument));
-          }
+      }
+    }
+    
+    // -option pretty print
+    if (cmd.hasOption("pp")) {
+      String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
+      prettyPrint(ast, path);
+      if (StringUtils.isNotBlank(path)) {
+        Log.info(PRETTYPRINT_SUCCESSFUL.formatted(path), getClass().getName());
+      }
+    }
+    
+    if (cmd.hasOption("o")) {
+      String outputDirArgument = cmd.getOptionValue("o");
+      if (outputDirArgument == null || outputDirArgument.isBlank()) {
+        Log.error(OUTPUT_OPTION_MISSING_ARG);
+        return;
+      }
+      try {
+        Path outputDirPath = Paths.get(outputDirArgument);
+        // allow non-existing directory paths; reject only existing non-directory targets
+        if (!Files.exists(outputDirPath) || Files.isDirectory(outputDirPath)) {
+          generateCD(ast, outputDirPath);
         }
-        catch (InvalidPathException e) {
+        else {
           Log.error(String.format(OUTPUT_PATH_INVALID, outputDirArgument));
         }
       }
-      
-    }
-    catch (ParseException e) {
-      Log.error(String.format(PARSE_EXCEPTION_MSG, e.getMessage()));
+      catch (InvalidPathException e) {
+        Log.error(String.format(OUTPUT_PATH_INVALID, outputDirArgument));
+      }
     }
   }
   

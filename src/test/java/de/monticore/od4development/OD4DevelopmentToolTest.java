@@ -2,6 +2,7 @@
 package de.monticore.od4development;
 
 import de.monticore.ODTestBasis;
+import de.se_rwth.commons.logging.RichConsoleLogHook;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,8 +40,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     String[] input = {};
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
     
-    assertEquals(16, out.size());
-    assertContains(out.getFirst(), "usage: OD4DevelopmentTool");
+    assertEquals(1, out.size());
+    assertEquals(getAsError(OD4DevelopmentTool.INPUT_OPTION_NOT_PRESENT), out.getFirst());
   }
   
   @Test
@@ -240,11 +241,13 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     assertTrue(symTab.exists() && symTab.isFile());
   }
   
-  protected String getAsInfo(String base, String ...data) {
-    return "[INFO]  de.monticore.od4development.OD4DevelopmentTool " + base.formatted(data).strip();
+  protected String getAsInfo(String base, String... data) {
+    return RichConsoleLogHook.BLUE + "[INFO]" + RichConsoleLogHook.RESET
+        + "  de.monticore.od4development.OD4DevelopmentTool " + base.formatted(data).strip();
   }
   
-  protected String getAsError(String base, String ...data) {
-    return "[ERROR]  " + base.formatted(data).strip();
+  protected String getAsError(String base, String... data) {
+    return RichConsoleLogHook.RED_BOLD + "[ERROR]" + RichConsoleLogHook.RESET + "  "
+        + base.formatted(data).strip();
   }
 }

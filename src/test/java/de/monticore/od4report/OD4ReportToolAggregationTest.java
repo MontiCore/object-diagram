@@ -3,6 +3,7 @@
 package de.monticore.od4report;
 
 import de.monticore.ODTestBasis;
+import de.se_rwth.commons.logging.RichConsoleLogHook;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OD4ReportToolAggregationTest extends ODTestBasis {
   
@@ -54,13 +54,17 @@ public class OD4ReportToolAggregationTest extends ODTestBasis {
     List<String> out = OD4ReportTestUtil.runToolInSeparateProcess(testArgs);
     
     assertEquals(2, out.size());
-    assertEquals("[WARN]  " + OD4ReportTool.WARN_ODD_SYMBOLTYPES_ARGS, out.get(0));
+    assertEquals(getAsWarn(OD4ReportTool.WARN_ODD_SYMBOLTYPES_ARGS), out.get(0));
     assertEquals(getAsInfo(OD4ReportTool.PARSE_SUCCESSFUL,"BasicGameOD"), out.get(1));
   }
-
-  protected String getAsInfo(String msg, String ...data) {
-    return "[INFO]  de.monticore.od4report.OD4ReportTool "
-        + msg.formatted(data).strip();
+  
+  protected String getAsInfo(String base, String... data) {
+    return RichConsoleLogHook.BLUE + "[INFO]" + RichConsoleLogHook.RESET
+        + "  de.monticore.od4report.OD4ReportTool " + base.formatted(data).strip();
   }
   
+  protected String getAsWarn(String base, String... data) {
+    return RichConsoleLogHook.YELLOW + "[WARN]" + RichConsoleLogHook.RESET + "  "
+        + base.formatted(data).strip();
+  }
 }

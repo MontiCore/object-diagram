@@ -19,7 +19,9 @@ import de.monticore.symbols.oosymbols._symboltable.FieldSymbolDeSer;
 import de.monticore.symbols.oosymbols._symboltable.MethodSymbolDeSer;
 import de.monticore.symbols.oosymbols._symboltable.OOTypeSymbolDeSer;
 import de.se_rwth.commons.logging.Log;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -58,6 +60,9 @@ public class OD4ReportTool extends OD4ReportToolTOP {
   
   protected static final String INPUT_FILE_NOT_EXISTENT = "0x0D022 Input file '%s' does not exist";
   
+  protected static final String INPUT_OPTION_NOT_PRESENT = "0x0D027 No input file given. Use -i <FILE> to declare the tool input.";
+  
+  
   /*=================================================================*/
   /* Part 1: Handling the arguments and options
   /*=================================================================*/
@@ -81,170 +86,143 @@ public class OD4ReportTool extends OD4ReportToolTOP {
    * </ul>
    * </pre>
    *
-   * @param args command line arguments
+   * @param cmd command line
    */
   @Override
-  public void run(String[] args) {
-    init();
-    Options options = initOptions();
+  public void doRun(CommandLine cmd) {
+    // if -i input is missing: also print help and stop
+    if (!cmd.hasOption("i")) {
+      Log.error(INPUT_OPTION_NOT_PRESENT);
+      return;
+    }
     
-    try {
-      // create CLI parser and parse input options from command line
-      CommandLineParser cliparser = new DefaultParser();
-      CommandLine cmd = cliparser.parse(options, args);
-      
-      // help: when --help
-      if (cmd.hasOption("h")) {
-        printHelp(options);
-        // do not continue, when help is printed
-        return;
+    // don't output to stdout when the prettyprint is output to stdout
+    final boolean doPrintToStdOut = !(cmd.hasOption("pp") && cmd.getOptionValue("pp") == null);
+    
+    // if -symbols is set: Add symbol types from file to global scope
+    if (cmd.hasOption("symtypes")) {
+      String[] cmdVals = cmd.getOptionValues("symtypes");
+      if (cmdVals == null || cmdVals.length == 0) {
+        Log.warn(WARN_NO_SYMBOLTYPES_ARGS);
       }
-      
-      // if -i input is missing: also print help and stop
-      if (!cmd.hasOption("i")) {
-        printHelp(options);
-        // do not continue, when help is printed
-        return;
-      }
-      
-      // don't output to stdout when the prettyprint is output to stdout
-      final boolean doPrintToStdOut = !(cmd.hasOption("pp") && cmd.getOptionValue("pp") == null);
-      
-      // if -symbols is set: Add symbol types from file to global scope
-      if (cmd.hasOption("symtypes")) {
-        String[] cmdVals = cmd.getOptionValues("symtypes");
-        if (cmdVals == null || cmdVals.length == 0) {
-          Log.warn(WARN_NO_SYMBOLTYPES_ARGS);
+      else {
+        if (cmdVals.length % 2 != 0) {
+          Log.warn(WARN_ODD_SYMBOLTYPES_ARGS);
         }
-        else {
-          if (cmdVals.length % 2 != 0) {
-            Log.warn(WARN_ODD_SYMBOLTYPES_ARGS);
-          }
-          OD4ReportMill.reset();
-          OD4ReportMill.init();
-          OD4ReportMill.globalScope().clear();
-          BasicSymbolsMill.initializePrimitives();
-          IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
-          for (int i = 0; i < cmdVals.length - 1; i += 2) {
-            switch (cmdVals[i + 1]) {
-              case "TypeSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new TypeSymbolDeSer());
-              case "DiagramSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new DiagramSymbolDeSer());
-              case "FunctionSymbolDeSer" ->
-                  gs.putSymbolDeSer(cmdVals[i], new FunctionSymbolDeSer());
-              case "TypeVarSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new TypeVarSymbolDeSer());
-              case "VariableSymbolDeSer" ->
-                  gs.putSymbolDeSer(cmdVals[i], new VariableSymbolDeSer());
-              case "FieldSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new FieldSymbolDeSer());
-              case "MethodSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new MethodSymbolDeSer());
-              case "OOTypeSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new OOTypeSymbolDeSer());
-              case "MCGrammarSymbolDeSer" ->
-                  gs.putSymbolDeSer(cmdVals[i], new MCGrammarSymbolDeSer());
-              case "AdditionalAttributeSymbolDeSer" ->
-                  gs.putSymbolDeSer(cmdVals[i], new AdditionalAttributeSymbolDeSer());
-              case "ProdSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new ProdSymbolDeSer());
-              case "RuleComponentSymbolDeSer" ->
-                  gs.putSymbolDeSer(cmdVals[i], new RuleComponentSymbolDeSer());
-              case "JavaMethodSymbolDeSer" ->
-                  gs.putSymbolDeSer(cmdVals[i], new JavaMethodSymbolDeSer());
-              case "LabelSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new LabelSymbolDeSer());
-              default -> {
-                Log.warn(String.format(WARN_INVALID_SYMBOL_DESER, cmdVals[i + 1]));
-                gs.putSymbolDeSer(cmdVals[i], new TypeSymbolDeSer());
-              }
+        
+        BasicSymbolsMill.initializePrimitives();
+        IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
+        for (int i = 0; i < cmdVals.length - 1; i += 2) {
+          switch (cmdVals[i + 1]) {
+            case "TypeSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new TypeSymbolDeSer());
+            case "DiagramSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new DiagramSymbolDeSer());
+            case "FunctionSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new FunctionSymbolDeSer());
+            case "TypeVarSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new TypeVarSymbolDeSer());
+            case "VariableSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new VariableSymbolDeSer());
+            case "FieldSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new FieldSymbolDeSer());
+            case "MethodSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new MethodSymbolDeSer());
+            case "OOTypeSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new OOTypeSymbolDeSer());
+            case "MCGrammarSymbolDeSer" ->
+                gs.putSymbolDeSer(cmdVals[i], new MCGrammarSymbolDeSer());
+            case "AdditionalAttributeSymbolDeSer" ->
+                gs.putSymbolDeSer(cmdVals[i], new AdditionalAttributeSymbolDeSer());
+            case "ProdSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new ProdSymbolDeSer());
+            case "RuleComponentSymbolDeSer" ->
+                gs.putSymbolDeSer(cmdVals[i], new RuleComponentSymbolDeSer());
+            case "JavaMethodSymbolDeSer" ->
+                gs.putSymbolDeSer(cmdVals[i], new JavaMethodSymbolDeSer());
+            case "LabelSymbolDeSer" -> gs.putSymbolDeSer(cmdVals[i], new LabelSymbolDeSer());
+            default -> {
+              Log.warn(String.format(WARN_INVALID_SYMBOL_DESER, cmdVals[i + 1]));
+              gs.putSymbolDeSer(cmdVals[i], new TypeSymbolDeSer());
             }
           }
         }
       }
-      
-      // if -path is set: save the model paths
-      MCPath symbolPath = new MCPath();
-      if (cmd.hasOption("path")) {
-        String[] paths = cmd.getOptionValues("path");
-        Arrays.stream(paths).forEach(p -> symbolPath.addEntry(Paths.get(p)));
+    }
+    
+    // if -path is set: save the model paths
+    MCPath symbolPath = new MCPath();
+    if (cmd.hasOption("path")) {
+      String[] paths = cmd.getOptionValues("path");
+      Arrays.stream(paths).forEach(p -> symbolPath.addEntry(Paths.get(p)));
+    }
+    OD4ReportMill.globalScope().setSymbolPath(symbolPath);
+    
+    // parse input file
+    String modelFile = cmd.getOptionValue("i");
+    Path modelFilePath = Paths.get(modelFile);
+    if (!modelFilePath.toFile().exists()) {
+      Log.error(String.format(INPUT_FILE_NOT_EXISTENT, modelFile));
+      return;
+    }
+    
+    ASTODArtifact astodArtifact = parse(modelFile);
+    
+    if (doPrintToStdOut) {
+      Log.info(String.format(PARSE_SUCCESSFUL, astodArtifact.getObjectDiagram().getName()),
+          getClass().getName());
+    }
+    
+    // create symbol table
+    BasicSymbolsMill.initializePrimitives();
+    IOD4ReportArtifactScope oD4ReportArtifactScope =
+        OD4ReportToolAPI.createSymbolTable(astodArtifact);
+    
+    boolean checkTypes = cmd.hasOption("s") || cmd.hasOption("o") || (cmd.hasOption("c") && (
+        cmd.getOptionValue("c") == null || cmd.getOptionValue("c").equals("inter")));
+    OD4ReportToolAPI.completeSymbolTable(astodArtifact, checkTypes);
+    
+    // run cocos
+    if (cmd.hasOption("c")) {
+      String[] cocoArgs = cmd.getOptionValues("c");
+      if (cocoArgs == null || cocoArgs.length == 0) {
+        OD4ReportToolAPI.runAllCoCos(astodArtifact);
       }
-      OD4ReportMill.globalScope().setSymbolPath(symbolPath);
-      
-      // parse input file
-      String modelFile = cmd.getOptionValue("i");
-      Path modelFilePath = Paths.get(modelFile);
-      if (!modelFilePath.toFile().exists()) {
-        Log.error(String.format(INPUT_FILE_NOT_EXISTENT, modelFile));
+      else if (cocoArgs.length == 1) {
+        String cocoArg = cocoArgs[0];
+        if ("intra".equals(cocoArg)) {
+          OD4ReportToolAPI.runAllIntraCoCos(astodArtifact);
+        }
+        else if ("inter".equals(cocoArg)) {
+          OD4ReportToolAPI.runAllCoCos(astodArtifact);
+        }
+        else {
+          Log.error(String.format(COCO_OPTION_INVALID, cocoArg));
+          return;
+        }
+      }
+      else {
+        Log.error(COCO_OPTION_TOO_MANY_ARGS);
         return;
       }
       
-      ASTODArtifact astodArtifact = parse(modelFile);
-      
       if (doPrintToStdOut) {
-        Log.info(String.format(PARSE_SUCCESSFUL, astodArtifact.getObjectDiagram().getName()),
-            getClass().getName());
-      }
-      
-      // create symbol table
-      BasicSymbolsMill.initializePrimitives();
-      IOD4ReportArtifactScope oD4ReportArtifactScope =
-          OD4ReportToolAPI.createSymbolTable(astodArtifact);
-      
-      boolean checkTypes = cmd.hasOption("s") || cmd.hasOption("o") || (cmd.hasOption("c") && (
-          cmd.getOptionValue("c") == null || cmd.getOptionValue("c").equals("inter")));
-      OD4ReportToolAPI.completeSymbolTable(astodArtifact, checkTypes);
-      
-      // run cocos
-      if (cmd.hasOption("c")) {
-        String[] cocoArgs = cmd.getOptionValues("c");
-        if (cocoArgs == null || cocoArgs.length == 0) {
-          OD4ReportToolAPI.runAllCoCos(astodArtifact);
-        }
-        else if (cocoArgs.length == 1) {
-          String cocoArg = cocoArgs[0];
-          if ("intra".equals(cocoArg)) {
-            OD4ReportToolAPI.runAllIntraCoCos(astodArtifact);
-          }
-          else if ("inter".equals(cocoArg)) {
-            OD4ReportToolAPI.runAllCoCos(astodArtifact);
-          }
-          else {
-            Log.error(String.format(COCO_OPTION_INVALID, cocoArg));
-            return;
-          }
-        }
-        else {
-          Log.error(COCO_OPTION_TOO_MANY_ARGS);
-          return;
-        }
-
-        if (doPrintToStdOut) {
-          if (Log.getErrorCount() == 0) {
-            Log.info(String.format(CHECK_SUCCESSFUL, astodArtifact.getObjectDiagram().getName()),
-                getClass().getName());
-          }
-          else {
-            Log.error(CHECK_ERROR);
-            return;
-          }
-        }
-      }
-      
-      // -option pretty print
-      if (cmd.hasOption("pp")) {
-        String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
-        prettyPrint(astodArtifact, path);
-      }
-      
-      // -option pretty print symboltable
-      if (cmd.hasOption("s")) {
-        Path symTabPath =
-            storeSymTab(oD4ReportArtifactScope, modelFilePath, cmd.getOptionValue("s"));
-        if (doPrintToStdOut) {
-          Log.info(String.format(STEXPORT_SUCCESSFUL, symTabPath.toAbsolutePath()),
+        if (Log.getErrorCount() == 0) {
+          Log.info(String.format(CHECK_SUCCESSFUL, astodArtifact.getObjectDiagram().getName()),
               getClass().getName());
         }
+        else {
+          Log.error(CHECK_ERROR);
+          return;
+        }
       }
     }
-    catch (ParseException e) {
-      // an unexpected error from the apache CLI parser:
-      Log.error("0xA7110 Could not process CLI parameters: " + e.getMessage());
+    
+    // -option pretty print
+    if (cmd.hasOption("pp")) {
+      String path = cmd.getOptionValue("pp", StringUtils.EMPTY);
+      prettyPrint(astodArtifact, path);
     }
     
+    // -option pretty print symboltable
+    if (cmd.hasOption("s")) {
+      Path symTabPath = storeSymTab(oD4ReportArtifactScope, modelFilePath, cmd.getOptionValue("s"));
+      if (doPrintToStdOut) {
+        Log.info(String.format(STEXPORT_SUCCESSFUL, symTabPath.toAbsolutePath()),
+            getClass().getName());
+      }
+    }
   }
   
   /*=================================================================*/

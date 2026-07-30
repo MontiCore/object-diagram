@@ -4,6 +4,7 @@ package de.monticore.od4report;
 
 import de.monticore.ODTestBasis;
 
+import de.se_rwth.commons.logging.RichConsoleLogHook;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
@@ -33,8 +34,8 @@ public class OD4ReportToolTest extends ODTestBasis {
     String[] input = {};
     List<String> out = OD4ReportTestUtil.runToolInSeparateProcess(input);
     
-    assertEquals(18, out.size());
-    assertEquals("usage: OD4ReportTool", out.getFirst());
+    assertEquals(1, out.size());
+    assertEquals(getAsError(OD4ReportTool.INPUT_OPTION_NOT_PRESENT, "Examples"), out.get(0));
   }
   
   @Test
@@ -188,11 +189,13 @@ public class OD4ReportToolTest extends ODTestBasis {
   }
   
   protected String getAsInfo(String base, String... data) {
-    return "[INFO]  de.monticore.od4report.OD4ReportTool " + base.formatted(data).strip();
+    return RichConsoleLogHook.BLUE + "[INFO]" + RichConsoleLogHook.RESET
+        + "  de.monticore.od4report.OD4ReportTool " + base.formatted(data).strip();
   }
   
   protected String getAsError(String base, String... data) {
-    return "[ERROR]  " + base.formatted(data).strip();
+    return RichConsoleLogHook.RED_BOLD + "[ERROR]" + RichConsoleLogHook.RESET + "  "
+        + base.formatted(data).strip();
   }
   
 }
