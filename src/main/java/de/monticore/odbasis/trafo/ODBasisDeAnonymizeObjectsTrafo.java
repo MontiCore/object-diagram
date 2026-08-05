@@ -41,10 +41,7 @@ public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
   public void endVisit(ASTObjectDiagram node) {
     for (int i = 0; i < node.getODElementList().size(); i++) {
       ASTODElement element = node.getODElementList().get(i);
-      if (ODBasisMill.typeDispatcher().isODBasisASTODAnonymousObject(element)) {
-        ASTODAnonymousObject anonymousObject =
-            ODBasisMill.typeDispatcher().asODBasisASTODAnonymousObject(element);
-        
+      if (element instanceof ASTODAnonymousObject anonymousObject) {
         ASTODNamedObject namedCopy = copyToNamedObject(anonymousObject);
         node.setODElement(i, namedCopy);
       }
@@ -55,9 +52,7 @@ public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
   public void endVisit(ASTODAttribute node) {
     if (node.isPresentODValue()) {
       ASTODValue value = node.getODValue();
-      if (ODBasisMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
-        ASTODAnonymousObject anonymousObject =
-            ODBasisMill.typeDispatcher().asODBasisASTODAnonymousObject(value);
+      if (value instanceof ASTODAnonymousObject anonymousObject) {
         ASTODNamedObject namedCopy = copyToNamedObject(anonymousObject);
         node.setODValue(namedCopy);
       }

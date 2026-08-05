@@ -4,7 +4,6 @@
 
 package de.monticore.od4development.trafo;
 
-import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.odattribute._ast.ASTODList;
 import de.monticore.odattribute._ast.ASTODMap;
 import de.monticore.odattribute._ast.ASTODMapElement;
@@ -43,9 +42,7 @@ public class OD4DevelopmentDeAnonymizeObjectsTrafoExtension extends ODBasisDeAno
   public void endVisit(ASTODList node) {
     for (int i = 0; i < node.getODValueList().size(); i++) {
       ASTODValue value = node.getODValue(i);
-      if (OD4DevelopmentMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
-        ASTODAnonymousObject anonymousObject =
-            OD4DevelopmentMill.typeDispatcher().asODBasisASTODAnonymousObject(value);
+      if (value instanceof ASTODAnonymousObject anonymousObject) {
         ASTODNamedObject namedObject = copyToNamedObject(anonymousObject);
         node.setODValue(i, namedObject);
       }
@@ -58,9 +55,7 @@ public class OD4DevelopmentDeAnonymizeObjectsTrafoExtension extends ODBasisDeAno
       ASTODMapElement mapElement = node.getODMapElement(i);
       ASTODValue value = mapElement.getVal();
       
-      if (OD4DevelopmentMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
-        ASTODAnonymousObject anonymousObject =
-            OD4DevelopmentMill.typeDispatcher().asODBasisASTODAnonymousObject(value);
+      if (value instanceof ASTODAnonymousObject anonymousObject) {
         ASTODNamedObject namedObject = copyToNamedObject(anonymousObject);
         mapElement.setVal(namedObject);
       }

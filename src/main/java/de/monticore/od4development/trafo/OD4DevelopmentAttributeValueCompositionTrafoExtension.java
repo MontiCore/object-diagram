@@ -4,7 +4,6 @@
 
 package de.monticore.od4development.trafo;
 
-import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.odattribute._ast.ASTODList;
 import de.monticore.odattribute._ast.ASTODMap;
 import de.monticore.odattribute._ast.ASTODMapElement;
@@ -13,7 +12,6 @@ import de.monticore.odbasis._ast.ASTODAttribute;
 import de.monticore.odbasis._ast.ASTODNamedObject;
 import de.monticore.odbasis._ast.ASTODObject;
 import de.monticore.odbasis._ast.ASTODValue;
-import de.monticore.odlink.ODLinkMill;
 import de.monticore.odlink._ast.ASTODLink;
 import de.monticore.odlink.trafo.ODLinkAttributeValueCompositionTrafo;
 
@@ -27,14 +25,10 @@ public class OD4DevelopmentAttributeValueCompositionTrafoExtension
   public void endVisit(ASTODObject node) {
     for (ASTODAttribute attribute : node.getODAttributeList()) {
       if (attribute.isPresentODValue()) {
-        if (OD4DevelopmentMill.typeDispatcher().isODAttributeASTODList(attribute.getODValue())) {
-          ASTODList list =
-              OD4DevelopmentMill.typeDispatcher().asODAttributeASTODList(attribute.getODValue());
+        if (attribute.getODValue() instanceof ASTODList list) {
           List<ASTODValue> valueToRemove = new ArrayList<>();
           for (ASTODValue value : list.getODValueList()) {
-            if (OD4DevelopmentMill.typeDispatcher().isODBasisASTODNamedObject(value)) {
-              ASTODNamedObject namedObject =
-                  ODLinkMill.typeDispatcher().asODBasisASTODNamedObject(value);
+            if (value instanceof ASTODNamedObject namedObject) {
               valueToRemove.add(value);
               objectsToMove.add(namedObject);
               
@@ -48,14 +42,10 @@ public class OD4DevelopmentAttributeValueCompositionTrafoExtension
             attributesToRemove.add(attribute);
           }
         }
-        else if (OD4DevelopmentMill.typeDispatcher().isODAttributeASTODMap(attribute.getODValue())) {
-          ASTODMap map = OD4DevelopmentMill.typeDispatcher().asODAttributeASTODMap(attribute.getODValue());
+        else if (attribute.getODValue() instanceof ASTODMap map) {
           List<ASTODMapElement> mapElementsToRemove = new ArrayList<>();
           for (ASTODMapElement mapElement : map.getODMapElementList()) {
-            
-            if (OD4DevelopmentMill.typeDispatcher().isODBasisASTODNamedObject(mapElement.getVal())) {
-              ASTODNamedObject namedObject =
-                  ODLinkMill.typeDispatcher().asODBasisASTODNamedObject(mapElement.getVal());
+            if (mapElement.getVal() instanceof ASTODNamedObject namedObject) {
               mapElementsToRemove.add(mapElement);
               objectsToMove.add(namedObject);
               

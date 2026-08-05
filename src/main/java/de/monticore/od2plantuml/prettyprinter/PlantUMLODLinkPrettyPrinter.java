@@ -2,9 +2,7 @@ package de.monticore.od2plantuml.prettyprinter;
 
 import de.monticore.odbasis._visitor.ODBasisHandler;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;
-import de.monticore.odlink.ODLinkMill;
 import de.monticore.odlink._ast.*;
-import de.monticore.odlink._util.IODLinkTypeDispatcher;
 import de.monticore.odlink._visitor.ODLinkHandler;
 import de.monticore.odlink._visitor.ODLinkTraverser;
 import de.monticore.odlink._visitor.ODLinkVisitor2;
@@ -61,25 +59,14 @@ public class PlantUMLODLinkPrettyPrinter implements ODLinkVisitor2, ODLinkHandle
     String linkRepresentation = "--";
     ASTODLinkDirection linkDirection = node.getODLinkDirection();
     
-    IODLinkTypeDispatcher typeDispatcher = ODLinkMill.typeDispatcher();
-    
-    if (typeDispatcher.isODLinkASTODLeftToRightDir(linkDirection)) {
-      if (!symbol.isEmpty()) {
-        linkRepresentation = symbol + linkRepresentation;
-      }
-      linkRepresentation = linkRepresentation + ">";
-    }
-    else if (typeDispatcher.isODLinkASTODRightToLeftDir(linkDirection)) {
-      if (!symbol.isEmpty()) {
-        linkRepresentation = linkRepresentation + symbol;
-      }
-      linkRepresentation = "<" + linkRepresentation;
-    }
-    else if (typeDispatcher.isODLinkASTODBiDir(linkDirection)) {
-      linkRepresentation =
-          (symbol.isEmpty() ? "<" : symbol) + linkRepresentation + (symbol.isEmpty() ? ">"
-                                                                                     : symbol);
-    }
+    linkRepresentation = switch (linkDirection) {
+      case ASTODLeftToRightDir dir -> (symbol.isEmpty() ? "" : symbol) + linkRepresentation + ">";
+      case ASTODRightToLeftDir dir -> "<" + linkRepresentation + (symbol.isEmpty() ? "" : symbol);
+      case ASTODBiDir dir -> (symbol.isEmpty() ? "<" : symbol) + linkRepresentation + (symbol.isEmpty() ? ">"
+                                                                                                        : symbol);
+      default -> linkRepresentation;
+    };
+
     return " " + linkRepresentation + " ";
   }
   
