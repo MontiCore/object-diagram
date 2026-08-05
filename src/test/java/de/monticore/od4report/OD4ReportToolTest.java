@@ -32,7 +32,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     String[] help = { "-h" };
     new OD4ReportTool().run(help);
     
-    assertContains(getOut(), "usage: OD4ReportTool");
+    assertContains(getOut(), "usage:  OD4ReportTool [-c <arg>] [-h]");
     MCAssertions.assertNoFindings();
   }
   
@@ -41,7 +41,7 @@ public class OD4ReportToolTest extends ODOutTestBasis {
     String[] input = {};
     new OD4ReportTool().run(input);
     
-    assertContains(getOut(), "usage: OD4ReportTool");
+    assertContains(getOut(), "usage:  OD4ReportTool [-c <arg>] [-h]");
     MCAssertions.assertNoFindings();
   }
   

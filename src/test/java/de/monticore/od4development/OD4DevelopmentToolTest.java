@@ -27,7 +27,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
     String[] help = { "-h" };
     new OD4DevelopmentTool().run(help);
     
-    assertContains(getOut(), "usage: OD4DevelopmentTool");
+    assertContains(getOut(), "usage:  OD4DevelopmentTool [-c] [-h]");
     MCAssertions.assertNoFindings();
   }
   
@@ -36,7 +36,7 @@ public class OD4DevelopmentToolTest extends ODOutTestBasis {
     String[] input = {};
     new OD4DevelopmentTool().run(input);
     
-    assertContains(getOut(), "usage: OD4DevelopmentTool");
+    assertContains(getOut(), "usage:  OD4DevelopmentTool [-c] [-h]");
     MCAssertions.assertNoFindings();
   }
   
