@@ -30,7 +30,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     String[] help = { "-h" };
     new OD4DataTool().run(help);
     
-    assertContains(getOut(), "usage: OD4DataTool");
+    assertContains(getOut(), "usage:  OD4DataTool [-c <arg>] [-h]");
     MCAssertions.assertNoFindings();
   }
   
@@ -39,7 +39,7 @@ public class OD4DataToolTest extends ODOutTestBasis {
     String[] input = {};
     new OD4DataTool().run(input);
     
-    assertContains(getOut(), "usage: OD4DataTool");
+    assertContains(getOut(), "usage:  OD4DataTool [-c <arg>] [-h]");
     MCAssertions.assertNoFindings();
   }
   
