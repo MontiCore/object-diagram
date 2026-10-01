@@ -31,8 +31,8 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     String[] help = { "-h" };
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(help);
     
-    assertEquals(16, out.size());
-    assertContains(out.getFirst(), "usage:  OD4DevelopmentTool [-c] [-h]");
+    assertEquals(21, out.size());
+    assertContains(out.getFirst(), "usage:  OD4DevelopmentTool [-c <arg>] [-h] [-i <file>]");
   }
   
   @Test
@@ -136,7 +136,7 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     String[] input = { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-o", outputDir.toString() };
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(input);
 
-    assertEquals(3, out.size());
+    assertEquals(2, out.size());
     assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
     assertTrue(Files.isDirectory(outputDir));
     try (Stream<Path> generatedFiles = Files.walk(outputDir)) {

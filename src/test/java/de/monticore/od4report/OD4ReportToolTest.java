@@ -25,8 +25,8 @@ public class OD4ReportToolTest extends ODTestBasis {
     String[] help = { "-h" };
     List<String> out = OD4ReportTestUtil.runToolInSeparateProcess(help);
     
-    assertEquals(18, out.size());
-    assertEquals("usage:  OD4ReportTool [-c <arg>] [-h]", out.getFirst());
+    assertEquals(28, out.size());
+    assertContains(out.getFirst(), "usage:  OD4ReportTool [-c <arg>] [-h] [-i <file>]");
   }
   
   @Test
