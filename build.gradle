@@ -104,6 +104,8 @@ sourcesJar.dependsOn project.collect { it.tasks.withType(MCGenTask) }
 
 tasks.withType(ShadowJar).configureEach {
   duplicatesStrategy = DuplicatesStrategy.INCLUDE
+  // signature files of signed dependencies are invalid for the merged jar
+  exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.EC'
 }
 
 // build grammar jar as well
