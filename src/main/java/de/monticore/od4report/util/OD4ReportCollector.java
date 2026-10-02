@@ -12,76 +12,56 @@ import de.monticore.odbasis._ast.ASTObjectDiagram;
 import de.monticore.odbasis.utils.ODBasisObjectCollector;
 import de.monticore.odlink._ast.ASTODLink;
 import de.monticore.odlink.utils.ODLinkCollector;
-import de.monticore.prettyprint.IndentPrinter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Collects the objects and links of an OD4Report object diagram. Each query traverses the
+ * diagram with fresh collectors, so a collector instance can be reused for any number of queries.
+ */
 public class OD4ReportCollector {
 
-  protected OD4ReportTraverser traverser = OD4ReportMill.traverser();
-
-  protected IndentPrinter printer;
-
-  private OD4ReportObjectCollector od4ReportObjectCollector = new OD4ReportObjectCollector();
-
-  private ODBasisObjectCollector odBasisObjectCollector = new ODBasisObjectCollector();
-
-  private ODLinkCollector odLinkCollector = new ODLinkCollector();
-
-  public OD4ReportCollector() {
-    init();
-  }
-
   public List<ASTODReportObject> getReportObjects(ASTObjectDiagram objectDiagram) {
-    objectDiagram.accept(traverser);
-    List<ASTODReportObject> result = od4ReportObjectCollector.getNamedObjects();
-    reset();
-    return result;
+    return collect(objectDiagram).reportObjects().getNamedObjects();
   }
 
   public List<ASTODNamedObject> getNamedObjects(ASTObjectDiagram objectDiagram) {
-    objectDiagram.accept(traverser);
-    List<ASTODNamedObject> result = Stream.concat(odBasisObjectCollector.getNamedObjects().stream(),
-        od4ReportObjectCollector.getNamedObjects().stream()).collect(Collectors.toList());
-    reset();
-    return result;
+    Collected collected = collect(objectDiagram);
+    return Stream.concat(collected.basisObjects().getNamedObjects().stream(),
+        collected.reportObjects().getNamedObjects().stream()).collect(Collectors.toList());
   }
 
   public List<ASTODAnonymousObject> getAnonymousObjects(ASTObjectDiagram objectDiagram) {
-    objectDiagram.accept(traverser);
-    List<ASTODAnonymousObject> result = odBasisObjectCollector.getAnonymousObjects();
-    reset();
-    return result;
+    return collect(objectDiagram).basisObjects().getAnonymousObjects();
   }
 
   public List<ASTODObject> getODObjects(ASTObjectDiagram objectDiagram) {
-    objectDiagram.accept(traverser);
-    List<ASTODObject> result = Stream.concat(odBasisObjectCollector.getODObjects().stream(),
-        od4ReportObjectCollector.getNamedObjects().stream()).collect(Collectors.toList());
-    reset();
-    return result;
+    Collected collected = collect(objectDiagram);
+    return Stream.concat(collected.basisObjects().getODObjects().stream(),
+        collected.reportObjects().getNamedObjects().stream()).collect(Collectors.toList());
   }
 
   public List<ASTODLink> getODLinks(ASTObjectDiagram objectDiagram) {
+    return collect(objectDiagram).links().getLinks();
+  }
+
+  protected Collected collect(ASTObjectDiagram objectDiagram) {
+    Collected collected = new Collected(new OD4ReportObjectCollector(),
+        new ODBasisObjectCollector(), new ODLinkCollector());
+
+    OD4ReportTraverser traverser = OD4ReportMill.traverser();
+    traverser.add4OD4Report(collected.reportObjects());
+    traverser.add4ODBasis(collected.basisObjects());
+    traverser.add4ODLink(collected.links());
     objectDiagram.accept(traverser);
-    List<ASTODLink> result = odLinkCollector.getLinks();
-    reset();
-    return result;
+
+    return collected;
   }
 
-  private void init() {
-    traverser.add4ODBasis(odBasisObjectCollector);
-    traverser.add4ODLink(odLinkCollector);
-    traverser.add4OD4Report(od4ReportObjectCollector);
-  }
-
-  private void reset() {
-    od4ReportObjectCollector = new OD4ReportObjectCollector();
-    odBasisObjectCollector = new ODBasisObjectCollector();
-    odLinkCollector = new ODLinkCollector();
-    init();
+  protected record Collected(OD4ReportObjectCollector reportObjects,
+                             ODBasisObjectCollector basisObjects, ODLinkCollector links) {
   }
 
 }
