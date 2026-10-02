@@ -3,8 +3,8 @@ package de.monticore.od2plantuml;
 import de.monticore.ODTestBasis;
 import de.monticore.io.paths.MCPath;
 import de.monticore.od2plantuml.prettyprinter.PlantUMLODFullPrettyPrinter;
-import de.monticore.od4data.trafo.OD4DataAttributeValueCompositionTrafo;
-import de.monticore.od4data.trafo.OD4DataDeAnonymizeObjectsTrafo;
+import de.monticore.od4development.trafo.OD4DevelopmentAttributeValueCompositionTrafo;
+import de.monticore.od4development.trafo.OD4DevelopmentDeAnonymizeObjectsTrafo;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.odbasis._ast.ASTODArtifact;
@@ -62,8 +62,8 @@ public class PlantUMLODFullPrettyPrinterTest extends ODTestBasis {
     ASTODArtifact transformableArtifact =
         OD4ReportTestUtil.loadModelAndST(inputPath, new MCPath(PATH));
     
-    new OD4DataDeAnonymizeObjectsTrafo().transform(transformableArtifact);
-    new OD4DataAttributeValueCompositionTrafo().transform(transformableArtifact);
+    new OD4DevelopmentDeAnonymizeObjectsTrafo().transform(transformableArtifact);
+    new OD4DevelopmentAttributeValueCompositionTrafo().transform(transformableArtifact);
     
     PlantUMLODFullPrettyPrinter prettyPrinter = new PlantUMLODFullPrettyPrinter();
     String plantUML = prettyPrinter.prettyprint(transformableArtifact);

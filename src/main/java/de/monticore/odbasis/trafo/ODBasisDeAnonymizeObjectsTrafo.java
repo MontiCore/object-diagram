@@ -41,10 +41,7 @@ public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
   public void endVisit(ASTObjectDiagram node) {
     for (int i = 0; i < node.getODElementList().size(); i++) {
       ASTODElement element = node.getODElementList().get(i);
-      if (ODBasisMill.typeDispatcher().isODBasisASTODAnonymousObject(element)) {
-        ASTODAnonymousObject anonymousObject =
-            ODBasisMill.typeDispatcher().asODBasisASTODAnonymousObject(element);
-        
+      if (element instanceof ASTODAnonymousObject anonymousObject) {
         ASTODNamedObject namedCopy = copyToNamedObject(anonymousObject);
         node.setODElement(i, namedCopy);
       }
@@ -55,9 +52,7 @@ public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
   public void endVisit(ASTODAttribute node) {
     if (node.isPresentODValue()) {
       ASTODValue value = node.getODValue();
-      if (ODBasisMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
-        ASTODAnonymousObject anonymousObject =
-            ODBasisMill.typeDispatcher().asODBasisASTODAnonymousObject(value);
+      if (value instanceof ASTODAnonymousObject anonymousObject) {
         ASTODNamedObject namedCopy = copyToNamedObject(anonymousObject);
         node.setODValue(namedCopy);
       }
@@ -70,16 +65,8 @@ public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
     
     pseudoCounts.putIfAbsent(type, 0);
     int pseudoIdx = pseudoCounts.merge(type, 1, Integer::sum);
-    
-    StringBuilder sb = new StringBuilder();
-    sb.append("__");
-    sb.append(typeName);
-    sb.append("_anonymous_");
-    sb.append(pseudoIdx);
-    
-    String generatedName = sb.toString();
-    
-    return generatedName;
+
+    return "__" + typeName + "_anonymous_" + pseudoIdx;
   }
   
   protected ASTODNamedObject copyToNamedObject(ASTODAnonymousObject object) {

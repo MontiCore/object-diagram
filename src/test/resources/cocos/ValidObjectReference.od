@@ -1,0 +1,16 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package cocos;
+
+import examples.cd.SimpleOD.*;
+
+objectdiagram ValidObjectReference {
+
+  foo:ObjectType{};
+
+  bar:ObjectType{
+    foobar = foo;
+  };
+
+}
+

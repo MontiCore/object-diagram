@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._ast.ASTODReportObject;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import de.monticore.odbasis._symboltable.ODBasisScopesGenitor;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbolBuilder;
 import de.monticore.symboltable.ImportStatement;
@@ -14,17 +13,11 @@ import de.se_rwth.commons.logging.Log;
 import java.util.ArrayList;
 
 public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
-
-  private ODBasisScopesGenitor odBasisScopesGenitor = new ODBasisScopesGenitor();
-
+  
   public OD4ReportScopesGenitor() {
     super();
   }
-
-  public void setCheckTypes(boolean checkTypes) {
-    odBasisScopesGenitor.setCheckTypes(checkTypes);
-  }
-
+  
   @Override
   public void visit(ASTODReportObject astodReportObject) {
     VariableSymbol symbol = create_ODReportObject(astodReportObject).build();
@@ -38,17 +31,11 @@ public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
     astodReportObject.setSymbol(symbol);
     astodReportObject.setEnclosingScope(symbol.getEnclosingScope());
   }
-
-  @Override
-  public void endVisit(ASTODReportObject astodReportObject) {
-    super.endVisit(astodReportObject);
-    odBasisScopesGenitor.endVisit(astodReportObject);
-  }
-
+  
   private VariableSymbolBuilder create_ODReportObject(ASTODReportObject astodReportObject) {
     return OD4ReportMill.variableSymbolBuilder().setName(astodReportObject.getName());
   }
-
+  
   @Override
   public IOD4ReportArtifactScope createFromAST(ASTODArtifact rootNode) {
     Preconditions.checkNotNull(rootNode,
@@ -71,5 +58,5 @@ public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
     rootNode.accept(getTraverser());
     return artifactScope;
   }
-
+  
 }

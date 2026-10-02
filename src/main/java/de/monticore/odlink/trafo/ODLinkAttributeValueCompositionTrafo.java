@@ -26,35 +26,30 @@ public class ODLinkAttributeValueCompositionTrafo implements ODBasisVisitor2, OD
     for (ASTODAttribute attribute : node.getODAttributeList()) {
       if (attribute.isPresentODValue()) {
         ASTODValue value = attribute.getODValue();
-        if (ODLinkMill.typeDispatcher().isODBasisASTODNamedObject(value)) {
-          ASTODNamedObject namedObject =
-              ODLinkMill.typeDispatcher().asODBasisASTODNamedObject(value);
-          attributesToRemove.add(attribute);
-          objectsToMove.add(namedObject);
-          
-          ASTODLink link = createComposition(node.getName(), namedObject.getName(), attribute.getName());
-          compositionsToCreate.add(link);
-        }
-        else if (ODLinkMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
-          Log.warn("0x0D021: Could not extract composed object because its anonymous!",
+        switch (value) {
+          case ASTODNamedObject namedObject -> {
+            attributesToRemove.add(attribute);
+            objectsToMove.add(namedObject);
+            
+            ASTODLink link = createComposition(node.getName(), namedObject.getName(), attribute.getName());
+            compositionsToCreate.add(link);
+          }
+          case ASTODAnonymousObject anonymousObject -> Log.warn("0x0D021: Could not extract composed object because its anonymous!",
               value.get_SourcePositionStart());
-        }
-        else if (ODLinkMill.typeDispatcher().isODBasisASTODName(value)) {
-          ASTODName odName = ODLinkMill.typeDispatcher().asODBasisASTODName(value);
-          ASTODLink link = createAssociation(node.getName(), odName.getName(), attribute.getName());
-          attributesToRemove.add(attribute);
-          compositionsToCreate.add(link);
-        }
-        else if (ODLinkMill.typeDispatcher().isODBasisASTODSimpleAttributeValue(value)) {
-          ASTODSimpleAttributeValue simpleValue = ODLinkMill.typeDispatcher().asODBasisASTODSimpleAttributeValue(value);
-          if (ODLinkMill.typeDispatcher().isExpressionsBasisASTNameExpression(simpleValue.getExpression())) {
-            // TODO JRa: Use Typecheck3 to check the reference of the NameExpression. Do not transform, if its an ENUM value!
-            ASTNameExpression nameExpression =
-                ODLinkMill.typeDispatcher().asExpressionsBasisASTNameExpression(simpleValue.getExpression());
-            ASTODLink link = createAssociation(node.getName(), nameExpression.getName(), attribute.getName());
+          case ASTODName odName -> {
+            ASTODLink link = createAssociation(node.getName(), odName.getName(), attribute.getName());
             attributesToRemove.add(attribute);
             compositionsToCreate.add(link);
           }
+          case ASTODSimpleAttributeValue simpleAttributeValue -> {
+            if (simpleAttributeValue.getExpression() instanceof ASTNameExpression nameExpression) {
+              // TODO JRa: Use Typecheck3 to check the reference of the NameExpression. Do not transform, if its an ENUM value!
+              ASTODLink link = createAssociation(node.getName(), nameExpression.getName(), attribute.getName());
+              attributesToRemove.add(attribute);
+              compositionsToCreate.add(link);
+            }
+          }
+          default -> {} // ignore
         }
       }
     }

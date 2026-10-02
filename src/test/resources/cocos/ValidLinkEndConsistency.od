@@ -1,0 +1,17 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package cocos;
+
+import examples.cd.SimpleOD.*;
+
+objectdiagram ValidLinkEndConsistency {
+
+  foo:ObjectType{};
+  bar:ObjectType{};
+  fooBar:ObjectType2{};
+  barBaz:ObjectType2{};
+
+  link firstLink foo,bar -> fooBar,barBaz;
+
+}
+

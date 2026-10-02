@@ -46,7 +46,7 @@ java {
 dependencies {
   grammar("de.monticore:monticore-grammar:$mc_version")
   implementation "org.antlr:antlr4-runtime:4.12.0"
-  implementation 'net.sourceforge.plantuml:plantuml:1.2023.12'
+  implementation "net.sourceforge.plantuml:plantuml:$plantuml_version"
   implementation "de.se_rwth.commons:se-commons-logging:$mc_version"
   implementation "de.monticore:monticore-runtime:$mc_version"
   implementation "de.monticore.lang:cd4analysis:$mc_version"
@@ -113,18 +113,6 @@ tasks.register('grammarJar', Jar) {
 }
 jar.dependsOn(grammarJar)
 
-tasks.register('buildOD4DataTool', ShadowJar) {
-  minimize()
-  archiveFileName = 'MCOD4Data.jar'
-  archiveClassifier = "od4data-mc-tool"
-  manifest {
-    attributes('Main-Class': 'de.monticore.od4data.OD4DataTool')
-  }
-  from sourceSets.main.output
-  configurations = [project.configurations.runtimeClasspath]
-}
-jar.dependsOn(buildOD4DataTool)
-
 tasks.register('buildOD4ReportTool', ShadowJar) {
   minimize()
   archiveFileName = 'MCOD4Report.jar'
@@ -164,7 +152,6 @@ publishing {
       from components.java
       artifact sourcesJar
       artifact buildOD4DevelopmentTool
-      artifact buildOD4DataTool
       artifact buildOD4ReportTool
     }
   }
@@ -233,13 +220,11 @@ checkArtifactsODLink.dependsOn(checkArtifactsODBasis)
 
 checkArtifactsODAttribute.dependsOn(checkArtifactsODBasis)
 
-checkArtifactsOD4Data.dependsOn(checkArtifactsODLink)
-checkArtifactsOD4Data.dependsOn(checkArtifactsODAttribute)
-
-checkArtifactsOD4Development.dependsOn(checkArtifactsOD4Data)
+checkArtifactsOD4Development.dependsOn(checkArtifactsODLink)
+checkArtifactsOD4Development.dependsOn(checkArtifactsODAttribute)
 
 checkArtifactsOD4Report.dependsOn(checkArtifactsDateLiterals)
-checkArtifactsOD4Report.dependsOn(checkArtifactsOD4Data)
+checkArtifactsOD4Report.dependsOn(checkArtifactsOD4Development)
 
 // MLC Show dependencies
 // always depend on the shows of the mlc models which are allowed by an mlc
@@ -247,10 +232,8 @@ showArtifactsODLink.dependsOn(showArtifactsODBasis)
 
 showArtifactsODAttribute.dependsOn(showArtifactsODBasis)
 
-showArtifactsOD4Data.dependsOn(showArtifactsODLink)
-showArtifactsOD4Data.dependsOn(showArtifactsODAttribute)
-
-showArtifactsOD4Development.dependsOn(showArtifactsOD4Data)
+showArtifactsOD4Development.dependsOn(showArtifactsODLink)
+showArtifactsOD4Development.dependsOn(showArtifactsODAttribute)
 
 showArtifactsOD4Report.dependsOn(showArtifactsDateLiterals)
-showArtifactsOD4Report.dependsOn(showArtifactsOD4Data)
+showArtifactsOD4Report.dependsOn(showArtifactsOD4Development)
