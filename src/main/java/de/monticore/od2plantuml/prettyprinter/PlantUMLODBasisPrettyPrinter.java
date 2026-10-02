@@ -104,4 +104,9 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
   public void visit(ASTODName node) {
     printer.print(node.getName());
   }
+
+  @Override
+  public void visit(ASTODAbsent node) {
+    printer.print("...");
+  }
 }

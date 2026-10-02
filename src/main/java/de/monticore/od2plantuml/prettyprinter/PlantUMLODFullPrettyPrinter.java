@@ -2,9 +2,12 @@ package de.monticore.od2plantuml.prettyprinter;
 
 import de.monticore.dateliterals._prettyprint.DateLiteralsPrettyPrinter;
 import de.monticore.expressions.commonexpressions._prettyprint.CommonExpressionsPrettyPrinter;
+import de.monticore.expressions.expressionsbasis._prettyprint.ExpressionsBasisPrettyPrinter;
 import de.monticore.literals.mccommonliterals._prettyprint.MCCommonLiteralsPrettyPrinter;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report._visitor.OD4ReportTraverser;
+import de.monticore.od4report._visitor.OD4ReportTraverserImplementation;
+import de.monticore.odattribute._prettyprint.ODAttributePrettyPrinter;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.prettyprint.IndentPrinter;
 
@@ -24,6 +27,14 @@ public class PlantUMLODFullPrettyPrinter {
         new MCCommonLiteralsPrettyPrinter(printer, false);
     traverser.add4MCCommonLiterals(literalsPrettyPrinter);
     traverser.setMCCommonLiteralsHandler(literalsPrettyPrinter);
+    ExpressionsBasisPrettyPrinter expressionsBasisPrettyPrinter =
+        new ExpressionsBasisPrettyPrinter(printer, false);
+    traverser.add4ExpressionsBasis(expressionsBasisPrettyPrinter);
+    traverser.setExpressionsBasisHandler(expressionsBasisPrettyPrinter);
+    // lists and maps as attribute values, printed in OD syntax
+    ODAttributePrettyPrinter odAttributePrettyPrinter = new ODAttributePrettyPrinter(printer, false);
+    traverser.add4ODAttribute(odAttributePrettyPrinter);
+    traverser.setODAttributeHandler(odAttributePrettyPrinter);
     CommonExpressionsPrettyPrinter commonExpressionsPrettyPrinter =
         new CommonExpressionsPrettyPrinter(printer, false);
     traverser.add4CommonExpressions(commonExpressionsPrettyPrinter);

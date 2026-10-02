@@ -30,8 +30,8 @@ gradle clean build
       * ``` -i gentest/src/main/resources/Example.od -pp diagram.png ```
    * Print PlantUML text to stdout:
       * ``` -i gentest/src/main/resources/Example.od -pp ```
-   * Use external symbol table and symbol path(s):
-      * ``` -i gentest/src/main/resources/Example.od -s gentest/src/main/resources/symboltable -path some/symbol/dir -path another/symbol/dir -pp diagram.png ```
+   * Use symbol path(s) for imported symbols:
+      * ``` -i gentest/src/main/resources/Example.od -path some/symbol/dir another/symbol/dir -pp diagram.png ```
 
 
 * Explanation of the CLI arguments:
@@ -40,9 +40,8 @@ gradle clean build
    * ``` -pp ``` / ``` --prettyprint [file] ``` is optional:
       * with a file argument, output is written/rendered to that file,
       * without a file argument, generated PlantUML text is printed to stdout.
-   * ``` -s ``` / ``` --symboltable <file> ``` is optional and loads a symbol table from file.
-     If omitted, the symbol table is derived from the AST.
-   * ``` -path <dirlist> ``` is optional and can be provided multiple times to configure symbol paths.
+   * ``` -path <dirlist> ``` is optional and takes one or more directories to configure symbol
+     paths. It can also be provided multiple times.
    * If ``` -i ``` is missing, the tool prints help and exits.
 
 ## How the Tool Works
@@ -50,7 +49,8 @@ gradle clean build
 ### Step 1: Parse the Object Diagram
 
 The tool reads an Object Diagram model and parses it into an Abstract Syntax Tree (AST)
-based on the OD4Development grammar.
+based on the OD4Report grammar. As OD4Report extends OD4Development, all OD4Development models
+are supported, as well as models using OD4Report features such as dates.
 
 ### Example OD Input
 

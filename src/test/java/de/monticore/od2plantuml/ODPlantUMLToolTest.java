@@ -22,10 +22,9 @@ public class ODPlantUMLToolTest extends ODTestBasis {
     String[] args = new String[] { "-h" };
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
-    assertEquals(14, out.size());
-    assertEquals(" usage:  ODPlantUMLTool [-h] [-i <file>] [-path <dirlist>] [-pp <file>] [-s",
+    assertEquals(11, out.size(), String.join("\n", out));
+    assertEquals(" usage:  ODPlantUMLTool [-h] [-i <file>] [-path <dirlist>] [-pp <file>]",
         out.getFirst());
-    assertEquals("    <file>]", out.get(1));
   }
   
   @Test
@@ -33,10 +32,9 @@ public class ODPlantUMLToolTest extends ODTestBasis {
     String[] args = new String[] {};
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
-    assertEquals(14, out.size());
-    assertEquals(" usage:  ODPlantUMLTool [-h] [-i <file>] [-path <dirlist>] [-pp <file>] [-s",
+    assertEquals(11, out.size(), String.join("\n", out));
+    assertEquals(" usage:  ODPlantUMLTool [-h] [-i <file>] [-path <dirlist>] [-pp <file>]",
         out.getFirst());
-    assertEquals("    <file>]", out.get(1));
   }
   
   @Test
@@ -45,12 +43,24 @@ public class ODPlantUMLToolTest extends ODTestBasis {
         new String[] { "-i", INPUT_OD.toString(), "-path", INPUT_PATH_DIR.toString(), "-pp" };
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
-    assertEquals(12, out.size());
-    assertEquals("@startuml", out.get(1));
-    assertEquals("note \"OD\" as tag #white", out.get(2));
-    assertEquals("@enduml", out.get(11));
+    assertEquals(11, out.size(), String.join("\n", out));
+    assertEquals("@startuml", out.getFirst());
+    assertEquals("note \"OD\" as tag #white", out.get(1));
+    assertEquals("@enduml", out.getLast());
   }
   
+  /** OD4Report models, e.g., with dates, are supported, too. */
+  @Test
+  void testPrettyPrintOD4ReportModel() {
+    Path input = PATH.resolve(Paths.get("examples", "od2cd", "MyFamily.od"));
+    String[] args = new String[] { "-i", input.toString(), "-path", PATH.toString(), "-pp" };
+    List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
+
+    assertEquals("@startuml", out.getFirst(), String.join("\n", out));
+    assertTrue(out.contains("  bought = 2020-01-05 15:30:00"), String.join("\n", out));
+    assertEquals("@enduml", out.getLast());
+  }
+
   @Test
   @Disabled("Disabled because PlantUML currently requires local GraphViz installation on Linux")
   void testPrettyPrintToPngFile() {
@@ -61,9 +71,9 @@ public class ODPlantUMLToolTest extends ODTestBasis {
             output.toString() };
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
-    assertEquals(2, out.size(), String.join("\n", out));
-    assertEquals(ODPlantUMLTool.SUCCESS_IMAGE_GENERATED.formatted(output.toString()), out.get(1));
-    
+    assertEquals(1, out.size(), String.join("\n", out));
+    assertEquals(ODPlantUMLTool.SUCCESS_IMAGE_GENERATED.formatted(output.toString()), out.getFirst());
+
     assertTrue(Files.exists(output));
   }
   
@@ -76,8 +86,8 @@ public class ODPlantUMLToolTest extends ODTestBasis {
             output.toString() };
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
-    assertEquals(2, out.size());
-    assertEquals(getAsError(ODPlantUMLTool.ERROR_UNSUPPORTED_FORMAT, "xyz"), out.get(1));
+    assertEquals(1, out.size(), String.join("\n", out));
+    assertEquals(getAsError(ODPlantUMLTool.ERROR_UNSUPPORTED_FORMAT, "xyz"), out.getFirst());
     
     assertFalse(Files.exists(output));
   }
@@ -91,8 +101,8 @@ public class ODPlantUMLToolTest extends ODTestBasis {
             output.toString() };
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
-    assertEquals(2, out.size());
-    assertEquals(getAsError(ODPlantUMLTool.ERROR_MISSING_EXTENSION), out.get(1));
+    assertEquals(1, out.size(), String.join("\n", out));
+    assertEquals(getAsError(ODPlantUMLTool.ERROR_MISSING_EXTENSION), out.getFirst());
     assertFalse(Files.exists(output));
   }
   
@@ -106,8 +116,8 @@ public class ODPlantUMLToolTest extends ODTestBasis {
             output.toString() };
     List<String> out = ODPlantUMLTestUtil.runToolInSeparateProcess(args);
     
-    assertEquals(2, out.size(), String.join("\n", out));
-    assertEquals(ODPlantUMLTool.SUCCESS_IMAGE_GENERATED.formatted(output.toString()), out.get(1));
+    assertEquals(1, out.size(), String.join("\n", out));
+    assertEquals(ODPlantUMLTool.SUCCESS_IMAGE_GENERATED.formatted(output.toString()), out.getFirst());
     assertTrue(Files.exists(output));
   }
   

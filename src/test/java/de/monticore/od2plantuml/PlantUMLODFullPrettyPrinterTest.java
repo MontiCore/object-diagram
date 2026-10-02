@@ -9,6 +9,8 @@ import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.runtime.junit.TestWithMCLanguage;
+import net.sourceforge.plantuml.syntax.SyntaxChecker;
+import net.sourceforge.plantuml.syntax.SyntaxResult;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -19,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * This class contains test cases for the PlantUMLODFullPrettyPrinter, which is responsible for
@@ -54,7 +57,8 @@ public class PlantUMLODFullPrettyPrinterTest extends ODTestBasis {
       "od2cd/ProjectListOD",
       "od2cd/Variants",
       "od2cd/InnerObject",
-      "od2cd/MyFamily"
+      "od2cd/MyFamily",
+      "od2cd/PlantUMLConstructs"
   })
   public void test(String input) throws IOException {
     Path inputPath = Paths.get(basedir + input+".od");
@@ -77,8 +81,10 @@ public class PlantUMLODFullPrettyPrinterTest extends ODTestBasis {
         "The printed output\n\n\"\"\"\n%s\n\"\"\"\n\ndoes not match with the expected PlantUML output\n\n\"\"\"\n%s\n\"\"\"\n.",
         plantUML, expectedPlantUML)
     );
-    
-    // TODO MSm parse PlantUML
+
+    // the comparison ignores whitespace, so additionally check that PlantUML accepts the output
+    SyntaxResult syntax = SyntaxChecker.checkSyntax(plantUML);
+    assertFalse(syntax.isError(), () -> "Invalid PlantUML: " + syntax.getErrors() + "\n" + plantUML);
   }
   
   /**

@@ -2,14 +2,15 @@ package de.monticore.od2plantuml;/* (c) https://github.com/MontiCore/monticore *
 
 import de.monticore.io.paths.MCPath;
 import de.monticore.od2plantuml.prettyprinter.PlantUMLODFullPrettyPrinter;
-import de.monticore.od4development.OD4DevelopmentMill;
-import de.monticore.od4development._parser.OD4DevelopmentParser;
+import de.monticore.od4report.OD4ReportMill;
+import de.monticore.od4report._parser.OD4ReportParser;
 import de.monticore.od4development._symboltable.CDRoleSymbolDeSer;
-import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
-import de.monticore.od4development._symboltable.OD4DevelopmentScopesGenitorDelegator;
+import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
+import de.monticore.od4report._symboltable.OD4ReportScopesGenitorDelegator;
 import de.monticore.od4development.trafo.OD4DevelopmentAttributeValueCompositionTrafo;
 import de.monticore.od4development.trafo.OD4DevelopmentDeAnonymizeObjectsTrafo;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
 import de.monticore.types.mcbasictypes._ast.ASTMCImportStatement;
 import de.se_rwth.commons.logging.Log;
 import net.sourceforge.plantuml.FileFormat;
@@ -53,8 +54,6 @@ public class ODPlantUMLTool {
    *     <li>{@code -path <dirlist>}: sets one or more symbol path entries for imported symbols.</li>
    *     <li>{@code -pp}/{@code --prettyprint [file]}: generates a PlantUML image to the given file,
    *         or prints the PlantUML source to stdout when no file is given.</li>
-   *     <li>{@code -s}/{@code --symboltable <file>}: loads the symbol table from the given file
-   *         instead of building it from the AST.</li>
    * </ul>
    * </pre>
    *
@@ -62,7 +61,9 @@ public class ODPlantUMLTool {
    */
   public void run(String[] args) {
     Log.init();
-    OD4DevelopmentMill.init();
+    OD4ReportMill.init();
+    // needed to load imported symbols that use primitive types
+    BasicSymbolsMill.initializePrimitives();
     Options options = initOptions();
     
     try {
@@ -99,26 +100,20 @@ public class ODPlantUMLTool {
           // support multiple -path entries passed via CLI
           Arrays.stream(paths).forEach(p -> mcPath.addEntry(Paths.get(p)));
         }
-        OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
-        OD4DevelopmentMill.globalScope()
+        OD4ReportMill.globalScope().setSymbolPath(mcPath);
+        OD4ReportMill.globalScope()
             .putTypeSymbolDeSer("de.monticore.cdbasis._symboltable.CDTypeSymbol");
-        OD4DevelopmentMill.globalScope()
+        OD4ReportMill.globalScope()
             .putSymbolDeSer("de.monticore.cdassociation._symboltable.CDRoleSymbol",
                 new CDRoleSymbolDeSer());
         
         for (ASTMCImportStatement i : ast.get().getMCImportStatementList()) {
-          OD4DevelopmentMill.globalScope().loadDiagram(i.getQName());
+          OD4ReportMill.globalScope().loadDiagram(i.getQName());
         }
       }
       
-      if (cmd.hasOption("s")) {
-        MCPath mcPath = new MCPath(cmd.getOptionValue("s"));
-        OD4DevelopmentMill.globalScope().setSymbolPath(mcPath);
-      }
-      else {
-        createSymbolTable(ast.get());
-      }
-      
+      createSymbolTable(ast.get());
+
       new OD4DevelopmentDeAnonymizeObjectsTrafo().transform(ast.get());
       new OD4DevelopmentAttributeValueCompositionTrafo().transform(ast.get());
       
@@ -143,7 +138,7 @@ public class ODPlantUMLTool {
    */
   private Optional<ASTODArtifact> parse(String model) {
     try {
-      OD4DevelopmentParser parser = OD4DevelopmentMill.parser();
+      OD4ReportParser parser = OD4ReportMill.parser();
       Optional<ASTODArtifact> optAst = parser.parse(model);
       
       if (!parser.hasErrors() && optAst.isPresent()) {
@@ -173,11 +168,8 @@ public class ODPlantUMLTool {
     options.addOption(Option.builder("pp").longOpt("prettyprint").argName("file").optionalArg(true)
         .numberOfArgs(1).desc("Prints the AST to stdout or the specified file (optional)").get());
     
-    options.addOption(Option.builder("s").longOpt("symboltable").argName("file").hasArg()
-        .desc("Serialized the Symbol table of the given artifact.").get());
-    
     options.addOption(
-        Option.builder("path").argName("dirlist").numberOfArgs(Option.UNLIMITED_VALUES).hasArg()
+        Option.builder("path").argName("dirlist").hasArgs()
             .desc("Sets the artifact path for imported symbols").get());
     return options;
   }
@@ -275,8 +267,8 @@ public class ODPlantUMLTool {
    * @param node parsed OD artifact
    * @return the resulting artifact scope
    */
-  public IOD4DevelopmentArtifactScope createSymbolTable(ASTODArtifact node) {
-    OD4DevelopmentScopesGenitorDelegator genitor = OD4DevelopmentMill.scopesGenitorDelegator();
+  public IOD4ReportArtifactScope createSymbolTable(ASTODArtifact node) {
+    OD4ReportScopesGenitorDelegator genitor = OD4ReportMill.scopesGenitorDelegator();
     return genitor.createFromAST(node);
   }
   

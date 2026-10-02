@@ -64,23 +64,42 @@ public class PlantUMLODLinkPrettyPrinter implements ODLinkVisitor2, ODLinkHandle
       case ASTODRightToLeftDir dir -> "<" + linkRepresentation + (symbol.isEmpty() ? "" : symbol);
       case ASTODBiDir dir -> (symbol.isEmpty() ? "<" : symbol) + linkRepresentation + (symbol.isEmpty() ? ">"
                                                                                                         : symbol);
-      default -> linkRepresentation;
+      default -> symbol + linkRepresentation;
     };
 
     return " " + linkRepresentation + " ";
   }
-  
+
+  /** Prints {@code [qualifier] "role"}, as PlantUML expects it on the left side. */
   @Override
   public void handle(ASTODLinkLeftSide node) {
+    printQualifier(node);
     if (node.isPresentRole()) {
       printer.print(" \"" + node.getRole() + "\" ");
     }
   }
-  
+
+  /** Prints {@code "role" [qualifier]}, as PlantUML expects it on the right side. */
   @Override
   public void handle(ASTODLinkRightSide node) {
     if (node.isPresentRole()) {
       printer.print(" \"" + node.getRole() + "\" ");
     }
+    printQualifier(node);
+  }
+
+  protected void printQualifier(ASTODLinkSide node) {
+    if (!node.isPresentODLinkQualifier()) {
+      return;
+    }
+    ASTODLinkQualifier qualifier = node.getODLinkQualifier();
+    printer.print(" [");
+    if (qualifier.isPresentName()) {
+      printer.print(qualifier.getName());
+    }
+    else {
+      qualifier.getODValue().accept(getTraverser());
+    }
+    printer.print("] ");
   }
 }
