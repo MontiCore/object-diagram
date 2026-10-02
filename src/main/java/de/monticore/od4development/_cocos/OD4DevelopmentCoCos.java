@@ -1,6 +1,7 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od4development._cocos;
 
+import de.monticore.od4development._cocos.link.ValidLinkQualifierCoCo;
 import de.monticore.odbasis._cocos.ODBasicsCoCos;
 import de.monticore.odlink._cocos.ODLinkCoCos;
 
@@ -10,15 +11,17 @@ public class OD4DevelopmentCoCos {
     final OD4DevelopmentCoCoChecker checker = new OD4DevelopmentCoCoChecker();
     checker.addChecker(new ODBasicsCoCos().getCheckerForAllIntraCoCos());
     checker.addChecker(new ODLinkCoCos().getCheckerForAllIntraCoCos());
-    
+    checker.addCoCo(new ValidLinkQualifierCoCo());
+
     return checker;
   }
-  
+
   public OD4DevelopmentCoCoChecker getCheckerForAllCoCos() {
     final OD4DevelopmentCoCoChecker checker = new OD4DevelopmentCoCoChecker();
     checker.addChecker(new ODBasicsCoCos().getCheckerForAllCoCos());
     checker.addChecker(new ODLinkCoCos().getCheckerForAllCoCos());
-    
+    checker.addCoCo(new ValidLinkQualifierCoCo());
+
     return checker;
   }
 

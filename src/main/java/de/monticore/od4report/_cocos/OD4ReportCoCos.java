@@ -3,6 +3,7 @@
 package de.monticore.od4report._cocos;
 
 import de.monticore.dateliterals._cocos.DateLiteralsCoCos;
+import de.monticore.od4development._cocos.link.ValidLinkQualifierCoCo;
 import de.monticore.odbasis._cocos.ODBasicsCoCos;
 import de.monticore.odlink._cocos.ODLinkCoCos;
 
@@ -12,6 +13,7 @@ public class OD4ReportCoCos {
     final OD4ReportCoCoChecker checker = new OD4ReportCoCoChecker();
     checker.addChecker(new ODBasicsCoCos().getCheckerForAllIntraCoCos());
     checker.addChecker(new ODLinkCoCos().getCheckerForAllIntraCoCos());
+    checker.addCoCo(new ValidLinkQualifierCoCo());
     checker.addChecker(new DateLiteralsCoCos().getCheckerForAllCoCos());
 
     return checker;
@@ -21,6 +23,7 @@ public class OD4ReportCoCos {
     final OD4ReportCoCoChecker checker = new OD4ReportCoCoChecker();
     checker.addChecker(new ODBasicsCoCos().getCheckerForAllCoCos());
     checker.addChecker(new ODLinkCoCos().getCheckerForAllCoCos());
+    checker.addCoCo(new ValidLinkQualifierCoCo());
     checker.addChecker(new DateLiteralsCoCos().getCheckerForAllCoCos());
 
     return checker;
