@@ -30,8 +30,8 @@ import de.monticore.odbasis.trafo.ODBasisDeAnonymizeObjectsTrafo;
  * </pre>
  * will be transformed to
  * <pre>
- *   __a_anonymous_0:A {
- *     foo = __b_anonymous_0:B {};
+ *   __a_anonymous_1:A {
+ *     foo = __b_anonymous_1:B {};
  *   };
  * </pre>
  */

@@ -15,6 +15,7 @@ import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.se_rwth.commons.logging.Log;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -204,6 +205,26 @@ public class OD4DevelopmentDeAnonymizeObjectsTrafoTest extends ODTestBasis {
     assertEquals("innerE", fooMap2Val1ListVal3FB2.getName());
   }
   
+  @Test
+  void testDeAnonymizationGeneratesUniqueNamesPerType() throws IOException {
+    ASTODArtifact artifact = OD4DevelopmentMill.parser().parse_StringODArtifact(
+        "objectdiagram Unique { :A {}; :A {}; :B { a = :A {}; }; }").orElseThrow();
+    ASTObjectDiagram diagram = artifact.getObjectDiagram();
+
+    new OD4DevelopmentDeAnonymizeObjectsTrafo().transform(artifact);
+
+    ASTODNamedObject a1 = assertAndGetAsODNamedObject(diagram.getODElement(0));
+    ASTODNamedObject a2 = assertAndGetAsODNamedObject(diagram.getODElement(1));
+    ASTODNamedObject b = assertAndGetAsODNamedObject(diagram.getODElement(2));
+    ASTODNamedObject nestedA = assertAndGetAsODNamedObject(b.getODAttribute(0).getODValue());
+
+    // the nested object is renamed first, as attributes are visited before the diagram ends
+    assertEquals("__a_anonymous_1", nestedA.getName());
+    assertEquals("__a_anonymous_2", a1.getName());
+    assertEquals("__a_anonymous_3", a2.getName());
+    assertEquals("__b_anonymous_1", b.getName());
+  }
+
   protected ASTODList assertAndGetAsODList(ASTODValue value) {
     assertInstanceOf(ASTODList.class, value);
     return (ASTODList) value;
