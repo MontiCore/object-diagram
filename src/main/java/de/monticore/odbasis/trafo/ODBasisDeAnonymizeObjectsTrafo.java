@@ -65,16 +65,8 @@ public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
     
     pseudoCounts.putIfAbsent(type, 0);
     int pseudoIdx = pseudoCounts.merge(type, 1, Integer::sum);
-    
-    StringBuilder sb = new StringBuilder();
-    sb.append("__");
-    sb.append(typeName);
-    sb.append("_anonymous_");
-    sb.append(pseudoIdx);
-    
-    String generatedName = sb.toString();
-    
-    return generatedName;
+
+    return "__" + typeName + "_anonymous_" + pseudoIdx;
   }
   
   protected ASTODNamedObject copyToNamedObject(ASTODAnonymousObject object) {

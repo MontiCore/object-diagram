@@ -7,7 +7,6 @@ import de.monticore.io.paths.MCPath;
 import de.monticore.od4development._parser.OD4DevelopmentParser;
 import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.runtime.junit.MCAssertions;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import org.antlr.v4.runtime.RecognitionException;

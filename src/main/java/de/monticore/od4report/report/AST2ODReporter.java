@@ -8,16 +8,15 @@ import de.monticore.generating.templateengine.reporting.commons.ReportingConstan
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
 import de.monticore.od4report.OD4ReportMill;
 import de.monticore.odbasis._ast.ASTODBasisNode;
-import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.Names;
 
 import java.io.File;
 
 public class AST2ODReporter extends AReporter {
 
-  private String modelName;
+  private final String modelName;
 
-  private ReportingRepository reporting;
+  private final ReportingRepository reporting;
 
   public AST2ODReporter(String outputDir, String modelName, ReportingRepository reporting) {
     super(

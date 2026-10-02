@@ -1,27 +1,15 @@
 /* (c) https://github.com/MontiCore/monticore */
 package de.monticore.od2plantuml;
 
-import com.google.common.collect.Lists;
-import de.monticore.io.paths.MCPath;
-import de.monticore.od4development.OD4DevelopmentMill;
-import de.monticore.od4development.OD4DevelopmentTool;
-import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
-import de.monticore.odbasis._ast.ASTODArtifact;
-import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
-import de.monticore.symboltable.ImportStatement;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class ODPlantUMLTestUtil {

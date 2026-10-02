@@ -178,7 +178,7 @@ public class ODPlantUMLTool {
     
     options.addOption(
         Option.builder("path").argName("dirlist").numberOfArgs(Option.UNLIMITED_VALUES).hasArg()
-            .desc("Sets the artifact path for imported symbols").build());
+            .desc("Sets the artifact path for imported symbols").get());
     return options;
   }
   

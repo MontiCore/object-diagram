@@ -161,9 +161,9 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
   }
 
   public void handleLinks(ASTODLink odLink) {
-    List<String> leftSides = odLink.getODLinkLeftSide().getReferenceNamesList().stream().map(ASTODName::getName).collect(Collectors.toList());
+    List<String> leftSides = odLink.getODLinkLeftSide().getReferenceNamesList().stream().map(ASTODName::getName).toList();
 
-    List<String> rightSides = odLink.getODLinkRightSide().getReferenceNamesList().stream().map(ASTODName::getName).collect(Collectors.toList());
+    List<String> rightSides = odLink.getODLinkRightSide().getReferenceNamesList().stream().map(ASTODName::getName).toList();
     
     String rightRoleName = odLink.getODLinkRightSide().isPresentRole() ? odLink.getODLinkRightSide().getRole() : "";
     String leftRoleName = odLink.getODLinkLeftSide().isPresentRole() ? odLink.getODLinkLeftSide().getRole() : "";
@@ -212,9 +212,9 @@ public class OD2CDObjectVisitor implements ODBasisVisitor2 {
             }
           }
           // in case of direction disruption, we choose how it is possible to navigate
-          else if (cdRoleOfLeft.isPresent() && !cdRoleOfRight.isPresent()) {
+          else if (cdRoleOfLeft.isPresent() && cdRoleOfRight.isEmpty()) {
             this.linkAttributeList.add(constructLink(left, right, rightRoleName, cdRoleOfLeft));
-          } else if (!cdRoleOfLeft.isPresent() && cdRoleOfRight.isPresent()) {
+          } else if (cdRoleOfLeft.isEmpty() && cdRoleOfRight.isPresent()) {
             this.linkAttributeList.add(constructLink(right, left, leftRoleName, cdRoleOfRight));
           }
           

@@ -363,10 +363,12 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   @Override
   public Options addAdditionalOptions(Options options) {
     // check cocos
-    options.addOption(Option.builder("c").longOpt("coco").optionalArg(true).numberOfArgs(1).desc(
-        "Checks the CoCos for the input. Optional arguments are:\n" + "-c intra to check only the"
-            + " intra-model CoCos,\n" + "-c inter to check only inter-model CoCos."
-            + " Without an argument, all CoCos are checked.").get());
+    options.addOption(Option.builder("c").longOpt("coco").optionalArg(true).numberOfArgs(1).desc("""
+        Checks the CoCos for the input. Optional arguments are:
+        -c intra to check only the\
+         intra-model CoCos,
+        -c inter to check only inter-model CoCos.\
+         Without an argument, all CoCos are checked.""").get());
     
     options.addOption(
         Option.builder("o").longOpt("output").optionalArg(true).hasArg().numberOfArgs(1)

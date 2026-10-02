@@ -12,6 +12,7 @@ import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.odattribute._ast.ASTODList;
 import de.monticore.odattribute._ast.ASTODMap;
 import de.monticore.odbasis._ast.*;
+import de.monticore.odlink._ast.ASTODLeftToRightDir;
 import de.monticore.odlink._ast.ASTODLink;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import org.junit.jupiter.api.Test;
@@ -134,27 +135,27 @@ public class OD4DevelopmentAttributeValueCompositionTrafoTest extends ODTestBasi
   
   protected ASTODList assertAndGetAsODList(ASTODValue value) {
     assertInstanceOf(ASTODList.class, value);
-    return OD4DevelopmentMill.typeDispatcher().asODAttributeASTODList(value);
+    return (ASTODList) value;
   }
   
   protected ASTODMap assertAndGetAsODMap(ASTODValue value) {
     assertInstanceOf(ASTODMap.class, value);
-    return OD4DevelopmentMill.typeDispatcher().asODAttributeASTODMap(value);
+    return (ASTODMap) value;
   }
   
   protected ASTODNamedObject assertAndGetAsODNamedObject(ASTODElement element) {
     assertInstanceOf(ASTODNamedObject.class, element);
-    return OD4DevelopmentMill.typeDispatcher().asODBasisASTODNamedObject(element);
+    return (ASTODNamedObject) element;
   }
   
   protected ASTODNamedObject assertAndGetAsODNamedObject(ASTODValue value) {
     assertInstanceOf(ASTODNamedObject.class, value);
-    return OD4DevelopmentMill.typeDispatcher().asODBasisASTODNamedObject(value);
+    return (ASTODNamedObject) value;
   }
   
   protected ASTODLink assertAndGetAsODLink(ASTODElement element) {
     assertInstanceOf(ASTODLink.class, element);
-    return OD4DevelopmentMill.typeDispatcher().asODLinkASTODLink(element);
+    return (ASTODLink) element;
   }
   
   protected void assertLinkCompositionConfig(ASTODLink link, String source, String target,
@@ -165,28 +166,24 @@ public class OD4DevelopmentAttributeValueCompositionTrafoTest extends ODTestBasi
   protected void assertLinkConfig(ASTODLink link, String source, String target, String role,
       boolean isComposition) {
     assertEquals(1, link.getLeftReferenceNames().size());
-    assertEquals(source, link.getLeftReferenceNames().get(0));
+    assertEquals(source, link.getLeftReferenceNames().getFirst());
     assertEquals(1, link.getRightReferenceNames().size());
-    assertEquals(target, link.getRightReferenceNames().get(0));
+    assertEquals(target, link.getRightReferenceNames().getFirst());
     assertEquals(isComposition, link.isComposition());
     assertFalse(link.isLink());
     assertFalse(link.isAggregation());
-    assertTrue(OD4DevelopmentMill.typeDispatcher().isODLinkASTODLeftToRightDir(link.getODLinkDirection()));
+    assertInstanceOf(ASTODLeftToRightDir.class, link.getODLinkDirection());
     assertEquals(role, link.getODLinkRightSide().getRole());
   }
   
   protected void assertLinkQualifier(ASTODLink link, int qualifier) {
     ASTODValue qualifierValue = link.getODLinkLeftSide().getODLinkQualifier().getODValue();
-    if (OD4DevelopmentMill.typeDispatcher().isODBasisASTODSimpleAttributeValue(qualifierValue)) {
-      ASTODSimpleAttributeValue value =
-          OD4DevelopmentMill.typeDispatcher().asODBasisASTODSimpleAttributeValue(qualifierValue);
+    if (qualifierValue instanceof ASTODSimpleAttributeValue simpleAttributeValue) {
       ASTLiteralExpression expectedExpression = OD4DevelopmentMill.literalExpressionBuilder()
           .setLiteral(OD4DevelopmentMill.natLiteralBuilder().setDigits(String.valueOf(qualifier)).build())
           .build();
-      assertTrue(value.getExpression().deepEquals(expectedExpression));
-    }
-    else if (OD4DevelopmentMill.typeDispatcher().isODBasisASTODName(qualifierValue)) {
-      ASTODName name = OD4DevelopmentMill.typeDispatcher().asODBasisASTODName(qualifierValue);
+      assertTrue(simpleAttributeValue.getExpression().deepEquals(expectedExpression));
+    } else if (qualifierValue instanceof ASTODName name) {
       assertEquals(String.valueOf(qualifier), name.getName());
     }
   }

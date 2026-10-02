@@ -206,31 +206,31 @@ public class OD4DevelopmentDeAnonymizeObjectsTrafoTest extends ODTestBasis {
   
   protected ASTODList assertAndGetAsODList(ASTODValue value) {
     assertInstanceOf(ASTODList.class, value);
-    return OD4DevelopmentMill.typeDispatcher().asODAttributeASTODList(value);
+    return (ASTODList) value;
   }
   
   protected ASTODMap assertAndGetAsODMap(ASTODValue value) {
     assertInstanceOf(ASTODMap.class, value);
-    return OD4DevelopmentMill.typeDispatcher().asODAttributeASTODMap(value);
+    return (ASTODMap) value;
   }
   
   protected ASTODNamedObject assertAndGetAsODNamedObject(ASTODElement element) {
     assertInstanceOf(ASTODNamedObject.class, element);
-    return OD4DevelopmentMill.typeDispatcher().asODBasisASTODNamedObject(element);
+    return (ASTODNamedObject) element;
   }
   
   protected ASTODAnonymousObject assertAndGetAsODAnonymousObject(ASTODElement element) {
     assertInstanceOf(ASTODAnonymousObject.class, element);
-    return OD4DevelopmentMill.typeDispatcher().asODBasisASTODAnonymousObject(element);
+    return (ASTODAnonymousObject) element;
   }
   
   protected ASTODNamedObject assertAndGetAsODNamedObject(ASTODValue value) {
     assertInstanceOf(ASTODNamedObject.class, value);
-    return OD4DevelopmentMill.typeDispatcher().asODBasisASTODNamedObject(value);
+    return (ASTODNamedObject) value;
   }
   
   protected ASTODAnonymousObject assertAndGetAsODAnonymousObject(ASTODValue value) {
     assertInstanceOf(ASTODAnonymousObject.class, value);
-    return OD4DevelopmentMill.typeDispatcher().asODBasisASTODAnonymousObject(value);
+    return (ASTODAnonymousObject) value;
   }
 }

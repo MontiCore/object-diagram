@@ -35,7 +35,7 @@ public class OD4ReportToolTest extends ODTestBasis {
     List<String> out = OD4ReportTestUtil.runToolInSeparateProcess(input);
     
     assertEquals(1, out.size());
-    assertEquals(getAsError(OD4ReportTool.INPUT_OPTION_NOT_PRESENT, "Examples"), out.get(0));
+    assertEquals(getAsError(OD4ReportTool.INPUT_OPTION_NOT_PRESENT, "Examples"), out.getFirst());
   }
   
   @Test

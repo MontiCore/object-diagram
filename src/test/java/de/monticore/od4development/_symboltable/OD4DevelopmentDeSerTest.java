@@ -6,7 +6,6 @@ import de.monticore.ODTestBasis;
 import de.monticore.io.paths.MCPath;
 import de.monticore.od4development.OD4DevelopmentTestUtil;
 import de.monticore.od4development.OD4DevelopmentMill;
-import de.monticore.od4development.OD4DevelopmentTool;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;

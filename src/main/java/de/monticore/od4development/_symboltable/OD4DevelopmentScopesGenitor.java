@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.symboltable.ImportStatement;
-import de.se_rwth.commons.logging.Log;
 
 import java.util.ArrayList;
 

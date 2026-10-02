@@ -19,7 +19,7 @@ public class ODBasisSymbolTableCompleter implements ODBasisVisitor2, ODBasisHand
   
   protected boolean checkTypes;
   
-  private SymTypeExpression defaultObjectType;
+  private final SymTypeExpression defaultObjectType;
   
   
   public ODBasisSymbolTableCompleter(boolean checkTypes) {
