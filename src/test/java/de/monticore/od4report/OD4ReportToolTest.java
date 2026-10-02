@@ -25,10 +25,36 @@ public class OD4ReportToolTest extends ODTestBasis {
     String[] help = { "-h" };
     List<String> out = OD4ReportTestUtil.runToolInSeparateProcess(help);
     
-    assertEquals(28, out.size());
+    assertEquals(35, out.size());
     assertContains(out.getFirst(), "usage:  OD4ReportTool [-c <arg>] [-h] [-i <file>]");
   }
   
+  @Test
+  public void testOD4ReportToolVersion() {
+    List<String> out = OD4ReportTestUtil.runToolInSeparateProcess("-v");
+
+    assertEquals(1, out.size());
+    assertContains(out.getFirst(), "based on MontiCore version");
+  }
+
+  @Test
+  public void testOD4ReportToolStacktrace() {
+    List<String> out =
+        OD4ReportTestUtil.runToolInSeparateProcess("-i", INPUT_OD.toString(), "--stacktrace");
+
+    assertEquals(1, out.size());
+    assertEquals(getAsInfo(OD4ReportTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+  }
+
+  @Test
+  public void testOD4ReportToolReportNotSupported() {
+    List<String> out =
+        OD4ReportTestUtil.runToolInSeparateProcess("-i", INPUT_OD.toString(), "-r", "reports");
+
+    assertEquals(1, out.size());
+    assertEquals(getAsError(OD4ReportTool.REPORT_OPTION_NOT_SUPPORTED), out.getFirst());
+  }
+
   @Test
   public void testOD4ReportToolMissingInput() {
     String[] input = {};

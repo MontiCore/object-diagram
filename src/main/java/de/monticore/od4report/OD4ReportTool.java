@@ -61,6 +61,9 @@ public class OD4ReportTool extends OD4ReportToolTOP {
   protected static final String INPUT_FILE_NOT_EXISTENT = "0x0D022 Input file '%s' does not exist";
   
   protected static final String INPUT_OPTION_NOT_PRESENT = "0x0D027 No input file given. Use -i <FILE> to declare the tool input.";
+
+  protected static final String REPORT_OPTION_NOT_SUPPORTED =
+      "0x0D029 Option -r is not supported by the OD4Report tool.";
   
   
   /*=================================================================*/
@@ -73,6 +76,7 @@ public class OD4ReportTool extends OD4ReportToolTOP {
    * <pre>
    * <ul>
    *     <li>{@code -h}/{@code --help}: prints the help dialog and exits.</li>
+   *     <li>{@code -v}/{@code --version}: prints version information and exits.</li>
    *     <li>{@code -i}/{@code --input <file>}: sets the mandatory input OD file to parse.</li>
    *     <li>{@code -symtypes}/{@code --symboltypes <sym> <deser> ...}: registers custom symbol
    *         deserializers for foreign-language symbols.</li>
@@ -83,6 +87,8 @@ public class OD4ReportTool extends OD4ReportToolTOP {
    *         optional file.</li>
    *     <li>{@code -s}/{@code --symboltable [file]}: writes the symbol table to the optional file
    *         or to the default location.</li>
+   *     <li>{@code --stacktrace}: prints stack traces for errors.</li>
+   *     <li>{@code -r}/{@code --report}: generated standard option, not supported by this tool.</li>
    * </ul>
    * </pre>
    *
@@ -90,6 +96,11 @@ public class OD4ReportTool extends OD4ReportToolTOP {
    */
   @Override
   public void doRun(CommandLine cmd) {
+    if (cmd.hasOption("r")) {
+      Log.error(REPORT_OPTION_NOT_SUPPORTED);
+      return;
+    }
+
     // if -i input is missing: also print help and stop
     if (!cmd.hasOption("i")) {
       Log.error(INPUT_OPTION_NOT_PRESENT);
@@ -254,14 +265,23 @@ public class OD4ReportTool extends OD4ReportToolTOP {
    */
   @Override
   public Options addStandardOptions(Options options) {
-    // help dialog
-    options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").get());
+    super.addStandardOptions(options);
     
-    // parse input file
-    options.addOption(Option.builder("i").longOpt("input").argName("file").hasArg()
-        .desc("Reads the source file (mandatory) and parses the contents as an object diagram")
-        .get());
+    // print OD symtab: replaces the generated option, as the file is optional here
+    options.addOption(
+        Option.builder("s").longOpt("symboltable").argName("file").optionalArg(true).numberOfArgs(1)
+            .desc("Stores the symbol table of the OD. The default value is `{ODName}.odsym`.")
+            .get());
     
+    // reports: generated standard option, rejected in doRun
+    options.addOption(Option.builder("r").longOpt("report").argName("dir").hasArg()
+        .desc("Not supported by this tool").get());
+    
+    return options;
+  }
+  
+  @Override
+  public Options addAdditionalOptions(Options options) {
     // Read file to add symboltypes to global scope
     options.addOption(
         Option.builder("symtypes").longOpt("symboltypes").argName("string").optionalArg(true)
@@ -269,25 +289,6 @@ public class OD4ReportTool extends OD4ReportToolTOP {
                 "Symbol type followed by deser (repeat for multiple) to be able to resolve smbols from foreign languages.")
             .get());
     
-    // model paths
-    options.addOption(Option.builder("path").argName("dirlist").hasArgs()
-        .desc("Sets the artifact path for imported symbols").get());
-    
-    // pretty print OD
-    options.addOption(Option.builder("pp").longOpt("prettyprint").argName("file").optionalArg(true)
-        .numberOfArgs(1).desc("Prints the OD-AST to stdout or the specified file (optional)")
-        .get());
-    
-    // print OD symtab
-    options.addOption(
-        Option.builder("s").longOpt("symboltable").argName("file").optionalArg(true).numberOfArgs(1)
-            .desc("Stores the symbol table of the OD. The default value is `{ODName}.odsym`.")
-            .get());
-    return options;
-  }
-  
-  @Override
-  public Options addAdditionalOptions(Options options) {
     // check cocos
     options.addOption(Option.builder("c").longOpt("coco").optionalArg(true).numberOfArgs(1).desc(
         """

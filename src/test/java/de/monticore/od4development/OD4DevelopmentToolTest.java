@@ -31,10 +31,36 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     String[] help = { "-h" };
     List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(help);
     
-    assertEquals(21, out.size());
+    assertEquals(29, out.size());
     assertContains(out.getFirst(), "usage:  OD4DevelopmentTool [-c <arg>] [-h] [-i <file>]");
   }
   
+  @Test
+  public void testOD4DevelopmentToolVersion() {
+    List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess("-v");
+
+    assertEquals(1, out.size());
+    assertContains(out.getFirst(), "based on MontiCore version");
+  }
+
+  @Test
+  public void testOD4DevelopmentToolStacktrace() {
+    List<String> out =
+        OD4DevelopmentTestUtil.runToolInSeparateProcess("-i", INPUT_OD.toString(), "--stacktrace");
+
+    assertEquals(1, out.size());
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+  }
+
+  @Test
+  public void testOD4DevelopmentToolReportNotSupported() {
+    List<String> out =
+        OD4DevelopmentTestUtil.runToolInSeparateProcess("-i", INPUT_OD.toString(), "-r", "reports");
+
+    assertEquals(1, out.size());
+    assertEquals(getAsError(OD4DevelopmentTool.REPORT_OPTION_NOT_SUPPORTED), out.getFirst());
+  }
+
   @Test
   public void testOD4DevelopmentToolMissingInput() {
     String[] input = {};

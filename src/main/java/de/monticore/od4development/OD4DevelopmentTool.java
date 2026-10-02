@@ -60,13 +60,16 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
   protected static final String COCO_OPTION_TOO_MANY_ARGS =
       "0x0D019 Option -c accepts at most one argument: intra or inter.";
   protected static final String PARSE_EXCEPTION_MSG = "0x0D021 Could not process parameters: %s";
-  
+  protected static final String REPORT_OPTION_NOT_SUPPORTED =
+      "0x0D028 Option -r is not supported by the OD4Development tool.";
+
   /**
    * Processes CLI arguments and executes parsing, symbol table creation, CoCo checks,
    * pretty printing, symbol export and optional OD-to-CD generation.
    * <pre>
    * <ul>
    *     <li>{@code -h}/{@code --help}: prints the help dialog and exits.</li>
+   *     <li>{@code -v}/{@code --version}: prints version information and exits.</li>
    *     <li>{@code -i}/{@code --input <file>}: sets the mandatory input OD file to parse.</li>
    *     <li>{@code -path <dirlist>}: sets one or more symbol path entries for imported symbols.</li>
    *     <li>{@code -pp}/{@code --prettyprint [file]}: pretty prints the AST to stdout or the optional file.</li>
@@ -74,12 +77,18 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
    *     <li>{@code -c}/{@code --coco [intra|inter]}: runs all CoCos by default, or only intra/inter CoCos when specified.</li>
    *     <li>{@code -o}/{@code --output <dir>}: generates a class diagram into the given output directory.</li>
    *     <li>{@code --stacktrace}: prints stack traces for errors.</li>
+   *     <li>{@code -r}/{@code --report}: generated standard option, not supported by this tool.</li>
    * </ul>
    * </pre>
    *
    * @param cmd command line
    */
   public void doRun(CommandLine cmd) {
+    if (cmd.hasOption("r")) {
+      Log.error(REPORT_OPTION_NOT_SUPPORTED);
+      return;
+    }
+
     // if -i input is missing: stop
     if (!cmd.hasOption("i")) {
       Log.error(INPUT_OPTION_NOT_PRESENT);
@@ -327,29 +336,17 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
    */
   @Override
   public Options addStandardOptions(Options options) {
-    // help dialog
-    options.addOption(Option.builder("h").longOpt("help").desc("Prints this help dialog").get());
+    super.addStandardOptions(options);
     
-    // parse input file
-    options.addOption(Option.builder("i").longOpt("input").argName("file").hasArg()
-        .desc("Reads the source file (mandatory) and parses the contents as an " + "object diagram")
-        .get());
-    
-    // model paths
-    options.addOption(
-        Option.builder("path").argName("dirlist").numberOfArgs(Option.UNLIMITED_VALUES).hasArg()
-            .desc("Sets the artifact path for imported symbols").get());
-    
-    // pretty print OD
-    options.addOption(Option.builder("pp").longOpt("prettyprint").argName("file").optionalArg(true)
-        .numberOfArgs(1).desc("Prints the OD-AST to stdout or the specified file (optional)")
-        .get());
-    
-    // print OD symtab
+    // print OD symtab: replaces the generated option, as the file is optional here
     options.addOption(
         Option.builder("s").longOpt("symboltable").argName("file").optionalArg(true).numberOfArgs(1)
             .desc("Stores the symbol table of the OD. The default value is `{ODName}.odsym`.")
             .get());
+    
+    // reports: generated standard option, rejected in doRun
+    options.addOption(Option.builder("r").longOpt("report").argName("dir").hasArg()
+        .desc("Not supported by this tool").get());
     
     return options;
   }
