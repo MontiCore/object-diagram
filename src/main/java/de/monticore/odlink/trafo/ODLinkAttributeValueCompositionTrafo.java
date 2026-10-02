@@ -34,7 +34,7 @@ public class ODLinkAttributeValueCompositionTrafo implements ODBasisVisitor2, OD
             ASTODLink link = createComposition(node.getName(), namedObject.getName(), attribute.getName());
             compositionsToCreate.add(link);
           }
-          case ASTODAnonymousObject anonymousObject -> Log.warn("0x0D021: Could not extract composed object because its anonymous!",
+          case ASTODAnonymousObject anonymousObject -> Log.warn("0x0D032: Could not extract composed object because its anonymous!",
               value.get_SourcePositionStart());
           case ASTODName odName -> {
             ASTODLink link = createAssociation(node.getName(), odName.getName(), attribute.getName());

@@ -16,11 +16,14 @@ import de.monticore.odlink._cocos.link.LinkEndConsistencyCoCo;
 import de.monticore.odlink._cocos.link.ValidLinkReferenceCoCo;
 import de.monticore.runtime.junit.MCAssertions;
 import de.monticore.runtime.junit.TestWithMCLanguage;
+import de.se_rwth.commons.logging.Log;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestWithMCLanguage(OD4DevelopmentMill.class)
 public class OD4DevelopmentCoCoCheckerTest extends ODOutTestBasis {
@@ -81,9 +84,21 @@ public class OD4DevelopmentCoCoCheckerTest extends ODOutTestBasis {
     
     odCoCoChecker.addCoCo(new PartialAndCompleteAttributesCoCo());
     odCoCoChecker.checkAll(artifact);
-    MCAssertions.assertHasFindingStartingWith("0x0D004");
-    MCAssertions.assertHasFindingStartingWith("0x0D004");
-    MCAssertions.assertHasFindingStartingWith("0x0D004");
+    // bar2 and bar3 mix partial and complete, bar4 is reported by UniqueAttributeNamesCoCo
+    assertEquals(2, MCAssertions.assertHasFindingsStartingWith("0x0D004").size());
+  }
+
+  @Test
+  public void checkTwoCompleteAttributesAreReportedOnlyOnce() {
+    String testOD = cocoExamples.resolve("PartialAndCompleteAttributes.od").toString();
+    ASTODArtifact artifact = OD4DevelopmentTestUtil.loadModelAndST(testOD, new MCPath(PATH));
+
+    odCoCoChecker.addCoCo(new PartialAndCompleteAttributesCoCo());
+    odCoCoChecker.addCoCo(new UniqueAttributeNamesCoCo());
+    odCoCoChecker.checkAll(artifact);
+    assertEquals(2, MCAssertions.assertHasFindingsStartingWith("0x0D004").size());
+    assertEquals(1, MCAssertions.assertHasFindingsStartingWith("0x0D003").size());
+    assertEquals(3, Log.getFindings().size());
   }
 
   @Test

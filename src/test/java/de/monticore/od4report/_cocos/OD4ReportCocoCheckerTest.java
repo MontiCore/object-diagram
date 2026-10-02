@@ -11,6 +11,7 @@ import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.od4report._symboltable.IOD4ReportGlobalScope;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.odbasis._cocos.object.ValidObjectTypeCoCo;
+import de.monticore.odbasis._symboltable.ODBasisSymbolTableCompleter;
 import de.monticore.runtime.junit.MCAssertions;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.monticore.symbols.basicsymbols._symboltable.TypeSymbol;
@@ -57,7 +58,7 @@ public class OD4ReportCocoCheckerTest extends ODTestBasis {
     
     MCAssertions.assertHasFindingStartingWith("0xA0324 Cannot find symbol Jaguar");
     MCAssertions.assertHasFindingStartingWith(
-        "0x0D013: The type of the return type (ASTMCQualifiedType) could not be calculated");
+        ODBasisSymbolTableCompleter.ERROR_TYPE_NOT_CALCULATED.formatted("ASTMCQualifiedType"));
     MCAssertions.assertHasFindingStartingWith("0xB0035: Type 'Jaguar' is used but not defined.");
   }
   

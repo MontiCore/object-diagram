@@ -49,18 +49,31 @@ class LinkEndConsistencyCoCoTest extends ODOutTestBasis {
   }
 
   /**
-   * Tests that the CoCo reports error code {@code 0x0D008} when one reference on the right side
-   * of a named link cannot be resolved in the enclosing scope.
+   * Tests that the CoCo ignores references that cannot be resolved in the enclosing scope, as
+   * they are reported by {@link ValidLinkReferenceCoCo}.
    */
   @Test
-  void shouldReportUnresolvedReferenceOnRightSide() {
+  void shouldIgnoreUnresolvedReferenceOnRightSide() {
     ASTODArtifact artifact = loadArtifact("UnresolvedRightLinkEndConsistency.od");
 
     odCoCoChecker.checkAll(artifact);
 
-    MCAssertions.assertHasFindingStartingWith("0x0D008");
-    assertEquals(LinkEndConsistencyCoCo.ERROR_UNRESOLVED_REFERENCE.formatted("right side", "missingObject"), Log.getFindings().getFirst().getMsg());
+    MCAssertions.assertNoFindings();
+  }
+
+  /**
+   * Tests that an unresolved reference is reported only once if both link CoCos are checked.
+   */
+  @Test
+  void shouldReportUnresolvedReferenceOnceTogetherWithValidLinkReferenceCoCo() {
+    ASTODArtifact artifact = loadArtifact("UnresolvedRightLinkEndConsistency.od");
+    odCoCoChecker.addCoCo(new ValidLinkReferenceCoCo());
+
+    odCoCoChecker.checkAll(artifact);
+
     assertEquals(1, Log.getFindings().size());
+    MCAssertions.assertHasFindingStartingWith(
+        ValidLinkReferenceCoCo.ERROR_RIGHT_REFERENCE_UNRESOLVED.formatted("missingObject"));
   }
 
   /**

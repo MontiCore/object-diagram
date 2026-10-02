@@ -14,16 +14,14 @@ import java.util.Optional;
 /**
  * Checks that both sides of a named link are internally type-consistent.
  * <p>
- * For each side, all referenced variables must be resolvable in the enclosing scope and all
- * resolved variables on that side must have the same {@link SymTypeExpression}.
+ * For each side, all resolved variables on that side must have the same
+ * {@link SymTypeExpression}. References that cannot be resolved are skipped, as they are reported
+ * by {@link ValidLinkReferenceCoCo}.
  * The left and right side are checked independently; this CoCo does not compare the two sides
  * with each other.
  */
 public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
-  
-  public static final String ERROR_UNRESOLVED_REFERENCE =
-      "0x0D008: The %s reference '%s' of the named link cannot be resolved in the enclosing scope.";
-  
+
   public static final String ERROR_INCONSISTENT_REFERENCE_TYPES =
       "0x0D009: All references on the %s of a named link must resolve to variables of the same type, but '%s' resolves to type '%s' and '%s' resolves to type '%s'.";
   
@@ -39,11 +37,7 @@ public class LinkEndConsistencyCoCo implements ODLinkASTODLinkCoCo {
     
     for (String referenceName : referenceNames) {
       Optional<VariableSymbol> symbol = node.getEnclosingScope().resolveVariable(referenceName);
-      if (symbol.isEmpty()) {
-        Log.error(String.format(ERROR_UNRESOLVED_REFERENCE, sideName, referenceName),
-            node.get_SourcePositionStart());
-      }
-      else {
+      if (symbol.isPresent()) {
         SymTypeExpression currentType = symbol.get().getType();
         if (firstReferenceType == null) {
           firstReferenceName = referenceName;

@@ -1,7 +1,5 @@
 // (c) https://github.com/MontiCore/monticore
 
-// (c) https://github.com/MontiCore/monticore
-
 package de.monticore.dateliterals._cocos.date;
 
 import de.monticore.dateliterals._ast.ASTDate;
@@ -17,6 +15,8 @@ import java.time.LocalDateTime;
  */
 public class DateConcistencyCoCo implements DateLiteralsASTDateCoCo {
 
+  public static final String ERROR_INCONSISTENT_DATE = "0x0D030: Invalid date: %s";
+
   @Override
   public void check(ASTDate node) {
     try {
@@ -26,7 +26,8 @@ public class DateConcistencyCoCo implements DateLiteralsASTDateCoCo {
               node.getTimePart().getMinute().getValue(), node.getTimePart().getSecond().getValue());
     }
     catch (DateTimeException e) {
-      Log.error("0x0D009: Violation of CoCo 'DateConcistencyCoCo'", node.get_SourcePositionStart());
+      Log.error(String.format(ERROR_INCONSISTENT_DATE, e.getMessage()),
+          node.get_SourcePositionStart());
     }
   }
 

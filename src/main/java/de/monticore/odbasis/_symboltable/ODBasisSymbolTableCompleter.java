@@ -14,7 +14,10 @@ import de.monticore.types3.TypeCheck3;
 import de.se_rwth.commons.logging.Log;
 
 public class ODBasisSymbolTableCompleter implements ODBasisVisitor2, ODBasisHandler {
-  
+
+  public static final String ERROR_TYPE_NOT_CALCULATED =
+      "0x0D031: The type of the return type (%s) could not be calculated";
+
   protected ODBasisTraverser traverser;
   
   protected boolean checkTypes;
@@ -44,7 +47,7 @@ public class ODBasisSymbolTableCompleter implements ODBasisVisitor2, ODBasisHand
       ASTMCObjectType objectType = node.getMCObjectType();
       final SymTypeExpression typeResult = TypeCheck3.symTypeFromAST(objectType);
       if (typeResult.isObscureType()) {
-        Log.error(String.format("0x0D013: The type of the return type (%s) could not be calculated",
+        Log.error(String.format(ERROR_TYPE_NOT_CALCULATED,
                 node.getMCObjectType().getClass().getSimpleName()),
             node.getMCObjectType().get_SourcePositionStart());
       } else {
