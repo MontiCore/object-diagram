@@ -13,11 +13,11 @@ import de.monticore.od2cd.CompositionPrinter;
 import de.monticore.od2cd.OD2CDConverter;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCos;
+import de.monticore.od4development._prettyprint.OD4DevelopmentFullPrettyPrinter;
 import de.monticore.od4development._symboltable.CDRoleSymbolDeSer;
 import de.monticore.od4development._symboltable.IOD4DevelopmentArtifactScope;
 import de.monticore.od4development._visitor.OD4DevelopmentTraverser;
 import de.monticore.odbasis._ast.ASTODArtifact;
-import de.monticore.odbasis._prettyprint.ODBasisFullPrettyPrinter;
 import de.monticore.odbasis._symboltable.ODBasisSymbolTableCompleter;
 import de.monticore.prettyprint.IndentPrinter;
 import de.monticore.symbols.basicsymbols.BasicSymbolsMill;
@@ -216,7 +216,7 @@ public class OD4DevelopmentTool extends OD4DevelopmentToolTOP {
    */
   @Override
   public void prettyPrint(ASTODArtifact ast, String file) {
-    ODBasisFullPrettyPrinter printer = new ODBasisFullPrettyPrinter(new IndentPrinter());
+    OD4DevelopmentFullPrettyPrinter printer = new OD4DevelopmentFullPrettyPrinter(new IndentPrinter());
     String result = printer.prettyprint(ast);
     print(result, file);
   }
