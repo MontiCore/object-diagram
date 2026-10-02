@@ -16,6 +16,8 @@ import de.se_rwth.commons.logging.Log;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.syntax.SyntaxChecker;
+import net.sourceforge.plantuml.syntax.SyntaxResult;
 import org.apache.commons.cli.*;
 import org.apache.commons.cli.help.HelpFormatter;
 import org.apache.commons.io.FilenameUtils;
@@ -42,6 +44,7 @@ public class ODPlantUMLTool {
   public static final String ERROR_UNSUPPORTED_FORMAT =
       "0x0D012: Unsupported output format '%s' for -pp.";
   public static final String ERROR_GENERATE_IMAGE = "0x0D010: Error generating diagram image: %s";
+  public static final String ERROR_INVALID_PLANTUML = "0x0D033: Generated PlantUML is invalid: %s";
   public static final String SUCCESS_IMAGE_GENERATED = "Diagram image generated and saved as: %s";
   
   /**
@@ -60,7 +63,6 @@ public class ODPlantUMLTool {
    * @param args command line arguments
    */
   public void run(String[] args) {
-    Log.init();
     OD4ReportMill.init();
     // needed to load imported symbols that use primitive types
     BasicSymbolsMill.initializePrimitives();
@@ -146,7 +148,7 @@ public class ODPlantUMLTool {
       }
       Log.error(PARSE_ERROR_MODEL);
     }
-    catch (NullPointerException | IOException e) {
+    catch (IOException e) {
       Log.error(String.format(PARSE_ERROR_IO, model), e);
     }
     return Optional.empty();
@@ -243,11 +245,21 @@ public class ODPlantUMLTool {
    * @param fileFormat target image format (e.g. PNG)
    */
   public void generateImage(String plantUMLSource, String destinationPath, FileFormat fileFormat) {
+    // PlantUML renders an image showing the error for invalid sources, which must not be saved
+    SyntaxResult syntax = SyntaxChecker.checkSyntax(plantUMLSource);
+    if (syntax.isError()) {
+      Log.error(String.format(ERROR_INVALID_PLANTUML, String.join(", ", syntax.getErrors())));
+      return;
+    }
+
     try {
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       SourceStringReader reader = new SourceStringReader(plantUMLSource);
-      reader.outputImage(outputStream, new FileFormatOption(fileFormat));
-      
+      if (reader.outputImage(outputStream, new FileFormatOption(fileFormat)) == null) {
+        Log.error(String.format(ERROR_GENERATE_IMAGE, "no diagram found"));
+        return;
+      }
+
       try (
           FileOutputStream fileOutputStream = new FileOutputStream(
               destinationPath + fileFormat.getFileSuffix())) {
@@ -279,6 +291,8 @@ public class ODPlantUMLTool {
    * @param args command line arguments
    */
   public static void main(String[] args) {
+    // initialized here, not in run, to keep a log configured by callers of run
+    Log.init();
     try {
       ODPlantUMLTool tool = new ODPlantUMLTool();
       tool.run(args);

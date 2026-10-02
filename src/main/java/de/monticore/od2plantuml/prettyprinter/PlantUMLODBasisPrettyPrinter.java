@@ -17,7 +17,8 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
   
   private final IndentPrinter printer;
   private ODBasisTraverser traverser;
-  private final Map<ASTODAnonymousObject, UUID> anonymousObjectsNameCache = new LinkedHashMap<>();
+  /** Deterministic aliases for anonymous objects that were not named by a trafo. */
+  private final Map<ASTODAnonymousObject, String> anonymousObjectsNameCache = new LinkedHashMap<>();
   
   public PlantUMLODBasisPrettyPrinter(IndentPrinter printer) {
     this.printer = printer;
@@ -64,8 +65,8 @@ public class PlantUMLODBasisPrettyPrinter implements ODBasisVisitor2, ODBasisHan
   public void visit(ASTODAnonymousObject node) {
     var typesPrinter = new MCBasicTypesFullPrettyPrinter(new IndentPrinter());
     var printedType = typesPrinter.prettyprint(node.getMCObjectType());
-    this.anonymousObjectsNameCache.putIfAbsent(node, UUID.randomUUID());
-    String nodeName = this.anonymousObjectsNameCache.get(node).toString();
+    String nodeName = this.anonymousObjectsNameCache.computeIfAbsent(node,
+        n -> "__anonymous_" + (anonymousObjectsNameCache.size() + 1));
     printer.println(
         String.format("object \"__:%2$s__\" as %1$s {", nodeName, printedType));
   }
