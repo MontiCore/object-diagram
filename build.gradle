@@ -79,14 +79,6 @@ test {
     showStackTraces = true
     showStandardStreams = true
   }
-
-  // listen to standard out and standard error of the test JVM(s)
-  addTestOutputListener(new TestOutputListener() {
-    @Override
-    void onOutput(TestDescriptor testDescriptor, TestOutputEvent outputEvent) {
-      logger.lifecycle("Test: " + testDescriptor.getName() + " produced standard out/err: " + outputEvent.getMessage())
-    }
-  })
   finalizedBy jacocoTestReport
 }
 
@@ -137,7 +129,7 @@ tasks.register('buildOD4DevelopmentTool', ShadowJar) {
 jar.dependsOn(buildOD4DevelopmentTool)
 
 tasks.register('testReport', TestReport) {
-  destinationDirectory = file("${layout.buildDirectory}/reports/allTests")
+  destinationDirectory = layout.buildDirectory.dir("reports/allTests")
   // Include the results from the 'test' task
   getTestResults().from(tasks.withType(Test))
 }
@@ -181,10 +173,13 @@ dependencies {
   MLC("de.monticore.lang:mlc-gradle:$mlc_version")
 }
 
-def modelPath = [];
-configurations.compileClasspath.resolve().each { modelPath.addAll(["-mp", it.toString()]) }
-configurations.grammarSymbolDependencies.resolve().each { modelPath.addAll(["-mp", it.toString()]) }
-modelPath.addAll(["-mp", "$projectDir/target/symbols"])
+// the model path is resolved when an MLC task is executed, not for every build
+def mlcModelPath = { ->
+  (configurations.compileClasspath.files + configurations.grammarSymbolDependencies.files
+      + layout.buildDirectory.dir("symbols").get().asFile)
+      .collectMany { ["-mp", it.toString()] }
+}
+def mlcReportsDir = layout.buildDirectory.dir("reports").get().asFile.path
 
 // two tasks per MLC file
 // each task needs to depend on all internally promoted MLCs
@@ -196,8 +191,8 @@ fileTree("src").matching { include '**/*.mlc' }.each {
     classpath = configurations.MLC
     group = 'MLC'
     mainClass = 'de.monticore.mlc.MLCTool'
-    args = [ "-input", f, "-projectDir", projectDir, "-s", "-reports", "${layout.buildDirectory}/reports", "-a", "-noFQ"]
-    args += modelPath
+    args = [ "-input", f, "-projectDir", projectDir, "-s", "-reports", mlcReportsDir, "-a", "-noFQ"]
+    argumentProviders.add({ mlcModelPath() } as CommandLineArgumentProvider)
     dependsOn("generateMCGrammars")
   }
   showArtifacts.dependsOn("showArtifacts${mlcName}")
@@ -206,8 +201,8 @@ fileTree("src").matching { include '**/*.mlc' }.each {
     classpath = configurations.MLC
     group = 'MLC'
     mainClass = 'de.monticore.mlc.MLCTool'
-    args = ["-input", f, "-projectDir", projectDir, "-s", "-check", "-reports", "${layout.buildDirectory}/reports"]
-    args += modelPath
+    args = ["-input", f, "-projectDir", projectDir, "-s", "-check", "-reports", mlcReportsDir]
+    argumentProviders.add({ mlcModelPath() } as CommandLineArgumentProvider)
     dependsOn("generateMCGrammars")
   }
   checkArtifacts.dependsOn("checkArtifacts${mlcName}")
