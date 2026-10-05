@@ -90,10 +90,6 @@ test {
   finalizedBy jacocoTestReport
 }
 
-shadowJar {
-  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
 // build sources jar in addition
 tasks.register('sourcesJar', Jar) {
   from(sourceSets.main.allJava)
@@ -103,7 +99,7 @@ tasks.register('sourcesJar', Jar) {
 sourcesJar.dependsOn project.collect { it.tasks.withType(MCGenTask) }
 
 tasks.withType(ShadowJar).configureEach {
-  duplicatesStrategy = DuplicatesStrategy.INCLUDE
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   // signature files of signed dependencies are invalid for the merged jar
   exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.EC'
 }
@@ -181,7 +177,7 @@ tasks.register('showArtifacts') { group = "MLC" }
 tasks.register('checkArtifacts') {group = "MLC" }
 configurations { MLC }
 dependencies {
-  MLC("de.monticore.lang:mlc-gradle:$version")
+  MLC("de.monticore.lang:mlc-gradle:$mlc_version")
 }
 
 def modelPath = [];
