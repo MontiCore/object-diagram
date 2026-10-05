@@ -14,9 +14,12 @@ import de.monticore.odattribute._ast.ASTODMap;
 import de.monticore.odbasis._ast.*;
 import de.monticore.odlink._ast.ASTODLeftToRightDir;
 import de.monticore.odlink._ast.ASTODLink;
+import de.monticore.odlink.trafo.ODLinkAttributeValueCompositionTrafo;
+import de.monticore.runtime.junit.MCAssertions;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,6 +63,28 @@ public class OD4DevelopmentAttributeValueCompositionTrafoTest extends ODTestBasi
     assertLinkCompositionConfig(blaaLink, "bar", "blaa", "foobar2");
   }
   
+  /** No links can be created for values of anonymous objects, as they cannot be referenced. */
+  @Test
+  void testAttributeCompositionTrafoWithAnonymousParent() throws IOException {
+    ASTODArtifact artifact = OD4DevelopmentMill.parser().parse_StringODArtifact(
+        "objectdiagram T { :A { b = c:B {}; l = [d:B {}]; m = [1 -> e:B {}]; r = foo; }; }")
+        .orElseThrow();
+    ASTObjectDiagram diagram = artifact.getObjectDiagram();
+
+    new OD4DevelopmentAttributeValueCompositionTrafo().transform(artifact);
+
+    assertEquals(4, MCAssertions.assertHasFindingsStartingWith(
+        ODLinkAttributeValueCompositionTrafo.WARN_ANONYMOUS_PARENT).size());
+    assertEquals(1, diagram.getODElementList().size());
+    ASTODAnonymousObject parent = assertInstanceOf(ASTODAnonymousObject.class,
+        diagram.getODElement(0));
+    assertEquals(4, parent.getODAttributeList().size());
+    assertEquals(1, assertInstanceOf(ASTODList.class,
+        parent.getODAttribute(1).getODValue()).sizeODValues());
+    assertEquals(1, assertInstanceOf(ASTODMap.class,
+        parent.getODAttribute(2).getODValue()).sizeODMapElements());
+  }
+
   @Test
   void testAttributeCompositionTrafoInList() {
     String testOD = TRAFO_EXAMPLES.resolve("AttributeObjectComposition2.od").toString();

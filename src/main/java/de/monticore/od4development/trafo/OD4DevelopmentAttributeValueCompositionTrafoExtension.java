@@ -28,7 +28,7 @@ public class OD4DevelopmentAttributeValueCompositionTrafoExtension
         if (attribute.getODValue() instanceof ASTODList list) {
           List<ASTODValue> valueToRemove = new ArrayList<>();
           for (ASTODValue value : list.getODValueList()) {
-            if (value instanceof ASTODNamedObject namedObject) {
+            if (value instanceof ASTODNamedObject namedObject && !isAnonymousParent(node, value)) {
               valueToRemove.add(value);
               objectsToMove.add(namedObject);
               
@@ -45,7 +45,8 @@ public class OD4DevelopmentAttributeValueCompositionTrafoExtension
         else if (attribute.getODValue() instanceof ASTODMap map) {
           List<ASTODMapElement> mapElementsToRemove = new ArrayList<>();
           for (ASTODMapElement mapElement : map.getODMapElementList()) {
-            if (mapElement.getVal() instanceof ASTODNamedObject namedObject) {
+            if (mapElement.getVal() instanceof ASTODNamedObject namedObject
+                && !isAnonymousParent(node, mapElement.getVal())) {
               mapElementsToRemove.add(mapElement);
               objectsToMove.add(namedObject);
               
