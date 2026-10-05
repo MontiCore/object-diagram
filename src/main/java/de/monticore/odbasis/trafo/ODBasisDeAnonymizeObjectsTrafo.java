@@ -78,6 +78,7 @@ public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
     builder.setMCObjectType(object.getMCObjectType());
     builder.set_SourcePositionStart(object.get_SourcePositionStart());
     builder.set_SourcePositionEnd(object.get_SourcePositionEnd());
+    builder.set_PreCommentList(object.get_PreCommentList());
     builder.set_PostCommentList(object.get_PostCommentList());
     
     ASTODNamedObject namedObject = builder.build();
