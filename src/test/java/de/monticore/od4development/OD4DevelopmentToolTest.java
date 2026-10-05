@@ -241,30 +241,22 @@ public class OD4DevelopmentToolTest extends ODTestBasis {
     assertEquals(getAsInfo(OD4DevelopmentTool.STEXPORT_SUCCESSFUL, symTab.getAbsolutePath()), out.get(1));
   }
 
+  /** The symbol table is stored next to an input file that is given without a directory. */
   @Test
   public void testStoreSymtabFileWithoutParentPath() {
-    Path tempDir = getTmpFilePath("relative-input");
-    assertDoesNotThrow(() -> Files.createDirectories(tempDir));
+    Path workingDir = getTmpFilePath("relative-input");
+    assertDoesNotThrow(() -> Files.createDirectories(workingDir));
+    assertDoesNotThrow(() -> Files.copy(INPUT_OD, workingDir.resolve("Example.od")));
 
-    Path relativeInput = tempDir.resolve("Example.od");
-    assertDoesNotThrow(() -> FileUtils.copyFile(INPUT_OD.toFile(), relativeInput.toFile()));
+    List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(workingDir, "-i",
+        "Example.od", "-path", INPUT_PATH_DIR.toAbsolutePath().toString(), "-s");
 
-    String previousUserDir = System.getProperty("user.dir");
-    try {
-      System.setProperty("user.dir", tempDir.toString());
-      String[] args = new String[] { "-i", relativeInput.toString(), "-path", INPUT_PATH_DIR.toString(), "-s" };
-      List<String> out = OD4DevelopmentTestUtil.runToolInSeparateProcess(args);
-
-      assertEquals(2, out.size());
-      assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
-      assertEquals(getAsInfo(OD4DevelopmentTool.STEXPORT_SUCCESSFUL, relativeInput.getParent().resolve("Example.odsym").toFile().getAbsolutePath()), out.get(1));
-    }
-    finally {
-      System.setProperty("user.dir", previousUserDir);
-    }
-
-    File symTab = tempDir.resolve("Example.odsym").toFile();
-    assertTrue(symTab.exists() && symTab.isFile());
+    Path symTab = workingDir.resolve("Example.odsym");
+    assertEquals(2, out.size(), String.join("\n", out));
+    assertEquals(getAsInfo(OD4DevelopmentTool.PARSE_SUCCESSFUL, "Examples"), out.getFirst());
+    assertEquals(getAsInfo(OD4DevelopmentTool.STEXPORT_SUCCESSFUL,
+        symTab.toAbsolutePath().toString()), out.get(1));
+    assertTrue(Files.isRegularFile(symTab));
   }
 
   protected String getAsInfo(String base, String... data) {
