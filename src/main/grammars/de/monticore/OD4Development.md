@@ -281,7 +281,7 @@ the [DateLiterals](../../../grammars/de/monticore/DateLiterals.mc4) grammar are
 located [here](../../../java/de/monticore/dateliterals/_cocos).
 
 * The context
-  condition [```DateConcistencyCoCo```](../../../java/de/monticore/dateliterals/_cocos/date/DateConcistencyCoCo.java)
+  condition [```DateConsistencyCoCo```](../../../java/de/monticore/dateliterals/_cocos/date/DateConsistencyCoCo.java)
   checks if a date is consistent in termns of day of year as well as time of day.
 
 ## Symbol Table

@@ -9,7 +9,7 @@ import de.monticore.odbasis._cocos.attributes.ValidObjectAttributesCoCo;
 import de.monticore.odbasis._cocos.names.UniqueObjectNamesCoCo;
 import de.monticore.odbasis._cocos.object.ValidObjectTypeCoCo;
 
-public class ODBasicsCoCos {
+public class ODBasisCoCos {
 
   public ODBasisCoCoChecker getCheckerForAllIntraCoCos() {
     final ODBasisCoCoChecker checker = new ODBasisCoCoChecker();
@@ -29,9 +29,7 @@ public class ODBasicsCoCos {
   public ODBasisCoCoChecker getCheckerForAllCoCos() {
     final ODBasisCoCoChecker checker = new ODBasisCoCoChecker();
     checker.addChecker(this.getCheckerForAllIntraCoCos());
-
-    // types
-    checker.addCoCo(new ValidObjectTypeCoCo());
+    checker.addChecker(this.getCheckerForAllInterCoCos());
 
     return checker;
   }

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * Check if the ODDate is a consistent Date. Consistency is checked using {@link LocalDate}.
  */
-public class DateConcistencyCoCo implements DateLiteralsASTDateCoCo {
+public class DateConsistencyCoCo implements DateLiteralsASTDateCoCo {
 
   public static final String ERROR_INCONSISTENT_DATE = "0x0D030: Invalid date: %s";
 
