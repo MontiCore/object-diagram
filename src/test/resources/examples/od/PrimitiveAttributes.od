@@ -1,0 +1,14 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.od;
+
+import examples.cd.SimpleOD.*;
+
+objectdiagram PrimitiveAttributes {
+
+  o:ObjectType2 {
+    int foobar3 = 1;
+    String foobar4 = "x";
+  };
+
+}
