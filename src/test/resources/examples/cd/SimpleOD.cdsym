@@ -144,6 +144,16 @@
               "kind": "de.monticore.types.check.SymTypeOfObject",
               "objName": "java.lang.String"
             }
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "myDate",
+            "fullName": "examples.cd.SimpleOD.ObjectType2.myDate",
+            "packageName": "examples.cd.SimpleOD",
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "java.lang.String"
+            }
           }
         ]
       }

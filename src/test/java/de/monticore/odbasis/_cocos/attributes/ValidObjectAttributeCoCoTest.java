@@ -7,6 +7,7 @@ import de.monticore.od4development.OD4DevelopmentMill;
 import de.monticore.od4development.OD4DevelopmentTestUtil;
 import de.monticore.od4development._cocos.OD4DevelopmentCoCoChecker;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.odbasis._cocos.ODBasisCoCos;
 import de.monticore.runtime.junit.MCAssertions;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 import de.se_rwth.commons.logging.Log;
@@ -63,8 +64,20 @@ class ValidObjectAttributeCoCoTest extends ODOutTestBasis {
     assertEquals(1, Log.getFindings().size());
     MCAssertions.assertHasFindingStartingWith("0x0D006");
     assertEquals(
-        ValidObjectAttributesCoCo.ERROR_ATTRIBUTE_NOT_DEFINED.formatted("undefinedField", "foo"),
+        ValidObjectAttributesCoCo.ERROR_ATTRIBUTE_NOT_DEFINED.formatted("undefinedField", "ObjectType"),
         Log.getFindings().getFirst().getMsg());
+  }
+
+  /** The CoCo is an inter-model CoCo and must be part of the checker for all CoCos. */
+  @Test
+  void shouldBeCheckedByCheckerForAllCoCos() {
+    ASTODArtifact artifact = loadArtifact("InvalidObjectAttributes.od");
+    OD4DevelopmentTestUtil.completeSymbolTable(artifact, true);
+
+    new ODBasisCoCos().getCheckerForAllCoCos().checkAll(artifact);
+
+    MCAssertions.assertHasFindingStartingWith(
+        ValidObjectAttributesCoCo.ERROR_ATTRIBUTE_NOT_DEFINED.formatted("undefinedField", "ObjectType"));
   }
 
   protected ASTODArtifact loadArtifact(String fileName) {
