@@ -32,7 +32,8 @@ public class ValidObjectAttributesCoCo implements ODBasisASTODObjectCoCo {
         Optional<VariableSymbol> field =
             objectType.get().getSpannedScope().resolveVariableDown(attribute.getName());
         if (field.isEmpty()) {
-          Log.error(ERROR_ATTRIBUTE_NOT_DEFINED.formatted(attribute.getName(), node.getName()),
+          Log.error(ERROR_ATTRIBUTE_NOT_DEFINED.formatted(attribute.getName(),
+                  node.getMCObjectType().printType()),
               attribute.get_SourcePositionStart());
         }
       }
