@@ -65,11 +65,15 @@ public class OD4ReportDeSerTest extends ODTestBasis {
     assertNotEquals("", serialized);
     
     // check for contents
-    assertContains(serialized, "\"name\":\"MyFamily\"");
-    assertContains(serialized, "\"fullName\":\"examples.od.tiger\"");
-    assertContains(serialized, "\"fullName\":\"examples.od.alice\"");
-    assertContains(serialized, "\"fullName\":\"examples.od.bob\"");
-    assertContains(serialized, "\"objName\":\"examples.cd.MyFamily.Person\"");
+    IOD4ReportArtifactScope deserialized = symbols2Json.deserialize(serialized);
+    assertEquals("MyFamily", deserialized.getName());
+    Optional<VariableSymbol> tiger = deserialized.resolveVariable("tiger");
+    assertEquals("examples.od.tiger", tiger.get().getFullName());
+    Optional<VariableSymbol> alice = deserialized.resolveVariable("alice");
+    assertEquals("examples.od.alice", alice.get().getFullName());
+    Optional<VariableSymbol> bob = deserialized.resolveVariable("bob");
+    assertEquals("examples.od.bob", bob.get().getFullName());
+    assertEquals("examples.cd.MyFamily.Person", alice.get().getType().printFullName());
   }
   
   @Test
