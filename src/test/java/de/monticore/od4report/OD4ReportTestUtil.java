@@ -69,6 +69,16 @@ public class OD4ReportTestUtil {
    * This isolates the JUnit JVM from potential System.exit(...) calls inside the tool.
    */
   public static List<String> runToolInSeparateProcess(String... args) {
+    return runToolInSeparateProcess(null, args);
+  }
+
+  /**
+   * Runs the OD tool in a separate JVM process with the given working directory and returns the
+   * merged console output.
+   *
+   * @param workingDir working directory of the process, {@code null} for the current one
+   */
+  public static List<String> runToolInSeparateProcess(Path workingDir, String... args) {
     List<String> command = new ArrayList<>();
     command.add(Paths.get(System.getProperty("java.home"), "bin", "java").toString());
     command.add("-cp");
@@ -77,7 +87,11 @@ public class OD4ReportTestUtil {
     command.addAll(List.of(args));
 
     try {
-      Process process = new ProcessBuilder(command).redirectErrorStream(true).start();
+      ProcessBuilder processBuilder = new ProcessBuilder(command).redirectErrorStream(true);
+      if (workingDir != null) {
+        processBuilder.directory(workingDir.toFile());
+      }
+      Process process = processBuilder.start();
       List<String> outputLines;
       try (BufferedReader reader =
           new BufferedReader(new InputStreamReader(process.getInputStream(), UTF_8))) {

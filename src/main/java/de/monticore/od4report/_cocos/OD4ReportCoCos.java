@@ -21,10 +21,16 @@ public class OD4ReportCoCos {
 
   public OD4ReportCoCoChecker getCheckerForAllCoCos() {
     final OD4ReportCoCoChecker checker = new OD4ReportCoCoChecker();
-    checker.addChecker(new ODBasisCoCos().getCheckerForAllCoCos());
-    checker.addChecker(new ODLinkCoCos().getCheckerForAllCoCos());
-    checker.addCoCo(new ValidLinkQualifierCoCo());
-    checker.addChecker(new DateLiteralsCoCos().getCheckerForAllCoCos());
+    checker.addChecker(getCheckerForAllIntraCoCos());
+    checker.addChecker(getCheckerForAllInterCoCos());
+
+    return checker;
+  }
+
+  public OD4ReportCoCoChecker getCheckerForAllInterCoCos() {
+    final OD4ReportCoCoChecker checker = new OD4ReportCoCoChecker();
+    checker.addChecker(new ODBasisCoCos().getCheckerForAllInterCoCos());
+    checker.addChecker(new ODLinkCoCos().getCheckerForAllInterCoCos());
 
     return checker;
   }

@@ -37,7 +37,7 @@ public class OD4ReportTool extends OD4ReportToolTOP {
   protected static final String PARSE_SUCCESSFUL = "Successfully parsed %s";
   
   protected static final String CHECK_SUCCESSFUL =
-      "Successfully checked the CoCos for class diagram %s";
+      "Successfully checked the CoCos for object diagram %s";
   
   protected static final String CHECK_ERROR = "0x0D023 Error while processing the object diagram";
 
@@ -120,8 +120,7 @@ public class OD4ReportTool extends OD4ReportToolTOP {
         if (cmdVals.length % 2 != 0) {
           Log.warn(WARN_ODD_SYMBOLTYPES_ARGS);
         }
-        
-        BasicSymbolsMill.initializePrimitives();
+
         IOD4ReportGlobalScope gs = OD4ReportMill.globalScope();
         for (int i = 0; i < cmdVals.length - 1; i += 2) {
           switch (cmdVals[i + 1]) {
@@ -175,12 +174,12 @@ public class OD4ReportTool extends OD4ReportToolTOP {
           getClass().getName());
     }
     
-    // create symbol table
+    // create symbol table (primitives are added once, as they are not checked for duplicates)
     BasicSymbolsMill.initializePrimitives();
     IOD4ReportArtifactScope oD4ReportArtifactScope =
         OD4ReportToolAPI.createSymbolTable(astodArtifact);
     
-    boolean checkTypes = cmd.hasOption("s") || cmd.hasOption("o") || (cmd.hasOption("c") && (
+    boolean checkTypes = cmd.hasOption("s") || (cmd.hasOption("c") && (
         cmd.getOptionValue("c") == null || cmd.getOptionValue("c").equals("inter")));
     OD4ReportToolAPI.completeSymbolTable(astodArtifact, checkTypes);
     
@@ -196,7 +195,7 @@ public class OD4ReportTool extends OD4ReportToolTOP {
           OD4ReportToolAPI.runAllIntraCoCos(astodArtifact);
         }
         else if ("inter".equals(cocoArg)) {
-          OD4ReportToolAPI.runAllCoCos(astodArtifact);
+          OD4ReportToolAPI.runAllInterCoCos(astodArtifact);
         }
         else {
           Log.error(String.format(COCO_OPTION_INVALID, cocoArg));
@@ -294,7 +293,7 @@ public class OD4ReportTool extends OD4ReportToolTOP {
         """
             Checks the CoCos for the input. Optional arguments are:
             -c intra to check only the intra-model CoCos,
-            -c inter checks also inter-model CoCos.
+            -c inter to check only inter-model CoCos.
             Without an argument, all CoCos are checked.
             """.stripIndent()).get());
     return options;
@@ -312,7 +311,9 @@ public class OD4ReportTool extends OD4ReportToolTOP {
     Path targetPath;
     if (symTabPath == null || symTabPath.isBlank()) {
       String symTabName = FilenameUtils.getBaseName(modelPath.toString()) + ".odsym";
-      targetPath = modelPath.getParent().resolve(symTabName);
+      Path modelParent = modelPath.getParent();
+      // handle relative input files that do not have an explicit parent directory
+      targetPath = modelParent != null ? modelParent.resolve(symTabName) : Paths.get(symTabName);
     }
     else {
       targetPath = Paths.get(symTabPath);

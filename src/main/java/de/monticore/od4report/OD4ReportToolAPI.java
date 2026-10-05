@@ -68,4 +68,8 @@ public class OD4ReportToolAPI {
     new OD4ReportCoCos().getCheckerForAllIntraCoCos().checkAll(ast);
   }
 
+  public static void runAllInterCoCos(ASTODArtifact ast) {
+    new OD4ReportCoCos().getCheckerForAllInterCoCos().checkAll(ast);
+  }
+
 }
