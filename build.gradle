@@ -99,7 +99,8 @@ tasks.register('sourcesJar', Jar) {
 sourcesJar.dependsOn project.collect { it.tasks.withType(MCGenTask) }
 
 tasks.withType(ShadowJar).configureEach {
-  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+  // EXCLUDE must not be used: together with minimize() it produces jars without any files
+  duplicatesStrategy = DuplicatesStrategy.INCLUDE
   // signature files of signed dependencies are invalid for the merged jar
   exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.EC'
 }
