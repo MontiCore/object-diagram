@@ -9,6 +9,7 @@ import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.od4report._ast.ASTODReportObject;
 import de.monticore.od4report.util.OD4ReportCollector;
 import de.monticore.odbasis._ast.ASTODArtifact;
+import de.monticore.odbasis._ast.ASTObjectDiagram;
 import de.monticore.runtime.junit.TestWithMCLanguage;
 
 import org.junit.jupiter.api.Test;
@@ -48,6 +49,23 @@ public class OD4ReportCollectorTest extends ODTestBasis {
     assertEquals(1, reportObjects.size());
   }
   
+  /** A collector can be reused, also for different diagrams, without affecting the results. */
+  @Test
+  public void testRepeatedQueries() {
+    ASTObjectDiagram examples = OD4ReportTestUtil.loadModel(EXAMPLE_DIR.resolve("Examples.od"),
+        new MCPath(PATH)).getObjectDiagram();
+    ASTObjectDiagram simple = OD4ReportTestUtil.loadModel(EXAMPLE_DIR.resolve("SimpleOD2.od"),
+        new MCPath(PATH)).getObjectDiagram();
+    OD4ReportCollector od4ReportCollector = new OD4ReportCollector();
+
+    for (int i = 0; i < 3; i++) {
+      assertEquals(4, od4ReportCollector.getODObjects(examples).size());
+      assertEquals(5, od4ReportCollector.getODObjects(simple).size());
+      assertEquals(2, od4ReportCollector.getODLinks(examples).size());
+      assertEquals(1, od4ReportCollector.getODLinks(simple).size());
+    }
+  }
+
   @Test
   public void testAnonymousCollect() {
     Path inputOD = EXAMPLE_DIR.resolve("SimpleOD2.od");

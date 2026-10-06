@@ -16,6 +16,7 @@ classdiagram SimpleOD {
   class ObjectType2 extends ObjectType {
       int foobar3;
       String foobar4;
+      String myDate;
   }
 
   class ObjectType3 extends ObjectType {

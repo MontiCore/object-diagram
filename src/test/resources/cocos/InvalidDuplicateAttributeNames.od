@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package cocos;
+
+import examples.cd.SimpleOD.*;
+
+objectdiagram InvalidDuplicateAttributeNames {
+
+  foo:ObjectType{
+    foobar = foo;
+    foobar = bar;
+  };
+
+}
+

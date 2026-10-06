@@ -32,4 +32,13 @@ public class ODLinkCoCos {
     return checker;
   }
 
+  public ODLinkCoCoChecker getCheckerForAllInterCoCos() {
+    final ODLinkCoCoChecker checker = new ODLinkCoCoChecker();
+
+    // links
+    checker.addCoCo(new LinkEndConsistencyCoCo());
+
+    return checker;
+  }
+
 }

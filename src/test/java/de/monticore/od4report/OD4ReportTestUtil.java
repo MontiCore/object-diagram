@@ -2,6 +2,7 @@
 package de.monticore.od4report;
 
 import com.google.common.collect.Lists;
+import de.monticore.ToolProcessRunner;
 import de.monticore.io.paths.MCPath;
 
 import de.monticore.od4report._symboltable.IOD4ReportArtifactScope;
@@ -45,7 +46,9 @@ public class OD4ReportTestUtil {
   }
   
   public static IOD4ReportArtifactScope createSymbolTableFromAST(ASTODArtifact ast) {
-    IOD4ReportArtifactScope as = OD4ReportToolAPI.createSymbolTable(ast, true);
+    IOD4ReportArtifactScope as = OD4ReportToolAPI.createSymbolTable(ast);
+    
+    OD4ReportToolAPI.completeSymbolTable(ast, true);
     
     // add imports
     List<ImportStatement> imports = Lists.newArrayList();
@@ -54,5 +57,25 @@ public class OD4ReportTestUtil {
     as.setImportsList(imports);
     
     return as;
+  }
+
+  /**
+   * Runs the OD tool in a separate JVM process and returns the merged console output.
+   *
+   * @see ToolProcessRunner
+   */
+  public static List<String> runToolInSeparateProcess(String... args) {
+    return runToolInSeparateProcess(null, args);
+  }
+
+  /**
+   * Runs the OD tool in a separate JVM process with the given working directory and returns the
+   * merged console output.
+   *
+   * @param workingDir working directory of the process, {@code null} for the current one
+   * @see ToolProcessRunner
+   */
+  public static List<String> runToolInSeparateProcess(Path workingDir, String... args) {
+    return ToolProcessRunner.run(OD4ReportTool.class, workingDir, args);
   }
 }

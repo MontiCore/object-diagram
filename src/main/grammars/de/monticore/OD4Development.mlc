@@ -24,7 +24,8 @@ mlc OD4Development {
   }
 
   promote {  // allow using other languages
-    mlc "de.monticore.OD4Data";
-  }
+      mlc "de.monticore.ODLink";
+      mlc "de.monticore.ODAttribute";
+    }
 
 }

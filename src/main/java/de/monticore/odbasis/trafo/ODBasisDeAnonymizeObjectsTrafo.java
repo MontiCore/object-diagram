@@ -7,7 +7,6 @@ package de.monticore.odbasis.trafo;
 import de.monticore.odbasis.ODBasisMill;
 import de.monticore.odbasis._ast.*;
 import de.monticore.odbasis._visitor.ODBasisVisitor2;
-import de.monticore.types.mcbasictypes._ast.ASTMCObjectType;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,23 +27,24 @@ import java.util.Map;
  * </pre>
  * will be transformed to
  * <pre>
- *   __a_anonymous_0:A {
- *     foo = __b_anonymous_0:B {};
+ *   __a_anonymous_1:A {
+ *     foo = __b_anonymous_1:B {};
  *   };
  * </pre>
  */
 public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
   
-  protected Map<ASTMCObjectType, Integer> pseudoCounts = new LinkedHashMap<>();
+  /**
+   * Number of generated names per type. Keyed by the printed type, as AST
+   * nodes are compared by identity and each object has its own type node.
+   */
+  protected Map<String, Integer> pseudoCounts = new LinkedHashMap<>();
   
   @Override
   public void endVisit(ASTObjectDiagram node) {
     for (int i = 0; i < node.getODElementList().size(); i++) {
       ASTODElement element = node.getODElementList().get(i);
-      if (ODBasisMill.typeDispatcher().isODBasisASTODAnonymousObject(element)) {
-        ASTODAnonymousObject anonymousObject =
-            ODBasisMill.typeDispatcher().asODBasisASTODAnonymousObject(element);
-        
+      if (element instanceof ASTODAnonymousObject anonymousObject) {
         ASTODNamedObject namedCopy = copyToNamedObject(anonymousObject);
         node.setODElement(i, namedCopy);
       }
@@ -55,9 +55,7 @@ public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
   public void endVisit(ASTODAttribute node) {
     if (node.isPresentODValue()) {
       ASTODValue value = node.getODValue();
-      if (ODBasisMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
-        ASTODAnonymousObject anonymousObject =
-            ODBasisMill.typeDispatcher().asODBasisASTODAnonymousObject(value);
+      if (value instanceof ASTODAnonymousObject anonymousObject) {
         ASTODNamedObject namedCopy = copyToNamedObject(anonymousObject);
         node.setODValue(namedCopy);
       }
@@ -65,21 +63,11 @@ public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
   }
   
   protected String generateObjectPseudoName(ASTODObject object) {
-    ASTMCObjectType type = object.getMCObjectType();
-    String typeName = type.printType().toLowerCase().replaceAll("\\.", "_");
-    
-    pseudoCounts.putIfAbsent(type, 0);
-    int pseudoIdx = pseudoCounts.merge(type, 1, Integer::sum);
-    
-    StringBuilder sb = new StringBuilder();
-    sb.append("__");
-    sb.append(typeName);
-    sb.append("_anonymous_");
-    sb.append(pseudoIdx);
-    
-    String generatedName = sb.toString();
-    
-    return generatedName;
+    String typeName = object.getMCObjectType().printType().toLowerCase().replaceAll("\\.", "_");
+
+    int pseudoIdx = pseudoCounts.merge(typeName, 1, Integer::sum);
+
+    return "__" + typeName + "_anonymous_" + pseudoIdx;
   }
   
   protected ASTODNamedObject copyToNamedObject(ASTODAnonymousObject object) {
@@ -90,6 +78,7 @@ public class ODBasisDeAnonymizeObjectsTrafo implements ODBasisVisitor2 {
     builder.setMCObjectType(object.getMCObjectType());
     builder.set_SourcePositionStart(object.get_SourcePositionStart());
     builder.set_SourcePositionEnd(object.get_SourcePositionEnd());
+    builder.set_PreCommentList(object.get_PreCommentList());
     builder.set_PostCommentList(object.get_PostCommentList());
     
     ASTODNamedObject namedObject = builder.build();

@@ -5,11 +5,43 @@
   "symbols": [
     {
       "kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
-      "name": "A"
+      "name": "A",
+      "spannedScope": {
+        "symbols": [
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "x",
+            "type": {
+              "kind": "de.monticore.types.check.SymTypePrimitive",
+              "primitiveName": "int"
+            }
+          },
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "s",
+            "type": {
+              "kind": "de.monticore.types.check.SymTypeOfObject",
+              "objName": "java.lang.String"
+            }
+          }
+        ]
+      }
     },
     {
       "kind": "de.monticore.symbols.basicsymbols._symboltable.TypeSymbol",
-      "name": "B"
+      "name": "B",
+      "spannedScope": {
+        "symbols": [
+          {
+            "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+            "name": "b",
+            "type": {
+              "kind": "de.monticore.types.check.SymTypePrimitive",
+              "primitiveName": "boolean"
+            }
+          }
+        ]
+      }
     }
   ]
 }

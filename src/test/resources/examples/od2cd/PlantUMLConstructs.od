@@ -1,0 +1,27 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package examples.od2cd;
+
+import examples.cd.SimpleOD.*;
+
+objectdiagram PlantUMLConstructs {
+
+  a:ObjectType1 {
+    e = Color.RED;
+    q = x.y;
+    sum = 1 + 2;
+    l = [1, 2, 3];
+    m = [1 -> 2, 3 -> 4];
+    o = ...;
+  };
+
+  b:ObjectType2 {};
+
+  c:ObjectType3 {};
+
+  composition a -- (part) b;
+  aggregation a -- c;
+  link a [[key]] (src) -> (tgt) [[other]] b;
+  link a ["k"] -> c;
+
+}

@@ -4,7 +4,7 @@ object "__alice:Person__" as alice {
   age = 29 
 }
 object "__bob:Person__" as bob {
-  nicknames = "Bob""Bobby""Robert"
+  nicknames = ["Bob", "Bobby", "Robert"]
 }
 alice <--> bob : married
 object "__:BMW__" as __bmw_anonymous_1 {

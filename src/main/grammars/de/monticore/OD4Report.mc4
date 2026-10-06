@@ -23,11 +23,11 @@ package de.monticore;
        for the forms of attribute values
    * ODLink.mc4
        defining the links between objects
-  * OD4Data.mc4
+  * OD4Development.mc4
        = ODAttribute.mc4 + ODLink.mc4
 */
 
-grammar OD4Report extends de.monticore.OD4Data,
+grammar OD4Report extends de.monticore.OD4Development,
                           de.monticore.DateLiterals,
                           de.monticore.types.MCCollectionTypes {
 
