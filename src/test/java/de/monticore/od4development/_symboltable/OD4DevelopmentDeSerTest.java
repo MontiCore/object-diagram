@@ -71,11 +71,15 @@ public class OD4DevelopmentDeSerTest extends ODTestBasis {
     assertNotEquals("", serialized);
     
     // check for contents
-    assertContains(serialized, "\"name\":\"SimpleOD2\"");
-    assertContains(serialized, "\"fullName\":\"examples.od.myObject1\"");
-    assertContains(serialized, "\"fullName\":\"examples.od.fooBar2\"");
-    assertContains(serialized, "\"fullName\":\"examples.od.myObject2\"");
-    assertContains(serialized, "\"objName\":\"examples.cd.SimpleOD2.ObjectType2\"");
+    IOD4DataArtifactScope deserialized = symbols2Json.deserialize(serialized);
+    assertEquals("SimpleOD2", deserialized.getName());
+    Optional<VariableSymbol> myObject1 = deserialized.resolveVariable("myObject1");
+    assertEquals("examples.od.myObject1", myObject1.get().getFullName());
+    Optional<VariableSymbol> fooBar2 = deserialized.resolveVariable("fooBar2");
+    assertEquals("examples.od.fooBar2", fooBar2.get().getFullName());
+    Optional<VariableSymbol> myObject2 = deserialized.resolveVariable("myObject2");
+    assertEquals("examples.od.myObject2", myObject2.get().getFullName());
+    assertEquals("examples.cd.SimpleOD2.ObjectType2", myObject2.get().getType().printFullName());
   }
   
   @Test
