@@ -34,6 +34,7 @@ public class OD4DevelopmentScopesGenitor extends OD4DevelopmentScopesGenitorTOP 
     initArtifactScopeHP1(artifactScope);
     rootNode.accept(getTraverser());
     initArtifactScopeHP2(artifactScope);
+    scopeStack.remove(artifactScope);
     return artifactScope;
   }
 

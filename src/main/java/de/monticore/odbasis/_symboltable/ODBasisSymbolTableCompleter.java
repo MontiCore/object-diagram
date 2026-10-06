@@ -16,46 +16,63 @@ import de.se_rwth.commons.logging.Log;
 public class ODBasisSymbolTableCompleter implements ODBasisVisitor2, ODBasisHandler {
 
   public static final String ERROR_TYPE_NOT_CALCULATED =
-      "0x0D031: The type of the return type (%s) could not be calculated";
+      "0x0D031: The type '%s' of object '%s' could not be calculated.";
+
+  /** Name of the type used for all objects if the types are not checked. */
+  public static final String DEFAULT_OBJECT = "de.monticore.internal._DefaultObject";
 
   protected ODBasisTraverser traverser;
-  
+
   protected boolean checkTypes;
-  
-  private final SymTypeExpression defaultObjectType;
-  
-  
+
+  /** Created when it is needed for the first time, as it is not used if types are checked. */
+  private SymTypeExpression defaultObjectType;
+
+
   public ODBasisSymbolTableCompleter(boolean checkTypes) {
     this.traverser = null;
     this.checkTypes = checkTypes;
-    
-    IODBasisGlobalScope gs = ODBasisMill.globalScope();
-    TypeSymbol defaultObjectTypeSymbol = ODBasisMill.typeSymbolBuilder()
-        .setName("DefaultObject")
-        .setFullName("DefaultObject")
-        .setEnclosingScope(gs)
-        .setSpannedScope(ODBasisMill.scope())
-        .setAccessModifier(AccessModifier.ALL_INCLUSION)
-        .build();
-    gs.add(defaultObjectTypeSymbol);
-    this.defaultObjectType = SymTypeExpressionFactory.createTypeObject(defaultObjectTypeSymbol);
   }
-  
+
   @Override
   public void endVisit(ASTODNamedObject node) {
     if (checkTypes) {
       ASTMCObjectType objectType = node.getMCObjectType();
       final SymTypeExpression typeResult = TypeCheck3.symTypeFromAST(objectType);
       if (typeResult.isObscureType()) {
-        Log.error(String.format(ERROR_TYPE_NOT_CALCULATED,
-                node.getMCObjectType().getClass().getSimpleName()),
-            node.getMCObjectType().get_SourcePositionStart());
+        Log.error(String.format(ERROR_TYPE_NOT_CALCULATED, objectType.printType(), node.getName()),
+            objectType.get_SourcePositionStart());
       } else {
         node.getSymbol().setType(typeResult);
       }
     } else {
-      node.getSymbol().setType(this.defaultObjectType);
+      node.getSymbol().setType(getDefaultObjectType());
     }
+  }
+
+  /**
+   * Returns the type for all objects if the types are not checked. The type symbol is added to
+   * the global scope only once, also if several completers are used.
+   */
+  protected SymTypeExpression getDefaultObjectType() {
+    if (defaultObjectType == null) {
+      IODBasisGlobalScope gs = ODBasisMill.globalScope();
+      TypeSymbol defaultObjectTypeSymbol = gs.getTypeSymbols().get(DEFAULT_OBJECT).stream()
+          .findFirst()
+          .orElseGet(() -> {
+            TypeSymbol symbol = ODBasisMill.typeSymbolBuilder()
+                .setName(DEFAULT_OBJECT)
+                .setFullName(DEFAULT_OBJECT)
+                .setEnclosingScope(gs)
+                .setSpannedScope(ODBasisMill.scope())
+                .setAccessModifier(AccessModifier.ALL_INCLUSION)
+                .build();
+            gs.add(symbol);
+            return symbol;
+          });
+      defaultObjectType = SymTypeExpressionFactory.createTypeObject(defaultObjectTypeSymbol);
+    }
+    return defaultObjectType;
   }
   
   @Override

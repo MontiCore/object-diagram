@@ -58,7 +58,7 @@ public class OD4ReportCocoCheckerTest extends ODTestBasis {
     
     MCAssertions.assertHasFindingStartingWith("0xA0324 Cannot find symbol Jaguar");
     MCAssertions.assertHasFindingStartingWith(
-        ODBasisSymbolTableCompleter.ERROR_TYPE_NOT_CALCULATED.formatted("ASTMCQualifiedType"));
+        ODBasisSymbolTableCompleter.ERROR_TYPE_NOT_CALCULATED.formatted("Jaguar", "tiger"));
     MCAssertions.assertHasFindingStartingWith("0xB0035: Type 'Jaguar' is used but not defined.");
   }
   

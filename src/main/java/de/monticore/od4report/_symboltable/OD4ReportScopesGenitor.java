@@ -54,8 +54,12 @@ public class OD4ReportScopesGenitor extends OD4ReportScopesGenitorTOP {
         .forEach(i -> artifactScope.addImports(new ImportStatement(i.getQName(), i.isStar())));
     
     artifactScope.setName(rootNode.getObjectDiagram().getName());
+    artifactScope.setAstNode(rootNode);
     putOnStack(artifactScope);
+    initArtifactScopeHP1(artifactScope);
     rootNode.accept(getTraverser());
+    initArtifactScopeHP2(artifactScope);
+    scopeStack.remove(artifactScope);
     return artifactScope;
   }
   
