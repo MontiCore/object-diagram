@@ -8,12 +8,14 @@ import de.monticore.od4report.OD4ReportMill;
 import de.monticore.od4report.OD4ReportTestUtil;
 import de.monticore.odbasis._ast.ASTODArtifact;
 import de.monticore.runtime.junit.TestWithMCLanguage;
+import de.monticore.symbols.basicsymbols._symboltable.VariableSymbol;
 import de.se_rwth.commons.Names;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 

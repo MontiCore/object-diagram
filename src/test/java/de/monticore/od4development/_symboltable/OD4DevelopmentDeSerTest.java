@@ -71,7 +71,7 @@ public class OD4DevelopmentDeSerTest extends ODTestBasis {
     assertNotEquals("", serialized);
     
     // check for contents
-    IOD4DataArtifactScope deserialized = symbols2Json.deserialize(serialized);
+    IOD4DevelopmentArtifactScope deserialized = symbols2Json.deserialize(serialized);
     assertEquals("SimpleOD2", deserialized.getName());
     Optional<VariableSymbol> myObject1 = deserialized.resolveVariable("myObject1");
     assertEquals("examples.od.myObject1", myObject1.get().getFullName());
