@@ -16,7 +16,10 @@ import de.se_rwth.commons.logging.Log;
 import java.util.*;
 
 public class ODLinkAttributeValueCompositionTrafo implements ODBasisVisitor2, ODLinkVisitor2 {
-  
+
+  public static final String WARN_ANONYMOUS_PARENT =
+      "0x0D034: Could not extract composed object because its parent object is anonymous!";
+
   protected List<ASTODObject> objectsToMove = new ArrayList<>();
   protected List<ASTODAttribute> attributesToRemove = new ArrayList<>();
   protected List<ASTODLink> compositionsToCreate = new ArrayList<>();
@@ -26,35 +29,37 @@ public class ODLinkAttributeValueCompositionTrafo implements ODBasisVisitor2, OD
     for (ASTODAttribute attribute : node.getODAttributeList()) {
       if (attribute.isPresentODValue()) {
         ASTODValue value = attribute.getODValue();
-        if (ODLinkMill.typeDispatcher().isODBasisASTODNamedObject(value)) {
-          ASTODNamedObject namedObject =
-              ODLinkMill.typeDispatcher().asODBasisASTODNamedObject(value);
-          attributesToRemove.add(attribute);
-          objectsToMove.add(namedObject);
-          
-          ASTODLink link = createComposition(node.getName(), namedObject.getName(), attribute.getName());
-          compositionsToCreate.add(link);
-        }
-        else if (ODLinkMill.typeDispatcher().isODBasisASTODAnonymousObject(value)) {
-          Log.warn("0x0D021: Could not extract composed object because its anonymous!",
+        switch (value) {
+          case ASTODNamedObject namedObject -> {
+            if (isAnonymousParent(node, value)) {
+              break;
+            }
+            attributesToRemove.add(attribute);
+            objectsToMove.add(namedObject);
+
+            ASTODLink link = createComposition(node.getName(), namedObject.getName(), attribute.getName());
+            compositionsToCreate.add(link);
+          }
+          case ASTODAnonymousObject anonymousObject -> Log.warn("0x0D032: Could not extract composed object because its anonymous!",
               value.get_SourcePositionStart());
-        }
-        else if (ODLinkMill.typeDispatcher().isODBasisASTODName(value)) {
-          ASTODName odName = ODLinkMill.typeDispatcher().asODBasisASTODName(value);
-          ASTODLink link = createAssociation(node.getName(), odName.getName(), attribute.getName());
-          attributesToRemove.add(attribute);
-          compositionsToCreate.add(link);
-        }
-        else if (ODLinkMill.typeDispatcher().isODBasisASTODSimpleAttributeValue(value)) {
-          ASTODSimpleAttributeValue simpleValue = ODLinkMill.typeDispatcher().asODBasisASTODSimpleAttributeValue(value);
-          if (ODLinkMill.typeDispatcher().isExpressionsBasisASTNameExpression(simpleValue.getExpression())) {
-            // TODO JRa: Use Typecheck3 to check the reference of the NameExpression. Do not transform, if its an ENUM value!
-            ASTNameExpression nameExpression =
-                ODLinkMill.typeDispatcher().asExpressionsBasisASTNameExpression(simpleValue.getExpression());
-            ASTODLink link = createAssociation(node.getName(), nameExpression.getName(), attribute.getName());
+          case ASTODName odName -> {
+            if (isAnonymousParent(node, value)) {
+              break;
+            }
+            ASTODLink link = createAssociation(node.getName(), odName.getName(), attribute.getName());
             attributesToRemove.add(attribute);
             compositionsToCreate.add(link);
           }
+          case ASTODSimpleAttributeValue simpleAttributeValue -> {
+            if (simpleAttributeValue.getExpression() instanceof ASTNameExpression nameExpression
+                && !isAnonymousParent(node, value)) {
+              // TODO JRa: Use Typecheck3 to check the reference of the NameExpression. Do not transform, if its an ENUM value!
+              ASTODLink link = createAssociation(node.getName(), nameExpression.getName(), attribute.getName());
+              attributesToRemove.add(attribute);
+              compositionsToCreate.add(link);
+            }
+          }
+          default -> {} // ignore
         }
       }
     }
@@ -66,7 +71,22 @@ public class ODLinkAttributeValueCompositionTrafo implements ODBasisVisitor2, OD
     node.getObjectDiagram().addAllODElements(objectsToMove);
     node.getObjectDiagram().addAllODElements(compositionsToCreate);
     objectsToMove.clear();
+    attributesToRemove.clear();
     compositionsToCreate.clear();
+  }
+
+  /**
+   * Links require the name of the parent object, so no links can be created for values of
+   * anonymous objects. In this case, a warning is logged at the value.
+   *
+   * @return {@code true} if the parent object is anonymous and the value must be skipped
+   */
+  protected boolean isAnonymousParent(ASTODObject parent, ASTODValue value) {
+    if (parent instanceof ASTODAnonymousObject) {
+      Log.warn(WARN_ANONYMOUS_PARENT, value.get_SourcePositionStart());
+      return true;
+    }
+    return false;
   }
   
   protected ASTODLinkBuilder createLinkBase(String sourceName, String targetName, String roleName) {

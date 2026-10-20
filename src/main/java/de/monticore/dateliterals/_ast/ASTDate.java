@@ -63,7 +63,7 @@ public class ASTDate extends ASTDateTOP {
    * @return year as int value
    */
   public int getYear() {
-    return Integer.valueOf(getDatePart().getYear().getDigits()).intValue();
+    return Integer.parseInt(getDatePart().getYear().getDigits());
   }
 
   /**
@@ -72,7 +72,7 @@ public class ASTDate extends ASTDateTOP {
    * @return month as int value
    */
   public int getMonth() {
-    return Integer.valueOf(getDatePart().getMonth().getDigits()).intValue();
+    return Integer.parseInt(getDatePart().getMonth().getDigits());
   }
 
   /**
@@ -81,7 +81,7 @@ public class ASTDate extends ASTDateTOP {
    * @return day as int value
    */
   public int getDay() {
-    return Integer.valueOf(getDatePart().getDay().getDigits()).intValue();
+    return Integer.parseInt(getDatePart().getDay().getDigits());
   }
 
   /**
@@ -90,7 +90,7 @@ public class ASTDate extends ASTDateTOP {
    * @return hours as int value
    */
   public int getHour() {
-    return Integer.valueOf(getTimePart().getHour().getDigits()).intValue();
+    return Integer.parseInt(getTimePart().getHour().getDigits());
   }
 
   /**
@@ -99,7 +99,7 @@ public class ASTDate extends ASTDateTOP {
    * @return minutes as int value
    */
   public int getMinute() {
-    return Integer.valueOf(getTimePart().getMinute().getDigits()).intValue();
+    return Integer.parseInt(getTimePart().getMinute().getDigits());
   }
 
   /**
@@ -108,7 +108,7 @@ public class ASTDate extends ASTDateTOP {
    * @return seconds as int value
    */
   public int getSecond() {
-    return Integer.valueOf(getTimePart().getSecond().getDigits()).intValue();
+    return Integer.parseInt(getTimePart().getSecond().getDigits());
   }
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ODLinkCollector implements ODLinkVisitor2 {
 
-  private List<ASTODLink> links = new ArrayList<>();
+  private final List<ASTODLink> links = new ArrayList<>();
 
   @Override
   public void visit(ASTODLink link) {

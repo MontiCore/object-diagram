@@ -157,6 +157,15 @@
                       },
                       {
                         "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
+                        "name": "value",
+                        "isPrivate": true,
+                        "type": {
+                          "kind": "de.monticore.types.check.SymTypePrimitive",
+                          "primitiveName": "int"
+                        }
+                      },
+                      {
+                        "kind": "de.monticore.symbols.oosymbols._symboltable.FieldSymbol",
                         "name": "classes",
                         "isPrivate": true,
                         "type": {

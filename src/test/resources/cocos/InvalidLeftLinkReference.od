@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package cocos;
+
+import examples.cd.SimpleOD.*;
+
+objectdiagram InvalidLeftLinkReference {
+
+  foo:ObjectType{};
+  bar:ObjectType{};
+
+  link missingLeft -> bar;
+
+}
+

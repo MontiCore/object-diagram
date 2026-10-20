@@ -1,0 +1,49 @@
+// (c) https://github.com/MontiCore/monticore
+
+package de.monticore.odbasis._cocos;
+
+import de.monticore.odbasis._cocos.attributes.NoAbstractAttributesCoCo;
+import de.monticore.odbasis._cocos.attributes.PartialAndCompleteAttributesCoCo;
+import de.monticore.odbasis._cocos.attributes.UniqueAttributeNamesCoCo;
+import de.monticore.odbasis._cocos.attributes.ValidObjectAttributesCoCo;
+import de.monticore.odbasis._cocos.names.UniqueObjectNamesCoCo;
+import de.monticore.odbasis._cocos.object.ValidObjectTypeCoCo;
+
+public class ODBasisCoCos {
+
+  public ODBasisCoCoChecker getCheckerForAllIntraCoCos() {
+    final ODBasisCoCoChecker checker = new ODBasisCoCoChecker();
+
+    // add default cocos
+    // attributes
+    checker.addCoCo(new NoAbstractAttributesCoCo());
+    checker.addCoCo(new PartialAndCompleteAttributesCoCo());
+    checker.addCoCo(new UniqueAttributeNamesCoCo());
+
+    // names
+    checker.addCoCo(new UniqueObjectNamesCoCo());
+
+    return checker;
+  }
+
+  public ODBasisCoCoChecker getCheckerForAllCoCos() {
+    final ODBasisCoCoChecker checker = new ODBasisCoCoChecker();
+    checker.addChecker(this.getCheckerForAllIntraCoCos());
+    checker.addChecker(this.getCheckerForAllInterCoCos());
+
+    return checker;
+  }
+
+  public ODBasisCoCoChecker getCheckerForAllInterCoCos() {
+    final ODBasisCoCoChecker checker = new ODBasisCoCoChecker();
+    
+    // attributes
+    checker.addCoCo(new ValidObjectAttributesCoCo());
+
+    // types
+    checker.addCoCo(new ValidObjectTypeCoCo());
+
+    return checker;
+  }
+
+}

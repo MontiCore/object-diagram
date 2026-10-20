@@ -1,0 +1,19 @@
+@startuml
+note "OD" as tag #white
+object "__a:ObjectType1__" as a {
+  e = Color.RED
+  q = x.y
+  sum = 1 + 2
+  l = [1, 2, 3]
+  m = [1 -> 2, 3 -> 4]
+  o = ...
+}
+object "__b:ObjectType2__" as b {
+}
+object "__c:ObjectType3__" as c {
+}
+a *-- "part" b
+a o-- c
+a [key] "src" --> "tgt" [other] b
+a ["k"] --> c
+@enduml

@@ -11,8 +11,6 @@ import java.util.Optional;
  */
 public class CDRoleAdapter extends FieldSymbol {
   
-
-  
   protected FieldSymbol original;
   
   protected LinkCardinality cardinality;
@@ -63,7 +61,7 @@ public class CDRoleAdapter extends FieldSymbol {
     STAR("[*]"),
     PLUS("[+]");
     
-    protected String val;
+    private final String val;
     
     LinkCardinality(String val) {
       this.val = val;
@@ -73,7 +71,7 @@ public class CDRoleAdapter extends FieldSymbol {
       Optional<LinkCardinality> res = Arrays.stream(values())
           .filter(c -> c.val.equals(value))
           .findAny();
-      return res.isPresent() ? res.get() : ONE;
+      return res.orElse(ONE);
     }
   }
 

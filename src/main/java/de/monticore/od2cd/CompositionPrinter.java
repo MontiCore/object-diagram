@@ -14,8 +14,8 @@ public class CompositionPrinter {
     
     IOD4DevelopmentGlobalScope gs = OD4DevelopmentMill.globalScope();
     
-    if (gs.getSubScopes().size() >= 1) {
-      IOD4DevelopmentArtifactScope as = (IOD4DevelopmentArtifactScope) gs.getSubScopes().get(0);
+    if (!gs.getSubScopes().isEmpty()) {
+      IOD4DevelopmentArtifactScope as = (IOD4DevelopmentArtifactScope) gs.getSubScopes().getFirst();
       
       if (as.getTypeSymbols().containsKey(type.printType()) ||
           as.getOOTypeSymbols().containsKey(type.printType()) ||
@@ -37,7 +37,7 @@ public class CompositionPrinter {
   public String write(String type) {
     IOD4DevelopmentGlobalScope gs = OD4DevelopmentMill.globalScope();
     
-    if (gs.getSubScopes().size() >= 1) {
+    if (!gs.getSubScopes().isEmpty()) {
       return ".build().get()";
     }
     return ".build()";
@@ -46,8 +46,8 @@ public class CompositionPrinter {
   public String update(String attribute, String value) {
     IOD4DevelopmentGlobalScope gs = OD4DevelopmentMill.globalScope();
     
-    if (gs.getSubScopes().size() >= 1) {
-      String asName = gs.getSubScopes().get(0).getName();
+    if (!gs.getSubScopes().isEmpty()) {
+      String asName = gs.getSubScopes().getFirst().getName();
       
       String res = "";
       String line = "";
@@ -67,7 +67,7 @@ public class CompositionPrinter {
   public String genType(ASTMCType type) {
     IOD4DevelopmentGlobalScope gs = OD4DevelopmentMill.globalScope();
     String genType = OD4DevelopmentMill.prettyPrint(type, false);
-    if (gs.getSubScopes().size() >= 1) {
+    if (!gs.getSubScopes().isEmpty()) {
       return genType + "Builder";
     } else {
       return genType;

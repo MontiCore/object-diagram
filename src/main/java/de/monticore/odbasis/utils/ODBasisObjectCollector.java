@@ -14,9 +14,9 @@ import java.util.stream.Stream;
 
 public class ODBasisObjectCollector implements ODBasisVisitor2 {
 
-  private List<ASTODNamedObject> namedObjects = new ArrayList<>();
+  private final List<ASTODNamedObject> namedObjects = new ArrayList<>();
 
-  private List<ASTODAnonymousObject> anonymousObjects = new ArrayList<>();
+  private final List<ASTODAnonymousObject> anonymousObjects = new ArrayList<>();
 
   @Override
   public void visit(ASTODNamedObject namedObject) {

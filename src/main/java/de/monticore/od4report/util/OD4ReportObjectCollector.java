@@ -10,7 +10,7 @@ import java.util.List;
 
 public class OD4ReportObjectCollector implements OD4ReportVisitor2 {
 
-  private List<ASTODReportObject> namedObjects = new ArrayList<>();
+  private final List<ASTODReportObject> namedObjects = new ArrayList<>();
 
   @Override
   public void visit(ASTODReportObject reportObject) {

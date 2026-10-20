@@ -6,18 +6,17 @@ import de.monticore.ast.ASTNode;
 import de.monticore.generating.templateengine.reporting.commons.AReporter;
 import de.monticore.generating.templateengine.reporting.commons.ReportingConstants;
 import de.monticore.generating.templateengine.reporting.commons.ReportingRepository;
-import de.monticore.od4data._prettyprint.OD4DataFullPrettyPrinter;
+import de.monticore.od4report.OD4ReportMill;
 import de.monticore.odbasis._ast.ASTODBasisNode;
-import de.monticore.prettyprint.IndentPrinter;
 import de.se_rwth.commons.Names;
 
 import java.io.File;
 
 public class AST2ODReporter extends AReporter {
 
-  private String modelName;
+  private final String modelName;
 
-  private ReportingRepository reporting;
+  private final ReportingRepository reporting;
 
   public AST2ODReporter(String outputDir, String modelName, ReportingRepository reporting) {
     super(
@@ -55,7 +54,7 @@ public class AST2ODReporter extends AReporter {
    * @param ast {@link ASTNode}
    */
   private void writeContent(ASTODBasisNode ast) {
-    writeLine(new OD4DataFullPrettyPrinter(new IndentPrinter()).prettyprint(ast));
+    writeLine(OD4ReportMill.prettyPrint(ast, false));
   }
 
 }

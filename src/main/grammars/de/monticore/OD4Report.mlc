@@ -27,7 +27,7 @@ mlc OD4Report {
 
   promote {  // allow using other languages
     mlc "de.monticore.DateLiterals";
-    mlc "de.monticore.OD4Data";
+    mlc "de.monticore.OD4Development";
     mlc "de.monticore.types.MCCollectionTypes";
   }
 

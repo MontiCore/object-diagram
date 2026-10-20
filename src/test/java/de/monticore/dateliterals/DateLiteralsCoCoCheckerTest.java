@@ -18,6 +18,8 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @TestWithMCLanguage(OD4ReportMill.class)
 public class DateLiteralsCoCoCheckerTest extends ODOutTestBasis {
   
@@ -36,8 +38,6 @@ public class DateLiteralsCoCoCheckerTest extends ODOutTestBasis {
     odCoCoChecker.addChecker(new DateLiteralsCoCos().getCheckerForAllCoCos());
     odCoCoChecker.checkAll(artifact);
     
-    MCAssertions.assertHasFindingStartingWith("0x0D009");
-    MCAssertions.assertHasFindingStartingWith("0x0D009");
-    MCAssertions.assertHasFindingStartingWith("0x0D009");
+    assertEquals(3, MCAssertions.assertHasFindingsStartingWith("0x0D030").size());
   }
 }
