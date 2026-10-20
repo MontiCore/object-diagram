@@ -72,7 +72,7 @@ syntax:
 
 Below follow more detailed explanations about the project:
 
-## Tools: `ODDataTool` and `OD4ReportTool`
+## Tools: `OD4DevelopmentTool` and `OD4ReportTool`
 
 By default, the project creates two tools, stored in `MCOD4Development.jar` and  `MCOD4Report.jar`.
 
