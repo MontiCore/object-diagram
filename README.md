@@ -1,12 +1,12 @@
 <!-- (c) https://github.com/MontiCore/monticore -->
 
-This documentation is primarily intended for **modelers** who work with object diagrams
-and want to use the **OD4Development** tool effectively. The goal is to help you become
-productive quickly, perform common modeling tasks confidently, and generate direct value
-from ODs (for example, deriving a class diagram).
+This documentation is primarily intended for **modelers** who work with object
+diagrams and want to use the **OD4Development** tool effectively. The goal is to
+help you become productive quickly, perform common modeling tasks confidently,
+and generate direct value from ODs (for example, deriving a class diagram).
 
-For **language engineers** (language development, grammar work, tool extensions), detailed
-technical documentation is available at
+For **language engineers** (language development, grammar work, tool
+extensions), detailed technical documentation is available at
 [`src/main/grammars/de/monticore/OD4Development.md`](src/main/grammars/de/monticore/OD4Development.md).
 
 # Table of Contents
@@ -14,41 +14,42 @@ technical documentation is available at
 - [What is OD4Development?](#what-is-od4development)
 - [Example Model](#example-model)
 - [OD Language Primer](#od-language-primer)
-  - [Object Diagrams](#object-diagrams)
-  - [Comments](#comments)
-  - [Packages and Imports](#packages-and-imports)
-  - [Objects](#objects)
-  - [Attributes and Values](#attributes-and-values)
-  - [Links](#links)
-  - [When CD References Are Required](#when-cd-references-are-required)
+   - [Object Diagrams](#object-diagrams)
+   - [Comments](#comments)
+   - [Packages and Imports](#packages-and-imports)
+   - [Objects](#objects)
+   - [Attributes and Values](#attributes-and-values)
+   - [Links](#links)
+   - [When CD References Are Required](#when-cd-references-are-required)
 - [Setup and Build](#setup-and-build)
-  - [Prerequisites](#prerequisites)
-  - [Getting the Tools](#getting-the-tools)
+   - [Prerequisites](#prerequisites)
+   - [Getting the Tools](#getting-the-tools)
 - [Focus: OD4Development](#focus-od4development)
-  - [Quick Start](#quick-start)
-  - [CLI Reference: OD4Development](#cli-reference-od4development)
-  - [Typical Workflows](#typical-workflows)
-    - [1) Run CoCos](#1-run-cocos)
-    - [2) Pretty Printing](#2-pretty-printing)
-    - [3) Export Symbol Table](#3-export-symbol-table)
-    - [4) Resolve Symbols](#4-resolve-symbols-via--path)
-    - [5) Derive a Class Diagram from an OD](#5-derive-a-class-diagram-from-an-od--o)
+   - [Quick Start](#quick-start)
+   - [CLI Reference: OD4Development](#cli-reference-od4development)
+   - [Typical Workflows](#typical-workflows)
+      - [1) Run CoCos](#1-run-cocos)
+      - [2) Pretty Printing](#2-pretty-printing)
+      - [3) Export Symbol Table](#3-export-symbol-table)
+      - [4) Resolve Symbols](#4-resolve-symbols-via--path)
+      - [5) Derive a Class Diagram from an OD](#5-derive-a-class-diagram-from-an-od--o)
 - [Further Information](#further-information)
 
 # What is OD4Development?
 
 OD4Development provides a complete toolchain for working with object diagrams:
 
-- **Model validation**: Constraint-on-Context (CoCo) checks verify model consistency and correctness
-  beyond syntax—catching logical issues before downstream processing.
-- **Model normalization**: Pretty printing reformats ODs into a canonical style, useful for version
-  control and team collaboration.
-- **Symbol management**: Export and import symbol tables to share type information across models
-  and enable cross-model references.
-- **Artifact derivation**: Generate class diagrams from ODs, creating a structured view of the
-  instances and relationships described in your model.
-- **Transparent feedback**: All operations report their results clearly via the command line,
-  making it easy to diagnose issues and verify success.
+- **Model validation**: Constraint-on-Context (CoCo) checks verify model
+  consistency and correctness beyond syntax—catching logical issues before
+  downstream processing.
+- **Model normalization**: Pretty printing reformats ODs into a canonical style,
+  useful for version control and team collaboration.
+- **Symbol management**: Export and import symbol tables to share type
+  information across models and enable cross-model references.
+- **Artifact derivation**: Generate class diagrams from ODs, creating a
+  structured view of the instances and relationships described in your model.
+- **Transparent feedback**: All operations report their results clearly via the
+  command line, making it easy to diagnose issues and verify success.
 
 # Example Model
 
@@ -83,16 +84,19 @@ objectdiagram MyFamily {
 }
 ```
 
-This notation is intentionally aligned with the readability of class diagram syntax.
+This notation is intentionally aligned with the readability of class diagram
+syntax.
 
 # OD Language Primer
 
-This section gives a compact introduction to the OD language using the examples from this repository.
+This section gives a compact introduction to the OD language using the examples
+from this repository.
 
 ## Object Diagrams
 
-OD models are stored in `.od` files. Each file starts with `objectdiagram <Name> { ... }` and
-contains object instances and links between them.
+OD models are stored in `.od` files. Each file starts with
+`objectdiagram <Name> { ... }` and contains object instances and links between
+them.
 
 ```txt
 objectdiagram Example {
@@ -113,8 +117,9 @@ objectdiagram Example {
 
 ## Packages and Imports
 
-You can organize models with `package` declarations and import symbols from other models.
-Imports are especially useful when your OD references external types.
+You can organize models with `package` declarations and import symbols from
+other models. Imports are especially useful when your OD references external
+types.
 
 ```txt
 package my.examples;
@@ -127,8 +132,9 @@ objectdiagram Example {
 
 ## Objects
 
-Objects are declared as `<objectName>:<Type> { ... };`, for example `alice:Person { ... };`.
-The `MyFamily` example also shows anonymous typed objects like `:BMW { ... }`.
+Objects are declared as `<objectName>:<Type> { ... };`, for example
+`alice:Person { ... };`. The `MyFamily` example also shows anonymous typed
+objects like `:BMW { ... }`.
 
 ```txt
 objectdiagram Example {
@@ -144,8 +150,9 @@ objectdiagram Example {
 
 ## Attributes and Values
 
-Attributes are assigned inside object blocks using `name = value;`. Values can be literals,
-lists, enum constants, and other expression forms supported by the language.
+Attributes are assigned inside object blocks using `name = value;`. Values can
+be literals, lists, enum constants, and other expression forms supported by the
+language.
 
 ```txt
 objectdiagram Example {
@@ -162,8 +169,8 @@ objectdiagram Example {
 
 ## Links
 
-Links represent relationships between object instances. In this example, you can see both
-top-level link statements and role-based references.
+Links represent relationships between object instances. In this example, you can
+see both top-level link statements and role-based references.
 
 ```txt
 objectdiagram Example {
@@ -178,14 +185,17 @@ objectdiagram Example {
 
 ## When CD References Are Required
 
-Referencing a class diagram (via imported symbol files) is **not always mandatory**.
+Referencing a class diagram (via imported symbol files) is **not always
+mandatory**.
 
-- You can use core tool functions like parsing and pretty printing without importing CD symbols.
+- You can use core tool functions like parsing and pretty printing without
+  importing CD symbols.
 - Intra-model CoCos can also be run without full external type resolution.
-- CD symbol references become important when you want to resolve external types reliably,
-  for example in inter-model or full CoCo checks.
+- CD symbol references become important when you want to resolve external types
+  reliably, for example in inter-model or full CoCo checks.
 
-In practice: start without imports for syntax and formatting tasks, and add `-path` plus `import`
+In practice: start without imports for syntax and formatting tasks, and add
+`-path` plus `import`
 statements once your workflow requires cross-model type resolution.
 
 # Setup and Build
@@ -210,8 +220,8 @@ Pre-built JARs are available for download:
 - [**OD4Development.jar**][od4dev-link]
 - [**OD4Report.jar**][od4report-link]
 
-Download the JAR you need and place it in your working directory. You can start using the tool immediately
-without any compilation step.
+Download the JAR you need and place it in your working directory. You can start
+using the tool immediately without any compilation step.
 
 ### Option B: Build from Source
 
@@ -269,16 +279,16 @@ This confirms the OD has been read and parsed without errors.
 
 ## CLI Reference: OD4Development
 
-| Option | Meaning |
-| --- | --- |
-| `-h`, `--help` | Show help |
-| `-i`, `--input <file>` | **Required**: input OD |
-| `-path <dirlist>` | Model/symbol path (multiple entries supported) |
-| `-pp`, `--prettyprint [file]` | Pretty print to stdout or file |
-| `-s`, `--symboltable [file]` | Store symbol table (`.odsym`) |
-| `-c`, `--coco [intra\|inter]` | Run CoCos (`no arg` = all CoCos) |
-| `-o`, `--output <dir>` | Derive class diagram from OD |
-| `-d` | Enable debug logging |
+| Option                        | Meaning                                        |
+|-------------------------------|------------------------------------------------|
+| `-h`, `--help`                | Show help                                      |
+| `-i`, `--input <file>`        | **Required**: input OD                         |
+| `-path <dirlist>`             | Model/symbol path (multiple entries supported) |
+| `-pp`, `--prettyprint [file]` | Pretty print to stdout or file                 |
+| `-s`, `--symboltable [file]`  | Store symbol table (`.odsym`)                  |
+| `-c`, `--coco [intra\|inter]` | Run CoCos (`no arg` = all CoCos)               |
+| `-o`, `--output <dir>`        | Derive class diagram from OD                   |
+| `-d`                          | Enable debug logging                           |
 
 ## Typical Workflows
 
@@ -331,7 +341,8 @@ java -jar target/libs/MCOD4Development.jar -i Example.od -pp Example.pp.od
 
 ### 3) Export Symbol Table
 
-Use the following command to export a symbol table with the default name (next to the model, e.g. `Example.odsym`):
+Use the following command to export a symbol table with the default name (next
+to the model, e.g. `Example.odsym`):
 
 ```bash
 java -jar target/libs/MCOD4Development.jar -i Example.od -s
@@ -351,21 +362,23 @@ Creation of symbol file <absolute-path-to-odsym> successful
 
 ### 4) Resolve Symbols via `-path`
 
-Object diagrams describe *instances* of types that must be defined elsewhere—typically in a class diagram.
-For example, the `MyFamily` OD uses types like `Person`, `BMW`, and `Jaguar`. These types are
-defined in a separate class diagram model, whose symbol information is stored in a symbol file
+Object diagrams describe *instances* of types that must be defined
+elsewhere—typically in a class diagram. For example, the `MyFamily` OD uses
+types like `Person`, `BMW`, and `Jaguar`. These types are defined in a separate
+class diagram model, whose symbol information is stored in a symbol file
 (`.cdsym`).
 
 To validate that your OD uses only types that actually exist, you must:
 
-1. Make the symbol file(s) discoverable by setting a model path with `-path`.
+1. Make the symbol file (s) discoverable by setting a model path with `-path`.
 2. Import the symbol files in your OD using `import` statements.
 3. Run CoCo validation to check type references.
 
 **Example workflow:**
 
-Suppose you have a class diagram that defines `Person`, `BMW`, and `Jaguar` in a file called `Types.cd`.
-After processing that CD, you get a symbol file `Types.cdsym`. Now add to your OD:
+Suppose you have a class diagram that defines `Person`, `BMW`, and `Jaguar` in a
+file called `Types.cd`. After processing that CD, you get a symbol file
+`Types.cdsym`. Now add to your OD:
 
 ```txt
 import Types.*;
@@ -381,22 +394,25 @@ Then run validation:
 java -jar target/libs/MCOD4Development.jar -i Example.od -path cd -c
 ```
 
-Here, `cd` is the directory containing `Types.cdsym`. The tool will load the symbol file, resolve
-the type references in your OD, and report any mismatches.
+Here, `cd` is the directory containing `Types.cdsym`. The tool will load the
+symbol file, resolve the type references in your OD, and report any mismatches.
 
 **Troubleshooting symbol resolution:**
 
 If types cannot be resolved, check:
 
-- whether matching `*sym` files exist on the model path (file extensions must end with `sym`),
+- whether matching `*sym` files exist on the model path (file extensions must
+  end with `sym`),
 - whether your OD `import` statements match the symbol file location and names,
-- whether `-path` points to the correct root directory containing the symbol files.
+- whether `-path` points to the correct root directory containing the symbol
+  files.
 
 ### 5) Derive a Class Diagram from an OD (`-o`)
 
-**Why?** An OD shows a concrete snapshot of object instances and their relationships at a specific point in time.
-By analyzing these instances, you can reverse-engineer a class diagram that captures the underlying
-structure—the types, attributes, and associations that make up the model. This is useful when:
+**Why?** An OD shows a concrete snapshot of object instances and their
+relationships at a specific point in time. By analyzing these instances, you can
+reverse-engineer a class diagram that captures the underlying structure—the
+types, attributes, and associations that make up the model. This is useful when:
 
 - You have detailed instance data but need a class-level abstraction,
 - You want to document the structural design implied by your instances,
@@ -409,9 +425,10 @@ structure—the types, attributes, and associations that make up the model. This
 java -jar target/libs/MCOD4Development.jar -i Example.od -o out
 ```
 
-This analyzes the OD and generates a class diagram, written to the `out` directory.
-The resulting CD will contain classes for all object types referenced in the OD, their attributes,
-and the associations between them—essentially a schema that your instance data conforms to.
+This analyzes the OD and generates a class diagram, written to the `out`
+directory. The resulting CD will contain classes for all object types referenced
+in the OD, their attributes, and the associations between them—essentially a
+schema that your instance data conforms to.
 
 # Further Information
 
